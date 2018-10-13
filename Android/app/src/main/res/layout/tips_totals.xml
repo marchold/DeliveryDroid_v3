@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ActionBar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_height"
+        style="@style/action_bar_layout"
+        android:gravity="bottom">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="2dp"
+            android:src="@drawable/icon_back"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="-7dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:padding="3dp"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView2"
+
+            android:text="@string/tipHistory"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/headerDetailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10sp" />
+
+        <FrameLayout
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_toLeftOf="@+id/textView2"></FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignRight="@+id/textView2"
+            android:scaleType="center"
+            android:src="@drawable/action_drop_icon"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:id="@+id/moreClickable"
+            android:layout_width="44dp"
+            android:background="@drawable/transparent_button"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/icon_three_dots" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_underline_height"
+        android:background="@color/android_blue_underline" />
+
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/sewidget29"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:background="#FF333333">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <Spinner
+                    android:id="@+id/deliveryAreaSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    tools:listitem="@layout/tip_totals_spinner_in_toolbar" />
+
+
+                <RelativeLayout
+                    android:id="@+id/dateRangeContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginTop="15dip"
+                        android:text="@string/startDate"
+                        android:textColor="#FFF" />
+
+                    <EditText
+                        android:id="@+id/hourlyPayRate"
+                        android:layout_width="150dip"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/textView3"
+                        android:layout_below="@+id/textView3"
+                        android:layout_marginRight="10dip"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="none">
+
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/deliveries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/hourlyPayRate"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dip"
+                        android:layout_toRightOf="@+id/hourlyPayRate"
+                        android:text="@string/endDate"
+                        android:textColor="#FFF" />
+
+                    <EditText
+                        android:id="@+id/totalCash"
+                        android:layout_width="150dip"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/deliveries"
+                        android:layout_below="@+id/deliveries"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="none" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/filterLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+
+                    <com.catglo.widgets.FlowLayout
+                        android:id="@+id/filterAreaContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:horizontalSpacing="15dip"
+                        app:verticalSpacing="15dip"
+                        android:layout_margin="15dp">
+
+                        <CheckBox
+                            android:id="@+id/monday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/recurrence_bubble_fill"
+                            android:button="@drawable/nothing"
+                            android:gravity="center"
+                            android:singleLine="true"
+
+                            android:text="@string/mon" />
+
+                        <CheckBox
+                            android:id="@+id/tuesday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:background="@drawable/recurrence_bubble_fill"
+                            android:button="@drawable/nothing"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="@string/tue" />
+
+                        <CheckBox
+                            android:id="@+id/wendsday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/recurrence_bubble_fill"
+                            android:button="@drawable/nothing"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="@string/wed" />
+
+                        <CheckBox
+                            android:id="@+id/thursday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/recurrence_bubble_fill"
+                            android:button="@drawable/nothing"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="@string/thu" />
+
+                        <CheckBox
+                            android:id="@+id/friday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/recurrence_bubble_fill"
+                            android:button="@drawable/nothing"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="@string/fri" />
+
+                        <CheckBox
+                            android:id="@+id/saturday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/recurrence_bubble_fill"
+                            android:button="@drawable/nothing"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="@string/sat" />
+
+                        <CheckBox
+                            android:id="@+id/sunday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/recurrence_bubble_fill"
+                            android:button="@drawable/nothing"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="@string/sun" />
+
+                    </com.catglo.widgets.FlowLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/resultsLayouyt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tipsMade" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/tipsMade"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="TextView"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/deliveries" />
+
+                            <TextView
+                                android:id="@+id/totalDeliveries"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="TextView"
+                                android:textColor="@color/chea_header_bar_green"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/distanceDrivenLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/milesDriven" />
+
+                            <TextView
+                                android:id="@+id/milesDriven"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="TextView"
+                                android:textColor="@color/chea_header_bar_green"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/averageTip" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/averageTip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="324"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/averagePayRateTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="Average Pay Rate" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/averagePayRate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="324"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/DriverEarnings" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/driverEarnings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="TextView"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/hoursWorked" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/textView19"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="@string/hoursWorked"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView20_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/hoursWorked" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/textView19_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="@string/hoursWorked"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView20_c"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/hoursWorked" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/textView19_c"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="@string/hoursWorked"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/whoOwesWho"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/bestTip" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/bestTip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="TextView"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                android:textColor="#FFF"
+                                android:id="@+id/textView14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/worstTip" />
+
+                            <TextView
+                                android:textColor="@color/chea_header_bar_green"
+                                android:id="@+id/worstTip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="32sp" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/menu_drawer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="#A000">
+
+             <include layout="@layout/tip_totals_menu"></include>
+        </FrameLayout>
+
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

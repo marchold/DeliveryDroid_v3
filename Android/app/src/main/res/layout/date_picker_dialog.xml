@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    android:layout_height="fill_parent"
+     android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+<DatePicker 
+    android:id="@+id/datePicker"
+    android:layout_gravity="center_horizontal"
+    style="@style/dialog_datepicker_style" 
+
+    />
+</FrameLayout>

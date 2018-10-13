@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/optimizeBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    android:gravity="center"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:id="@+id/roundTripTimeArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+           
+                <ProgressBar
+                    android:id="@+id/progressBarRoundTrip"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/errorIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/error_icon"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/roundTripTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="..."
+                    android:textColor="@color/chea_header_dark_text"
+                    android:textSize="16sp" />
+  
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/roundTripTimeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Round_Trip_Time"
+            android:textColor="@color/chea_header_dark_text"
+            android:textSize="8sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/optimizeClickable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/optimizeIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_opt" />
+
+        <TextView
+            android:id="@+id/optimizeRouteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="@string/Optimize"
+            android:textColor="@color/chea_header_dark_text"
+            android:textSize="8sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="26dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/driverEarnings"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="$124.69"
+            android:textColor="@color/chea_header_dark_text"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="center"
+            android:text="@string/DriverEarnings"
+            android:textColor="@color/chea_header_dark_text"
+            android:textSize="8sp" />
+    </LinearLayout>
+
+</LinearLayout>

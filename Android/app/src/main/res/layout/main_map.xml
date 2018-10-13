@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget38"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/blue_gradent_background"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/AddDelevery"
+        android:layout_width="160dip"
+        android:layout_height="80dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/Checkout"
+        android:text="@string/AddOrder"
+        android:textSize="22sp" >
+    </Button>
+
+    <Button
+        android:id="@+id/Checkout"
+        android:layout_width="160dip"
+        android:layout_height="0dip"
+        android:layout_alignParentBottom="true"
+        android:text="@string/order_summary"
+        android:textSize="22sp" >
+    </Button>
+
+    <com.google.android.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/Checkout"
+        android:layout_alignLeft="@+id/Checkout"
+        android:apiKey="@string/maps_API_KEY"
+        android:clickable="true" >
+    </com.google.android.maps.MapView>
+
+</RelativeLayout>

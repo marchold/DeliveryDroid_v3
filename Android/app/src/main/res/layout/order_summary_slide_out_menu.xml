@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.catglo.widgets.FlowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="#A000"
+
+    >
+
+    <Button
+        android:id="@+id/go_to_day_menu_button"
+        style="@style/slide_out_menu_button"
+        android:drawableTop="@drawable/go_to_day"
+        android:text="@string/goToDay" />
+
+    <Button
+        android:id="@+id/export_to_menu_button"
+        style="@style/slide_out_menu_button"
+        android:drawableTop="@drawable/export"
+        android:text="CSV Exoprt" />
+
+    <Button
+        android:id="@+id/odometer_and_hours_menu_button"
+        style="@style/slide_out_menu_button"
+        android:drawableTop="@drawable/odometer"
+        android:text="@string/odo_and_hr" />
+
+    <Button
+        android:id="@+id/add_order_menu_button"
+        style="@style/slide_out_menu_button"
+        android:drawableTop="@drawable/add_order_plus"
+        android:text="@string/AddOrder" />
+
+    <Button
+        android:id="@+id/delete_shift_menu_button"
+        style="@style/slide_out_menu_button"
+        android:drawableTop="@drawable/trash"
+        android:text="@string/deleteThisShift" />
+
+    <Button
+        android:id="@+id/customize_list_menu_button"
+        style="@style/slide_out_menu_button"
+        android:drawableTop="@drawable/customize_list"
+        android:text="@string/Customize_List_View" />
+
+    <Button
+        android:id="@+id/configure_cash_owed_to_store_menu_button"
+        style="@style/slide_out_menu_button"
+        android:text="Configure Cash Owed To Store" />
+
+
+</com.catglo.widgets.FlowLayout>

@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_dk"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/ActionBar"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/action_bar_bkgd"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="2dp"
+            android:src="@drawable/back_for_nav" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-7dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="@string/Pay_rate"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/headerDetailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10sp" />
+
+        <FrameLayout
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/textView2" >
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignRight="@+id/textView2"
+            android:scaleType="center"
+            android:src="@drawable/action_drop_icon"
+            android:visibility="invisible" />
+        
+          <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/transparent_button"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/Delete"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <com.catglo.widgets.RowLayout
+        android:id="@+id/RowLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+       <RelativeLayout
+            android:id="@+id/contentLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_dk"
+            android:padding="15dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Pay_rate" />
+
+            <EditText
+                android:id="@+id/preferedDeliveryRadius"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView1"
+                android:layout_below="@+id/textView1"
+                android:ems="10"
+                android:inputType="numberDecimal" >
+            </EditText>
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_dk"
+            android:padding="15dp" >
+
+            <net.simonvt.timepicker.TimePicker
+                android:id="@+id/timePicker1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3" >
+
+            </net.simonvt.timepicker.TimePicker>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="25dp"
+                android:text="@string/Start_time" />
+        </RelativeLayout>
+
+        
+    </com.catglo.widgets.RowLayout>
+
+</LinearLayout>

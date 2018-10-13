@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Custom Value Name"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/customName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:ems="10" >
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Mileage Pay Amount"
+        android:textSize="20sp" />
+    
+    <EditText
+        android:id="@+id/customValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:ems="10"
+        android:inputType="numberSigned|numberDecimal|number" />
+
+
+    
+      <TextView
+          android:id="@+id/textView3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_margin="5dp"
+          android:text="These checkboxes are for cases where you get paid a custom amount for some trips such." >
+
+    </TextView>
+    
+
+</LinearLayout>

@@ -1,0 +1,135 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsStoreAddressActivity" >
+    
+   <RelativeLayout 
+    android:id="@+id/ActionBar"
+    android:layout_width="fill_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/left_divider"
+    android:gravity="bottom" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="44dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="2dp"
+        android:src="@drawable/icon_back" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="-7dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:src="@drawable/icon" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imageView2"
+        android:text="@string/Store_Address"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="13sp" />
+
+    <FrameLayout
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textView2" >
+
+    </FrameLayout>
+
+
+  
+        <Button
+            android:id="@+id/cancel"
+            style="@style/action_bar_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+  			android:text="@android:string/cancel"
+            android:textAllCaps="true" />
+          
+
+</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ActionBar"
+        android:orientation="vertical" >
+    <View
+          android:id="@+id/View01"
+          android:layout_width="match_parent"
+          android:layout_height="4dp"
+          android:background="@color/android_blue_underline" />
+
+       <com.catglo.widgets.AddressHistoryAutocomplete
+           android:id="@+id/autocomplete"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginBottom="10dp"
+           android:layout_marginLeft="10dp"
+           android:layout_marginRight="10dp"
+           android:layout_marginTop="15dp"
+           android:drawableRight="@drawable/current_location"
+           android:ems="10"
+           android:hint="@string/Store_Address" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:gravity="center" >
+
+           <Button
+               android:id="@+id/look_up_store_address"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="5dp"
+               android:layout_weight="1"
+               android:text="@string/Current_GPS" />
+
+           <Button
+               android:id="@+id/save"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="5dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:text="@string/Save" />
+
+       </LinearLayout>
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" >
+
+           <com.google.android.maps.MapView
+               android:id="@+id/mapview"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:layout_marginTop="10dp"
+               android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
+               android:clickable="false" >
+
+           </com.google.android.maps.MapView>
+
+       </RelativeLayout>
+       
+    </LinearLayout>
+
+</RelativeLayout>

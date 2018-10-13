@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+     <include
+        android:id="@+id/optimizeBar"
+        android:layout_width="65dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        layout="@layout/optimize_bar" />
+    
+    <com.google.android.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/optimizeBar"
+        android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
+        android:clickable="true" />
+
+    <!-- debug key 061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA -->
+
+   
+
+</RelativeLayout>

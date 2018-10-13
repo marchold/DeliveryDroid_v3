@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/gradient2" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.catglo.widgets.RowLayout
+            android:id="@+id/RowLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/osTextDriverEarnings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Driver Earnings"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/osDriverEarnings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="7.96"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/osTextMoneyCollected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="2dip"
+                    android:paddingTop="2dip"
+                    android:singleLine="true"
+                    android:text="@string/MoneyCollected"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/osMoneyCollected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/osTextCashCollected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Cash Collected"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/osCashCollected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/CashTipsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="@string/cashTips"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/CashTips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="3.99"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/creditCollectedContainer"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/osTextMileageEarned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="@string/otherCollected"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/otherCollected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="7.59"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/osCreditTipsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="@string/creditTips"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/osCreditTips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2.33"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/osTextTipsMade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:singleLine="true"
+                    android:text="Tips Made"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/osTipsMade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="7.59"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mileageEarnedContainer"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/osTextMileageEarned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Mileage Earned"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/osMileageEarned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="7.59"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/All_Orders"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/allOrders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="7.96"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <Spinner
+                            android:id="@+id/cashOwedToStoreHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/creditCardMinusTip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:text="7.96"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#fffbed09"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1ab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hoursWorked"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/hoursWorked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            
+             <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1cc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Hourly_pay"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/hourlyPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#fffbed09"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            
+            
+            
+        </com.catglo.widgets.RowLayout>
+    </ScrollView>
+
+</RelativeLayout>

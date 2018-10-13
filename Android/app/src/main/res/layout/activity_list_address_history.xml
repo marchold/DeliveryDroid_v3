@@ -1,0 +1,146 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/ActionBar"
+        style="@style/action_bar_layout"
+		android:layout_height="@dimen/action_bar_height"
+		android:layout_width="fill_parent"
+        android:gravity="top" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="44dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="2dp"
+            android:src="@drawable/icon_back" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-7dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="@string/Address_Order_History"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/headerDetailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:text="@string/Totals"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10sp"
+            android:visibility="invisible" />
+
+        <FrameLayout
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/textView2" >
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignRight="@+id/textView2"
+            android:scaleType="center"
+            android:src="@drawable/action_drop_icon"
+            android:visibility="invisible" />
+
+        <FrameLayout
+            android:id="@+id/actionMenuDropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignRight="@+id/textView2"
+            android:layout_centerVertical="true" >
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/actionBarTopRightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/headerDetailText"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView2"
+            android:gravity="center|top"
+            android:textSize="9sp" />
+
+        
+
+    </RelativeLayout>
+    
+    
+    <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_underline_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/ActionBar"
+		android:layout_marginTop="@dimen/action_bar_height_minus_two"
+        android:background="@color/android_blue_underline" />
+    
+    
+
+    <EditText
+        android:id="@+id/searchField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:ems="10"
+        android:hint="@string/Search_Notes_Or_Addresses"
+        android:singleLine="true" 
+        android:layout_toLeftOf="@+id/aptNumberField"
+        android:layout_alignParentLeft="true"
+        >
+
+    </EditText>
+    
+     <EditText
+        android:id="@+id/aptNumberField"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:ems="10"
+        android:hint="#"
+        android:singleLine="true" 
+        android:layout_alignParentRight="true">
+
+    </EditText>
+
+    <ListView
+        android:id="@+id/orderList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/searchField" >
+
+    </ListView>
+
+</RelativeLayout>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/FooterBarLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/FooterBarColor" >
+
+     <LinearLayout
+         android:id="@+id/outTheDoorClickable"
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:layout_weight="1"
+         android:orientation="vertical" >
+
+         <ImageButton
+             android:id="@+id/outTheDoorButton"
+             style="@style/tab_bar_button_image"
+             android:src="@drawable/icon_out_door" />
+
+         <TextView
+             android:id="@+id/TextView02"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:layout_gravity="center"
+             android:layout_marginLeft="5dp"
+             android:layout_marginRight="5dp"
+             android:gravity="center"
+             android:lines="2"
+             android:text="@string/OUT_THE_DOOR"
+             android:textColor="#000"
+             android:textSize="8sp" />
+
+     </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderSummaryClickable"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/orderSummaryButton"
+             style="@style/tab_bar_button_image"
+                android:src="@drawable/icon_summery" />
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/ORDER_SUMMARY"
+                android:textColor="#000"
+                android:textSize="8sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bankClickable"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                style="@style/tab_bar_button_image"
+                android:src="@drawable/icon_drops" />
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/BANK_AND_CASH_DROPS"
+                android:textColor="#000"
+                android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/totalsClickable"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imageView3"
+                            style="@style/tab_bar_button_image"
+
+                android:src="@drawable/icon_sum" />
+
+            <TextView
+                android:id="@+id/TextView04"
+                android:layout_width="46dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/TOTALS"
+                android:textColor="#000"
+                android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addOrderClickable"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/addOrderButton"
+                            style="@style/tab_bar_button_image"
+
+                android:src="@drawable/icon_add_order" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="40dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:lines="2"
+                android:text="ADD ORDER"
+                android:textColor="#000"
+                android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/iconMoreClickable"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_more" />
+
+            <TextView
+                android:id="@+id/TextView05"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/MORE"
+                android:textColor="#000"
+                android:textSize="8sp" />
+        </LinearLayout>
+    </LinearLayout>

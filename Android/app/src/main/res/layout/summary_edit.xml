@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sewidget29"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/viewPartLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <com.catglo.widgets.RowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="@dimen/summary_edit_label_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/order_number"
+                    android:textColor="#FFF" />
+
+                <EditText
+                    android:id="@+id/totalCash"
+                    android:layout_width="120dip"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="phone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/whoOwesWho"
+                    android:layout_width="@dimen/summary_edit_label_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/Delivery_time"
+                    android:textColor="#FFF" />
+
+                <EditText
+                    android:id="@+id/OrderPlacedTime"
+                    android:layout_width="120dip"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="time"
+                    android:text="TextView"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="@dimen/summary_edit_label_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/OrderTime"
+                    android:textColor="#FFF" />
+
+                <EditText
+                    android:id="@+id/DeliveryTime"
+                    android:layout_width="120dip"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:imeOptions="flagNoExtractUi"
+                    android:text="TextView"
+                    android:textSize="20sp" >
+
+                    <requestFocus />
+                </EditText>
+            </LinearLayout>
+        </com.catglo.widgets.RowLayout>
+
+        <com.catglo.widgets.RowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="@dimen/summary_edit_field_width"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/deliveries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/OrderAddress"
+                    android:textColor="#FFF" />
+
+                <com.catglo.widgets.AddressAutocomplete
+                    android:id="@+id/orderAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="flagNoExtractUi" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/summary_edit_field_width"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/apartmentNumber_long"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/totalCredit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="flagNoExtractUi" >
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
+                android:layout_width="@dimen/summary_edit_field_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/OrderNotes"
+                    android:textColor="#FFF" />
+
+                <EditText
+                    android:id="@+id/OrderNotes"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/LinearLayout1x"
+                android:layout_width="@dimen/summary_edit_field_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textView5x"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/phoneNumber"
+                    android:textColor="#FFF" />
+
+                <EditText
+                    android:id="@+id/phoneNumber"
+                      android:inputType="phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false" />
+            </LinearLayout>
+            
+            
+        </com.catglo.widgets.RowLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:gravity="center_horizontal"
+            android:padding="10dp" >
+
+            <EditText
+                android:layout_below="@+id/undeliverableCheckBox"
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="phone|numberDecimal"
+                android:numeric="decimal"
+                android:text="TextView"
+                android:textSize="20sp"
+                android:width="150dip" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView6"
+                android:layout_alignTop="@+id/textView6"
+                android:layout_toLeftOf="@+id/textView6"
+                android:text="@string/order_price" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView6"
+                android:layout_alignRight="@+id/textView6"
+                android:layout_below="@+id/textView6"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="phone|numberDecimal"
+                android:numeric="decimal"
+                android:text="TextView" />
+
+            <EditText
+                android:id="@+id/hourlyPayRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView7"
+                android:layout_alignRight="@+id/textView7"
+                android:layout_below="@+id/textView7"
+                android:inputType="phone|numberDecimal"
+                android:numeric="decimal" >
+            </EditText>
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/hourlyPayRate"
+                android:layout_alignTop="@+id/hourlyPayRate"
+                android:layout_toLeftOf="@+id/hourlyPayRate" >
+            </Spinner>
+
+            <TextView
+                android:id="@+id/milesDrivenLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/spinner2"
+                android:layout_alignTop="@+id/spinner2"
+                android:layout_toLeftOf="@+id/spinner2"
+                android:imeOptions="flagNoExtractUi"
+                android:text="@string/SplitOrder" >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/deliveryAreaSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView7"
+                android:layout_alignTop="@+id/textView7"
+                android:layout_toLeftOf="@+id/textView7" >
+            </Spinner>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/deliveryAreaSpinner"
+                android:layout_alignTop="@+id/deliveryAreaSpinner"
+                android:layout_toLeftOf="@+id/deliveryAreaSpinner"
+                android:imeOptions="flagNoExtractUi"
+                android:text="@string/Payment" >
+            </TextView>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="undeliverable"
+                android:id="@+id/undeliverableCheckBox"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="false" />
+        </RelativeLayout>
+
+        <include
+            android:layout_marginTop="20dip"
+            layout="@layout/new_order_custom_checkboxes" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="@string/goBack"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

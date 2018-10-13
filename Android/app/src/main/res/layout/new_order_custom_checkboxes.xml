@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rowLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+           
+                android:orientation="horizontal" >
+
+                <CheckBox
+                    android:id="@+id/OutOfTown"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="52dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/custom_checkbox1"
+                    android:button="@drawable/custom_checkbox_box"
+                    android:text="@string/Custom_Mileage_Pay"
+                    android:textColor="@color/custom_checkbox1_color"
+                    android:visibility="visible" />
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/OutOfTown2"
+                    android:layout_height="52dp"
+                    android:layout_margin="5dp"
+                    android:button="@drawable/custom_checkbox_box"
+                    android:background="@drawable/custom_checkbox2"
+                    android:text="@string/Custom"
+                    android:textColor="@color/custom_checkbox2_color"
+                    android:visibility="visible" />
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/OutOfTown3"
+                    android:layout_height="52dp"
+                    android:layout_margin="5dp"
+                    android:button="@drawable/custom_checkbox_box"
+                    android:background="@drawable/custom_checkbox3"
+                    android:text="@string/Custom"
+                    android:textColor="@color/custom_checkbox3_color"
+                    android:visibility="visible" />
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/OutOfTown4"
+                    android:layout_height="52dp"
+                    android:layout_margin="5dp"
+                    android:button="@drawable/custom_checkbox_box"
+                    android:background="@drawable/custom_checkbox4"
+                    android:text="@string/Custom"
+                    android:textColor="@color/custom_checkbox4_color"
+                    android:visibility="visible" />
+            </LinearLayout>

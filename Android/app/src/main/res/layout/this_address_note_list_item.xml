@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gps_note_item_background"
+    android:padding="8dp" >
+
+    <RelativeLayout
+        android:id="@+id/iconWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/dateTime"
+            android:layout_width="65dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/distance"
+            android:lines="2"
+            android:text="Nov, 12th 2012. 6:00pm"
+            android:textColor="#666666"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/iconWrapper"
+        android:padding="2dp"
+        android:text="Gate Code 12345"
+        android:textColor="#111111"
+        android:textSize="16sp" />
+
+    <FrameLayout
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:background="@color/gray"
+        android:layout_alignParentLeft="true">
+
+        </FrameLayout>
+
+
+</RelativeLayout>

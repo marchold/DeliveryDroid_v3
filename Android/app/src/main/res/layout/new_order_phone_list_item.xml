@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(360) 454-1234"
+        android:id="@+id/phoneNumber"
+        android:singleLine="true"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:text="420 S. Fakestreet,  Agrestic CA. 90931"
+        android:id="@+id/orderAddress"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+</LinearLayout>

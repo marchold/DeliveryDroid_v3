@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <com.catglo.widgets.FlowLayout
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:background="#A000"
+
+        >
+
+
+        <Button
+            android:id="@+id/email_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/email_icon"
+            android:text="@string/email" />
+
+
+        <Button
+            android:id="@+id/text_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/text_message_small"
+            android:text="@string/textMessage" />
+
+        <Button
+            android:id="@+id/toggle_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/icon_filter"
+            android:text="@string/Hide_weekday_filters"
+            android:enabled="true" />
+
+
+    </com.catglo.widgets.FlowLayout>
+</FrameLayout>

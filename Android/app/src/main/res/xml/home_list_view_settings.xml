@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/List_display_options">
+
+
+    <!--
+     boolean showOrderCost = sharedPreferences.getBoolean("showOrderCost", true);
+		 boolean showAverageTip = sharedPreferences.getBoolean("showAverageTip", true);
+		 boolean showOrderTime = sharedPreferences.getBoolean("showOrderTime", true);
+		    -->
+
+
+    <CheckBoxPreference
+        android:key="showOrderCost"
+        android:defaultValue="true"
+        android:title="@string/Order_Cost" android:summary="@string/Show_the_total_order_total_cost_to_the_customer"/>
+    <CheckBoxPreference
+        android:key="showLastTipAmount"
+        android:title="@string/Last_Tip_Amount" android:summary="@string/Show_the_last_tip_amount_for_the_address"/>
+    <CheckBoxPreference
+        android:key="showNumberOfPastDeliveries"
+        android:title="@string/Number_of_past_deliveries" android:summary="@string/Show_the_number_of_times_you_have_delivered_to_the_same_address"/>
+    <CheckBoxPreference
+        android:key="showAveragePercentageTip"
+        android:title="@string/Average_percentage_tip" />
+    <CheckBoxPreference
+        android:key="showAverageTip"
+        android:defaultValue="true"
+        android:title="@string/Average_tip_amount" />
+    <CheckBoxPreference
+        android:key="showOrderTime"
+        android:defaultValue="true"
+        android:title="@string/OrderTime" android:summary="@string/Show_the_time_entered_when_adding_an_order"/>
+    <CheckBoxPreference
+        android:key="showWaitTime"
+        android:title="@string/Order_wait_time" android:summary="@string/Show_the_number_of_minutes_that_have_elapsed_since_the_time_entered_with_the_order"/>
+
+    <PreferenceCategory
+        android:icon="@drawable/circle_both"
+        android:title="@string/Show_bestworst_tippers_icon" android:summary="@string/Show_an_icon_if_address_history_good_bad_tips">
+        <CheckBoxPreference
+            android:icon="@drawable/circle_both"
+            android:key="showIconForBestWorstTippers"
+            android:title="@string/Show_bestworst_tippers_icon" android:summary="@string/Show_an_icon_if_address_history_good_bad_tips" android:disableDependentsState="false"/>
+
+        <EditTextPreference
+            android:icon="@drawable/circle_red"
+            android:key="thresholdForBadTip"
+            android:title="@string/Bad_tip_threshold" android:dependency="showIconForBestWorstTippers" android:defaultValue="0.5"/>
+        <EditTextPreference
+            android:icon="@drawable/circle_green"
+            android:key="goodTipThreshold"
+            android:title="@string/Good_tip_threshold"
+             android:dependency="showIconForBestWorstTippers"
+             android:defaultValue="5"/>
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

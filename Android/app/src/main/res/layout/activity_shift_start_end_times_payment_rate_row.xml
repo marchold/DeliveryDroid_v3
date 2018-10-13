@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="@drawable/cell_background" >
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:layout_toLeftOf="@+id/rate"
+        android:singleLine="true"
+        android:text="10 Minutes Ago gjhgkjh hjg jhgkjgh"
+        android:textColor="@color/white"
+        android:textSize="@dimen/data_secondary_value_font_size" />
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:text="$6.99"
+        android:textColor="@color/white"
+        android:textSize="@dimen/data_value_font_size" />
+
+</RelativeLayout>

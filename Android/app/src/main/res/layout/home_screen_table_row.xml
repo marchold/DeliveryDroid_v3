@@ -1,0 +1,187 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_root"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <FrameLayout
+        android:id="@+id/dragHandle"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/table_row"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/table_row"
+        android:background="@drawable/handle_drag" >
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/table_row"
+        android:layout_alignTop="@+id/table_row"
+        android:layout_toRightOf="@+id/dragHandle"
+        android:background="@drawable/handle_no_drag" >
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/table_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="0px"
+            android:paddingRight="0px"
+            android:scaleType="fitXY"
+            android:src="@drawable/map1" />
+
+        <RelativeLayout
+            android:id="@+id/complex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/addressWarningIcons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/driveTimeArea"
+                android:orientation="horizontal" >
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/addressSmall"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:layout_toLeftOf="@+id/driveTimeArea"
+                android:layout_toRightOf="@+id/addressWarningIcons"
+                android:singleLine="true"
+                android:text="13032 178th DR SE. Snohomish, WA. 98290 USA"
+                android:textSize="19sp" />
+
+            <ImageView
+                android:id="@+id/circleGreenIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/addressSmall"
+                android:src="@drawable/circle_green"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/circleRedIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/addressSmall"
+                android:src="@drawable/circle_red"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/textView2_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addressSmall" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$19.99"
+                    android:textColor="@color/costColor"
+                    android:textSize="14sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/driveTimeArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true" >
+
+                <ImageView
+                    android:id="@+id/warningIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:src="@color/transparent"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/driveTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="6min"
+                    android:textColor="@color/gold"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/addressSmall"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/lastTipThisAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/numberOfPastDeliveries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/AveragePercentageTip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="TextView"
+                    android:textColor="@color/paidColor" />
+
+                <TextView
+                    android:id="@+id/AverageTip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="TextView"
+                    android:textColor="@color/tipColor" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addressSmall"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/textView2_container" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:39pm"
+                    android:textColor="@color/timeColor"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/waitTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="6min"
+                    android:textColor="@color/gold" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/table_row"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_background"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/icon_payment_type"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:src="@drawable/icon_money" />
+
+    <TextView
+        android:id="@+id/check_out_order_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0.6"
+        android:ellipsize="none"
+        android:lines="1"
+        android:text="@string/Number"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/check_out_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0.5"
+        android:background="@drawable/right_side_line"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="@string/fake_address"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/check_out_cost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:background="@drawable/right_side_line"
+        android:ellipsize="none"
+        android:singleLine="true"
+        android:text="@string/total"
+        android:textColor="@color/paidColor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/check_out_payed"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:ellipsize="none"
+        android:singleLine="true"
+        android:text="@string/Paid"
+        android:textColor="@color/costColor"
+        android:textSize="18sp" />
+
+</LinearLayout>

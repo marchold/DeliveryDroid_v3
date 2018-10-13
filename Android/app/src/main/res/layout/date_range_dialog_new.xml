@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/startDateTab"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textAllCaps="true"
+            android:textSize="22sp"
+            android:background="@color/android_blue"
+            android:text="@string/start" />
+
+        <TextView
+            android:id="@+id/endDateTab"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+             android:textColor="#FFF"
+             android:textSize="22sp"
+               android:textAllCaps="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/end" />
+    </LinearLayout>
+
+    <DatePicker
+        android:layout_gravity="clip_horizontal"
+        android:id="@+id/datePicker1"
+        style="@style/dialog_datepicker_style" >
+    </DatePicker>
+
+    <DatePicker
+        android:id="@+id/datePicker2"
+        android:visibility="gone"
+        android:layout_gravity="clip_horizontal"
+        style="@style/dialog_datepicker_style"
+        >
+    </DatePicker>
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Settings_ListOptions" >
+
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="com.catglo.deliverydroid.settings.Settings_ListOptions_Wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/sampleCellContainer"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/gray" >
+
+    </FrameLayout>
+
+</LinearLayout>

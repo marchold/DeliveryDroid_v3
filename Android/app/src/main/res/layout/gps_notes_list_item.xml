@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gps_note_item_background"
+    android:padding="8dp" >
+
+    <RelativeLayout
+        android:id="@+id/iconWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/note"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_compass"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/dateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/distance"
+        android:layout_toRightOf="@+id/iconWrapper"
+        android:singleLine="true"
+        android:text="Nov, 12th 2012. 6:00pm"
+        android:textColor="#666666"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:maxWidth="120dp"
+        android:singleLine="true"
+        android:text="1984 13th St. Los Osos, CA. 93402 USA"
+        android:textColor="#666666"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/distance"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/iconWrapper"
+        android:padding="8dp"
+        android:text="Gate Code 12345"
+        android:textColor="#111111"
+        android:textSize="16sp" />
+
+   
+
+</RelativeLayout>

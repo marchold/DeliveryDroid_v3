@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="shift_sum_item_width">150dp</dimen>
+    <dimen name="bankDropItemWidth">150dp</dimen>
+    <dimen name="smallLabel">15sp</dimen>
+    <dimen name="basicInputText">16sp</dimen>
+    <dimen name="dropRowContainerWidth">320dp</dimen>
+    <dimen name="header2">32sp</dimen>
+    <dimen name="summary_edit_label_width">100dp</dimen>
+    <dimen name="summary_edit_field_width">240dp</dimen>
+
+    <dimen name="landscape_button_bar_button_width">100dp</dimen>
+    <dimen name="landscape_button_bar_image_height">52dp</dimen>
+    <dimen name="landscape_button_bar_text_size">8sp</dimen>
+
+
+</resources>

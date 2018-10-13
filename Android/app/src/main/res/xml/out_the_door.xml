@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/gpsNotesButton"
+        android:icon="@drawable/text_gate_code"
+        android:orderInCategory="102"
+        android:showAsAction="always"
+        android:title="@string/Gate_Codes"/>
+
+    <item
+        android:id="@+id/MapIt"
+        android:icon="@drawable/text_map"
+        android:orderInCategory="103"
+        android:showAsAction="always"
+        android:title="@string/map"/>
+
+    <item
+        android:id="@+id/Navigate"
+        android:icon="@drawable/text_navigate"
+        android:orderInCategory="104"
+        android:showAsAction="always"
+        android:title="@string/Navigate"/>
+
+    <item
+        android:id="@+id/markUndeliverable"
+        android:orderInCategory="105"
+        android:showAsAction="collapseActionView"
+        android:title="Mark Undeliverable"/>
+
+    <item
+        android:id="@+id/editOrder"
+        android:orderInCategory="106"
+        android:showAsAction="collapseActionView"
+        android:title="Edit Order"/>
+
+    <item
+        android:id="@+id/callStore"
+        android:orderInCategory="107"
+        android:showAsAction="collapseActionView"
+        android:title="@string/call_store"/>
+
+</menu>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/NewOrderLastScreen"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:background="#000"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <com.catglo.widgets.RowLayout
+                android:id="@+id/rowLayout00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" >
+
+                <com.catglo.widgets.RowLayout
+                    android:id="@+id/rowLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/OrderNumberText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/OrderNumber" />
+
+                        <EditText
+                            android:id="@+id/OrderNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext|flagNoExtractUi"
+                            android:inputType="phone"
+                            android:minWidth="120dp"
+                            android:nextFocusDown="@+id/OrderTime"
+                            android:singleLine="true"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/textOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/OrderTime" >
+                        </TextView>
+
+                        <EditText
+                            android:id="@+id/OrderTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="time"
+                            android:minWidth="120dp"
+                            android:nextFocusDown="@+id/OrderCost" />
+                    </LinearLayout>
+                </com.catglo.widgets.RowLayout>
+
+                <com.catglo.widgets.RowLayout
+                    android:id="@+id/rowLayout23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/widget168"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/OrderTotal" />
+
+                        <EditText
+                            android:id="@+id/OrderCost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext|flagNoExtractUi"
+                            android:inputType="numberDecimal"
+                            android:minWidth="100dp"
+                            android:nextFocusDown="@+id/otherPay"
+                            android:singleLine="true"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/TextView01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Extra_Pay" />
+
+                        <EditText
+                            android:id="@+id/otherPay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext|flagNoExtractUi"
+                            android:inputType="numberDecimal"
+                            android:minWidth="100dp"
+                            android:nextFocusDown="@+id/preTip"
+                            android:singleLine="true"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/TextView011"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Tip" />
+
+                        <EditText
+                            android:id="@+id/preTip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext|flagNoExtractUi"
+                            android:inputType="numberDecimal"
+                            android:minWidth="100dp"
+                            android:nextFocusDown="@+id/orderAddress"
+                            android:singleLine="true"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                    
+                    
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/TextView011bcd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Total_Paid" />
+
+                        <EditText
+                            android:id="@+id/totalPayed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext|flagNoExtractUi"
+                            android:inputType="numberDecimal"
+                            android:minWidth="100dp"
+                            android:nextFocusDown="@+id/orderAddress"
+                            android:singleLine="true"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                    
+                </com.catglo.widgets.RowLayout>
+
+                <com.catglo.widgets.RowLayout
+                    android:id="@+id/rowLayout24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/widget169"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/OrderAddress" >
+                        </TextView>
+
+                        <com.catglo.widgets.AddressAutocomplete
+                            android:id="@+id/orderAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:dropDownWidth="fill_parent"
+                            android:imeOptions="actionNext|flagNoExtractUi"
+                            android:inputType="textPostalAddress"
+                            android:minWidth="160dp"
+                            android:nextFocusDown="@+id/ApartmentNumber"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/appartNumberTextLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apartmentNumber" >
+                        </TextView>
+
+                        <EditText
+                            android:id="@+id/ApartmentNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext|flagNoExtractUi"
+                            android:minWidth="40dp"
+                            android:nextFocusDown="@+id/OrderNotes"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="18sp" >
+                        </EditText>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/widget170"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ApartmentNumber"
+                            android:text="@string/OrderNotes" >
+                        </TextView>
+
+                        <EditText
+                            android:id="@+id/OrderNotes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ApartmentNumber"
+                            android:imeOptions="actionNext"
+                            android:minWidth="150dp"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="18sp" >
+                        </EditText>
+                    </LinearLayout>
+                    
+                     <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/widget17x"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/phoneNumber" >
+                        </TextView>
+
+                        <EditText
+                            android:id="@+id/phoneNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone|flagNoExtractUi"
+                            android:minWidth="150dp"
+                            android:inputType="phone"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="18sp" >
+                        </EditText>
+                    </LinearLayout>
+                    
+                     
+                </com.catglo.widgets.RowLayout>
+            </com.catglo.widgets.RowLayout>
+
+            <Button
+                android:id="@+id/AddOrder"
+                android:layout_width="150dip"
+                android:layout_height="70dip"
+                android:layout_margin="10dp"
+                android:text="@string/AddOrder" >
+
+            </Button>
+
+            <include layout="@layout/new_order_custom_checkboxes" />
+
+            <TextView
+                android:id="@+id/extraPayTooltip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bubble_point_top_left"
+                android:text="@string/extra_pay_tooltip"
+                android:textColor="@color/black"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

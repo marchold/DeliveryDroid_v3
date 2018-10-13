@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    <com.catglo.widgets.FlowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#A000"
+
+>
+
+
+        <Button
+            android:id="@+id/settings_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/settings_small"
+            android:text="@string/settings" />
+
+        <Button
+            android:id="@+id/navigate_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/navigate_small"
+            android:text="@string/Nav_To_Store" />
+
+        <Button
+            android:id="@+id/gps_notes_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/gps_notes"
+            android:text="@string/Gps_Notes" />
+
+        <Button
+            android:id="@+id/shift_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/shift"
+            android:text="@string/Shift" />
+
+        <Button
+            android:id="@+id/search_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/search"
+            android:text="@string/Search_Notes_Or_Addresses" />
+
+        <Button
+            android:id="@+id/customize_list_menu_button"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/customize_list"
+            android:text="@string/Customize_List_View" />
+        
+         <Button
+             android:id="@+id/call_store_menu_button"
+             style="@style/slide_out_menu_button"
+             android:drawableTop="@drawable/text_call_small"
+             android:text="@string/call_store" />
+         
+    </com.catglo.widgets.FlowLayout>
+</FrameLayout>

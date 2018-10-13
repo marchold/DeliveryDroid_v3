@@ -1,0 +1,253 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/blue_gradent_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/ActionBar"
+       style="@style/action_bar_layout"
+	android:layout_height="@dimen/action_bar_height"
+	android:layout_width="fill_parent"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="2dp"
+            android:src="@drawable/back_for_nav" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-7dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="@string/hoursWorked"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/headerDetailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10sp" />
+
+        <FrameLayout
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_toLeftOf="@+id/textView2" >
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignRight="@+id/textView2"
+            android:scaleType="center"
+            android:src="@drawable/action_drop_icon"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/transparent_button"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/Done"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+    
+     <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_underline_height"
+        android:background="@color/android_blue_underline" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/ActionBar"
+            android:layout_weight="1"
+            android:background="@color/gray_dk"
+            android:minHeight="480dp"
+            android:padding="15dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/Current_Shift" />
+
+            <TextView
+                android:id="@+id/currentShiftNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView1"
+                android:layout_below="@+id/textView1"
+                android:text="43"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView1"
+                android:layout_alignBottom="@+id/textView1"
+                android:layout_alignParentRight="true"
+                android:text="@string/deliveries" />
+
+            <TextView
+                android:id="@+id/deliveries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/currentShiftNumber"
+                android:layout_alignBottom="@+id/currentShiftNumber"
+                android:layout_alignRight="@+id/textView3"
+                android:text="14"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/currentShiftNumber"
+                android:layout_below="@+id/deliveries"
+                android:layout_marginTop="25dp"
+                android:text="@string/hoursWorked"
+                android:textAllCaps="true" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textView5"
+                android:layout_marginBottom="15dp"
+                android:background="#999" />
+
+            <EditText
+                android:id="@+id/shiftStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view1"
+                android:layout_toRightOf="@+id/textView1"
+                android:editable="false"
+                android:text="9:07pm Monday" />
+
+            <TextView
+                android:id="@+id/hoursWorked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/shiftEndTime"
+                android:layout_below="@+id/shiftEndTime"
+                android:layout_marginTop="15dp"
+                android:editable="false"
+                android:text="6h 43m"
+                android:textSize="@dimen/data_value_font_size" />
+
+            <EditText
+                android:id="@+id/shiftEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/shiftStartTime"
+                android:layout_below="@+id/shiftStartTime"
+                android:layout_marginTop="15dp"
+                android:editable="false"
+                android:text="2:20am Tuesday " />
+
+            <TextView
+                android:id="@+id/textView1a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/shiftStartTime"
+                android:layout_alignBottom="@+id/shiftStartTime"
+                android:layout_alignLeft="@+id/view1"
+                android:text="@string/shiftStartTime"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/shiftEndTime"
+                android:layout_alignBottom="@+id/shiftEndTime"
+                android:layout_alignLeft="@+id/textView1a"
+                android:text="@string/shiftEndTime"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/hoursWorked"
+                android:layout_alignBottom="@+id/hoursWorked"
+                android:layout_alignLeft="@+id/textView6"
+                android:text="@string/Hours"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <Button
+                android:id="@+id/setShiftTimesToOrderTimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView7"
+                android:layout_alignRight="@+id/hourlyPayRateAutocomplete"
+                android:layout_below="@+id/hoursWorked"
+                android:layout_marginTop="33dp"
+                android:text="@string/estimateShiftTime" />
+
+            <Button
+                android:id="@+id/hourlyPayRateAutocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/setShiftTimesToOrderTimes"
+                android:inputType="numberDecimal"
+                android:text="@string/Start_a_new_pay_rate" />
+
+            <LinearLayout
+                android:id="@+id/dayHoursLabels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/hourlyPayRateAutocomplete"
+                android:layout_marginTop="22dp"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

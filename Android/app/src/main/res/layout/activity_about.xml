@@ -1,0 +1,109 @@
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.catglo.deliverydroid.AboutActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Large" />
+
+        <TextView
+            android:id="@+id/version"
+            android:text="1.0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Large" />
+
+
+        <TextView
+            android:text="Credits"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Large" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="Many thanks to Chea Yeam at ZenDiv.com, Any nice looking graphics or icons in the app were made by him."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="@string/creditsBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="We use android Drag Sort List View.\nMany thanks to Carl A. Bauer and the other contributors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+
+
+        <TextView
+            android:text="Legal Notices"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Large" />
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="We use android Flow Layout.\nMany thanks to Artem Votincev\nCopyright (c) 2011, Artem Votincev (apmem.org)\nAll rights reserved."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+
+        <TextView
+            android:id="@+id/legal"
+            android:layout_marginTop="10dp"
+            android:text="Legal Notices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <com.catglo.widgets.RowLayout
+        android:id="@+id/RowLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/osTextDriverEarnings"
+                style="@style/details_view_header_text"
+                android:text="@string/DriverEarnings" />
+
+            <TextView
+                android:id="@+id/osDriverEarnings"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+         <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/osTextMoneyCollected"
+                style="@style/details_view_header_text"
+                android:text="@string/MoneyCollected" />
+
+            <TextView
+                android:id="@+id/osMoneyCollected"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+         <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/osTextCashCollected"
+                style="@style/details_view_header_text"
+                android:text="@string/Cash_Collected" />
+
+            <TextView
+                android:id="@+id/osCashCollected"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+         <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/CashTipsText"
+                style="@style/details_view_header_text"
+                android:text="@string/cashTips" />
+
+            <TextView
+                android:id="@+id/CashTips"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+         <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/osTextMileageEarned"
+                style="@style/details_view_header_text"
+                android:text="@string/otherCollected" />
+
+            <TextView
+                android:id="@+id/otherCollected"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+         <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/osCreditTipsText"
+                style="@style/details_view_header_text"
+                android:text="@string/creditTips" />
+
+            <TextView
+                android:id="@+id/osCreditTips"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/osTextTipsMade"
+                style="@style/details_view_header_text"
+                android:text="@string/tipsMade" />
+
+            <TextView
+                android:id="@+id/osTipsMade"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+         <LinearLayout style="@style/details_view_header_data_layout" 
+             android:id="@+id/mileageEarnedContainer">
+
+            <TextView
+                android:id="@+id/osTextMileageEarned2"
+                style="@style/details_view_header_text"
+                android:text="@string/Mileage_Earned" />
+
+            <TextView
+                android:id="@+id/osMileageEarned"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+         <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/details_view_header_text"
+                android:text="@string/All_Orders" />
+
+            <TextView
+                android:id="@+id/allOrders"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <Spinner
+                android:id="@+id/cashOwedToStoreHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/creditCardMinusTip"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/textView1ab"
+                style="@style/details_view_header_text"
+                android:text="@string/hoursWorked" />
+
+            <TextView
+                android:id="@+id/hoursWorked"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/details_view_header_data_layout" >
+
+            <TextView
+                android:id="@+id/textView1cc"
+                style="@style/details_view_header_text"
+                android:text="@string/Hourly_pay" />
+
+            <TextView
+                android:id="@+id/hourlyPay"
+                style="@style/details_view_data_text" />
+        </LinearLayout>
+    </com.catglo.widgets.RowLayout>
+
+</ScrollView>

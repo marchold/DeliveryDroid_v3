@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <com.catglo.widgets.AutoResizeTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@android:id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:background="#111"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingEnd="8dip"
+        android:ellipsize="none"
+		android:singleLine="true"
+		android:textSize="24sp"
+        android:paddingStart="8dip"
+        android:text="AutoResizeTextView"
+        android:textColor="#FFF" />
+

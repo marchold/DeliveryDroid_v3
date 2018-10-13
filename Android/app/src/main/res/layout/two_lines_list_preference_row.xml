@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+ 
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_list_view_row_table_row"
+    android:gravity="center_vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dip"
+    android:paddingTop="8dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip">
+ 
+    <LinearLayout
+        android:orientation="vertical"
+    	android:layout_width="0dip"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1"
+    	android:padding="0dip">
+     <TextView
+         android:id="@+id/custom_list_view_row_text_view"
+         android:textSize="16sp"
+         android:gravity="center_vertical"
+         android:layout_width="fill_parent" 
+         android:layout_height="22dip" />
+     <TextView
+         android:id="@+id/custom_list_view_row_subtext_view"
+         android:textSize="12sp"
+         android:gravity="center_vertical"
+         android:layout_width="fill_parent" 
+         android:layout_height="18dip" />
+    </LinearLayout>
+ 
+    <ImageView
+        android:id="@+id/custom_list_view_row_selected_indicator"
+        android:src="@android:drawable/checkbox_on_background"
+        android:layout_width="wrap_content" 
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical" />
+</TableRow>

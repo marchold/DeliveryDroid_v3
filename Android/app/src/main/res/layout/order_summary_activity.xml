@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ActionBar"
+        android:background="@color/android_blue_underline" />
+
+    <RelativeLayout
+        android:id="@+id/sideScrollIndicator"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/View01"
+        android:background="@color/gray_dk"
+        android:gravity="bottom" >
+
+        <TextView
+            android:id="@+id/previousShift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/icon_left"
+            android:text="Small Text"
+            android:textColor="#FFF"
+            android:textSize="15sp" />
+
+        <View
+            android:id="@+id/prevShiftClickable"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/currentShift" />
+
+        <TextView
+            android:id="@+id/nextShift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/currentShift"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/icon_right"
+            android:text="Small Text"
+            android:textColor="#FFF"
+            android:textSize="15dp" />
+
+        <View
+            android:id="@+id/nextShiftClickable"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/currentShift" />
+
+        <TextView
+            android:id="@+id/currentShift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/previousShift"
+            android:layout_alignBottom="@+id/previousShift"
+            android:layout_centerHorizontal="true"
+            android:text="Small Text"
+            android:textColor="#FFF"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleType="fitXY"
+            android:src="@drawable/black_out_sides" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="wrap_content"
+            android:layout_height="4dp"
+            android:layout_alignLeft="@+id/currentShift"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/currentShift"
+            android:layout_below="@+id/currentShift"
+            android:background="@color/android_blue_underline" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/android_blue_underline" />
+
+        <ImageView
+            android:id="@+id/icon_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/icon_left_blue" />
+
+        <ImageView
+            android:id="@+id/icon_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/icon_right_blue" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ActionBar"
+        style="@style/action_bar_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="20dp"
+            android:layout_height="44dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="2dp"
+            android:src="@drawable/icon_back" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-7dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="@string/Past_Orders"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/headerDetailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:text="@string/Totals"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10sp" />
+
+        <FrameLayout
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_toLeftOf="@+id/textView2" >
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignRight="@+id/textView2"
+            android:scaleType="center"
+            android:src="@drawable/action_drop_icon" />
+
+        <FrameLayout
+            android:id="@+id/actionMenuDropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignRight="@+id/textView2" >
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/osDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_toLeftOf="@+id/moreClickable"
+            android:layout_toRightOf="@+id/textView2"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="dsfsdfgasdf sad fsda f"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/moreClickable"
+            android:layout_below="@+id/textView2"
+            android:singleLine="true"
+            android:text="@string/deliveries"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/osNumberOfDeliveries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/osDate"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/TextView02"
+            android:text="48"
+            android:textColor="@color/chea_header_bar_green"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        
+         <LinearLayout
+             android:id="@+id/moreClickable"
+             android:layout_width="44dp"
+             android:layout_height="match_parent"
+             android:layout_alignParentRight="true"
+             android:layout_marginLeft="10dp"
+             android:background="@drawable/transparent_button"
+             android:orientation="vertical" >
+            
+             <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:layout_gravity="center"
+                 android:layout_marginBottom="5dp"
+                 android:src="@drawable/icon_three_dots" />
+
+        </LinearLayout>
+        
+    </RelativeLayout>
+
+ <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sideScrollIndicator">
+
+
+    <ViewSwitcher
+        android:id="@+id/viewSwitcher1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         >
+
+        <LinearLayout
+            android:id="@+id/fragmentContainerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <FrameLayout
+                android:id="@+id/fragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fragmentContainer1b"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:visibility="visible" >
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragmentContainerContainer2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <FrameLayout
+                android:id="@+id/fragmentContainer2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fragmentContainer2b"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:visibility="gone" >
+            </FrameLayout>
+        </LinearLayout>
+    </ViewSwitcher>
+
+    
+     <FrameLayout 
+            android:id="@+id/menu_drawer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="#A000" 
+            >
+            <include layout="@layout/order_summary_slide_out_menu"/>
+            
+        </FrameLayout>
+       
+        
+    </android.support.v4.widget.DrawerLayout>
+    
+    
+    <LinearLayout
+        android:id="@+id/dropdownMenu"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ActionBar"
+        android:layout_marginLeft="45dp"
+        android:background="#FFF"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/totalsMenuButton"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/border_ccc"
+            android:gravity="center"
+            android:text="@string/Totals"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#666" />
+
+        <TextView
+            android:id="@+id/orderListMenuButton"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="-2dp"
+            android:background="@drawable/border_ccc"
+            android:gravity="center"
+            android:text="@string/Order_List"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#666" />
+
+        <TextView
+            android:id="@+id/splitViewButton"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="-2dp"
+            android:background="@drawable/border_ccc"
+            android:gravity="center"
+            android:text="@string/SplitView"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#666" />
+    </LinearLayout>
+
+</RelativeLayout>

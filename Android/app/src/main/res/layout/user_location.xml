@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:id="@+id/zipDialog">
+ 
+<TableRow android:layout_width="wrap_content" android:layout_height="wrap_content"
+>
+
+<ImageView android:src="@drawable/icon"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginRight="10dp"
+               />
+
+<TextView android:text="Enter the store's zip code. Then a list of street names near the store will download." android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+</TableRow>
+<TableRow android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
+<AutoCompleteTextView android:hint="Store Address" android:id="@+id/storeAddress" android:layout_width="230dip" android:layout_height="wrap_content"/>
+<ImageButton android:id="@+id/look_up_store_address" android:scaleType="fitXY"  android:src="@android:drawable/ic_menu_search" android:layout_width="50dip" android:layout_height="48dip"/>
+</TableRow>
+
+<EditText android:numeric="integer" android:hint="Store Zip Code" android:id="@+id/userZip" android:layout_width="wrap_content" android:layout_height="wrap_content"></EditText>
+
+  
+</LinearLayout>

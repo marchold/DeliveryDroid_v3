@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ActionBar"
+	style="@style/action_bar_layout"
+	android:layout_height="@dimen/action_bar_height"
+	android:layout_width="fill_parent"
+    android:gravity="bottom" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="2dp"
+        android:src="@drawable/back_for_nav"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:padding="1dp"
+        android:src="@drawable/icon" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/action_bar_primary_header_text"
+        android:layout_toRightOf="@+id/imageView2"
+        android:text="@string/Deleveries"/>
+
+    <TextView
+        android:id="@+id/headerDetailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="10sp" />
+
+    <FrameLayout
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_toLeftOf="@+id/textView2" >
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignRight="@+id/textView2"
+        android:scaleType="center"
+        android:src="@drawable/action_drop_icon"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_height"
+        android:layout_alignBottom="@+id/view1"
+        android:layout_marginBottom="-1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/textView2" >
+
+        <LinearLayout
+            android:id="@+id/sortClickable"
+            style="@style/action_bar_menu_layout_item"
+            android:layout_height="match_parent"
+            android:gravity="bottom" >
+
+            <TextView
+                android:id="@+id/sortHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:singleLine="true"
+                android:text="@string/LIST"
+                android:textColor="@color/android_blue"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/sortUnderline"
+                style="@style/action_bar_menu_selection_underline"
+                android:layout_marginBottom="4dp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mapClcikable"
+            style="@style/action_bar_menu_layout_item"
+            android:layout_height="match_parent"
+            android:gravity="bottom" >
+
+            <TextView
+                android:id="@+id/mapHeader"
+                style="@style/action_bar_menu_text"
+                android:text="@string/MAP"
+                android:textColor="@color/android_blue"
+                 />
+
+            <View
+                android:id="@+id/mapUnderline"
+                android:layout_marginBottom="4dp"
+                style="@style/action_bar_menu_selection_underline" />
+
+        </LinearLayout>
+        
+         <LinearLayout
+             android:id="@+id/moreClickable"
+             android:layout_width="44dp"
+             android:background="@drawable/transparent_button"
+             android:layout_height="match_parent"
+             android:orientation="vertical" >
+            
+             <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:layout_gravity="center"
+                 android:layout_marginBottom="5dp"
+                 android:src="@drawable/icon_three_dots" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/action_bar_underline_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+		android:layout_marginTop="@dimen/action_bar_height_minus_two"
+        android:background="@color/android_blue_underline" />
+
+</RelativeLayout>

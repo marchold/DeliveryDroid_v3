@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="dropPrefs"
+    android:title="Drop Reminders" >
+
+    <EditTextPreference
+        android:key="dropAlarmAmount"
+        android:title="Cash Amount" />
+
+ <!--     <RingtonePreference
+        android:key="DROP_ALARM_TONE"
+        android:title="Alarm Sound" 
+    android:ringtoneType="notification" 
+       />
+-->
+
+    <CheckBoxPreference
+        android:key="dontCountTipsForDropAlarms"
+        android:title="Don&apos;t count tips for drops" />
+
+    <CheckBoxPreference
+        android:key="playAlarmSoundForDrop"
+        android:title="Play a sound" />
+    
+    
+    <CheckBoxPreference
+        android:key="dropAlarmSystemNotification"
+        android:summary="Show icon in the android system notification bar"
+        android:title="Notification bar icon" />
+
+</PreferenceScreen>

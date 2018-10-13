@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sewidget29"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/viewPartLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1111"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/order_number"
+                android:textAllCaps="true"
+                android:textColor="#FFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/totalCash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45000129"
+                android:textColor="@color/chea_header_bar_green"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/OrderAddress"
+                android:textAllCaps="true"
+                android:textColor="#FFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="1994 Hershey Rd. Bloomington, IL. 93402. USA"
+                android:textColor="@color/chea_header_bar_green"
+                android:textSize="18sp" />
+
+             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/phoneNumber"
+                android:textAllCaps="true"
+                android:textColor="#FFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="(360) 867-5309"
+                android:textColor="@color/chea_header_bar_green"
+                android:textSize="18sp" />
+            
+            
+            <TextView
+                android:id="@+id/whoOwesWho"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/Delivery_time"
+                android:textAllCaps="true"
+                android:textColor="#FFF" />
+
+            <TextView
+                android:id="@+id/OrderPlacedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="11/11/2011 11:11 pm"
+                android:textColor="@color/chea_header_bar_green"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/OrderTime"
+                android:textAllCaps="true"
+                android:textColor="#FFF" />
+
+            <TextView
+                android:id="@+id/DeliveryTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11/11/2011 11:11 pm"
+                android:textColor="@color/chea_header_bar_green"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3r"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/OrderNotes"
+            android:textAllCaps="true"
+            android:textColor="#FFF" />
+
+        <TextView
+            android:id="@+id/OrderNotes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:singleLine="false"
+            android:text="These are sample order notes "
+            android:textColor="@color/chea_header_bar_green"
+            android:textSize="20sp" />
+
+        <com.catglo.widgets.RowLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="@string/OrderTotal"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="$43.99"
+                    android:textColor="@color/chea_header_bar_green"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/paymentType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="EBT"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/paymentAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="$45.00"
+                    android:textColor="@color/chea_header_bar_green"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/paymentTypeSplit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Cash"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/paymentAmountSplit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="$5.00"
+                    android:textColor="@color/chea_header_bar_green"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/altMileagePayLabel1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Mileage Pay"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/altMileagePay1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="$5.00"
+                    android:textColor="@color/chea_header_bar_green"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/altMileagePayLabel2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Mileage Pay"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/altMileagePay2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="$5.00"
+                    android:textColor="@color/chea_header_bar_green"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/altMileagePayLabel3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Mileage Pay"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/altMileagePay3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="$5.00"
+                    android:textColor="@color/chea_header_bar_green"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/altMileagePayLabel4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Mileage Pay"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/altMileagePay4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="$5.00"
+                    android:textColor="@color/chea_header_bar_green"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </com.catglo.widgets.RowLayout>
+    </LinearLayout>
+
+</ScrollView>

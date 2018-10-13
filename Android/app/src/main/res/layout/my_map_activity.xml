@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+	<include android:id="@+id/optimizeBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/optimize_bar" />
+
+     <com.google.android.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:layout_below="@+id/optimizeBar"
+        android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
+    />
+     <!-- debug key 061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA -->
+
+</RelativeLayout>
