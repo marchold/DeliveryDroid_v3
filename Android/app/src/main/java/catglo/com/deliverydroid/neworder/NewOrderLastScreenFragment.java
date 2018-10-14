@@ -23,9 +23,9 @@ import android.widget.TextView;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
-import catglo.com.deliverydroid.widgets.AddressAutocomplete;
-import catglo.com.deliverydroid.widgets.DataAwareFragment;
-import catglo.com.deliverydroid.widgets.Tooltip;
+import catglo.com.widgets.AddressAutocomplete;
+import catglo.com.widgets.DataAwareFragment;
+import catglo.com.widgets.Tooltip;
 
 
 import java.sql.Timestamp;

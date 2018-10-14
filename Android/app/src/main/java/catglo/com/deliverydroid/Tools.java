@@ -27,11 +27,12 @@ import android.widget.Toast;
 
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliverydroid.shift.ShiftStartEndBaseActivity;
-import catglo.com.deliverydroid.widgets.DateRangeDialogFragment;
-import catglo.com.deliverydroid.widgets.DateRangeSlider;
-import catglo.com.deliverydroid.widgets.DateSlider;
-import catglo.com.deliverydroid.widgets.TimeSlider;
+import catglo.com.widgets.DateRangeDialogFragment;
+import catglo.com.widgets.DateRangeSlider;
+import catglo.com.widgets.DateSlider;
+import catglo.com.widgets.TimeSlider;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import org.joda.time.DateTime;
 import org.joda.time.MutableDateTime;
 

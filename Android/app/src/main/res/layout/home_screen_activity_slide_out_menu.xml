@@ -5,7 +5,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-    <com.catglo.widgets.FlowLayout
+    <catglo.com.widgets.FlowLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="#A000"
@@ -55,5 +55,5 @@ xmlns:android="http://schemas.android.com/apk/res/android"
              android:drawableTop="@drawable/text_call_small"
              android:text="@string/call_store" />
          
-    </com.catglo.widgets.FlowLayout>
+    </catglo.com.widgets.FlowLayout>
 </FrameLayout>

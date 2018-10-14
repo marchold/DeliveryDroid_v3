@@ -320,7 +320,7 @@
 
                     <fragment
                         android:id="@+id/Settings_DropWrapper_fragment"
-                        android:name="com.catglo.deliverydroid.bankDrop.Settings_DropPrefsActivity"
+                        android:name="catglo.com.deliverydroid.bankDrop.Settings_DropPrefsActivity"
                         android:layout_width="320dp"
                         android:layout_height="320dp" />
                 </LinearLayout>

@@ -1,5 +1,6 @@
 package catglo.com.deliverydroid.homeScreen;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -9,12 +10,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -28,9 +32,11 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
+import catglo.com.deliveryDatabase.StreetList;
 import catglo.com.deliveryDatabase.ZipCode;
 import catglo.com.deliverydroid.*;
 import catglo.com.deliverydroid.bankDrop.BankTillDropActivity;
+import catglo.com.deliverydroid.data.MyGeoPoint;
 import catglo.com.deliverydroid.neworder.NewOrderActivity;
 import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
 import catglo.com.deliverydroid.outTheDoor.GpsNotes;
@@ -43,42 +49,43 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import org.joda.time.DateTime;
 
 public class HomeScreenActivity extends DeliveryDroidBaseActivity {
-	
-    protected Editor prefEditor;
-    protected View orderSummaryButton;
-    protected View outTheDoorButton;
-    protected View bankButton;
-    protected View totalsButton;
-    protected View addOrderButton;
-    protected View moreMenuButton;
+
+	private static final int REQUEST_CODE_ACCESS_LOCATION = 1001;
+	protected Editor prefEditor;
+	protected View orderSummaryButton;
+	protected View outTheDoorButton;
+	protected View bankButton;
+	protected View totalsButton;
+	protected View addOrderButton;
+	protected View moreMenuButton;
 	private View sortClickable;
 	private View mapClickable;
 	private View sortUnderline;
 	private View mapUnderline;
 	private FrameLayout fragmentContainer;
 
-    public HomeScreenActivity(){
-        super();
-    }
+	public HomeScreenActivity() {
+		super();
+	}
 
-    static final int SORT           = 2;
-	static final int MAP            = 3;
-	static final int SETTINGS       = 4;
-	static final int NEW_SHIFT      = 5;
+	static final int SORT = 2;
+	static final int MAP = 3;
+	static final int SETTINGS = 4;
+	static final int NEW_SHIFT = 5;
 	static final int SEARCH_HISTORY = 6;
-	static final int NAV_TO_STORE   = 7;
-	static final int TRIAL_OVER               = 9;
-	static final int REVIEW_FOR_MORE          = 10;
-	static final int STORE_ADDRESS_FIRST      = 11;
-	
-	static final int DROP_NOTIFICATION        = 12;
-	public static final int DELIVERY_NOTIFICATION    = 13;
-	
-	static final int  CALL_STORE			  = 14;
-	static final int GPS_NOTES   = 15;
+	static final int NAV_TO_STORE = 7;
+	static final int TRIAL_OVER = 9;
+	static final int REVIEW_FOR_MORE = 10;
+	static final int STORE_ADDRESS_FIRST = 11;
+
+	static final int DROP_NOTIFICATION = 12;
+	public static final int DELIVERY_NOTIFICATION = 13;
+
+	static final int CALL_STORE = 14;
+	static final int GPS_NOTES = 15;
 	static final int CUSTOMIZE_LIST = 16;
-	
-//	public StreetList streetList	= null;
+
+	public StreetList streetList = null;
 	public Thread startUpThread;
 	private DrawerLayout drawerLayout;
 	private View menuDrawer;
@@ -89,13 +96,13 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	private Button menuSearchButton;
 	private Button menuCustomizeListButton;
 	private Button menuCallStoreListButton;
-    public OnClickListener menuGpsNotesClickListener;
-    public OnClickListener menuShiftClickListener;
-    public OnClickListener menuSearchClickListener;
-    public OnClickListener orderSummaryClickListener;
+	public OnClickListener menuGpsNotesClickListener;
+	public OnClickListener menuShiftClickListener;
+	public OnClickListener menuSearchClickListener;
+	public OnClickListener orderSummaryClickListener;
 
 
-    private boolean isGeofenceServiceRunning() {
+	private boolean isGeofenceServiceRunning() {
 	/*	return GeofenceIntentService.isRunning;
 	   ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -103,133 +110,148 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	            return true;
 	        }
 	    }*/
-	    return false;
+		return false;
 	}
-	
+
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
 
 
-		if (sharedPreferences.getString("storePhoneNumber", "").length()>0){
+		if (sharedPreferences.getString("storePhoneNumber", "").length() > 0) {
 			menuCallStoreListButton.setVisibility(View.VISIBLE);
 		} else {
 			menuCallStoreListButton.setVisibility(View.GONE);
 		}
-		
+
 		String storeAddress = sharedPreferences.getString("storeAddress", "");
-		if (storeAddress.length()>0){
+		if (storeAddress.length() > 0) {
 			menuNavigateButton.setVisibility(View.VISIBLE);
-		}else {
+		} else {
 			menuNavigateButton.setVisibility(View.GONE);
 		}
-		
-		
-		
+
+
 		if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) != ConnectionResult.SUCCESS) {
 			prefEditor.putBoolean("HasGooglePlay", false);
 		} else {
 			prefEditor.putBoolean("HasGooglePlay", true);
 		}
-		
+
 		int count = dataBase.getUndeliveredOrderCount();
-		if (count==0){
+		if (count == 0) {
 			outTheDoorButton.setVisibility(View.GONE);
 
 		} else {
 			outTheDoorButton.setVisibility(View.VISIBLE);
 		}
 		final int ordersThisShift = dataBase.getNumberOfOrdersThisShift();
-		if (ordersThisShift>0){
+		if (ordersThisShift > 0) {
 			prefEditor.putBoolean("inActiveShift", true);
 		}
-		
-		
-		if (  dataBase.getUndeliveredOrderCount() > 0 
-		   && sharedPreferences.getBoolean("pay_rate_location_aware", false) 
-		   && sharedPreferences.getBoolean("dual_wage", false) 
-		   && isGeofenceServiceRunning()==false
-		   && GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) == ConnectionResult.SUCCESS)
-		{
-			Intent serviceIntent = new Intent(getApplicationContext(),GeofenceIntentService.class);
+
+
+		if (dataBase.getUndeliveredOrderCount() > 0
+				&& sharedPreferences.getBoolean("pay_rate_location_aware", false)
+				&& sharedPreferences.getBoolean("dual_wage", false)
+				&& isGeofenceServiceRunning() == false
+				&& GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) == ConnectionResult.SUCCESS) {
+			Intent serviceIntent = new Intent(getApplicationContext(), GeofenceIntentService.class);
 			serviceIntent.putExtra("init_store_geofence", true);
-		    startService(serviceIntent);
+			startService(serviceIntent);
 		}
 
 	}
-	
-	
+
+
 	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_screen_activity);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.home_screen_activity);
 		prefEditor = sharedPreferences.edit();
-		
-		
+
+
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-	    menuDrawer = findViewById(R.id.menu_drawer); 
-		menuSettingsButton      = (Button)findViewById(R.id.settings_menu_button);
-		menuNavigateButton      = (Button)findViewById(R.id.navigate_menu_button);
-		menuGpsNotesButton      = (Button)findViewById(R.id.gps_notes_menu_button);
-		menuShiftButton         = (Button)findViewById(R.id.shift_menu_button);
-		menuSearchButton        = (Button)findViewById(R.id.search_menu_button);
-		menuCustomizeListButton = (Button)findViewById(R.id.customize_list_menu_button);
-		menuCallStoreListButton = (Button)findViewById(R.id.call_store_menu_button);
-		menuSettingsButton.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
-			startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), 0);
-            drawerLayout.closeDrawers();
-		}});
-		menuNavigateButton.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
-			String storeAddress = sharedPreferences.getString("storeAddress", "");
-			if (storeAddress.length()>=0){
-	    		tools.navigateTo(storeAddress, HomeScreenActivity.this);
-			} else {
-				if (alreadyAskedStoreAddress==false){
-					showDialog(STORE_ADDRESS_FIRST);
-					alreadyAskedStoreAddress=true;
+		menuDrawer = findViewById(R.id.menu_drawer);
+		menuSettingsButton = (Button) findViewById(R.id.settings_menu_button);
+		menuNavigateButton = (Button) findViewById(R.id.navigate_menu_button);
+		menuGpsNotesButton = (Button) findViewById(R.id.gps_notes_menu_button);
+		menuShiftButton = (Button) findViewById(R.id.shift_menu_button);
+		menuSearchButton = (Button) findViewById(R.id.search_menu_button);
+		menuCustomizeListButton = (Button) findViewById(R.id.customize_list_menu_button);
+		menuCallStoreListButton = (Button) findViewById(R.id.call_store_menu_button);
+		menuSettingsButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), 0);
+				drawerLayout.closeDrawers();
+			}
+		});
+		menuNavigateButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				String storeAddress = sharedPreferences.getString("storeAddress", "");
+				if (storeAddress.length() >= 0) {
+					tools.navigateTo(storeAddress, HomeScreenActivity.this);
+				} else {
+					if (alreadyAskedStoreAddress == false) {
+						showDialog(STORE_ADDRESS_FIRST);
+						alreadyAskedStoreAddress = true;
+					}
 				}
 			}
-		}});
+		});
 
-        menuGpsNotesClickListener = new OnClickListener(){public void onClick(View arg0) {
-            startActivity(new Intent(getApplicationContext(), GpsNotes.class));
-            drawerLayout.closeDrawers();
-        }};
-		menuGpsNotesButton.setOnClickListener(menuGpsNotesClickListener);
-        menuShiftClickListener = new OnClickListener(){public void onClick(View arg0) {
-            startActivity(new Intent(getApplicationContext(), ShiftStartEndActivity.class));
-            drawerLayout.closeDrawers();
-        }};
-		menuShiftButton.setOnClickListener(menuShiftClickListener);
-		menuSearchClickListener = new OnClickListener(){public void onClick(View arg0) {
-            startActivity(new Intent(getApplicationContext(), ListAddressHistoryActivity.class));
-            drawerLayout.closeDrawers();
-        }};
-        menuSearchButton.setOnClickListener(menuSearchClickListener);
-		menuCustomizeListButton.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
-			startActivity(new Intent(getApplicationContext(),Settings_ListOptions.class));
-			drawerLayout.closeDrawers();
-		}});
-		menuCallStoreListButton.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
-			drawerLayout.closeDrawers();
-			String phoneNumber = sharedPreferences.getString("storePhoneNumber", "");
-			if (phoneNumber.length()<1){
-				Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
-			} else {
-				 String uri = "tel:" + phoneNumber;
-				 Intent intent = new Intent(Intent.ACTION_DIAL);
-				 intent.setData(Uri.parse(uri));
-				 startActivity(intent);
+		menuGpsNotesClickListener = new OnClickListener() {
+			public void onClick(View arg0) {
+				startActivity(new Intent(getApplicationContext(), GpsNotes.class));
+				drawerLayout.closeDrawers();
 			}
-		}});		
-		
+		};
+		menuGpsNotesButton.setOnClickListener(menuGpsNotesClickListener);
+		menuShiftClickListener = new OnClickListener() {
+			public void onClick(View arg0) {
+				startActivity(new Intent(getApplicationContext(), ShiftStartEndActivity.class));
+				drawerLayout.closeDrawers();
+			}
+		};
+		menuShiftButton.setOnClickListener(menuShiftClickListener);
+		menuSearchClickListener = new OnClickListener() {
+			public void onClick(View arg0) {
+				startActivity(new Intent(getApplicationContext(), ListAddressHistoryActivity.class));
+				drawerLayout.closeDrawers();
+			}
+		};
+		menuSearchButton.setOnClickListener(menuSearchClickListener);
+		menuCustomizeListButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				startActivity(new Intent(getApplicationContext(), Settings_ListOptions.class));
+				drawerLayout.closeDrawers();
+			}
+		});
+		menuCallStoreListButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				drawerLayout.closeDrawers();
+				String phoneNumber = sharedPreferences.getString("storePhoneNumber", "");
+				if (phoneNumber.length() < 1) {
+					Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
+				} else {
+					String uri = "tel:" + phoneNumber;
+					Intent intent = new Intent(Intent.ACTION_DIAL);
+					intent.setData(Uri.parse(uri));
+					startActivity(intent);
+				}
+			}
+		});
+
 		startShift();
-		
-    	if (sharedPreferences.getString("addressFilterComponents","").length()<2)
-    	{
-    		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		if (sharedPreferences.getString("addressFilterComponents", "").length() < 2) {
+			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			Criteria criteria = new Criteria();
 			String bestProvider = locationManager.getBestProvider(criteria, false);
+			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_ACCESS_LOCATION);
+			}
+
 			Location lastKnownLocation = locationManager.getLastKnownLocation(bestProvider);//TODO: DEAL with null (if not google api's)
 			if (lastKnownLocation==null){
 				//TODO:Display error-Missing Google API's OR Location Disabled
@@ -257,7 +279,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
                             streetList = StreetList.LoadState(getApplicationContext());
                             if (StreetList.parentList.size() == 0) {
                                 try {
-                                    final GeoPoint g = streetList.getCurrentLocation();
+                                    final MyGeoPoint g = streetList.getCurrentLocation();
                                     if (g != null) {
                                         // Spin endlessly until we can get the near by zip
                                         // codes from the Internet
@@ -412,7 +434,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		if (lastOrderDelta > 12 && ordersThisShift > 0 && openOrders==0 && lastOrderDelta != lastLastOrderDelta) {
 			lastLastOrderDelta = lastOrderDelta;
 
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle("Starting a Shift?");
 			alertDialogBuilder.setMessage(getString(R.string.Its_been)+" "+lastOrderDelta+" "+getString(R.string.hours_since_you));
 			alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {

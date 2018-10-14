@@ -2,14 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/Feedback">
-        <com.catglo.deliverydroid.settings.SettingsEmailMe
+        <catglo.com.deliverydroid.settings.SettingsEmailMe
             android:dialogTitle="@string/Feedback"
             android:icon="@drawable/send_feedback"
             android:key="SendFeedback"
             android:summary="@string/contactdev"
             android:title="@string/SendFeedback" />
 
-        <com.catglo.deliverydroid.settings.SettingsReviewMe
+        <catglo.com.deliverydroid.settings.SettingsReviewMe
             android:dialogTitle="@string/Review"
             android:icon="@drawable/review_this_app"
             android:key="ReviewFeedback"
@@ -62,7 +62,7 @@
                 android:title="Custom Mileage Pay"
                 android:summary="Configure the custom mileage pay options. This can be useful if you sometimes have a different mileage pay.">
 
-                <com.catglo.deliverydroid.settings.SettingsHelpDialog
+                <catglo.com.deliverydroid.settings.SettingsHelpDialog
                     android:dialogIcon="@drawable/icon"
                     android:dialogMessage="In some cases drivers get a different mileage pay for certain deliveries use the custom mileage pay options for those situations. \n\nThese mileage pay options will be added to your default mileage pay, so if you get $0.50 mileage pay for orders but $0.75 for out of town deliveries, you would set a custom mileage pay of $0.25. \n\n You can also use one to make orders no mileage pay so if your regular mileage pay is $0.50 you would use a negative value -$0.50 to cancel it out."
                     android:summary="In some cases drivers get a different mileage pay for certain deliveries use the custom mileage pay options for those situations "
@@ -90,7 +90,7 @@
                         android:summary="@string/altPayLSum1"
                         android:title="@string/altPayL" />
 
-                    <com.catglo.deliverydroid.settings.SettingsHelpDialog
+                    <catglo.com.deliverydroid.settings.SettingsHelpDialog
                         android:dialogIcon="@drawable/icon"
                         android:dialogMessage="@string/altPaySettingsInstructions"
                         android:dialogTitle="@string/help"
@@ -116,7 +116,7 @@
                         android:summary="@string/altPayLSum"
                         android:title="@string/altPayL" />
 
-                    <com.catglo.deliverydroid.settings.SettingsHelpDialog
+                    <catglo.com.deliverydroid.settings.SettingsHelpDialog
                         android:dialogIcon="@drawable/icon"
                         android:dialogMessage="@string/altPaySettingsInstructions"
                         android:dialogTitle="@string/help"
@@ -142,7 +142,7 @@
                         android:summary="The label used for Alternate Mileage pay"
                         android:title="Alt. Mileage pay label" />
 
-                    <com.catglo.deliverydroid.settings.SettingsHelpDialog
+                    <catglo.com.deliverydroid.settings.SettingsHelpDialog
                         android:dialogIcon="@drawable/icon"
                         android:dialogMessage="@string/altPaySettingsInstructions"
                         android:dialogTitle="@string/help"
@@ -168,7 +168,7 @@
                         android:summary="The label used for Alternate Mileage pay"
                         android:title="Alt. Mileage pay label" />
 
-                    <com.catglo.deliverydroid.settings.SettingsHelpDialog
+                    <catglo.com.deliverydroid.settings.SettingsHelpDialog
                         android:dialogIcon="@drawable/icon"
                         android:dialogMessage="@string/altPaySettingsInstructions"
                         android:dialogTitle="@string/help"
@@ -200,7 +200,7 @@
 
             <PreferenceCategory android:title="@string/hourly_pay">
 
-                <!--     <com.catglo.deliverydroid.Settings_PayRateDialog
+                <!--     <catglo.com.deliverydroid.Settings_PayRateDialog
                          android:dialogIcon="@drawable/icon"
                          android:dialogTitle="@string/hourly_pay_rate"
                          android:icon="@drawable/hourly_pay"
@@ -212,7 +212,7 @@
 
 
 
-                     <com.catglo.deliverydroid.SettingsHelpDialog
+                     <catglo.com.deliverydroid.SettingsHelpDialog
                              android:dialogIcon="@drawable/icon"
                              android:dialogMessage="@string/payRateHelpDialog"
                              android:dialogTitle="@string/help"
@@ -269,8 +269,8 @@
                     android:summary="@string/Store_Address_IN_WAGE_AREA_desc"
                     android:title="@string/Store_Address">
                     <intent
-                        android:action="com.catglo.deliverydroid.SettingsStoreAddressActivity"
-                        android:targetPackage="com.catglo.deliverydroid" />
+                        android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
+                        android:targetPackage="catglo.com.deliverydroid" />
                 </PreferenceScreen>
 
 
@@ -338,8 +338,8 @@
                 android:summary="Store address is required for route optimization."
                 android:title="@string/Store_Address">
                 <intent
-                    android:action="com.catglo.deliverydroid.SettingsStoreAddressActivity"
-                    android:targetPackage="com.catglo.deliverydroid" />
+                    android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
+                    android:targetPackage="catglo.com.deliverydroid" />
             </PreferenceScreen>
 
             <PreferenceScreen
@@ -347,8 +347,8 @@
                 android:summary="@string/Pending_Deliveries_sum"
                 android:title="@string/Home_Screen_List">
                 <intent
-                    android:action="com.catglo.deliverydroid.Settings_ListOptions"
-                    android:targetPackage="com.catglo.deliverydroid" />
+                    android:action="catglo.com.deliverydroid.Settings_ListOptions"
+                    android:targetPackage="catglo.com.deliverydroid" />
             </PreferenceScreen>
 
             <CheckBoxPreference
@@ -363,7 +363,7 @@
             android:icon="@drawable/add_delivery_setting"
             android:summary="@string/OrderEntrySettingsSum"
             android:title="@string/OrderEntrySettings">
-            <com.catglo.deliverydroid.settings.SettingsHelpDialog
+            <catglo.com.deliverydroid.settings.SettingsHelpDialog
                 android:dialogIcon="@drawable/icon"
                 android:dialogMessage="@string/orderEntrySettingsHelp"
                 android:dialogTitle="@string/help"
@@ -413,7 +413,7 @@
                 android:summary="@string/address_autocomplete_settings_summary"
                 android:title="@string/Address_Autocomplete_Configuration">
 
-                <com.catglo.deliverydroid.settings.SettingsLocationsOptionsList
+                <catglo.com.deliverydroid.settings.SettingsLocationsOptionsList
                     android:key="addressFilterComponents"
                     android:summary="@string/filter_criteria_summary"
                     android:title="@string/Filter_criteria" />
@@ -429,7 +429,7 @@
                     android:key="SetUpZip"
                     android:summary="@string/DeliveryZipCodesSummery"
                     android:title="@string/DeliveryZipCodes">
-                    <com.catglo.deliverydroid.settings.SettingsHelpDialog
+                    <catglo.com.deliverydroid.settings.SettingsHelpDialog
                         android:dialogIcon="@drawable/icon"
                         android:dialogMessage="@string/zipCodesHelp"
                         android:dialogTitle="@string/help"
@@ -569,14 +569,14 @@
                     android:summary="@string/autoCutForPasteSum"
                     android:title="@string/autoCutForPaste" />
 
-                <com.catglo.widgets.TwoLinesListPreference
+                <catglo.com.widgets.TwoLinesListPreference
                     android:defaultValue="1"
                     android:entries="@array/navigation_options"
                     android:entryValues="@array/navigation_options_values"
                     android:key="navigationIntent"
                     android:summary="@string/Configure_which_navigation_app_is_launched"
                     android:title="@string/Navigation_App" />
-                <!--         <com.catglo.widgets.TwoLinesListPreference
+                <!--         <catglo.com.widgets.TwoLinesListPreference
                              android:defaultValue="2"
                              android:entries="@array/navigation_options"
                              android:entryValues="@array/navigation_options_values"
@@ -590,8 +590,8 @@
                 android:summary="@string/Store_Address_desc"
                 android:title="@string/Store_Address">
                 <intent
-                    android:action="com.catglo.deliverydroid.SettingsStoreAddressActivity"
-                    android:targetPackage="com.catglo.deliverydroid" />
+                    android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
+                    android:targetPackage="catglo.com.deliverydroid" />
             </PreferenceScreen>
 
 
@@ -609,7 +609,7 @@
             android:summary="Advanced location settings"
             android:title="@string/advanced" 
             android:icon="@drawable/advance">
-            <com.catglo.deliverydroid.SettingsHelpDialog
+            <catglo.com.deliverydroid.SettingsHelpDialog
                 android:icon="@drawable/help"
                 android:dialogIcon="@drawable/icon"
                 android:dialogMessage="@string/centerPointHelp"

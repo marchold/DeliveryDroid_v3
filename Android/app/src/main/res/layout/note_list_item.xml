@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
-    <com.catglo.widgets.RowLayout
+    <catglo.com.widgets.RowLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
@@ -22,7 +22,7 @@
             android:text="453-7773"
             android:textColor="@color/white" />
 
-    </com.catglo.widgets.RowLayout>
+    </catglo.com.widgets.RowLayout>
 
    
        

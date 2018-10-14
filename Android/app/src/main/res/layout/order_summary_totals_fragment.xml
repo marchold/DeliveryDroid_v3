@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <com.catglo.widgets.RowLayout
+    <catglo.com.widgets.RowLayout
         android:id="@+id/RowLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,6 +154,6 @@
                 android:id="@+id/hourlyPay"
                 style="@style/details_view_data_text" />
         </LinearLayout>
-    </com.catglo.widgets.RowLayout>
+    </catglo.com.widgets.RowLayout>
 
 </ScrollView>

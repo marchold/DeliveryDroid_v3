@@ -22,12 +22,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 
-public class GeofenceIntentService extends IntentService {
+public class GeofenceIntentService //extends IntentService
+{
 
-	public GeofenceIntentService(String name) {
-		super(name);
-	}
-}
 		/*implements LocationListener, OnRemoveGeofencesResultListener,OnAddGeofencesResultListener {
 	float latitude;
 	float longitude;

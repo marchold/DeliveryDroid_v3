@@ -22,7 +22,8 @@ class HomeScreen_Util implements HomeScreen_Utils {
 
 	@Override
 	public void getRoundTripTimeAndGeopoints(final Context context,final ArrayList<Order> orders, final DataBase dataBase,final HomeScreenRoutingListener listener) {
-		listener.onRoutingStarted();
+		/*listener.onRoutingStarted();
+
 		final ArrayList<Order> localOrders = orders;
 		new WebServiceDirections(context,
 								 PreferenceManager.getDefaultSharedPreferences(context),
@@ -60,18 +61,11 @@ class HomeScreen_Util implements HomeScreen_Utils {
         				listener.onRoutingFailed(orders);
         			} 
     			
-    			}/* catch (Exception e){
-    				listener.onRoutingFailed(orders);
-    				if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("generateDevLog", false)==true){
-    					FileWriter f; try {Writer writer = new StringWriter();PrintWriter printWriter = new PrintWriter(writer);e.printStackTrace(printWriter);String es = writer.toString();
-    			        f = new FileWriter(Environment.getExternalStorageDirectory()+"/dr_log"+".txt",true);f.write("\nMap Activity service Exception  "+e.getLocalizedMessage()+"\n"+es+"\n");
-    				    f.flush();f.close();} catch (IOException e2) {}
-    				}
-    			} finally {*/
-    				listener.onRoutingComplete();
-    			//}
+    			}
+    			listener.onRoutingComplete();
+
 			
-    	}});
+    	}});*/
 	}
 
 	

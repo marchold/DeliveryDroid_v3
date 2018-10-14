@@ -5,11 +5,10 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
-    <com.catglo.widgets.FlowLayout
+    <catglo.com.widgets.FlowLayout
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:background="#A000"
-
         >
 
 
@@ -34,5 +33,5 @@
             android:enabled="true" />
 
 
-    </com.catglo.widgets.FlowLayout>
+    </catglo.com.widgets.FlowLayout>
 </FrameLayout>

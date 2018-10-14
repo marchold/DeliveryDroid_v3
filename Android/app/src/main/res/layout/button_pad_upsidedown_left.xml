@@ -6,7 +6,7 @@
     android:gravity="center" >
 
 
-    <com.catglo.widgets.EditTextKeyboardSafe
+    <catglo.com.widgets.EditTextKeyboardSafe
         android:id="@+id/buttonPadEdit"
         android:background="@drawable/apptheme_textfield_activated_holo_light"
         android:layout_width="match_parent"

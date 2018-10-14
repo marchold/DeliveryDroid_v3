@@ -18,7 +18,8 @@ import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 
 
-import catglo.com.deliverydroid.widgets.DataAwareFragment;
+import catglo.com.widgets.ButtonPadFragment;
+import catglo.com.widgets.DataAwareFragment;
 import org.joda.time.DateTime;
 import org.joda.time.DurationFieldType;
 import org.joda.time.Hours;

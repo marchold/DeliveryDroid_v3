@@ -1,11 +1,8 @@
 package catglo.com.deliverydroid.backup;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
+
+
+
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -13,6 +10,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,7 +43,7 @@ import java.util.Date;
 
 
 public class GoogleDriveBackupRestoreActivity
-        extends Activity
+        extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
       //  implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, DriveFolder.OnChildrenRetrievedCallback, DriveFile.OnContentsOpenedCallback
 {
 
@@ -104,7 +103,7 @@ public class GoogleDriveBackupRestoreActivity
         mGoogleApiClient.connect();
     }
 
-    @Override
+  /*  @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         if (connectionResult.hasResolution()) {
             try {
@@ -115,7 +114,7 @@ public class GoogleDriveBackupRestoreActivity
         } else {
             GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
         }
-    }
+    }*/
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -123,9 +122,14 @@ public class GoogleDriveBackupRestoreActivity
     }
 
     @Override
-    public void onDisconnected() {
+    public void onConnectionSuspended(int i) {
 
     }
+
+    /*@Override
+    public void onDisconnected() {
+
+    }*/
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -287,6 +291,16 @@ public class GoogleDriveBackupRestoreActivity
         input.close();
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
 
     static class GoogleDriveDeliveryDroidFile {
         public String title;
@@ -299,7 +313,7 @@ public class GoogleDriveBackupRestoreActivity
     }
     ArrayList<GoogleDriveDeliveryDroidFile> fileList;
 
-    @Override
+  /*  @Override
     public void onChildrenRetrieved(DriveApi.MetadataBufferResult result) {
         if (!result.getStatus().isSuccess()) {
             //showMessage("Problem while retrieving files");
@@ -320,13 +334,5 @@ public class GoogleDriveBackupRestoreActivity
         listView.setVisibility(View.VISIBLE);
         listView.setAdapter(new ArrayAdapter<GoogleDriveDeliveryDroidFile>(this,android.R.layout.simple_list_item_1,fileList));
 
-     /*   listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DriveFile driveFile = Drive.DriveApi.getFile(mGoogleApiClient, fileList.get(position).id);
-                driveFile.openContents(mGoogleApiClient, DriveFile.MODE_READ_ONLY, null).addResultCallback(GoogleDriveBackupRestoreActivity.this);
-            }
-        });
-        */
-    }
+    }*/
 }

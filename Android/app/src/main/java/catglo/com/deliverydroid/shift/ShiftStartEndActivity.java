@@ -9,6 +9,7 @@ import android.app.DialogFragment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 
 

@@ -516,7 +516,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 	
 	                pd = ProgressDialog.show(OrderSummaryActivity.this, "Exporting...", "This may take a minute", true, false);//cancelable)//.show(this, "Working..", "Calculating Pi", true, false);
 
-                    Thread csvThread = new Thread(new Runnable(){public void run(){
+                 /*   Thread csvThread = new Thread(new Runnable(){public void run(){
 	                	String csvData = dataBase.getCSVData(startDate,endDate,pd);
 
 
@@ -567,7 +567,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 	                }});          
 					csvThread.start();
 					
-					
+					*/
 					
 					dialog.dismiss();
 				}});

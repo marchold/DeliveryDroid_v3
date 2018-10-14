@@ -12,8 +12,8 @@ import android.widget.ListAdapter;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.widgets.ButtonPadFragment;
-import catglo.com.deliverydroid.widgets.DataAwareFragment;
+import catglo.com.widgets.ButtonPadFragment;
+import catglo.com.widgets.DataAwareFragment;
 
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  * Created by goblets on 2/16/14.
  */
 public class AddressEntryFragment extends ButtonPadFragment {
-    GoogleAddressSuggester addressSuggestior;
+  //  GoogleAddressSuggester addressSuggestior;
     Pattern pattern;
     private int		inputStage;
     ArrayList<AddressInfo> addressList;
@@ -59,7 +59,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
 
         NewOrderActivity activity = (NewOrderActivity)getActivity();
 
-        addressSuggestior = new AddressSuggester(activity,activity.dataBase,new GoogleAddressSuggester.AddressListListener() {
+    /*    addressSuggestior = new AddressSuggester(activity,activity.dataBase,new GoogleAddressSuggester.AddressListListener() {
             @Override
             public void commit(ArrayList<AddressInfo> addressList, String searchString) {
                 if (   addressList  ==null
@@ -77,7 +77,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
                 }
             }
         });
-
+*/
         edit.setText(activity.order.address);
 
 
@@ -172,7 +172,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
         if (edit.isFocused()) {
             selectedPoint = null;
         }
-        addressSuggestior.lookup(newText);
+    //    addressSuggestior.lookup(newText);
 
     }
 }

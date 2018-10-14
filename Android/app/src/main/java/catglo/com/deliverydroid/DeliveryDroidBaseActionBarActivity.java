@@ -5,13 +5,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import catglo.com.deliveryDatabase.DataBase;
 
 
 /**
  * Created by goblets on 2/17/14.
  */
-public class DeliveryDroidBaseActionBarActivity extends Activity implements Tooled {
+public class DeliveryDroidBaseActionBarActivity extends AppCompatActivity implements Tooled {
 
     @Override
     public Tools getTools() {
@@ -32,13 +33,13 @@ public class DeliveryDroidBaseActionBarActivity extends Activity implements Tool
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+        //EasyTracker.getInstance(this).activityStart(this);  // Add this method.
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+        //EasyTracker.getInstance(this).activityStop(this);  // Add this method.
     }
 
 

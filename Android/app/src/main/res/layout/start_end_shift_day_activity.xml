@@ -104,7 +104,7 @@
         android:layout_height="@dimen/action_bar_underline_height"
         android:background="@color/android_blue_underline" />
     
-    <com.catglo.widgets.MyScrollView
+    <catglo.com.widgets.MyScrollView
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="match_parent" >
@@ -139,6 +139,6 @@
                 android:text="Raw Data View" />
             
         </LinearLayout>
-    </com.catglo.widgets.MyScrollView>
+    </catglo.com.widgets.MyScrollView>
 
 </LinearLayout>

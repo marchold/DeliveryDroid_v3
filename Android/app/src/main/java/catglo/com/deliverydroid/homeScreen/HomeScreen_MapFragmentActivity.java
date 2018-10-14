@@ -45,7 +45,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 	protected DataBase dataBase;
 	protected SharedPreferences sharedPreferences;
 	protected ArrayList<Order> orders;
-	//private MapView mapView;
+	private MapView mapView;
 	//private ArrayList<OverlayItem> mOverlays;
 	private TextView driverEarnings;
 	private TextView roundTripTime;
@@ -534,9 +534,9 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
     */
 	}
 	
-	@Override
+	/*@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	}*/
 }

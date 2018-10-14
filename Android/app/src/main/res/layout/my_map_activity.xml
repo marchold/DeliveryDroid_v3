@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         layout="@layout/optimize_bar" />
 
-     <com.google.android.maps.MapView
+     <com.google.android.gms.maps.MapView
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

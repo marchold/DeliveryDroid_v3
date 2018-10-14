@@ -46,12 +46,12 @@ public class SettingsLocationsOptionsList extends ListPreference {
 				//TODO:Display error-Missing Google API's OR Location Disabled
 			} else {
 				final Editor prefEditor = sharedPreferences.edit();
-				new WebServiceUpdateLocalePreferances(sharedPreferences,(float) lastKnownLocation.getLatitude(),(float) lastKnownLocation.getLongitude(),new WebServiceUpdateLocalePreferances.LocalityListener(){public void result(LocalityInfo info) {
+			/*	new WebServiceUpdateLocalePreferances(sharedPreferences,(float) lastKnownLocation.getLatitude(),(float) lastKnownLocation.getLongitude(),new WebServiceUpdateLocalePreferances.LocalityListener(){public void result(LocalityInfo info) {
 					prefEditor.putString("addressFilterComponents", info.filter);
 					prefEditor.commit();
 					setEntries(entries());
 		        	setEntryValues(entryValues());
-				}}).lookup();
+				}}).lookup();*/
 			}
         } else {
         	setEntries(entries());

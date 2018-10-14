@@ -17,13 +17,13 @@
             android:layout_height="fill_parent"
             android:orientation="vertical" >
 
-            <com.catglo.widgets.RowLayout
+            <catglo.com.widgets.RowLayout
                 android:id="@+id/rowLayout00"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" >
 
-                <com.catglo.widgets.RowLayout
+                <catglo.com.widgets.RowLayout
                     android:id="@+id/rowLayout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,9 +72,9 @@
                             android:minWidth="120dp"
                             android:nextFocusDown="@+id/OrderCost" />
                     </LinearLayout>
-                </com.catglo.widgets.RowLayout>
+                </catglo.com.widgets.RowLayout>
 
-                <com.catglo.widgets.RowLayout
+                <catglo.com.widgets.RowLayout
                     android:id="@+id/rowLayout23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
@@ -172,9 +172,9 @@
                             android:textSize="18sp" />
                     </LinearLayout>
                     
-                </com.catglo.widgets.RowLayout>
+                </catglo.com.widgets.RowLayout>
 
-                <com.catglo.widgets.RowLayout
+                <catglo.com.widgets.RowLayout
                     android:id="@+id/rowLayout24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
@@ -282,8 +282,8 @@
                     </LinearLayout>
                     
                      
-                </com.catglo.widgets.RowLayout>
-            </com.catglo.widgets.RowLayout>
+                </catglo.com.widgets.RowLayout>
+            </catglo.com.widgets.RowLayout>
 
             <Button
                 android:id="@+id/AddOrder"

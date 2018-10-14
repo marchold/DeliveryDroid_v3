@@ -198,7 +198,7 @@
                     android:visibility="visible">
 
 
-                    <com.catglo.widgets.FlowLayout
+                    <catglo.com.widgets.FlowLayout
                         android:id="@+id/filterAreaContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -283,7 +283,7 @@
                             android:singleLine="true"
                             android:text="@string/sun" />
 
-                    </com.catglo.widgets.FlowLayout>
+                    </catglo.com.widgets.FlowLayout>
                 </LinearLayout>
 
                 <LinearLayout

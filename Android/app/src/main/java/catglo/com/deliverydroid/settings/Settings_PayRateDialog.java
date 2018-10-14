@@ -3,6 +3,7 @@ package catglo.com.deliverydroid.settings;
 import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import catglo.com.deliverydroid.R;
 
 
 public class Settings_PayRateDialog extends DialogPreference {

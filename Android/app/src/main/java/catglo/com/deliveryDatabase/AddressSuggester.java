@@ -10,4 +10,7 @@ import java.util.regex.Pattern;
 
 public class AddressSuggester {
 
+    public void lookup(String s) {
+
+    }
 }

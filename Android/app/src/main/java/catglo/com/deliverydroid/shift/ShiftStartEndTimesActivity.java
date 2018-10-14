@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 
 import catglo.com.deliveryDatabase.Wage;
+import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 import org.joda.time.DateTime;
 import org.joda.time.Hours;

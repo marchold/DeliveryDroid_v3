@@ -166,7 +166,7 @@ public class SettingsAddressFilterCriteria extends Activity implements TextWatch
 		return false;
 	}
 
-	@Override
+	//@Override
 	protected boolean isRouteDisplayed() {
 		return false;
 	}

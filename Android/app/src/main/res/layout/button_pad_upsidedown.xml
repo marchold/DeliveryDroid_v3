@@ -7,7 +7,7 @@
 
 
 
-    <com.catglo.widgets.EditTextKeyboardSafe
+    <catglo.com.widgets.EditTextKeyboardSafe
         android:id="@+id/buttonPadEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

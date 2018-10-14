@@ -2084,8 +2084,8 @@ public class DataBase extends Object  {
 		if (order.geocodeFailed){
 			args.put("validatedAddress", false);
 		} else {
-			args.put("GPSLng", (float)order.geoPoint.geoPoint.getLongitudeE6()/(float)1000000);
-			args.put("GPSLat", (float)order.geoPoint.geoPoint.getLatitudeE6()/(float)1000000);
+			args.put("GPSLng", (float)order.geoPoint.lng);
+			args.put("GPSLat", (float)order.geoPoint.lat);
 			args.put("validatedAddress", order.isValidated);
 		}
 		
@@ -2157,7 +2157,7 @@ public class DataBase extends Object  {
 		args.put("GPSLng", (float)order.geoPoint.lng);
 		args.put("GPSLat", (float)order.geoPoint.lat);
 		
-		Log.i("address","edit addressLocation "+order.geoPoint.geoPoint.getLatitudeE6()+order.geoPoint.geoPoint.getLongitudeE6());
+		Log.i("address","edit addressLocation "+order.geoPoint.lat+order.geoPoint.lng);
 		
 		args.put("validatedAddress", order.isValidated);
 		
@@ -2707,7 +2707,7 @@ public class DataBase extends Object  {
 					AddressInfo ai = new AddressInfo();
 					ai.address = o.address;
 					if (o.isValidated && o.geoPoint != null){
-						ai.location = new MyGeoPoint(o.geoPoint.geoPoint);
+						ai.location = new MyGeoPoint(o.geoPoint.lat,o.geoPoint.lng);
 					} else {
 						ai.location = null;
 					}

@@ -11,7 +11,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
-        <com.catglo.widgets.RowLayout
+        <catglo.com.widgets.RowLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -89,9 +89,9 @@
                     <requestFocus />
                 </EditText>
             </LinearLayout>
-        </com.catglo.widgets.RowLayout>
+        </catglo.com.widgets.RowLayout>
 
-        <com.catglo.widgets.RowLayout
+        <catglo.com.widgets.RowLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -189,7 +189,7 @@
             </LinearLayout>
             
             
-        </com.catglo.widgets.RowLayout>
+        </catglo.com.widgets.RowLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"

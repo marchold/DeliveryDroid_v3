@@ -85,7 +85,7 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <com.catglo.widgets.RowLayout
+    <catglo.com.widgets.RowLayout
         android:id="@+id/RowLayout1"
         android:layout_width="fill_parent"
         android:layout_height="match_parent" >
@@ -139,6 +139,6 @@
         </RelativeLayout>
 
         
-    </com.catglo.widgets.RowLayout>
+    </catglo.com.widgets.RowLayout>
 
 </LinearLayout>

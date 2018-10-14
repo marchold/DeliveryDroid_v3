@@ -30,7 +30,7 @@ import android.widget.Toast;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
-import catglo.com.deliverydroid.widgets.AddressHistoryAutocomplete;
+import catglo.com.widgets.AddressHistoryAutocomplete;
 import com.google.android.gms.maps.MapView;
 
 
@@ -268,7 +268,7 @@ public class SettingsStoreAddressActivity extends
 		return false;
 	}
 
-	@Override
+	//@Override
 	protected boolean isRouteDisplayed() {
 		return false;
 	}

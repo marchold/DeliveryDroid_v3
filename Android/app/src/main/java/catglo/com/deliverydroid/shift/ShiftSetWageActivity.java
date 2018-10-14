@@ -6,7 +6,8 @@ import android.os.Bundle;
 
 import catglo.com.deliveryDatabase.Shift;
 import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
-import catglo.com.deliverydroid.widgets.ButtonPadFragment;
+import catglo.com.deliverydroid.R;
+import catglo.com.widgets.ButtonPadFragment;
 import org.joda.time.DateTime;
 
 import java.text.DecimalFormat;

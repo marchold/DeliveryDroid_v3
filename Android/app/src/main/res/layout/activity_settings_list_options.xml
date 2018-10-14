@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment1"
-        android:name="com.catglo.deliverydroid.settings.Settings_ListOptions_Wrapper"
+        android:name="catglo.com.deliverydroid.settings.Settings_ListOptions_Wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

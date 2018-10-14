@@ -7,10 +7,10 @@ import android.util.Log;
 
 
 public class SilentAddressValidator {
-	AddressSuggestiorGoogle webService;
+	//AddressSuggestiorGoogle webService;
 	Context context;
 	public SilentAddressValidator(Context context){
-		 webService = new AddressSuggestiorGoogle(context,null); 
+	//	 webService = new AddressSuggestiorGoogle(context,null);
 		 this.context = context;
 	}
 	public void lookup(final Order order){

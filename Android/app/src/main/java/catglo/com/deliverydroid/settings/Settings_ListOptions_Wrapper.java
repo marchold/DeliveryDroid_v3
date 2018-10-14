@@ -2,7 +2,7 @@ package catglo.com.deliverydroid.settings;
 
 import android.app.Activity;
 
-import catglo.com.deliverydroid.widgets.ActivityHostFragment;
+import catglo.com.widgets.ActivityHostFragment;
 
 public class Settings_ListOptions_Wrapper extends ActivityHostFragment {
 

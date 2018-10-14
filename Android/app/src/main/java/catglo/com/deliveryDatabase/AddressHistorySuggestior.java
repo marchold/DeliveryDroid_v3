@@ -15,8 +15,9 @@ import java.util.regex.Pattern;
 import android.content.Context;
 
 
-public class AddressHistorySuggestior extends AddressSuggestiorGoogle {
-
+public class AddressHistorySuggestior //extends AddressSuggestiorGoogle
+{
+/*
 	
 	float range;
 	private ArrayList<AddressInfo> recientStreetNames;
@@ -82,7 +83,7 @@ public class AddressHistorySuggestior extends AddressSuggestiorGoogle {
 			}
 		}};
 	}
-	
+
 	@Override
 	public void lookup(final String addressSoFar) {
 		if (commitor == null){
@@ -130,4 +131,5 @@ public class AddressHistorySuggestior extends AddressSuggestiorGoogle {
 		}
 		
 	}
+	*/
 }

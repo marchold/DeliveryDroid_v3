@@ -24,7 +24,12 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 import catglo.com.deliveryDatabase.DataBase;
-import catglo.com.deliverydroid.widgets.TwoLinesListPreference;
+import catglo.com.deliveryDatabase.StreetList;
+import catglo.com.deliveryDatabase.ZipCode;
+import catglo.com.deliverydroid.AboutActivity;
+import catglo.com.deliverydroid.R;
+import catglo.com.deliverydroid.backup.GoogleDriveBackupRestoreActivity;
+import catglo.com.widgets.TwoLinesListPreference;
 
 
 import java.io.File;
@@ -70,14 +75,14 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	  public void onStart() {
 	    super.onStart();
 
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	   // EasyTracker.getInstance(this).activityStart(this);  // Add this method.
 	  }
 
 	  @Override
 	  public void onStop() {
 	    super.onStop();
 	    
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	   // EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	  }
 	
 	/** Called when the activity is first created. */
@@ -160,7 +165,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             aboutPref = (Preference)getPreferenceScreen().findPreference("aboutPref");
             backupToGoogleDrive = (Preference)getPreferenceScreen().findPreference("backupToGoogleDrive");
 
-
+/*
 			rebuildStreetList.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 
 				public boolean onPreferenceClick(Preference preference) {
@@ -222,7 +227,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 				
 				return false;
 			}});
-
+*/
             aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -244,16 +249,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			databaseFileCopy.setPositiveButtonText("Copy it!");
 			databaseFileCopy.setNegativeButtonText("Don't Copy");
 			
-			/*
-			 * databaseFileCopy.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			 * 
-			 * public boolean onPreferenceClick(Preference arg0) { // TODO Auto-generated method stub
-			 * //arg0.setDefaultValue("/sdcard/DeliveriesDatabase");
-			 * 
-			 * return false; }
-			 * 
-			 * });
-			 */
+
 			databaseFileMerge.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				
 				public boolean onPreferenceChange(final Preference preference, final Object newValue) {
@@ -362,42 +358,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 
 			});
 			
-			
-	/*	
-	 * 
-	 * 
-<!--  		<CheckBoxPreference android:key="DatabaseUpload"
-			android:title="Upload Debug Data"
-			android:summary="Select this if you have talked to the developer about this first." />
--->
 
-	
-	databaseUpload.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-				public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-					Thread thread = new Thread(new Runnable(){public void run() {
-						try {
-							copyDatabse(getFilesDir() + "/" + DataBase.DATABASE_NAME,
-									Environment.getExternalStorageDirectory() + "/" + "debug.info");
-							try {
-								FileInputStream fis = //openFileInput();
-									new FileInputStream(Environment.getExternalStorageDirectory() + "/" + "debug.info");						
-								HttpFileUploader htfu = new HttpFileUploader("http://deliveryDroid.edapps4sale.com/upload.php","noparamshere", "debug.info");
-								htfu.doStart(fis);
-							} catch (FileNotFoundException e) {
-								e.printStackTrace();
-							}	
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}});
-					thread.start();
-					return true;
-				}
-			});*/
 
 			databaseFileCopy.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				public boolean onPreferenceChange(final Preference preference, final Object newValue) {
@@ -432,11 +393,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 				}
 			});
 		}
-			
+
 		newZipCode = (EditTextPreference) getPreferenceScreen().findPreference("NewZipCode");
 		newZipCode.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-				String zipCode = "";
+				/*String zipCode = "";
 				//try {
 					zipCode = newValue.toString();
 					StreetList.zipCodes.insert(new ZipCode(zipCode, ZipCode.STATE_NEEDS_LOOKUP,
@@ -445,13 +406,15 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 					streetList.saveURLState();
 					return true;
 				//} catch (final Exception e) {
-				//	return false;
+				//
 				//}
+				*/
+				return false;
 			}
 		});
 		newZipCode.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 			public boolean onPreferenceClick(Preference preference) {
-				Iterator<ZipCode> e = StreetList.zipCodes.iterator();
+				/*Iterator<ZipCode> e = StreetList.zipCodes.iterator();
 				float minimumDistance = Float.MAX_VALUE;
 				ZipCode closestUnusedZipcode=null;
 				while (e.hasNext()){
@@ -470,11 +433,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 					//TODO: we should search the net for more close by zip codes.
 					ps.getEditText().setText("");
 					ps.setText("");
-				}
+				}*/
 				return false;
 			}	
 		});
-		
+
 		zipCodePrefs = (PreferenceScreen) getPreferenceScreen().findPreference("SetUpZip");
 		
 		final Iterator<ZipCode> keys = StreetList.zipCodes.iterator();
@@ -509,11 +472,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			}
 		});
 
-		
-		
+
+
 		editTextPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-				final String oldZip = preference.getKey();
+
+			/*	final String oldZip = preference.getKey();
 				final String newZip = newValue.toString();
 				StreetList.zipCodes.remove(oldZip);
 				if (newZip.matches("^[0-9]{5}$")) {
@@ -528,7 +492,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 					final Toast toast = Toast.makeText(getApplicationContext(), "Deleted Zip Code " + oldZip,
 							Toast.LENGTH_LONG);
 					toast.show();
-				}
+				}*/
 				return true;
 			}
 

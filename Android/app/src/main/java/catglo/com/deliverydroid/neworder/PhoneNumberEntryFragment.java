@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.widgets.ButtonPadFragment;
-import catglo.com.deliverydroid.widgets.DataAwareFragment;
+import catglo.com.widgets.ButtonPadFragment;
+import catglo.com.widgets.DataAwareFragment;
 
 
 import java.util.ArrayList;

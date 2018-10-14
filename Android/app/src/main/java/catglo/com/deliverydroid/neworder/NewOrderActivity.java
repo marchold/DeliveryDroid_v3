@@ -1,26 +1,25 @@
 package catglo.com.deliverydroid.neworder;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.*;
+
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.widgets.ButtonPadFragment;
-import catglo.com.deliverydroid.widgets.DataAwareFragment;
-
+import catglo.com.widgets.ButtonPadFragment;
+import catglo.com.widgets.DataAwareFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -74,7 +73,7 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
         if (tabletPane==null)     viewPagerPages.add(Pages.order);
         else {
             NewOrderLastScreenFragment lastScreenFragment = new NewOrderLastScreenFragment();
-            getFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.orderDetailsContainer,lastScreenFragment,"order_details_fragment")
                     .commit();
@@ -82,12 +81,12 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
 
 
         // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        sectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager(),viewPagerPages);
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),viewPagerPages);
 
 
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -135,13 +134,13 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     public DataAwareFragment getFragment(Pages fragmentPage){
         if (   fragmentPage==Pages.order
             && tabletPane!=null){
-            return (DataAwareFragment)getFragmentManager().findFragmentByTag("order_details_fragment");
+            return (DataAwareFragment)getSupportFragmentManager().findFragmentByTag("order_details_fragment");
         }
         int index = getFragmentIndex(fragmentPage);
         if (index < 0){
             return null;
         }
-        return (DataAwareFragment)getFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + index);
+        return (DataAwareFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + index);
     }
 
     /**

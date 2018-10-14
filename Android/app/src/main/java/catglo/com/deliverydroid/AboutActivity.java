@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.widget.TextView;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 
 public class AboutActivity extends Activity  {
@@ -23,8 +24,8 @@ public class AboutActivity extends Activity  {
             e.printStackTrace();
         }
 
-        String legalString = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
-        ((TextView)findViewById(R.id.legal)).setText(legalString);
+       // String legalString = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
+       // ((TextView)findViewById(R.id.legal)).setText(legalString);
 
 
 

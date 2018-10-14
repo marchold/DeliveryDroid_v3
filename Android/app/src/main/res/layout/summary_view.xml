@@ -131,7 +131,7 @@
             android:textColor="@color/chea_header_bar_green"
             android:textSize="20sp" />
 
-        <com.catglo.widgets.RowLayout
+        <catglo.com.widgets.RowLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal" >
@@ -317,7 +317,7 @@
                     android:textColor="@color/chea_header_bar_green"
                     android:textSize="24sp" />
             </LinearLayout>
-        </com.catglo.widgets.RowLayout>
+        </catglo.com.widgets.RowLayout>
     </LinearLayout>
 
 </ScrollView>

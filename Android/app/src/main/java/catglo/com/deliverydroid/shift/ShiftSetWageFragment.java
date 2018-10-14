@@ -7,7 +7,7 @@ import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.R;
 
 import catglo.com.deliverydroid.Tools;
-import catglo.com.deliverydroid.widgets.ButtonPadFragment;
+import catglo.com.widgets.ButtonPadFragment;
 import org.joda.time.DateTime;
 
 import java.text.DecimalFormat;

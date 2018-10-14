@@ -11,6 +11,7 @@ import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 
+import catglo.com.deliverydroid.Tools;
 import net.simonvt.timepicker.TimePicker;
 
 public class ShiftStartEndEditWage extends DeliveryDroidBaseActivity {
