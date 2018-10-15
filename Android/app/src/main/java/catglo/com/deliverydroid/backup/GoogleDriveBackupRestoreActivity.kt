@@ -31,8 +31,15 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        dbFile = if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("DatabaseOnSdcard", false)) {
+            File(Environment.getExternalStorageDirectory(), DataBase.DATABASE_NAME)
+        } else {
+            File(applicationContext.filesDir, DataBase.DATABASE_NAME)
+        }
+
         setContentView(R.layout.backup_to_google_drive_activity)
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         signIn()
         backup?.setOnClickListener { saveFileToDrive() }
         restore?.setOnClickListener { restoreBackup() }
@@ -51,21 +58,14 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         return GoogleSignIn.getClient(this, signInOptions)
     }
 
-    private val dbFile : File
+    var dbFile : File? = null
 
-    init {
-        val path = if (PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean("DatabaseOnSdcard", false)) {
-            Environment.getExternalStorageDirectory()
-        } else {
-            applicationContext.filesDir
-        }
-        dbFile = File(path, DataBase.DATABASE_NAME)
-    }
+
 
     private fun saveFileToDrive() {
         mDriveResourceClient!!
             .createContents()
-            .continueWithTask { task -> createFileIntentSender(task.result!!, dbFile) }
+            .continueWithTask { task -> createFileIntentSender(task.result!!, dbFile!!) }
             .addOnFailureListener { e -> Log.w("DD", "Failed to create new contents.", e) }
     }
 
@@ -123,6 +123,10 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
                     mDriveResourceClient =
                             Drive.getDriveResourceClient(this, GoogleSignIn.getLastSignedInAccount(this)!!)
                 }
+                else
+                {
+                    //Display sign in error
+                }
             }
         }
     }
@@ -155,7 +159,7 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
 
                 contents?.inputStream.use { input ->
                     output.use { fileOut ->
-                        input?.copyTo(output)
+                        input?.copyTo(fileOut)
                     }
                 }
 

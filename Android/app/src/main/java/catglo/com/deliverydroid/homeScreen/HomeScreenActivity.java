@@ -170,6 +170,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		setContentView(R.layout.home_screen_activity);
 		prefEditor = sharedPreferences.edit();
 
+		if (getSupportActionBar()!=null) getSupportActionBar().hide();
 
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		menuDrawer = findViewById(R.id.menu_drawer);
