@@ -655,6 +655,7 @@
     <string name="undeliverable_mileage_pay">Undeliverable Mileage Pay</string>
     <string name="undeliverable_mileagepay_summary">Check if you receive mileage pay for orders that are marked undeliverable</string>
     <string name="Undeliverable_mileage_pay">Undeliverable Mileage Page</string>
+    <string name="something_went_wrong">Something went wrong</string>
 
 </resources>
 

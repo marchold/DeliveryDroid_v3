@@ -1,46 +1,32 @@
 package catglo.com.deliverydroid.backup
 
+
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
-import android.content.SharedPreferences
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-
-
+import android.widget.Toast
 import catglo.com.deliveryDatabase.DataBase
 import catglo.com.deliverydroid.R
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GooglePlayServicesUtil
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.drive.*
-import com.google.android.gms.drive.query.Filters
-import com.google.android.gms.drive.query.Query
-import com.google.android.gms.drive.query.SearchableField
-
-
-import java.io.*
-import java.util.ArrayList
-import java.util.Date
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.drive.CreateFileActivityOptions
-import com.google.android.gms.tasks.*
+import com.google.android.gms.drive.*
+import com.google.android.gms.drive.query.Filters
+import com.google.android.gms.drive.query.SearchableField
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
 import kotlinx.android.synthetic.main.backup_to_google_drive_activity.*
+import java.io.*
 
 class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
     private var mDriveClient: DriveClient? = null
     private var mDriveResourceClient: DriveResourceClient? = null
+
     private var mOpenItemTaskSource: TaskCompletionSource<DriveId>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,47 +51,25 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         return GoogleSignIn.getClient(this, signInOptions)
     }
 
+    private val dbFile : File
 
-    @Throws(FileNotFoundException::class, IOException::class)
-    internal fun copyDatabse(to: String, from: String) {
-        val input = FileInputStream(to)
-        val myOutput = FileOutputStream(from)
-
-        // transfer bytes from the inputfile to the outputfile
-        val buffer = ByteArray(1024)
-        var length: Int
-        while ((length = input.read(buffer)) > 0) {
-            myOutput.write(buffer, 0, length)
+    init {
+        val path = if (PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean("DatabaseOnSdcard", false)) {
+            Environment.getExternalStorageDirectory()
+        } else {
+            applicationContext.filesDir
         }
-
-        // Close the streams
-        myOutput.flush()
-        myOutput.close()
-        input.close()
+        dbFile = File(path, DataBase.DATABASE_NAME)
     }
 
-
     private fun saveFileToDrive() {
-
-        val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        var path: File
-        if (prefs.getBoolean("DatabaseOnSdcard", false) == true) {
-            path = Environment.getExternalStorageDirectory()
-        } else {
-            path = applicationContext.filesDir
-        }
-        path = File(path, DataBase.DATABASE_NAME)
-
-
         mDriveResourceClient!!
             .createContents()
-            .continueWithTask { task -> createFileIntentSender(task.result!!, path) }
+            .continueWithTask { task -> createFileIntentSender(task.result!!, dbFile) }
             .addOnFailureListener { e -> Log.w("DD", "Failed to create new contents.", e) }
     }
 
-    /**
-     * Creates an [IntentSender] to start a dialog activity with configured [ ] for user to create a new photo in Drive.
-     */
+
     private fun createFileIntentSender(driveContents: DriveContents, dbFileToBackup: File): Task<Void>? {
         try {
             Log.i("DD", "New contents created.")
@@ -113,18 +77,13 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
             val outputStream = driveContents.outputStream
             val input = FileInputStream(dbFileToBackup)
 
-
-            val buffer = ByteArray(1024)
-            var length: Int
-            while ((length = input.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length)
+            input.use { fin ->
+                outputStream.use { fout ->
+                    fin.copyTo(fout)
+                }
             }
-
             input.close()
 
-
-            // Create the initial metadata - MIME type and title.
-            // Note that the user will be able to change the title later.
             val metadataChangeSet = MetadataChangeSet.Builder()
                 .setMimeType("delivery/mysql")
                 .setTitle("Delivery Droid Database Backup")
@@ -168,28 +127,23 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         }
     }
 
-    private fun pickItem(openOptions: OpenFileActivityOptions): Task<DriveId> {
-        mOpenItemTaskSource = TaskCompletionSource()
-        mDriveClient!!
-            .newOpenFileActivityIntentSender(openOptions)
-            .continueWith({ task ->
-                startIntentSenderForResult(
-                    task.getResult(), REQUEST_CODE_OPEN_ITEM, null, 0, 0, 0
-                )
-                null
-            } as Continuation<IntentSender, Void>)
-        return mOpenItemTaskSource!!.task
-    }
-
     protected fun restoreBackup() {
         val openOptions = OpenFileActivityOptions.Builder()
             .setSelectionFilter(Filters.eq(SearchableField.MIME_TYPE, "delivery/mysql"))
             .setActivityTitle(getString(R.string.BackupRestoreData))
             .build()
-        pickItem(openOptions).addOnSuccessListener { getDatabaseFile() }.addOnFailureListener { }
+
+        mOpenItemTaskSource = TaskCompletionSource()
+        mDriveClient!!
+            .newOpenFileActivityIntentSender(openOptions)
+            .continueWith { task -> startIntentSenderForResult(task.result, REQUEST_CODE_OPEN_ITEM, null, 0, 0, 0)}
+        var pickItemTask =  mOpenItemTaskSource!!.task
+        pickItemTask
+            .addOnSuccessListener { driveId -> getDatabaseFile(driveId.asDriveFile()) }
+            .addOnFailureListener { Toast.makeText(this,R.string.something_went_wrong, Toast.LENGTH_LONG).show() }
     }
 
-    private fun getDatabaseFile() {
+    private fun getDatabaseFile(file: DriveFile) {
         // [START drive_android_open_file]
         val openFileTask = mDriveResourceClient!!.openFile(file, DriveFile.MODE_READ_ONLY)
         // [END drive_android_open_file]
@@ -197,34 +151,22 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         openFileTask
             .continueWithTask { task ->
                 val contents = task.result
-                // Process contents...
-                // [START_EXCLUDE]
-                // [START drive_android_read_as_string]
-                BufferedReader(InputStreamReader(contents!!.inputStream)).use { reader ->
-                    val builder = StringBuilder()
-                    var line: String
-                    while ((line = reader.readLine()) != null) {
-                        builder.append(line).append("\n")
+                val output = FileOutputStream(dbFile)
+
+                contents?.inputStream.use { input ->
+                    output.use { fileOut ->
+                        input?.copyTo(output)
                     }
-                    //       showMessage(getString(R.string.content_loaded));
-                    //       mFileContents.setText(builder.toString());
                 }
-                // [END drive_android_read_as_string]
-                // [END_EXCLUDE]
-                // [START drive_android_discard_contents]
-                val discardTask = mDriveResourceClient!!.discardContents(contents)
-                // [END drive_android_discard_contents]
+
+                val discardTask = mDriveResourceClient!!.discardContents(contents!!)
+
                 discardTask
             }
-            .addOnFailureListener { e ->
-                // Handle failure
-                // [START_EXCLUDE]
-                //  Log.e(TAG, "Unable to read contents", e);
-                //  showMessage(getString(R.string.read_failed));
-                //  finish();
-                // [END_EXCLUDE]
+            .addOnFailureListener {
+                Toast.makeText(this,R.string.something_went_wrong, Toast.LENGTH_LONG).show()
             }
-        // [END drive_android_read_contents]
+
     }
 
     companion object {
