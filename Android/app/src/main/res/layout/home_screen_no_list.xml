@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/noListAltView"
     android:layout_width="match_parent"
@@ -38,6 +45,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true">
+
+
+        <Button android:id="@+id/downloadMapClickListener"
+                style="@style/home_screen_extra_button"
+                android:text="@string/map_downloads" />
+             <!--   android:drawableTop="@drawable/map_download" -->
+
 
         <Button
             android:id="@+id/menuGpsNotesClickListener"
@@ -98,3 +112,8 @@
 
 
 </RelativeLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

@@ -109,7 +109,7 @@
                     android:text="@string/OrderAddress"
                     android:textColor="#FFF" />
 
-                <com.catglo.widgets.AddressAutocomplete
+                <catglo.com.widgets.AddressAutocomplete
                     android:id="@+id/orderAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -31,7 +31,7 @@ import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 import catglo.com.widgets.AddressHistoryAutocomplete;
-import com.google.android.gms.maps.MapView;
+import org.mapsforge.map.android.view.MapView;
 
 
 public class SettingsStoreAddressActivity extends

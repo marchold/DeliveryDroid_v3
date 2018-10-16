@@ -252,7 +252,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.order_summary_activity);
-		
+		getSupportActionBar().hide();
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	    menuDrawer = findViewById(R.id.menu_drawer);     
 	    findViewById(R.id.export_to_menu_button).setOnClickListener(new OnClickListener(){@SuppressWarnings("deprecation")

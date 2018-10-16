@@ -51,10 +51,10 @@ import catglo.com.deliverydroid.settings.SettingsActivity;
 import catglo.com.deliverydroid.shift.ShiftStartEndDayActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
-import com.mobeta.android.dslv.DragSortController;
-import com.mobeta.android.dslv.DragSortListView;
-import com.mobeta.android.dslv.DragSortListView.DragListener;
-import com.mobeta.android.dslv.DragSortListView.DropListener;
+import catglo.com.widgets.DragSortController;
+import catglo.com.widgets.DragSortListView;
+import catglo.com.widgets.DragSortListView.DragListener;
+import catglo.com.widgets.DragSortListView.DropListener;
 
 import org.joda.time.DateTime;
 
@@ -93,8 +93,9 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
     private Button menuSearchButton;
     private Button orderSummaryButton;
     private View helpIcon;
+	private Button downloadMapsButton;
 
-    public HomeScreen_ListFragmentDragDrop() {
+	public HomeScreen_ListFragmentDragDrop() {
 		super();
 		///this.gestureListener = null;
 				routeTimeEstimateListener = new HomeScreen_Util.HomeScreenRoutingListener(){
@@ -418,10 +419,6 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	private DragSortListView orderListView;
 
 
-
-
-
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -430,7 +427,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
     	getListView().setOnItemClickListener(new OnItemClickListener(){public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
     		showOptionsDialog(orders.get(arg2));
 		}});
-	//	getListView().setOnTouchListener(gestureListener);
+
         prefEditor = sharedPreferences.edit();
 
         setOptimizeOn(sharedPreferences.getBoolean("optimizeCheckbox", false));
@@ -441,18 +438,13 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
         
     	orderListView = (DragSortListView)getListView();
     	orderListView.setDropListener(this);
-    	orderListView.setDragListener(this);
-    
-    	
    	}
 
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { 
 		super.onCreateView(inflater, container, savedInstanceState);
-		
-		
-		
+
 		View view = inflater.inflate(R.layout.home_screen_drag_drop_list_fragment, null);
 		view.setOnTouchListener(gestureListener);
         
@@ -469,6 +461,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
         callStore = (Button)view.findViewById(R.id.callstoreButton);
         smsStore = (Button)view.findViewById(R.id.smsStoreButton);
 
+        downloadMapsButton      = (Button)noListAltView.findViewById(R.id.downloadMapClickListener);
         menuGpsNotesButton      = (Button)noListAltView.findViewById(R.id.menuGpsNotesClickListener);
         menuShiftButton         = (Button)noListAltView.findViewById(R.id.menuShiftClickListener);
         menuSearchButton        = (Button)noListAltView.findViewById(R.id.menuSearchClickListener);
@@ -907,6 +900,8 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
         HomeScreenActivity activity = (HomeScreenActivity)getActivity();
 
         if (menuGpsNotesButton!=null) menuGpsNotesButton.setOnClickListener(activity.menuGpsNotesClickListener);
+        if (downloadMapsButton!=null) downloadMapsButton.setOnClickListener(activity.menuDownloadMapClickListener);
+
         if (menuShiftButton!=null)    menuShiftButton.setOnClickListener(activity.menuShiftClickListener);
         if (menuSearchButton!=null)   menuSearchButton.setOnClickListener(activity.menuSearchClickListener);
         if (orderSummaryButton!=null) orderSummaryButton.setOnClickListener(activity.orderSummaryClickListener);

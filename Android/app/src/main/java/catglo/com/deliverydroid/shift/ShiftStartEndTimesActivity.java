@@ -82,29 +82,7 @@ public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
 		long timeInMillsLast;
 		try {
 			timeInMillsLast = dataBase.lastOrderTimeForShift(shift.primaryKey).getMillis();
-			/*
-			 java.lang.RuntimeException: Unable to resume activity {com.catglo.deliverydroid/com.catglo.deliverydroid.ShiftStartEndTimesActivity}: java.lang.NullPointerException
-			at android.app.ActivityThread.performResumeActivity(ActivityThread.java:2571)
-			at android.app.ActivityThread.handleResumeActivity(ActivityThread.java:2592)
-			at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:1905)
-			at android.app.ActivityThread.access$1500(ActivityThread.java:135)
-			at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1054)
-			at android.os.Handler.dispatchMessage(Handler.java:99)
-			at android.os.Looper.loop(Looper.java:150)
-			at android.app.ActivityThread.main(ActivityThread.java:4385)
-			at java.lang.reflect.Method.invokeNative(Native Method)
-			at java.lang.reflect.Method.invoke(Method.java:507)
-			at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:849)
-			at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:607)
-			at dalvik.system.NativeStart.main(Native Method)
-			Caused by: java.lang.NullPointerException
-			at com.catglo.deliverydroid.ShiftStartEndTimesActivity.updateUI(ShiftStartEndTimesActivity.java:80)
-			at com.catglo.deliverydroid.ShiftStartEndBaseActivity.onResume(ShiftStartEndBaseActivity.java:38)
-			at android.app.Instrumentation.callActivityOnResume(Instrumentation.java:1242)
-			at android.app.Activity.performResume(Activity.java:3949)
-			at android.app.ActivityThread.performResumeActivity(ActivityThread.java:2561)
-			... 12 more  
-			 */
+
 		} catch (NullPointerException e) {
 			timeInMillsLast = dt.getMillis();
 		}

@@ -64,7 +64,8 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	private View mapUnderline;
 	private FrameLayout fragmentContainer;
 
-	public HomeScreenActivity() {
+
+    public HomeScreenActivity() {
 		super();
 	}
 
@@ -100,17 +101,17 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	public OnClickListener menuShiftClickListener;
 	public OnClickListener menuSearchClickListener;
 	public OnClickListener orderSummaryClickListener;
+    public OnClickListener menuDownloadMapClickListener;
 
 
 	private boolean isGeofenceServiceRunning() {
-	/*	return GeofenceIntentService.isRunning;
-	   ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+		return GeofenceIntentService.isRunning;
+	 /*  ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 	        if (GeofenceIntentService.class.getName().equals(service.service.getClassName())) {
 	            return true;
 	        }
 	    }*/
-		return false;
 	}
 
 	@Override
@@ -200,6 +201,13 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 				}
 			}
 		});
+
+        menuDownloadMapClickListener = new OnClickListener() {
+            public void onClick(View arg0) {
+                startActivity(new Intent(getApplicationContext(), DownloadMapActivity.class));
+                drawerLayout.closeDrawers();
+            }
+        };
 
 		menuGpsNotesClickListener = new OnClickListener() {
 			public void onClick(View arg0) {

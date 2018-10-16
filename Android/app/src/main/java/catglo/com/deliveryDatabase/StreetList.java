@@ -645,9 +645,7 @@ public class StreetList extends Thread {
 		}
 	}
 
-	//I added the synchronized because I suspected a race condition was causing
-	//Caused by: java.lang.ArrayIndexOutOfBoundsException: 
-	//at com.catglo.deliverydroidfree.StreetList.getStreetNames(StreetList.java:744)
+
 	synchronized private boolean startBuildingStreetList(final String zipCode) {
 	/*	int i = 0;
 		{

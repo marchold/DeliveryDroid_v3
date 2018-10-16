@@ -49,7 +49,8 @@ public class GpsNotes extends DeliveryDroidBaseActivity implements LocationListe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gps_notes_activity);
-		
+		getSupportActionBar().hide();
+
 		loadOrders = sharedPreferences.getBoolean("loadOrders_gps_notes", false);
 		
 	    addButton = (ImageButton)findViewById(R.id.addButton);

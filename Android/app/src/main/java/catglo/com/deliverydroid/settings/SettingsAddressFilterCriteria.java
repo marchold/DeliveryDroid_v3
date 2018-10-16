@@ -20,7 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliverydroid.R;
-import com.google.android.gms.maps.MapView;
+import org.mapsforge.map.android.view.MapView;
 
 
 public class SettingsAddressFilterCriteria extends Activity implements TextWatcher, LocationListener {

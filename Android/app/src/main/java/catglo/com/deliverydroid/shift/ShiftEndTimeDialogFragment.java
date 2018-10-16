@@ -8,13 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 
 
+import android.widget.TimePicker;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Shift;
 import catglo.com.deliverydroid.R;
 
 
 public class ShiftEndTimeDialogFragment extends DialogFragment {
-	net.simonvt.timepicker.TimePicker timePicker;
+	TimePicker timePicker;
 	protected DataBase dataBase = null;
 	private Shift shift;
 	
@@ -44,7 +45,7 @@ public class ShiftEndTimeDialogFragment extends DialogFragment {
     	
     	
     	View dialogView = View.inflate(getActivity(),R.layout.shift_end_dialog, null);
-    	timePicker = (net.simonvt.timepicker.TimePicker)dialogView.findViewById(R.id.timePicker1);
+    	timePicker = (TimePicker)dialogView.findViewById(R.id.timePicker1);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView)
             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

@@ -46,7 +46,9 @@ public class BankTillDropActivity extends DeliveryDroidBaseActivity implements O
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bank_till_drop);
-     
+
+        getSupportActionBar().hide();
+
         dropsContainer = (LinearLayout) findViewById(R.id.DropsContainer);
         bankField = (EditText) findViewById(R.id.hourlyPayRate); //Borrowed from store
         myBank = (EditText) findViewById(R.id.editText7);    //Drivers own money

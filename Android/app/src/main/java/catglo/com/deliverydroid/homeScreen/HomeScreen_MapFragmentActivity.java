@@ -35,7 +35,7 @@ import catglo.com.deliverydroid.Tools;
 import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.Route;
 import catglo.com.deliverydroid.settings.SettingsActivity;
-import com.google.android.gms.maps.MapView;
+import org.mapsforge.map.android.view.MapView;
 
 
 import java.util.ArrayList;
@@ -225,6 +225,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.my_map_activity);
         if (dataBase == null) {
         	dataBase = new DataBase(getApplicationContext());
@@ -234,7 +235,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
     	mapView = (MapView) findViewById(R.id.mapview);
         roundTripTime = (TextView)findViewById(R.id.roundTripTime);
     	driverEarnings = (TextView)findViewById(R.id.driverEarnings);
-        prefEditor = sharedPreferences.edit();
+        //prefEditor = sharedPreferences.edit();
         optimizeClickable = (ViewGroup)findViewById(R.id.optimizeClickable);
         optimizeIcon = (ImageView)findViewById(R.id.optimizeIcon);
         optimizeText = (TextView)findViewById(R.id.optimizeRouteText);

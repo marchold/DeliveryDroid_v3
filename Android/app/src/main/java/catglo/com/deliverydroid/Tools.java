@@ -87,20 +87,7 @@ public class Tools {
         }
         String currencySymbol;
         try {
-            /*
-             * I got this crash report "doesn't open on Samsung note i717"
 
-            java.lang.RuntimeException: Unable to resume activity {com.catglo.deliverydroid/com.catglo.deliverydroidbase.HomeMapActivity}: java.lang.IllegalArgumentException: Not a supported ISO 3166 country: en
-            at android.app.ActivityThread.performResumeActivity(ActivityThread.java:2124)
-            ...
-            Caused by: java.lang.IllegalArgumentException: Not a supported ISO 3166 country: en
-            at java.util.Currency.getInstance(Currency.java:125)
-            at com.catglo.deliverydroidbase.DeliveryDroidBaseActivity.getFormattedCurrency(DeliveryDroidBaseActivity.java:71)
-            at com.catglo.deliverydroidbase.DragDropListFragment.updateUI(DragDropListFragment.java:154)
-            at com.catglo.deliverydroidbase.DeliveryListBaseFragment.onResume(DeliveryListBaseFragment.java:386)
-
-            So I default to dollar sign
-            */
             currencySymbol = Currency.getInstance(Locale.getDefault()).getSymbol();
         } catch (IllegalArgumentException e) {
             currencySymbol = "$";

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mobeta.android.dslv;
+package catglo.com.widgets;
 
 import android.content.Context;
 import android.database.Cursor;

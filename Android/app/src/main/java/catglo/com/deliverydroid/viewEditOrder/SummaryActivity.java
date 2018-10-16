@@ -26,7 +26,7 @@ public class SummaryActivity extends DeliveryDroidBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.summary_activity);
-		
+		getSupportActionBar().hide();
 		Intent intent = getIntent();
         key = intent.getIntExtra("DB Key", -1);
         final boolean openEdit = intent.getBooleanExtra("openEdit", false);

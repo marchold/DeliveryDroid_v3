@@ -25,7 +25,7 @@
         android:textSize="22sp" >
     </Button>
 
-    <com.google.android.maps.MapView
+    <org.mapsforge.map.android.view.MapView
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -33,6 +33,6 @@
         android:layout_alignLeft="@+id/Checkout"
         android:apiKey="@string/maps_API_KEY"
         android:clickable="true" >
-    </com.google.android.maps.MapView>
+    </org.mapsforge.map.android.view.MapView>
 
 </RelativeLayout>

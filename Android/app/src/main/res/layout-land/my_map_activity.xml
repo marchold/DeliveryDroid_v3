@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         layout="@layout/optimize_bar" />
     
-    <com.google.android.maps.MapView
+    <org.mapsforge.map.android.view.MapView
         android:id="@+id/mapview"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"

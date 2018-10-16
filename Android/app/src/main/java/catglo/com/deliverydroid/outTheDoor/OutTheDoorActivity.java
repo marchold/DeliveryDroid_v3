@@ -2,6 +2,7 @@ package catglo.com.deliverydroid.outTheDoor;
 
 
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -36,8 +37,6 @@ import catglo.com.deliverydroid.homeScreen.HomeScreenActivity;
 
 import java.util.LinkedList;
 import java.util.Locale;
-
-//import com.catglo.deliverydroid.neworder.NewOrderTimeFragment;
 
 public class OutTheDoorActivity extends DeliveryDroidBaseActionBarActivity
         implements ActionBar.TabListener,LocationListener {
@@ -82,8 +81,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_new_order_acticity);
-
-
 
         Intent intent = getIntent();
         startNewRun = intent.getBooleanExtra("startNewRun", false);
@@ -296,6 +293,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActionBarActivity
 
     }
 
+    @SuppressLint("MissingPermission") //We need to ask on the home screen so no check is needed here
     @Override
     protected void onResume() {
         super.onResume();

@@ -36,9 +36,9 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onNextButtonPressed() {
-        int i = getActionBar().getSelectedNavigationIndex();
+        int i = getSupportActionBar().getSelectedNavigationIndex();
         try {
-            getActionBar().selectTab(getActionBar().getTabAt(i+1));
+            getSupportActionBar().selectTab(getSupportActionBar().getTabAt(i+1));
         } catch (IndexOutOfBoundsException e){
             //TODO: maybe focus whatever seems like the next logical thing in the last screen frag on tablet
         }

@@ -95,8 +95,7 @@ public class OrderSummaryListFragment extends ListFragment  {
 				
 			}
 			public int getViewTypeCount() {
-				// TODO Auto-generated method stub
-				return 0;
+				return 1;
 			}
 			public boolean hasStableIds() {
 				// TODO Auto-generated method stub

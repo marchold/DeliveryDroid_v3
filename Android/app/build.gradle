@@ -28,11 +28,11 @@ android {
 }
 
 ext {
-    // The following are only a few examples of the types of properties you can define.
     compileSdkVersion = 28
     supportLibVersion = "28.0.0"
     mapsforgeLibVersion = "0.10.0"
     googlePlayServicesVersion = "16.0.0"
+    torrentstreamVersion = "2.5.0"
 }
 
 dependencies {
@@ -40,14 +40,21 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:support-v13:$supportLibVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'net.danlew:android.joda:2.9.9.4'
-    implementation 'com.google.code.gson:gson:2.8.5'
+
     implementation "com.google.android.gms:play-services-drive:$googlePlayServicesVersion"
     implementation "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
-    implementation "com.google.android.gms:play-services-auth:$googlePlayServicesVersion"
+    implementation "com.google.android.gms:play-services-auth:16.0.1"
+
+
+    implementation 'com.google.firebase:firebase-ml-vision:17.0.1'
+
     implementation 'com.android.volley:volley:1.1.0'
+    implementation 'net.danlew:android.joda:2.9.9.4'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     implementation "org.mapsforge:mapsforge-map-android:$mapsforgeLibVersion"
     implementation 'com.caverock:androidsvg:1.3'
     implementation "org.mapsforge:mapsforge-poi-android:$mapsforgeLibVersion"
@@ -56,4 +63,15 @@ dependencies {
     implementation "org.mapsforge:sqlite-android:$mapsforgeLibVersion:natives-arm64-v8a"
     implementation "org.mapsforge:sqlite-android:$mapsforgeLibVersion:natives-x86"
     implementation "org.mapsforge:sqlite-android:$mapsforgeLibVersion:natives-x86_64"
+
+    implementation "com.github.TorrentStream:TorrentStream-Android:${torrentstreamVersion}"
+
+
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-ml-common:16.1.4'
+    implementation 'com.google.firebase:firebase-ml-vision:17.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision-image-label-model:16.2.0'
+    implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.2'
+
+
 }

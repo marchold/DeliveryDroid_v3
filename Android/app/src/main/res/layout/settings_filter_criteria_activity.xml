@@ -98,7 +98,7 @@
             <requestFocus />
         </EditText>
 
-        <com.google.android.maps.MapView
+        <org.mapsforge.map.android.view.MapView
             android:id="@+id/mapview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -107,7 +107,7 @@
             android:layout_marginTop="20dp"
             android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
             android:clickable="false" >
-        </com.google.android.maps.MapView>
+        </org.mapsforge.map.android.view.MapView>
 
         <TextView
             android:id="@+id/tooltip"

@@ -260,60 +260,7 @@ public class AutoResizeTextView extends TextView {
                     // Trim characters off until we have enough room to draw the ellipsis
                     while(width < lineWidth + ellipseWidth) {
                         if (end<start) break;
-                        /*
-                        I got the following crash in google play so I added the if (end<start) break;
-                        java.lang.StringIndexOutOfBoundsException: length=5; regionStart=0; regionLength=-1
-                        at java.lang.String.startEndAndLength(String.java:583)
-                        at java.lang.String.substring(String.java:1464)
-                        at java.lang.String.subSequence(String.java:1851)
-                        at com.catglo.widgets.AutoResizeTextView.resizeText(AutoResizeTextView.java:262)
-                        at com.catglo.widgets.AutoResizeTextView.onLayout(AutoResizeTextView.java:192)
-                        at android.view.View.layout(View.java:14177)
-                        at android.widget.ListView.setupChild(ListView.java:2123)
-                        at android.widget.ListView.makeAndAddView(ListView.java:2036)
-                        at android.widget.ListView.fillDown(ListView.java:822)
-                        at android.widget.ListView.fillFromTop(ListView.java:883)
-                        at android.widget.ListView.layoutChildren(ListView.java:1848)
-                        at android.widget.AbsListView.onLayout(AbsListView.java:2136)
-                        at android.view.View.layout(View.java:14177)
-                        at android.view.ViewGroup.layout(ViewGroup.java:4399)
-                        at android.widget.RelativeLayout.onLayout(RelativeLayout.java:1021)
-                        at android.view.View.layout(View.java:14177)
-                        at android.view.ViewGroup.layout(ViewGroup.java:4399)
-                        at android.support.v4.view.ViewPager.onLayout(ViewPager.java:1589)
-                        at android.view.View.layout(View.java:14177)
-                        at android.view.ViewGroup.layout(ViewGroup.java:4399)
-                        at android.widget.FrameLayout.onLayout(FrameLayout.java:448)
-                        at android.view.View.layout(View.java:14177)
-                        at android.view.ViewGroup.layout(ViewGroup.java:4399)
-                        at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1663)
-                        at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1521)
-                        at android.widget.LinearLayout.onLayout(LinearLayout.java:1434)
-                        at android.view.View.layout(View.java:14177)
-                        at android.view.ViewGroup.layout(ViewGroup.java:4399)
-                        at android.widget.FrameLayout.onLayout(FrameLayout.java:448)
-                        at android.view.View.layout(View.java:14177)
-                        at android.view.ViewGroup.layout(ViewGroup.java:4399)
-                        at android.view.ViewRootImpl.performLayout(ViewRootImpl.java:2244)
-                        at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:2017)
-                        at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:1190)
-                        at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:4860)
-                        at android.view.Choreographer$CallbackRecord.run(Choreographer.java:766)
-                        at android.view.Choreographer.doCallbacks(Choreographer.java:575)
-                        at android.view.Choreographer.doFrame(Choreographer.java:542)
-                        at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:751)
-                        at android.os.Handler.handleCallback(Handler.java:725)
-                        at android.os.Handler.dispatchMessage(Handler.java:92)
-                        at android.os.Looper.loop(Looper.java:158)
-                        at android.app.ActivityThread.main(ActivityThread.java:5751)
-                        at java.lang.reflect.Method.invokeNative(Native Method)
-                        at java.lang.reflect.Method.invoke(Method.java:511)
-                        at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1083)
-                        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:850)
-                        at dalvik.system.NativeStart.main(Native Method)
-
-                         */
-                        lineWidth = textPaint.measureText(text.subSequence(start, --end + 1).toString());
+                                  lineWidth = textPaint.measureText(text.subSequence(start, --end + 1).toString());
                     }
                     setText(text.subSequence(0, end) + mEllipsis);
                 }

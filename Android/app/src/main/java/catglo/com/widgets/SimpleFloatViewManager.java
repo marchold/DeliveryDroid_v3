@@ -1,4 +1,4 @@
-package com.mobeta.android.dslv;
+package catglo.com.widgets;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

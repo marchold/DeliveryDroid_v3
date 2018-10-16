@@ -98,7 +98,9 @@
     <string name="PreviousDelivery">Previous Delivery</string>
     <string name="EDITORDER">EDIT ORDER</string>
     <string name="MinutesAddress">Minutes since order/Address\n</string>
-    <string name="StartRunDialogMessage">Choose Yes to if you are returning to the store and the undelivered orders are part of the next run. Choose no if you are just organizing the deliveries.</string>
+    <string name="StartRunDialogMessage">Choose Yes to if you are returning to the store and the undelivered orders are
+        part of the next run. Choose no if you are just organizing the deliveries.
+    </string>
     <string name="OutOfTown">Out of town</string>
     <string name="edit_street_names">Edit this street name</string>
     <string name="delete_street_name">Delete this street name</string>
@@ -112,7 +114,9 @@
     <string name="EditStreetDialogTitle">Edit Street Name</string>
     <string name="Ok">Ok</string>
     <string name="Cancel">Cancel</string>
-    <string name="EditStreetDialogMessage">Type the correct spelling for this street name, or click delete to remove it from the list.</string>
+    <string name="EditStreetDialogMessage">Type the correct spelling for this street name, or click delete to remove it
+        from the list.
+    </string>
     <string name="DeletetreetDialogTitle">Are you sure?</string>
     <string name="delete_street_message">Are you sure you want to delete %s from the list</string>
     <string name="NewStreetDialogTitle">Add Street Name</string>
@@ -157,7 +161,7 @@
     <string name="altPayLDT">The label used for Alternate Mileage pay</string>
     <string name="time">time</string>
     <string name="date">date</string>
-    <string name="Delivery_time">Delivery time </string>
+    <string name="Delivery_time">Delivery time</string>
     <string name="Order_placed">Order placed</string>
     <string name="black_color_value">#00000000</string>
     <string name="navy_color_code">#000080</string>
@@ -166,19 +170,33 @@
     <string name="undelivered">Undelivered</string>
     <string name="ebt">EBT</string>
     <string name="help">Help</string>
-    <string name="altPaySettingsInstructions">The alternate mileage pay is for situations where the store pays you a different amount for the delivery than it normally would. The value of the alternate mileage pay is added to your normal mileage pay.\nFor example if you get payed $0.10 per delivery, but you get paid $0.15 per delivery to the local Army Base. You would set one <i>Alt. Mileage Pay</i> to <b>$0.05</b> and the <i>Alt. Mileage pay label</i> to <b>Army Base</b>.\nIf there are some deliveries which you do not get paid mileage for you can enter a negative number, so if you get $0.10 a delivery enter an alternate amount of -0.10, then select that one when you don\'t get mileage pay.  There are 4 alternate amounts in case you have different pay for Out Of Town, College Dorm, Army Base, Before 4pm, or whatever.</string>
+    <string name="altPaySettingsInstructions">The alternate mileage pay is for situations where the store pays you a
+        different amount for the delivery than it normally would. The value of the alternate mileage pay is added to
+        your normal mileage pay.\nFor example if you get payed $0.10 per delivery, but you get paid $0.15 per delivery
+        to the local Army Base. You would set one <i>Alt. Mileage Pay</i> to <b>$0.05</b> and the <i>Alt. Mileage pay
+            label
+        </i> to <b>Army Base</b>.\nIf there are some deliveries which you do not get paid mileage for you can enter a
+        negative number, so if you get $0.10 a delivery enter an alternate amount of -0.10, then select that one when
+        you don\'t get mileage pay. There are 4 alternate amounts in case you have different pay for Out Of Town,
+        College Dorm, Army Base, Before 4pm, or whatever.
+    </string>
     <string name="no_order_numbers">Order Number Quick Entry Screen</string>
     <string name="no_order_numbers_desc">Show a separate order number screen when entering new orders.</string>
     <string name="use_price_setting">Order Price Quick Entry Screen</string>
     <string name="use_price_setting_sum">Show a separate price input screen when entering new orders.</string>
     <string name="Initial_Order_Number">Initial Order Number</string>
-    <string name="Initial_Order_Number_desc">Set automatically when entering order numbers. Serves as the first number in the list of order numbers</string>
+    <string name="Initial_Order_Number_desc">Set automatically when entering order numbers. Serves as the first number
+        in the list of order numbers
+    </string>
     <string name="Initial_Order_Number_daigTitle">The order number to start counting from</string>
     <string name="No_addresses">Address Quick Entry Screen</string>
     <string name="No_addresses_desc">Show a separate address input screen when entering new orders.</string>
     <string name="Store_Address">Store Address</string>
-    <string name="Store_Address_desc">The street address of the store where the deliveries originate. Setting this field will enable the navigate to store button</string>
-    <string name="Store_Address_IN_WAGE_AREA_desc">The street address of the store where the deliveries originate. </string>
+    <string name="Store_Address_desc">The street address of the store where the deliveries originate. Setting this field
+        will enable the navigate to store button
+    </string>
+    <string name="Store_Address_IN_WAGE_AREA_desc">The street address of the store where the deliveries originate.
+    </string>
     <string name="not_split">Not Split</string>
     <string name="hour">hour</string>
     <string name="minute">minute</string>
@@ -203,8 +221,13 @@
     <string name="StartOfWorkWeek_diagSum">For calculating weekly totals, the day your work week starts.</string>
     <string name="StartOfWorkWeek_diagTitle">Work week starts on</string>
     <string name="OrderEntrySettings">Add Delivery Settings</string>
-    <string name="OrderEntrySettingsSum">Set up which of the new order quick input screens are shown and how the address suggestions are generated</string>
-    <string name="orderEntrySettingsHelp">Delivery Droid tries to make entering orders as quick as possible. To do this there are several screens dedicated to entering order numbers, order prices, and order addresses. Here you can configure the order entry process to skip some of those screens or configure how they work.</string>
+    <string name="OrderEntrySettingsSum">Set up which of the new order quick input screens are shown and how the address
+        suggestions are generated
+    </string>
+    <string name="orderEntrySettingsHelp">Delivery Droid tries to make entering orders as quick as possible. To do this
+        there are several screens dedicated to entering order numbers, order prices, and order addresses. Here you can
+        configure the order entry process to skip some of those screens or configure how they work.
+    </string>
     <string name="settings">Settings</string>
     <string name="Start_End_Shift">New Shift</string>
     <string name="tipHistory">Tip History</string>
@@ -222,7 +245,7 @@
     <string name="worstTip">Worst Tip</string>
     <string name="textMessage">text message</string>
     <string name="blank"></string>
-    <string name="tipsHistoryExportEmailTop">Delivery Droid Tip Information Email: </string>
+    <string name="tipsHistoryExportEmailTop">Delivery Droid Tip Information Email:</string>
     <string name="bankHeading">Bank Amount</string>
     <string name="totalYouOwe">Total You Owe</string>
     <string name="totalYourOwed">Total Your Owed</string>
@@ -250,16 +273,31 @@
     <string name="MoneyCollected">Money Collected</string>
     <string name="odometerTotal">Odometer total</string>
     <string name="creditsTitle">Credits</string>
-    <string name="creditsBody">Many thanks to the delivery drivers who have contributed to the design\n\nThis app was inspired by:\nMatt Henry\n\n Since then many drivers have contributed:\nNeil Sizemore\nMichael Barron Jr\nEssohlath Akadje\nSteven Poekert\nLes Prince\nCarlton Clay\nChris Garcia\nSarah Sutton\nFoum Recei\nAl Dolega\nJoshua McBride\nJason Soltan\nTyler Allen\nManuel Villa\nRobert Royce\nJoseph Ford\n</string>
+    <string name="creditsBody">Many thanks to the delivery drivers who have contributed to the design\n\nThis app was
+        inspired by:\nMatt Henry\n\n Since then many drivers have contributed:\nNeil Sizemore\nMichael Barron
+        Jr\nEssohlath Akadje\nSteven Poekert\nLes Prince\nCarlton Clay\nChris Garcia\nSarah Sutton\nFoum Recei\nAl
+        Dolega\nJoshua McBride\nJason Soltan\nTyler Allen\nManuel Villa\nRobert Royce\nJoseph Ford\n
+    </string>
     <string name="DeliveryZipCodes">Delivery Zip Codes</string>
-    <string name="DeliveryZipCodesSummery">Delivery Droid can download a list of street names by zip code for fast address input</string>
+    <string name="DeliveryZipCodesSummery">Delivery Droid can download a list of street names by zip code for fast
+        address input
+    </string>
     <string name="NewZipCode">New Zip Code</string>
-    <string name="AddZipCodeSum">Enter a zip code in which deliveries are made to set up areas to download the street names for.</string>
+    <string name="AddZipCodeSum">Enter a zip code in which deliveries are made to set up areas to download the street
+        names for.
+    </string>
     <string name="DeliveryCenterLatitude">Delivery Center Latitude</string>
-    <string name="DeliveryCenterLatitudeSum">Delivery droid will use the center longitude and latitude for address validation.</string>
+    <string name="DeliveryCenterLatitudeSum">Delivery droid will use the center longitude and latitude for address
+        validation.
+    </string>
     <string name="DeliveryCenterLng">Delivery Center Longitude</string>
-    <string name="DeliveryCenterLngSum">Delivery droid will use the center longitude and longitude for address validation.</string>
-    <string name="zipCodesHelp">Delivery Droid can download street names by zip code so that you can scroll through a list of streets instead of typing in the street name. This settings screen is where you can configure the zip codes in your delivery area.\nUnfortunatly this only works for our users in the USA. </string>
+    <string name="DeliveryCenterLngSum">Delivery droid will use the center longitude and longitude for address
+        validation.
+    </string>
+    <string name="zipCodesHelp">Delivery Droid can download street names by zip code so that you can scroll through a
+        list of streets instead of typing in the street name. This settings screen is where you can configure the zip
+        codes in your delivery area.\nUnfortunatly this only works for our users in the USA.
+    </string>
     <string name="maps_API_KEY">061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA</string>
     <string name="maps_API_KEY_RELASE">061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q</string>
     <string name="maps_AIP_KEY_debug">061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA</string>
@@ -267,13 +305,28 @@
     <string name="notes">Notes</string>
     <string name="BackupRestoreData">Backup &amp; Restore Data</string>
     <string name="dbHelpTitle">Help on Backup &amp; Restore</string>
-    <string name="dbHelpBody">Delivery Droid stores all your order and shift data in an SQL database file. By default the file is stored on your phones main memory along with the app.\n\nSelecting Backup Data will let you make a copy of the file and store it on your sd-card.\n\nKeep data on sdcard moves the database file to the sd-card and begins using it there instead of on the phones main app memory. After selecting this option you are free to manipulate the SQL file with any standard SQLite file tool.\n\nSelecting Import database backup will take the contents of a previously created backup file and import those records in to the active database. You must be careful not to import the same data more than 1 time or else you will have duplicate entries.\n\nSelect Use database backup to replace the contents of your current database with a previous backup. Warning this will delete everything in your active database, make sure you have made a backup of your active data first.</string>
-    <string name="databaseMergeWarning">If data is imported 2 times you will have duplicate data. Are you sure you want to import this data?</string>
-    <string name="databaseUseWarning">Warning, This will ERASE your current database and replace it the new data. Are you sure you want to start using this new data?</string>
+    <string name="dbHelpBody">Delivery Droid stores all your order and shift data in an SQL database file. By default
+        the file is stored on your phones main memory along with the app.\n\nSelecting Backup Data will let you make a
+        copy of the file and store it on your sd-card.\n\nKeep data on sdcard moves the database file to the sd-card and
+        begins using it there instead of on the phones main app memory. After selecting this option you are free to
+        manipulate the SQL file with any standard SQLite file tool.\n\nSelecting Import database backup will take the
+        contents of a previously created backup file and import those records in to the active database. You must be
+        careful not to import the same data more than 1 time or else you will have duplicate entries.\n\nSelect Use
+        database backup to replace the contents of your current database with a previous backup. Warning this will
+        delete everything in your active database, make sure you have made a backup of your active data first.
+    </string>
+    <string name="databaseMergeWarning">If data is imported 2 times you will have duplicate data. Are you sure you want
+        to import this data?
+    </string>
+    <string name="databaseUseWarning">Warning, This will ERASE your current database and replace it the new data. Are
+        you sure you want to start using this new data?
+    </string>
     <string name="RegenStreetListTitle">Download Street List</string>
     <string name="RegenStreetListSum">Download a street list for these zip codes to be used in address entry</string>
     <string name="advanced">Advanced</string>
-    <string name="centerPointHelp">When entering addresses, these GPS values are used to help limit suggestions to ones in your area.</string>
+    <string name="centerPointHelp">When entering addresses, these GPS values are used to help limit suggestions to ones
+        in your area.
+    </string>
     <string name="estimateShiftTime">Set shift time to first/last order</string>
     <string name="notes_this_apt">Notes (this apartment number)</string>
     <string name="All_Orders">All Orders</string>
@@ -333,15 +386,22 @@
     <string name="yourMoney">Your Money</string>
     <string name="loanFromWork">Loan from work</string>
     <string name="AddressHouseNumber">Address - House Number</string>
-    <string name="midnight"> mid- \n night </string>
+    <string name="midnight">mid- \n night</string>
     <string name="noon">noon</string>
     <string name="Number">Number</string>
     <string name="Price">Price</string>
     <string name="Finish">Finish</string>
     <string name="Order">Order</string>
-    <string name="cost_input_newcommer_text">Enter order price.\nNext time it will be listed here as a quick pick\n\nDon\'t find this screen useful? You can disable it for next time in the settings.</string>
-    <string name="number_input_newcommer_text">Enter order number.\nNext time suggestions will be shown.\n\nDon\'t find this screen useful? You can disable it for next time in the settings.</string>
-    <string name="address_input_newcommer_text">Enter delivery address, or type some text from a past order to look one up. Search by number or word in the notes.\n\nDon\'t find this screen useful? You can disable it for next time in the settings.</string>
+    <string name="cost_input_newcommer_text">Enter order price.\nNext time it will be listed here as a quick
+        pick\n\nDon\'t find this screen useful? You can disable it for next time in the settings.
+    </string>
+    <string name="number_input_newcommer_text">Enter order number.\nNext time suggestions will be shown.\n\nDon\'t find
+        this screen useful? You can disable it for next time in the settings.
+    </string>
+    <string name="address_input_newcommer_text">Enter delivery address, or type some text from a past order to look one
+        up. Search by number or word in the notes.\n\nDon\'t find this screen useful? You can disable it for next time
+        in the settings.
+    </string>
     <string name="hide_num_checkbox">Don\'t show again.</string>
     <string name="need_store_addr">You must enter the store address in the settings first</string>
     <string name="Advanced">Advanced</string>
@@ -397,7 +457,9 @@
     <string name="add">add</string>
     <string name="Drop_Notifications">Drop Notifications</string>
     <string name="Drop_Notification_Amount">Drop Notification Amount</string>
-    <string name="drop_notification_summary">When your cash on hand is more than this value, you will relieve a remind to make a drop.</string>
+    <string name="drop_notification_summary">When your cash on hand is more than this value, you will relieve a remind
+        to make a drop.
+    </string>
     <string name="Make_a_Drop">Make a Drop</string>
     <string name="Store_phone_number">Store phone number</string>
     <string name="Store_phone_setting_summary">This number will be callable from the call store menu item.</string>
@@ -405,8 +467,11 @@
     <string name="Call">Call</string>
     <string name="missing_phone_number">Missing phone number</string>
     <string name="Custom_Reimbursement">Custom Reimbursement</string>
-    <string name="Custom_reimpurs_summary">Get paid a different about for out of town deliveries. Enter it here.</string>
-    <string name="custom_pref_sum_2">Don\'t relieve mileage pay before 4pm, enter a negative custom to cancel the regular reimbursement.</string>
+    <string name="Custom_reimpurs_summary">Get paid a different about for out of town deliveries. Enter it here.
+    </string>
+    <string name="custom_pref_sum_2">Don\'t relieve mileage pay before 4pm, enter a negative custom to cancel the
+        regular reimbursement.
+    </string>
 
     <string-array name="homeListConficChoices">
         <item>Order Cost</item>
@@ -432,20 +497,30 @@
     <string name="Show_bestworst_tippers_icon">Show tip icons</string>
     <string name="Bad_tip_threshold">Bad tip threshold</string>
     <string name="Good_tip_threshold">Good tip threshold</string>
-    <string name="Show_an_icon_if_address_history_good_bad_tips">Show an icon if an address has a history of good or bad tips</string>
+    <string name="Show_an_icon_if_address_history_good_bad_tips">Show an icon if an address has a history of good or bad
+        tips
+    </string>
     <string name="List_display_options">List display options</string>
     <string name="Show_the_total_order_total_cost_to_the_customer">Show the total order cost to the customer</string>
     <string name="Show_the_last_tip_amount_for_the_address">Show the last tip amount for the address</string>
-    <string name="Show_the_number_of_times_you_have_delivered_to_the_same_address">Show the number of times you have delivered to the same address</string>
+    <string name="Show_the_number_of_times_you_have_delivered_to_the_same_address">Show the number of times you have
+        delivered to the same address
+    </string>
     <string name="Show_the_time_entered_when_adding_an_order">Show the time entered when adding an order</string>
-    <string name="Show_the_number_of_minutes_that_have_elapsed_since_the_time_entered_with_the_order">Show the number of minutes that have elapsed since the time entered with the order</string>
+    <string name="Show_the_number_of_minutes_that_have_elapsed_since_the_time_entered_with_the_order">Show the number of
+        minutes that have elapsed since the time entered with the order
+    </string>
     <string name="title_activity_settings__list_options">Settings_ListOptions</string>
     <string name="action_settings">Settings</string>
     <string name="customerDefaultSMS">Your food will arrive soon. The order total is ###</string>
     <string name="Legacy_Backup">Legacy Backup</string>
-    <string name="Legacy_Backup_summary">Manual backup was written before the Cloud backup. This should no longer be necessary</string>
+    <string name="Legacy_Backup_summary">Manual backup was written before the Cloud backup. This should no longer be
+        necessary
+    </string>
     <string name="Navigation_Settings">Navigation Settings</string>
-    <string name="Navigation_Settings_summary">Configure how the navigation app is launched to apps other than the default</string>
+    <string name="Navigation_Settings_summary">Configure how the navigation app is launched to apps other than the
+        default
+    </string>
 
     <string-array name="navigationOptions">
         <item>Navigation Intent</item>
@@ -464,7 +539,9 @@
     <string name="title_activity_gps_notes">GPS Notes</string>
     <string name="New_note">New note</string>
     <string name="GPS_notes">GPS notes</string>
-    <string name="gps_notes_no_list_help">Use GPS Notes For:\n  *Gate Codes\n  *Neighborhood information\n  *Angry dog locations. \n\nNotes will be sorted by how far you are from where you were when you entered the note.</string>
+    <string name="gps_notes_no_list_help">Use GPS Notes For:\n *Gate Codes\n *Neighborhood information\n *Angry dog
+        locations. \n\nNotes will be sorted by how far you are from where you were when you entered the note.
+    </string>
 
     <string-array name="gps_notes_list_options">
         <item>Edit Note</item>
@@ -476,7 +553,7 @@
     <string name="Discard">Discard</string>
     <string name="Save">Save</string>
     <string name="Add_GPS_Note">Add GPS Note</string>
-    <string name="Add_GPS_Note_dialog_summary">Enter a note to be tagged with your current GPS location. </string>
+    <string name="Add_GPS_Note_dialog_summary">Enter a note to be tagged with your current GPS location.</string>
     <string name="Orders">Orders</string>
     <string name="Gps_Notes">Gps Notes</string>
     <string name="Order_Details">Order Details</string>
@@ -487,16 +564,22 @@
     <string name="Gate_Codes">Gate Codes</string>
     <string name="ba_to_home_from_new_order">Are you sure you want to discard this order?</string>
     <string name="OutTheDoorSettings">Out The Door Settings</string>
-    <string name="OutTheDoorSettingsSum">Navigation, Customer Text Message, and other settings related to on the road</string>
+    <string name="OutTheDoorSettingsSum">Navigation, Customer Text Message, and other settings related to on the road
+    </string>
     <string name="PaymentOptionsSettings">Payment Types</string>
     <string name="PaymentOptionsSum">Disable payment types you do not use.</string>
     <string name="autoCutForPaste">Copy Address</string>
-    <string name="autoCutForPasteSum">Automatically put address in the clipboard when launching map or navigation app</string>
+    <string name="autoCutForPasteSum">Automatically put address in the clipboard when launching map or navigation app
+    </string>
     <string name="autoCutOptions">Auto Cut Options</string>
     <string name="autoCutForPasteNav">Launching Navigate</string>
     <string name="autoCutForPasteMap">Launching Map App</string>
-    <string name="autoCutForPasteNavSum">Check if you want the customers address to be copied to the clipboard when launching the navigate app</string>
-    <string name="autoCutForPasteMapSum">Check if you want the customers address to be copied to the clipboard when launching the map app</string>
+    <string name="autoCutForPasteNavSum">Check if you want the customers address to be copied to the clipboard when
+        launching the navigate app
+    </string>
+    <string name="autoCutForPasteMapSum">Check if you want the customers address to be copied to the clipboard when
+        launching the map app
+    </string>
     <string name="Navigation_App">Navigation App</string>
     <string name="Configure_which_navigation_app_is_launched">Configure which navigation app is launched</string>
     <string name="Mapping_App">Map App</string>
@@ -526,9 +609,11 @@
     <string name="location_aware_setting_summary">Switch to 2nd pay when GPS says you are away from the store.</string>
     <string name="pay_rate_button">Pay Rate Button</string>
     <string name="pay_rate_button_summary">Show a button on the home screen for switching your pay rate.</string>
-    <string name="on_road_hourly_rate_summary">The amount that you hey paid per hour by the store while on the road.</string>
+    <string name="on_road_hourly_rate_summary">The amount that you hey paid per hour by the store while on the road.
+    </string>
     <string name="switch_on_out_the_door">"Switch on Out The Door "</string>
-    <string name="switch_out_the_door_summary">Switch to the on road rate when you press the Out The Door button.</string>
+    <string name="switch_out_the_door_summary">Switch to the on road rate when you press the Out The Door button.
+    </string>
     <string name="Clock_In">Clock In</string>
     <string name="Current_Shift">Current Shift</string>
     <string name="Odometer">Odometer</string>
@@ -540,19 +625,25 @@
     <string name="Shifts_and_Hours">Shifts and Hours</string>
     <string name="set_amount_per_hour">Set how you start shifts and the amount you earn per hour.</string>
     <string name="hourly_pay">Hourly pay</string>
-    <string name="track_odometer_summary">Select if you want to have the ability to enter the odometer values for shifts</string>
-    <string name="track_odometer">Track Odometer </string>
-    <string name="estimate_hours_from_orders_summary">Select and the app uses the times of the first and last order as the shift start end times. This will be automatic but less accurate.</string>
+    <string name="track_odometer_summary">Select if you want to have the ability to enter the odometer values for
+        shifts
+    </string>
+    <string name="track_odometer">Track Odometer</string>
+    <string name="estimate_hours_from_orders_summary">Select and the app uses the times of the first and last order as
+        the shift start end times. This will be automatic but less accurate.
+    </string>
     <string name="estimate_hours_from_orders">Estimate Hours</string>
     <string name="Hours">Hours</string>
     <string name="Effective_time">Effective time</string>
-    <string name="payRateHelpDialog">Set your pay rate in the Shift screen. For past shifts go to the Order Summary, select the day the pay rate started, and set it from the Odometer and Hours screen.</string>
+    <string name="payRateHelpDialog">Set your pay rate in the Shift screen. For past shifts go to the Order Summary,
+        select the day the pay rate started, and set it from the Odometer and Hours screen.
+    </string>
     <string name="Set_new_pay_rate">Set new pay rate</string>
     <string name="title_activity_shift_set_wage">Shift Set Wage Activity</string>
     <string name="Odometer_Reading">Odometer Reading</string>
     <string name="Now">Now</string>
     <string name="Start_a_new_pay_rate">Start a new pay rate</string>
-    <string name="Change_pay_rate_starting_at">Change pay rate starting at </string>
+    <string name="Change_pay_rate_starting_at">Change pay rate starting at</string>
     <string name="minutes_ago">minutes ago</string>
     <string name="title_activity_shift_start_end_day">ShiftStartEndDay</string>
     <string name="Per_Hour">/hr</string>
@@ -568,8 +659,8 @@
     <string name="Radius_Arrive_Store_summary">How many meters from the store to switch to in store rate</string>
     <string name="Hourly_pay">Hourly pay</string>
     <string name="check_ourder_summary">Go to the Order Summary screen to review past orders</string>
-    <string name="Its_been">Its been </string>
-    <string name="hours_since_you"> hours since you entered your last order. Start a new shift now?</string>
+    <string name="Its_been">Its been</string>
+    <string name="hours_since_you">hours since you entered your last order. Start a new shift now?</string>
     <string name="Pending_Deliveries">Pending Deliveries</string>
     <string name="Pending_Deliveries_sum">Configure what data is displayed on the pending deliveries list</string>
     <string name="Current_GPS">Current Location</string>
@@ -584,7 +675,9 @@
     <string name="CLEAR">CLEAR</string>
     <string name="NEXT">NEXT</string>
     <string name="Phone_in_Notes">Phone in Notes</string>
-    <string name="Phone_in_Note_sum">Selecting this option will make the app scan notes for phone numbers and give the option to call that number.</string>
+    <string name="Phone_in_Note_sum">Selecting this option will make the app scan notes for phone numbers and give the
+        option to call that number.
+    </string>
     <string name="default_sms_text">The default text for customer SMS messages</string>
     <string name="customer_text_message_body">Customer text message body</string>
     <string name="round_trip_settings_summary">Route optimization and trip time calculations, uses data.</string>
@@ -607,22 +700,31 @@
     <string name="Alarm">Alarm</string>
     <string name="title_activity_backup_to_google_drive">BackupToGoogleDrive</string>
 
-    <string name="error_decoding_number">Error Decoding Number. </string>
+    <string name="error_decoding_number">Error Decoding Number.</string>
     <string name="error_building_map_markers">Error with map markers</string>
     <string name="address">address</string>
     <string name="order">order</string>
     <string name="number">number</string>
     <string name="price">price</string>
     <string name="phone">phone</string>
-    <string name="extr_pay_tooltip">Will be added to mileage pay. This can be used for items purchased that get reimbursed by the store.</string>
-    <string name="notes_tooltip">Notes are saved for all deliveries to this address. Next time you can pull up this address from something such as a phone number in the notes.</string>
+    <string name="extr_pay_tooltip">Will be added to mileage pay. This can be used for items purchased that get
+        reimbursed by the store.
+    </string>
+    <string name="notes_tooltip">Notes are saved for all deliveries to this address. Next time you can pull up this
+        address from something such as a phone number in the notes.
+    </string>
     <string name="Phone_Number_Screen">Phone Number Screen</string>
-    <string name="Phone_number_screen_summary">Show a dedicated screen for entering phone numbers as a customer id</string>
+    <string name="Phone_number_screen_summary">Show a dedicated screen for entering phone numbers as a customer id
+    </string>
     <string name="Delivery_Time_Screen">Delivery Time Screen</string>
     <string name="Delivery_time_screen_summary">Dedicated screen for entering delivery time</string>
     <string name="Filter_criteria">Filter Criteria</string>
-    <string name="filter_criteria_summary">Select a region filter criteria to limit the address suggestions to your area</string>
-    <string name="address_autocomplete_settings_summary">Configure the details of how suggestions for addresses are generated in the address input screen</string>
+    <string name="filter_criteria_summary">Select a region filter criteria to limit the address suggestions to your
+        area
+    </string>
+    <string name="address_autocomplete_settings_summary">Configure the details of how suggestions for addresses are
+        generated in the address input screen
+    </string>
     <string name="Address_Autocomplete_Configuration">Address Autocomplete Configuration</string>
     <string name="Rebuild_filter_criteria">Rebuild filter criteria</string>
     <string name="Rebuild_list_of_filter_criteria_regions">Rebuild list of filter criteria regions</string>
@@ -651,11 +753,16 @@
         <item>1</item>
     </string-array>
 
-    <string name="undeliverable_mileage_pay_summary">Check if you get paid mileage pay for orders marked as undeliverable</string>
+    <string name="undeliverable_mileage_pay_summary">Check if you get paid mileage pay for orders marked as
+        undeliverable
+    </string>
     <string name="undeliverable_mileage_pay">Undeliverable Mileage Pay</string>
-    <string name="undeliverable_mileagepay_summary">Check if you receive mileage pay for orders that are marked undeliverable</string>
+    <string name="undeliverable_mileagepay_summary">Check if you receive mileage pay for orders that are marked
+        undeliverable
+    </string>
     <string name="Undeliverable_mileage_pay">Undeliverable Mileage Page</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="map_downloads">Map Downloads</string>
 
 </resources>
 
