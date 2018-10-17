@@ -66,6 +66,7 @@ public class Order extends NotedObject implements Comparable<Order>, Serializabl
 	}
 
 	static long GetTimeFromString(final String s, final String format) throws ParseException {
+		if (s==null) return 0;
 		final SimpleDateFormat formatter = new SimpleDateFormat(format);
 		long t;
 		try {

@@ -271,7 +271,8 @@ public class StreetList extends Thread {
 
 	public static StreetList LoadState(final Context context) {
 		StreetList list = new StreetList(context);
-		if (list.needsData==false) {
+
+		/*if (list.needsData==false) {
 			return list;
 		}
 		
@@ -371,28 +372,10 @@ public class StreetList extends Thread {
 		} catch (final Exception e) {
 			System.err.println("Excetiopn in (que)LoadState. " + e.getMessage());
 		} // catch
-		/*
-		 * // String path = context.getFilesDir().toString(); String StreetsFileName = path + STREET_NAMES_FILE;
-		 * 
-		 * theFile = new File(StreetsFileName);
-		 * 
-		 * try { // setup a stream to a physical file on the filesystem oStream = new FileInputStream(theFile); outStream = new
-		 * BufferedInputStream(oStream, 8192);
-		 * 
-		 * // attach a stream capable of writing objects to the stream that is // connected to the file objStream = new
-		 * DataInputStream(outStream);
-		 * 
-		 * int size = objStream.readInt(); for (int i = 0; i < size; i++) { Street s = Street.read(objStream);
-		 * list.streets.insert(s); }
-		 * 
-		 * // close down the streams objStream.close(); outStream.close(); } catch (IOException e) {
-		 * System.err.println("IOExcetiopn in (street)LoadState. " + e.getMessage()); e.printStackTrace(); // theFile.delete(); }
-		 * catch (Exception e) { System.err.println("Excetiopn in LoadState. " + e.getMessage()); } // catch
-		 */
 
 		
 		//Log.i("time LoadState", "" + (t2 - t1));
-
+*/
 		// TODO: if we dont have zip codes find them
 		return list;
 

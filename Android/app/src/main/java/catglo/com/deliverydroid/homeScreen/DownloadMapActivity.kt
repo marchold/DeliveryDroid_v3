@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -37,19 +38,24 @@ class DownloadMapActivity : AppCompatActivity() {
             addAll(searchForMapFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)))
             addAll(searchForMapFiles(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)))
             addAll(searchForMapFiles(Environment.getExternalStorageDirectory()))
+
         }
-        downloadedMapList.adapter = DownloadMapAdapter(this, mapFilesList)
-        downloadedMapList.visibility = View.VISIBLE
-        noDownloadsHelpView.visibility = View.GONE
+        if (mapFilesList.size>0) {
+            downloadedMapList.adapter = DownloadMapAdapter(this, mapFilesList)
+            downloadedMapList.visibility = View.VISIBLE
+            noDownloadsHelpView.visibility = View.GONE
+        }
     }
 
-    fun searchForMapFiles(val pathToSearch: File) : ArrayList<DownloadedMap>
+    fun searchForMapFiles(pathToSearch: File) : ArrayList<DownloadedMap>
     {
         var result =  ArrayList<DownloadedMap>()
         var mapFile = HashMap<String,DownloadedMap>()
         if (pathToSearch.exists() && pathToSearch.isDirectory)
         {
-            pathToSearch.listFiles().forEach {
+            val fileList = pathToSearch.listFiles()
+            fileList?.forEach {
+             Log.i("DD",it.absolutePath)
                 if (it.extension == "map")
                 {
                     var map = mapFile[it.nameWithoutExtension]

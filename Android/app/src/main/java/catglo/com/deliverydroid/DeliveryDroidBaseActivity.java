@@ -31,7 +31,7 @@ public class DeliveryDroidBaseActivity extends AppCompatActivity implements Tool
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		getSupportActionBar().hide();
+		if (getSupportActionBar()!=null) getSupportActionBar().hide();
         dataBase = tools.create(this);
 
 

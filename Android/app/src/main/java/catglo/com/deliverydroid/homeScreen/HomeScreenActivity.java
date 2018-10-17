@@ -3,9 +3,6 @@ package catglo.com.deliverydroid.homeScreen;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +16,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -260,20 +259,22 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE_ACCESS_LOCATION);
 			}
+			else {
 
-			Location lastKnownLocation = locationManager.getLastKnownLocation(bestProvider);//TODO: DEAL with null (if not google api's)
-			if (lastKnownLocation==null){
-				//TODO:Display error-Missing Google API's OR Location Disabled
-			} else {
-				prefEditor.putFloat("centrPoint_lat", (float) lastKnownLocation.getLatitude());
-				prefEditor.putFloat("centrPoint_lng", (float) lastKnownLocation.getLongitude());
-				prefEditor.putString("centrPoint_lat_s", lastKnownLocation.getLatitude()+"");
-				prefEditor.putString("centrPoint_lng_s", lastKnownLocation.getLongitude()+"");	
+                Location lastKnownLocation = locationManager.getLastKnownLocation(bestProvider);//TODO: DEAL with null (if not google api's)
+                if (lastKnownLocation == null) {
+                    //TODO:Display error-Missing Google API's OR Location Disabled
+                } else {
+                    prefEditor.putFloat("centrPoint_lat", (float) lastKnownLocation.getLatitude());
+                    prefEditor.putFloat("centrPoint_lng", (float) lastKnownLocation.getLongitude());
+                    prefEditor.putString("centrPoint_lat_s", lastKnownLocation.getLatitude() + "");
+                    prefEditor.putString("centrPoint_lng_s", lastKnownLocation.getLongitude() + "");
 			/*	new WebServiceUpdateLocalePreferances(sharedPreferences,(float) lastKnownLocation.getLatitude(),(float) lastKnownLocation.getLongitude(),new WebServiceUpdateLocalePreferances.LocalityListener(){public void result(LocalityInfo info) {
 					prefEditor.putString("addressFilterComponents", info.filter);
 					prefEditor.commit();
 				}}).lookup();*/
-			}
+                }
+            }
     	}
     	prefEditor.putFloat("dileveryRadius",0.1f);
 
@@ -616,7 +617,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 				menuCustomizeListButton.setVisibility(View.VISIBLE);
 				sortUnderline.setVisibility(View.VISIBLE);
 				fragment = new HomeScreen_ListFragmentDragDrop();//TODO: need a solution to pass gestureListener in
-	            getFragmentManager().beginTransaction().replace(R.id.fragmentContainerFrame, fragment).commit();
+	            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerFrame, fragment).commit();
 	            prefEditor.putInt("currentFragment", SORT);
 	            prefEditor.commit();
 			break;
@@ -624,7 +625,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 				menuCustomizeListButton.setVisibility(View.GONE);
 				mapUnderline.setVisibility(View.VISIBLE);
 				fragment = new HomeScreen_MapFragment();
-	            getFragmentManager().beginTransaction().replace(R.id.fragmentContainerFrame, fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerFrame, fragment).commit();
 	            prefEditor.putInt("currentFragment", MAP);
 	            prefEditor.commit();
 			break;

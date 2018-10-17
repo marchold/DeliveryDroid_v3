@@ -2,7 +2,7 @@ package catglo.com.widgets;
 
 import android.app.LocalActivityManager;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 @SuppressWarnings("deprecation")

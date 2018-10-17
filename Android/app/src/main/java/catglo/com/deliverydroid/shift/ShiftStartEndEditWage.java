@@ -6,13 +6,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
+import android.widget.TimePicker;
 import catglo.com.deliveryDatabase.Shift;
 import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 
 import catglo.com.deliverydroid.Tools;
-import net.simonvt.timepicker.TimePicker;
+
 
 public class ShiftStartEndEditWage extends DeliveryDroidBaseActivity {
 
