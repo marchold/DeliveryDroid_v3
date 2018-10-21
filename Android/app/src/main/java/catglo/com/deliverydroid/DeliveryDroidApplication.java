@@ -1,6 +1,7 @@
 package catglo.com.deliverydroid;
 
 import android.app.Application;
+import android.util.Log;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 public class DeliveryDroidApplication extends Application {
@@ -8,5 +9,6 @@ public class DeliveryDroidApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		JodaTimeAndroid.init(this);
+
 	}
 }

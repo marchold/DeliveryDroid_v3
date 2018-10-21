@@ -4,14 +4,29 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+ext {
+    compileSdkVersion = 28
+    supportLibVersion = "28.0.0"
+    mapsforgeLibVersion = "0.10.0"
+    googlePlayServicesVersion = "16.0.0"
+    torrentstreamVersion = "2.5.0"
+
+}
+
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "catglo.com.deliverydroid"
+        applicationId "com.catglo.deliverydroid"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 150
+        versionName "5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,19 +35,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'GoogleMapsApiKey', "\"$System.env.GoogleMapsApiKey\""
+    }
     buildToolsVersion '28.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
-
-ext {
-    compileSdkVersion = 28
-    supportLibVersion = "28.0.0"
-    mapsforgeLibVersion = "0.10.0"
-    googlePlayServicesVersion = "16.0.0"
-    torrentstreamVersion = "2.5.0"
 }
 
 dependencies {
@@ -41,7 +52,9 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:support-v13:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
+    implementation "com.android.support:design:$supportLibVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
 
     implementation "com.google.android.gms:play-services-drive:$googlePlayServicesVersion"
     implementation "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"

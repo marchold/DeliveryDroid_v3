@@ -29,13 +29,13 @@ import android.widget.Toast;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
-import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
-import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.*;
 import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.Route;
 import catglo.com.deliverydroid.settings.SettingsActivity;
+import org.jetbrains.annotations.NotNull;
 import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.reader.MapFile;
 
 
 import java.util.ArrayList;
@@ -168,58 +168,6 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
     	editor.putInt("mapZoomLevel", level);
     	editor.commit();
     }
-	
-/*	class MapOverlay extends ItemizedOverlay<OverlayItem> {
-		
-	//	private Context context;
-
-		public MapOverlay(Drawable defaultMarker,Context context) {
-			super(boundCenterBottom(defaultMarker));
-			//this.context = context;
-			mOverlays = new ArrayList<OverlayItem>();
-			populate();
-		}
-		
-
-	    // Removes overlay item i
-	    public void removeItem(int i){
-	        mOverlays.remove(i);
-	        populate();
-	    }
-
-		@Override
-		protected OverlayItem createItem(int i) {
-			 return mOverlays.get(i);
-		}
-
-		@Override
-		public int size() {
-			return mOverlays.size();
-		}
-		
-		public void addOverlay(OverlayItem overlay) {
-		    mOverlays.add(overlay);
-		    setLastFocusedIndex(-1);
-		    populate();
-		}
-		
-		@Override
-		protected boolean onTap(int index) {
-		  OverlayItem item = mOverlays.get(index);
-
-		  return false;
-		}
-		
-		public void clear() {
-			  mOverlays.clear();
-			  mapView.removeAllViews();
-			  //numItems = 0;
-			  setLastFocusedIndex(-1);
-			  populate();
-		}
-
-		
-	}*/
 
 	
     @Override
@@ -316,8 +264,9 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		
         updateUI();
         
-        if (sharedPreferences.getBoolean("optimizeCheckbox", false)    == true 
-       		 || sharedPreferences.getBoolean("calculateRouteTimes", false) == true){
+        if (   sharedPreferences.getBoolean("optimizeCheckbox", false)
+       		|| sharedPreferences.getBoolean("calculateRouteTimes", false))
+        {
    			roundTripTimeArea.setVisibility(View.VISIBLE);
    		} else {
    			roundTripTimeArea.setVisibility(View.GONE);
@@ -417,14 +366,25 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		lat = Float.parseFloat(sharedPreferences.getString("centrPoint_lat_s", ""+lat));
 		lng = Float.parseFloat(sharedPreferences.getString("centrPoint_lng_s", ""+lng));
         Log.i("MAP","Centring map to "+lng+","+lat);
-	//	MapController mc = mapView.getController();
-	//	mc.setCenter(new GeoPoint((int)(lat*1e6),(int)(lng*1e6)));
-		
-		
-		int zoom = sharedPreferences.getInt("mapZoomLevel",15);
-		
-		
-	//	mc.setZoom(zoom);
+
+
+		DownloadedMap.Companion.getMapForCurrentLocation(this, new MapReadyListener() {
+			@Override
+			public void onMapReady(@NotNull DownloadedMap map) {
+                int zoom = sharedPreferences.getInt("mapZoomLevel",15);
+
+                //	MapController mc = mapView.getController();
+                //	mc.setCenter(new GeoPoint((int)(lat*1e6),(int)(lng*1e6)));
+
+
+
+
+
+                //	mc.setZoom(zoom);
+			}
+		});
+
+
 		
 		if (sharedPreferences.getString("storeAddress", "").length()==0 || orders.size() < 2 || orders.size() > 8){
 			optimizeClickable.setVisibility(View.GONE);

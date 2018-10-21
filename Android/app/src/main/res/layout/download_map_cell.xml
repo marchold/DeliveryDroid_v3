@@ -1,29 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="65dp">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
 
-    <TextView
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:text="Map file title"
-            android:id="@+id/mapTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
-    <TextView android:layout_margin="5dp"
-              android:text="Has Map"
-              android:layout_alignParentRight="true"
-              android:id="@+id/hasMap"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:background="@drawable/cell_background">
 
-    <TextView android:layout_margin="5dp"
-              android:text="Has Poi"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentBottom="true"
-              android:id="@+id/hasPoi"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
+        <ImageView android:id="@+id/checkmark"
+                   android:layout_centerVertical="true"
+                   android:src="@drawable/ic_check_dark"
+                    android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+        <TextView
+                android:layout_toRightOf="@+id/checkmark"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:text="Map file title"
+                android:id="@+id/mapTitle"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="65dp"/>
+
+        <ImageView android:layout_margin="10dp"
+                   android:src="@drawable/map_check"
+                   android:layout_marginRight="15dp"
+                   android:layout_alignParentRight="true"
+                   android:id="@+id/hasMap"
+                   android:layout_width="30dp"
+                   android:layout_height="15dp"/>
+
+        <ImageView android:layout_margin="10dp"
+                   android:src="@drawable/poi_ok"
+                   android:layout_marginRight="15dp"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentBottom="true"
+                   android:id="@+id/hasPoi"
+                   android:layout_width="30dp"
+                   android:layout_height="15dp"/>
+
+        <ImageView android:id="@+id/warningIcon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                   android:layout_marginRight="15dp"
+                   android:src="@drawable/ic_warning"/>
+
+        <TextView android:id="@+id/warningText"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginRight="40dp"
+                  android:layout_centerVertical="true"
+                  android:text="Missing Map File"
+                  android:textColor="@color/medium_grey"/>
+
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="128mb"
+                  android:textColor="@color/medium_grey"
+                  android:layout_alignParentBottom="true"
+                  android:layout_alignLeft="@id/mapTitle"
+                  android:layout_marginBottom="5dp"/>
+
+    </RelativeLayout>
+</FrameLayout>
