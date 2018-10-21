@@ -2,4 +2,6 @@
 
 This is the 3rd revision of [Delivery Droid](https://play.google.com/store/apps/details?id=com.catglo.deliverydroid "Delivery Droid") 
 
-The 2nd revision uses google API's that are no longer public so the address autocomplete no longer works. The 3rd revision will use [MapsForge](https://github.com/mapsforge/mapsforge "MapsForge") so as not to rely on google any more. 
+The 2nd revision uses google API's that are no longer public so the address autocomplete no longer works. The 3rd revision will use [MapsForge](https://github.com/mapsforge/mapsforge "MapsForge") so as not to rely on google as much. 
+
+If you want to build the project check out the [build instructions](https://github.com/marchold/DeliveryDroid_v3/blob/master/HowToBuild.md) 
