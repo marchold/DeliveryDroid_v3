@@ -13,18 +13,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import catglo.com.api.GoogleAddressSuggester;
 
 
-public class AddressHistorySuggestior //extends AddressSuggestiorGoogle
+public class AddressHistorySuggester extends GoogleAddressSuggester
 {
-/*
-	
 	float range;
 	private ArrayList<AddressInfo> recientStreetNames;
 	public ArrayList<AddressInfo> addressList;
 
 	private String prefKey;
-	
+	private AddressSuggestionCommitor commitor;
+
 	public interface AddressResultListener {
 		public void onResultAddress(ArrayList<AddressInfo> results);
 	}
@@ -32,7 +32,7 @@ public class AddressHistorySuggestior //extends AddressSuggestiorGoogle
 	
 	final String fileNamePrefix="history____";
 		
-	public AddressHistorySuggestior(Context context,  String prefKey, final AddressResultListener commit){
+	public AddressHistorySuggester(Context context, String prefKey, final AddressResultListener commit){
 		super(context,null);
 	
 		FileInputStream fis;
@@ -47,6 +47,10 @@ public class AddressHistorySuggestior //extends AddressSuggestiorGoogle
 
 		this.prefKey = prefKey;
         this.resultListener = commit;
+	}
+
+	public interface AddressSuggestionCommitor {
+		void commit(ArrayList<AddressInfo> addressList, String searchString);
 	}
 
 	Pattern initialNumebrs = Pattern.compile("^([0-9]+)");
@@ -77,7 +81,7 @@ public class AddressHistorySuggestior //extends AddressSuggestiorGoogle
 				}
 			}
 		
-			AddressHistorySuggestior.this.addressList = list;
+			AddressHistorySuggester.this.addressList = list;
 			if (resultListener != null) {
 				resultListener.onResultAddress(list);
 			}
@@ -131,5 +135,5 @@ public class AddressHistorySuggestior //extends AddressSuggestiorGoogle
 		}
 		
 	}
-	*/
+
 }

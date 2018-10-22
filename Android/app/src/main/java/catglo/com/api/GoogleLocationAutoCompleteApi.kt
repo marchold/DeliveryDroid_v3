@@ -1,10 +1,9 @@
-package catglo.com.API
+package catglo.com.api
 
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Criteria
-import android.location.Location
 import android.location.LocationManager
 
 import catglo.com.deliveryDatabase.AddressInfo
@@ -12,13 +11,11 @@ import catglo.com.deliverydroid.BuildConfig
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.maps.model.LatLng
 
 
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 

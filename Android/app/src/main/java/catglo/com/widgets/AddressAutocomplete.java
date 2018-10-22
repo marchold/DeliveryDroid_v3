@@ -2,13 +2,15 @@ package catglo.com.widgets;
 
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
+
+import catglo.com.api.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliveryDatabase.DataBase;
@@ -17,7 +19,7 @@ import catglo.com.deliveryDatabase.DataBase;
 import java.util.ArrayList;
 
 
-public class AddressAutocomplete extends AutoCompleteTextView {
+public class AddressAutocomplete extends AppCompatAutoCompleteTextView {
 
 	private TextWatcher textWatcher;
 	private AddressSuggester suggestor;
@@ -38,7 +40,7 @@ public class AddressAutocomplete extends AutoCompleteTextView {
 				}
 			}
 		};
-       /* suggestor = new AddressSuggester(context,dataBase,new GoogleAddressSuggester.AddressListListener() {
+        suggestor = new AddressSuggester(context,dataBase,new GoogleAddressSuggester.AddressListListener() {
             @Override
             public void commit(ArrayList<AddressInfo> addressList, String searchString) {
                 try {
@@ -54,7 +56,7 @@ public class AddressAutocomplete extends AutoCompleteTextView {
                     e.printStackTrace();
                     //Im guessing this happens when the result comes back after the activity is not using the view or finished.
                 }
-            }}); */
+            }});
     	addTextChangedListener(textWatcher);
 	}
 	

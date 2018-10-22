@@ -50,7 +50,13 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements  On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TextView tv = (TextView)view.findViewById(android.R.id.text1);
         edit.setText(tv.getText());
-        edit.setSelection(tv.getText().length()-1);
+        try {
+            edit.setSelection(tv.getText().length());
+        }
+        catch (Exception e)
+        {
+            edit.setSelection(tv.getText().length() - 1);
+        }
     }
 
     /* If the activity implements this interface it will get the callback

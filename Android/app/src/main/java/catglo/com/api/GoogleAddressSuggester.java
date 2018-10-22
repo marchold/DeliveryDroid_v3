@@ -1,4 +1,4 @@
-package catglo.com.API;
+package catglo.com.api;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,7 +34,7 @@ public class GoogleAddressSuggester {
     private final SharedPreferences sharedPreferences;
     private final String addressFilterComponents;
     private final RequestQueue requestQue;
-    private final Context context;
+    protected final Context context;
 
     public interface AddressListListener {
         void commit(ArrayList<AddressInfo> addressList, String searchString);
@@ -81,9 +81,9 @@ public class GoogleAddressSuggester {
             double lat = location.getLatitude();
             double lng = location.getLongitude();
             String bounds = "&bounds=" + (lat - range) + "," + (lng - range) + URLEncoder.encode("|") + (lat + range) + "," + (lng + range);
-            url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address + bounds + "&sensor=true&key="+BuildConfig.GoogleMapsApiKey;
+            url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + bounds + "&sensor=true&key="+BuildConfig.GoogleMapsApiKey;
         } else {
-            url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=true&key="+BuildConfig.GoogleMapsApiKey;
+            url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=true&key="+BuildConfig.GoogleMapsApiKey;
         }
 
         if (addressFilterComponents.length() > 1) {

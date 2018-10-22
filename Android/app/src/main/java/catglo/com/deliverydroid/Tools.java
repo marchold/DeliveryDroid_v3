@@ -402,7 +402,10 @@ public class Tools {
 
             @Override
 		    public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
+
+
+                //TODO: This does not work we need a new way of detecting the on screen keyboard`
+             /*   activityRootView.getWindowVisibleDisplayFrame(r);
                 int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
                 //Log.i("MARC", "height dif " + heightDiff);
                 boolean isOpen = !(heightDiff < 200);
@@ -410,7 +413,8 @@ public class Tools {
                     return;
                 }
                 wasOpened = isOpen;
-                listener.onVisibilityChanged(isOpen);
+                listener.onVisibilityChanged(isOpen);*/
+
             }
 	    });
     }

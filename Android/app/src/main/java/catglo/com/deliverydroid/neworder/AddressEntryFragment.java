@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
+import catglo.com.api.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliverydroid.R;
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
  * Created by goblets on 2/16/14.
  */
 public class AddressEntryFragment extends ButtonPadFragment {
-  //  GoogleAddressSuggester addressSuggestior;
+    AddressSuggester addressSuggestior;
     Pattern pattern;
     private int		inputStage;
     ArrayList<AddressInfo> addressList;
@@ -59,12 +60,12 @@ public class AddressEntryFragment extends ButtonPadFragment {
 
         NewOrderActivity activity = (NewOrderActivity)getActivity();
 
-    /*    addressSuggestior = new AddressSuggester(activity,activity.dataBase,new GoogleAddressSuggester.AddressListListener() {
+        addressSuggestior = new AddressSuggester(getContext(), activity.dataBase, new GoogleAddressSuggester.AddressListListener() {
             @Override
             public void commit(ArrayList<AddressInfo> addressList, String searchString) {
                 if (   addressList  ==null
-                    || getActivity()==null
-                    || getActivity().isFinishing()==true)
+                        || getActivity()==null
+                        || getActivity().isFinishing()==true)
                 {
                     return;
                 }
@@ -77,7 +78,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
                 }
             }
         });
-*/
+
         edit.setText(activity.order.address);
 
 
@@ -102,6 +103,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
         return InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS;
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater,container,savedInstanceState);
 
@@ -109,7 +111,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
         pattern = Pattern.compile("([0-9\\-\\#\\@\\*_]*\\s)(.*)");
 
 
-        /*setOnKeyListener(new View.OnKeyListener(){
+       /* setOnKeyListener(new View.OnKeyListener(){
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction()==KeyEvent.ACTION_UP) {
                     if (keyCode == KeyEvent.KEYCODE_SPACE){
@@ -172,7 +174,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
         if (edit.isFocused()) {
             selectedPoint = null;
         }
-    //    addressSuggestior.lookup(newText);
+        if (addressSuggestior!=null) addressSuggestior.lookup(newText);
 
     }
 }

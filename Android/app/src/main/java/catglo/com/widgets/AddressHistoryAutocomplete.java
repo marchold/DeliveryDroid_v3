@@ -3,20 +3,22 @@ package catglo.com.widgets;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+
 import android.widget.Filterable;
 import android.widget.ListAdapter;
-import catglo.com.deliveryDatabase.AddressHistorySuggestior;
+import catglo.com.deliveryDatabase.AddressHistorySuggester;
+import catglo.com.deliveryDatabase.AddressHistorySuggester.AddressResultListener;
 import catglo.com.deliveryDatabase.AddressInfo;
 
 
-public class AddressHistoryAutocomplete extends AutoCompleteTextView {
+public class AddressHistoryAutocomplete extends AppCompatAutoCompleteTextView {
 
 	public AddressHistoryAutocomplete(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -40,7 +42,7 @@ public class AddressHistoryAutocomplete extends AutoCompleteTextView {
 	}
 
 	private TextWatcher textWatcher;
-	private AddressHistorySuggestior suggestor;
+	private AddressHistorySuggester suggestor;
 	Context context;
 	private String prefKey;
 	AddressInfo selectedAddress=null;
@@ -75,24 +77,24 @@ public class AddressHistoryAutocomplete extends AutoCompleteTextView {
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (count==1){
-				//	suggestor.lookup(""+s);
+					suggestor.lookup(""+s);
 				}
 			}
 		};
 		
 		//TODO: Address history suggester needs to return GPS coordinates as well as the address so we can save them in the settings and use them for geol
-	/*	suggestor = new AddressHistorySuggestior(context,prefKey, new AddressResultListener(){public void onResultAddress(final ArrayList<AddressInfo> results) {post(new Runnable(){public void run(){
+		suggestor = new AddressHistorySuggester(context,prefKey, new AddressResultListener(){public void onResultAddress(final ArrayList<AddressInfo> results) {post(new Runnable(){public void run(){
 			ArrayAdapter<AddressInfo> streets = new ArrayAdapter<AddressInfo>(context, android.R.layout.simple_dropdown_item_1line, results);
 			AddressHistoryAutocomplete.this.setAdapter(streets);
 			AddressHistoryAutocomplete.this.showDropDown();
 		}});}});
 		
-		*/
+
     	addTextChangedListener(textWatcher);
 	}
 
 	public void saveResult(AddressInfo value) {
-	//	suggestor.saveResult(value);
+		suggestor.saveResult(value);
 	}
 
 	public AddressInfo getSelectedAddress() {
