@@ -17,8 +17,12 @@ First go to the google link to get started [Get started with google maps platfor
 4. On a mac you can edit your ~/.bash_profile and add the api key
 
     export GoogleMapsApiKey=THIS_IS_WHERE_THE_KEY_GOES
+    export GoogleAnalyticsTrackingId=THIS_IS_WHERE_THE_TRACKING_ID_GOES
 
 5. Replace **THIS_IS_WHERE_THE_KEY_GOES** with the key you got from google. On windows its a little different you can google how to set environment variables in windows.
+6. If you want google analytics add a tracking id in the place of **THIS_IS_WHERE_THE_TRACKING_ID_GOES** 
+
+
 
 
 ## Download Android Studio
