@@ -1,5 +1,6 @@
 package catglo.com.deliverydroid.homeScreen;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,10 +35,18 @@ import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.Route;
 import catglo.com.deliverydroid.settings.SettingsActivity;
 import org.jetbrains.annotations.NotNull;
+import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.MapPosition;
+import org.mapsforge.map.android.util.AndroidPreferences;
+import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
+import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.renderer.TileRendererLayer;
+import org.mapsforge.map.model.IMapViewPosition;
 import org.mapsforge.map.reader.MapFile;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -304,8 +313,10 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			return false;
 		//}
 	}};
-    
-    void updateUI(){
+
+
+    @SuppressLint("MissingPermission")
+	void updateUI(){
     	//First get all the orders in to an array
     	if (sharedPreferences.getString("storeAddress", "").length()==0){
 			roundTripTime.setText("need store address");
@@ -368,19 +379,48 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
         Log.i("MAP","Centring map to "+lng+","+lat);
 
 
+        List<TileCache> tileCaches = new ArrayList<TileCache>();
+
+		float finalLng = lng;
+		float finalLat = lat;
 		DownloadedMap.Companion.getMapForCurrentLocation(this, new MapReadyListener() {
 			@Override
 			public void onMapReady(@NotNull DownloadedMap map) {
+                MapFile mapFile = new MapFile(map.getMapFile());
+
                 int zoom = sharedPreferences.getInt("mapZoomLevel",15);
 
                 //	MapController mc = mapView.getController();
                 //	mc.setCenter(new GeoPoint((int)(lat*1e6),(int)(lng*1e6)));
-
-
-
-
-
                 //	mc.setZoom(zoom);
+				AndroidPreferences preferencesFacade = new AndroidPreferences(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
+				mapView.getModel().init(preferencesFacade);
+				mapView.setClickable(true);
+				mapView.getMapScaleBar().setVisible(true);
+				mapView.setBuiltInZoomControls(true);
+
+
+                tileCaches.add(AndroidUtil.createTileCache(HomeScreen_MapFragmentActivity.this, "AA",
+                        mapView.getModel().displayModel.getTileSize(), 1.0f,
+                        mapView.getModel().frameBufferModel.getOverdrawFactor()));
+
+				TileRendererLayer tileRendererLayer = AndroidUtil.createTileRendererLayer(tileCaches.get(0),
+						mapView.getModel().mapViewPosition, mapFile, DeliveryDroidMapRenderTheme.OSMARENDER, false, true, false);
+				mapView.getLayerManager().getLayers().add(tileRendererLayer);
+
+
+                IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+
+                LatLong center = mvp.getCenter();
+
+                if (center.equals(new LatLong(0, 0))) {
+                    mvp.setMapPosition(new MapPosition(mapFile.startPosition(), (byte)15));
+                }
+               // mvp.setZoomLevelMax(getZoomLevelMax());
+               // mvp.setZoomLevelMin(getZoomLevelMin());
+
+
+
 			}
 		});
 

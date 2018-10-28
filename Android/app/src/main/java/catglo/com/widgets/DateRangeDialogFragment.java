@@ -116,5 +116,7 @@ public class DateRangeDialogFragment extends DialogFragment {
 		startDatePicker.setVisibility(View.GONE);
 		endDatePicker.setVisibility(View.VISIBLE);
 		hasNavigated = true;
+
+
 	}
 }
