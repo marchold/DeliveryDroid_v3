@@ -413,11 +413,11 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 
                 LatLong center = mvp.getCenter();
 
-                if (center.equals(new LatLong(0, 0))) {
+                //if (center.equals(new LatLong(0, 0))) {
                     mvp.setMapPosition(new MapPosition(mapFile.startPosition(), (byte)15));
-                }
-               // mvp.setZoomLevelMax(getZoomLevelMax());
-               // mvp.setZoomLevelMin(getZoomLevelMin());
+                //}
+               mvp.setZoomLevelMax((byte)18);
+               mvp.setZoomLevelMin((byte)8);
 
 
 

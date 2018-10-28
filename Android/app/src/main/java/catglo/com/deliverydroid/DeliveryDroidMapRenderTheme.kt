@@ -6,8 +6,8 @@ import java.io.InputStream
 
 enum class DeliveryDroidMapRenderTheme  constructor(private val path: String) : XmlRenderTheme {
 
-    DEFAULT("/assets/mapsforge/default.xml"),
-    OSMARENDER("/assets/mapsforge/osmarender.xml");
+    DEFAULT("/assets/default.xml"),
+    OSMARENDER("/assets/osmarender.xml");
 
     override fun getMenuCallback(): XmlRenderThemeMenuCallback? { return null }
 
