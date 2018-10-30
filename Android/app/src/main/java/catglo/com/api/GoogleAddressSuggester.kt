@@ -51,12 +51,11 @@ open class GoogleAddressSuggester(protected val context: Context, var resultList
             val location = getLastKnownLocation(bestProvider)
             val results : List<Address>
             if (location != null) {
-                results = geocoder.getFromLocationName(searchAddress,40)
-                /*
+                results = geocoder.getFromLocationName(searchAddress,40,
                     (location.latitude - range),
                     (location.longitude - range),
                     (location.latitude + range),
-                    (location.longitude + range))*/
+                    (location.longitude + range))
 
             } else {
                 results = geocoder.getFromLocationName(searchAddress,40)
