@@ -381,9 +381,9 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 
         List<TileCache> tileCaches = new ArrayList<TileCache>();
 
-		float finalLng = lng;
-		float finalLat = lat;
-		DownloadedMap.Companion.getMapForCurrentLocation(this, new MapReadyListener() {
+        float finalLng1 = lng;
+        float finalLat1 = lat;
+        DownloadedMap.Companion.getMapForCurrentLocation(this, new MapReadyListener() {
 			@Override
 			public void onMapReady(@NotNull DownloadedMap map) {
                 MapFile mapFile = new MapFile(map.getMapFile());
@@ -414,11 +414,12 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                 LatLong center = mvp.getCenter();
 
                 //if (center.equals(new LatLong(0, 0))) {
-                    mvp.setMapPosition(new MapPosition(mapFile.startPosition(), (byte)15));
+                    mvp.setMapPosition(new MapPosition(new LatLong(finalLat1, finalLng1), (byte)15));
                 //}
                mvp.setZoomLevelMax((byte)18);
                mvp.setZoomLevelMin((byte)8);
 
+               mapView.repaint();
 
 
 			}

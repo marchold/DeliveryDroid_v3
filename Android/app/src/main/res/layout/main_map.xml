@@ -31,7 +31,6 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/Checkout"
         android:layout_alignLeft="@+id/Checkout"
-        android:apiKey="@string/maps_API_KEY"
         android:clickable="true" >
     </org.mapsforge.map.android.view.MapView>
 

@@ -105,7 +105,6 @@
             android:layout_alignLeft="@+id/View01"
             android:layout_below="@+id/preferedDeliveryRadius"
             android:layout_marginTop="20dp"
-            android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
             android:clickable="false" >
         </org.mapsforge.map.android.view.MapView>
 

@@ -298,9 +298,7 @@
         list of streets instead of typing in the street name. This settings screen is where you can configure the zip
         codes in your delivery area.\nUnfortunatly this only works for our users in the USA.
     </string>
-    <string name="maps_API_KEY">061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA</string>
-    <string name="maps_API_KEY_RELASE">061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q</string>
-    <string name="maps_AIP_KEY_debug">061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA</string>
+
     <string name="map">Map</string>
     <string name="notes">Notes</string>
     <string name="BackupRestoreData">Backup &amp; Restore Data</string>

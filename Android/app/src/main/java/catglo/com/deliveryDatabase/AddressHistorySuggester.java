@@ -122,7 +122,7 @@ public class AddressHistorySuggester extends GoogleAddressSuggester
 			}
 		}});
 		try {
-			FileOutputStream fos = context.openFileOutput(fileNamePrefix+prefKey, Context.MODE_PRIVATE);
+			FileOutputStream fos = getContext().openFileOutput(fileNamePrefix+prefKey, Context.MODE_PRIVATE);
 			ObjectOutputStream os = new ObjectOutputStream(fos);
 			os.writeObject(recientStreetNames);
 			os.close();

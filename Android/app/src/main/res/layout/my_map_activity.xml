@@ -14,7 +14,6 @@
         android:layout_height="fill_parent"
         android:clickable="true"
         android:layout_below="@+id/optimizeBar"
-        android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
     />
      <!-- debug key 061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA -->
 

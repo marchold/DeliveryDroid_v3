@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import catglo.com.deliveryDatabase.DataBase
+import catglo.com.deliverydroid.BuildConfig
 import catglo.com.deliverydroid.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,9 +34,9 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         dbFile = if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("DatabaseOnSdcard", false)) {
-            File(Environment.getExternalStorageDirectory(), DataBase.DATABASE_NAME)
+            File(Environment.getExternalStorageDirectory(), BuildConfig.DATABASE_NAME)
         } else {
-            File(applicationContext.filesDir, DataBase.DATABASE_NAME)
+            File(applicationContext.filesDir, BuildConfig.DATABASE_NAME)
         }
 
         setContentView(R.layout.backup_to_google_drive_activity)

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 
+import catglo.com.deliverydroid.BuildConfig;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 import catglo.com.deliverydroid.backup.TableValues;
@@ -92,7 +93,7 @@ public class DataBase extends Object  {
 	
 	public static final String			PhoneNumber			= "PhoneNumber";
 
-	public static final String			DATABASE_NAME		= "DeliveryData.SQLite";
+
 	private static final String			DATABASE_TABLE		= "orders";
 	private static final int			DATABASE_VERSION	= 11;
 
@@ -212,7 +213,7 @@ public class DataBase extends Object  {
 			path = context.getFilesDir();
 		}
 
-		path = new File(path, DATABASE_NAME);
+		path = new File(path, BuildConfig.DATABASE_NAME);
 		
 		init(path);	
 	}}

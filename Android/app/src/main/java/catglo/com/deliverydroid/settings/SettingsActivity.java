@@ -27,6 +27,7 @@ import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.StreetList;
 import catglo.com.deliveryDatabase.ZipCode;
 import catglo.com.deliverydroid.AboutActivity;
+import catglo.com.deliverydroid.BuildConfig;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.backup.GoogleDriveBackupRestoreActivity;
 import catglo.com.widgets.TwoLinesListPreference;
@@ -294,7 +295,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 									
 									try {
 										copyDatabse(Environment.getExternalStorageDirectory() + "/" + newValue.toString(),
-												path.toString() + "/" + DataBase.DATABASE_NAME);
+												path.toString() + "/" + BuildConfig.DATABASE_NAME);
 									} catch (FileNotFoundException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -325,13 +326,13 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 					try {
 						if ((Boolean) newValue == true) {
 							//copy to sdcard
-							copyDatabse(getFilesDir() + "/" + DataBase.DATABASE_NAME,
-									Environment.getExternalStorageDirectory() + "/" + DataBase.DATABASE_NAME);
+							copyDatabse(getFilesDir() + "/" + BuildConfig.DATABASE_NAME,
+									Environment.getExternalStorageDirectory() + "/" + BuildConfig.DATABASE_NAME);
 
 						} else {
 							//copy from sdcard
-							copyDatabse(Environment.getExternalStorageDirectory() + "/" + DataBase.DATABASE_NAME,
-									getFilesDir() + DataBase.DATABASE_NAME);
+							copyDatabse(Environment.getExternalStorageDirectory() + "/" + BuildConfig.DATABASE_NAME,
+									getFilesDir() + BuildConfig.DATABASE_NAME);
 
 						}
 						final Toast toast = Toast.makeText(SettingsActivity.this.getApplicationContext(),
@@ -342,7 +343,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 
 					} catch (final FileNotFoundException e) {
 						final Toast toast = Toast.makeText(SettingsActivity.this.getApplicationContext(),
-								"DID NOT MOVE DATABASE FILE! (file not found error)"+getFilesDir() + "/" + DataBase.DATABASE_NAME+"   "+Environment.getExternalStorageDirectory() + "/" + DataBase.DATABASE_NAME,
+								"DID NOT MOVE DATABASE FILE! (file not found error)"+getFilesDir() + "/" + BuildConfig.DATABASE_NAME+"   "+Environment.getExternalStorageDirectory() + "/" + BuildConfig.DATABASE_NAME,
 								Toast.LENGTH_LONG);
 						toast.show();
 						return false;
@@ -370,7 +371,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 					} else {
 						final String val = newValue.toString();
 						try {
-							copyDatabse(getFilesDir() + "/" + DataBase.DATABASE_NAME,
+							copyDatabse(getFilesDir() + "/" + BuildConfig.DATABASE_NAME,
 									Environment.getExternalStorageDirectory() + "/" + val);
 							final Toast toast = Toast.makeText(SettingsActivity.this.getApplicationContext(),
 									"successfully copied database to "+Environment.getExternalStorageDirectory() +"/"+ val, Toast.LENGTH_LONG);

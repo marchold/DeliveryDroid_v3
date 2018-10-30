@@ -22,7 +22,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/optimizeBar"
-        android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
         android:clickable="true" />
 
     <!-- debug key 061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA -->

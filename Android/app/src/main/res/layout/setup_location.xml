@@ -25,7 +25,6 @@
       			 android:id="@+id/zipCodeMap"
                  android:layout_width="fill_parent"
                  android:layout_height="fill_parent"
-                 android:apiKey="061vUOvKcZ-cIdJqdiHt1Yix5A_Zi5CoquFaL_g"
                  android:enabled="true"
 				 android:clickable="true"
 				 

@@ -123,7 +123,6 @@
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"
                android:layout_marginTop="10dp"
-               android:apiKey="061vUOvKcZ-dcpNhvCHxZUmnmyoER75aCRCTX-Q"
                android:clickable="false" >
 
            </org.mapsforge.map.android.view.MapView>
