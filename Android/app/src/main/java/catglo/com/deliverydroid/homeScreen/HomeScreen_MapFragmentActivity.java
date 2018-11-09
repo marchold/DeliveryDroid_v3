@@ -35,15 +35,26 @@ import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.Route;
 import catglo.com.deliverydroid.settings.SettingsActivity;
 import org.jetbrains.annotations.NotNull;
+import org.mapsforge.core.graphics.Bitmap;
+import org.mapsforge.core.graphics.Paint;
+import org.mapsforge.core.graphics.Style;
+import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.MapPosition;
+
+import org.mapsforge.core.model.Point;
+import org.mapsforge.core.util.Utils;
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidPreferences;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.overlay.Marker;
+import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.IMapViewPosition;
 import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.util.MapPositionUtil;
 
 
 import java.io.File;
@@ -388,7 +399,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			public void onMapReady(@NotNull DownloadedMap map) {
                 MapFile mapFile = new MapFile(map.getMapFile());
 
-                int zoom = sharedPreferences.getInt("mapZoomLevel",15);
+                int zoom = sharedPreferences.getInt("mapZoomLevel",16);
 
                 //	MapController mc = mapView.getController();
                 //	mc.setCenter(new GeoPoint((int)(lat*1e6),(int)(lng*1e6)));
@@ -409,18 +420,110 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 				mapView.getLayerManager().getLayers().add(tileRendererLayer);
 
 
-                IMapViewPosition mvp = mapView.getModel().mapViewPosition;
 
-                LatLong center = mvp.getCenter();
+/*
+               Paint paintStroke = createPaint(AndroidGraphicFactory.INSTANCE
+								.createColor(org.mapsforge.core.graphics.Color.GREEN), 1,
+						Style.STROKE);
+				paintStroke.setDashPathEffect(new float[] { 25, 15 });
+				paintStroke.setStrokeWidth(5);
+				paintStroke.setStrokeWidth(3);
+				Polyline line = new Polyline(paintStroke,
+						AndroidGraphicFactory.INSTANCE);
 
-                //if (center.equals(new LatLong(0, 0))) {
-                    mvp.setMapPosition(new MapPosition(new LatLong(finalLat1, finalLng1), (byte)15));
-                //}
-               mvp.setZoomLevelMax((byte)18);
-               mvp.setZoomLevelMin((byte)8);
+				List<LatLong> geoPoints = line.getLatLongs();
+				//PointList tmp = response.getPoints();
 
-               mapView.repaint();
 
+				for (int i = 0; i < 10; i++) {
+					geoPoints.add(new LatLong(tmp.getLatitude(i), tmp.getLongitude(i)));
+
+				}
+*/
+
+
+                int counter=1;
+                float minLat=Float.MAX_VALUE;
+                float maxLat=Float.MIN_VALUE;
+                float minLng=Float.MAX_VALUE;
+                float maxLng=Float.MIN_VALUE;
+
+				for (Order order : orders){
+				    if (order.geoPoint.lat == 0 && order.geoPoint.lng == 0)
+                    {
+                        order.isValidated = false;
+                    }
+                    if (!order.isValidated)
+                    {
+
+                    }
+					if (order.isValidated){
+
+						try {
+
+							int imageResource = getResources().getIdentifier("drawable/map"+counter, null, getPackageName());
+                            Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(getResources().getDrawable(imageResource));
+                            bitmap.incrementRefCount();
+                            Marker marker = new Marker(new LatLong(order.geoPoint.lat, order.geoPoint.lng), bitmap, 0, -bitmap.getHeight() / 2) {
+                                @Override public boolean onTap(LatLong geoPoint, Point viewPosition, Point tapPoint) {
+                                    if (contains(viewPosition, tapPoint)) {
+                                        ///Toast.makeText(MainActivity.this, "Urmia, payamasli", Toast.LENGTH_SHORT).show();
+                                        return true;
+                                    }
+                                    return false;
+                                }
+                            };
+                            mapView.getLayerManager().getLayers().add(marker);
+
+						} catch (Resources.NotFoundException e){
+							Toast.makeText(getApplicationContext(), R.string.error_building_map_markers, Toast.LENGTH_SHORT).show();
+						}
+
+						if (order.geoPoint.lat < minLat) minLat = (float) order.geoPoint.lat;
+						if (order.geoPoint.lng < minLng) minLng = (float) order.geoPoint.lng;
+						if (order.geoPoint.lat > maxLat) maxLat = (float) order.geoPoint.lat;
+						if (order.geoPoint.lng < maxLng) maxLng = (float) order.geoPoint.lng;
+
+						counter++;
+					} else {
+						//TODO: We need an error icon or something, maybe the ! is enough
+					}
+				}
+
+				if (counter>1) {
+					float latDif = (maxLat - minLat) / 2;
+					float lngDif = (maxLng - minLng) / 2;
+					IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+					mvp.setMapPosition(new MapPosition(new LatLong(minLat + latDif, minLng + lngDif), (byte) zoom));
+				}
+				else {
+
+				    LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+				    if (locationManager!=null)
+                    {
+                        Criteria criteria = new Criteria();
+                        String bestProvider = locationManager.getBestProvider(criteria, false);
+                        Location location = locationManager.getLastKnownLocation(bestProvider);
+                        IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+                        mvp.setMapPosition(new MapPosition(new LatLong(location.getLatitude(), location.getLongitude()), (byte) zoom));
+                    }
+
+
+
+
+				}
+                /*
+                try {
+                    BoundingBox boundingBox = new BoundingBox(minLat, minLng, maxLat, maxLng);
+                    mapView.getModel().mapViewPosition.setMapLimit(boundingBox);
+                }
+                catch (IllegalArgumentException e){
+                   e.printStackTrace();
+
+                }
+*/
+
+                mapView.repaint();
 
 			}
 		});
@@ -436,8 +539,16 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		buildMapMarkerOverlay();
 		
     }
-    
-	
+
+
+	static Paint createPaint(int color, int strokeWidth, Style style) {
+		Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
+		paint.setColor(color);
+		paint.setStrokeWidth(strokeWidth);
+		paint.setStyle(style);
+		return paint;
+	}
+
 
 	void buildMapMarkerOverlay(){
 		//Build the overlays for the map markers

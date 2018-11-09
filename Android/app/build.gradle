@@ -61,8 +61,8 @@ android {
 
     buildTypes.each {
         it.buildConfigField 'String', 'GoogleMapsApiKey', "\"$System.env.GoogleMapsApiKey\""
-        it.resValue 'string', 'ga_trackingId', "\"$System.env.GoogleAnalyticsTrackingId\""
-        it.resValue 'string', 'maps_API_KEY' , "\"$System.env.GoogleMapsApiKey\""
+        it.resValue 'string', 'ga_trackingId', "$System.env.GoogleAnalyticsTrackingId"
+        it.resValue 'string', 'maps_API_KEY' , "$System.env.GoogleMapsApiKey"
     }
     buildToolsVersion '28.0.3'
     compileOptions {
@@ -84,6 +84,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
     implementation "com.google.android.gms:play-services-auth:16.0.1"
+    implementation "com.google.android.gms:play-services-places:$googlePlayServicesVersion"
 
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-ml-vision:18.0.1'

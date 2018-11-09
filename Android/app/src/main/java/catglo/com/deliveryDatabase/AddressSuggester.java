@@ -40,13 +40,15 @@ public class AddressSuggester extends GoogleAddressSuggester {
                     if (m.find()) {
                         String numberPartOfSearchString = m.group(1);
                         for (AddressInfo addressInfo : addresses){
-                            String address = addressInfo.address;
+                            String address = addressInfo.getAddress();
                             if (address.startsWith(numberPartOfSearchString)){
                                 list.add(addressInfo);
                             }
                         }
                     }
 
+                    //Local streeet list is broken
+                    /*
                     //If the google found at least 1 match with the same prefix, that is probably it, just use google
                     //The google result did not find a good match, filter the local street list
                     if (list.size()==0){
@@ -59,13 +61,13 @@ public class AddressSuggester extends GoogleAddressSuggester {
 
                                 if (s.startsWith(streetPart.toLowerCase())){
                                     s = s.substring(0, 1).toUpperCase() + s.substring(1);
-                                    AddressInfo addressInfo = new AddressInfo();
-                                    addressInfo.address = numberPart+s.replace('+', ' ');
+                                    String addressString = numberPart + s.replace('+', ' ')
+                                    AddressInfo addressInfo = new AddressInfo(addressString,);
                                     list.add(addressInfo);
                                 }
                             }
                         }
-                    }
+                    }*/
                 }
                 else { //We never get here if its just a number so this is for text first search the notes and append to the google list
                     list=new ArrayList<AddressInfo>();
@@ -123,15 +125,19 @@ public class AddressSuggester extends GoogleAddressSuggester {
 			if (commitLookup != null) {
 				commitLookup.commit(addressList,addressSoFar);
 			}
-		} else 
+		}
+		/*
+		//Local street list is broken
+		else
 		{
 			int size = StreetList.parentList.size();
 			if (size > 0) {
 				for (int i = 0; i < size; i++) {
-					AddressInfo ai = new AddressInfo();
+
 					String s = new String(StreetList.parentList.get(i).name).toLowerCase();
 					s = s.substring(0, 1).toUpperCase() + s.substring(1);
-					ai.address = addressSoFar+s.replace('+', ' ');
+					String addressString = addressSoFar + s.replace('+', ' ');
+                    AddressInfo ai = new AddressInfo(addressString,);
 					resultsFromDB.add(ai);
 				}				
 			}
@@ -141,6 +147,6 @@ public class AddressSuggester extends GoogleAddressSuggester {
 			if (commitLookup != null) {
                 commitLookup.commit(addressList, addressSoFar);
 			}
-		}
+		}*/
 	}
 }

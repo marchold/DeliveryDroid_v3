@@ -228,31 +228,33 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
         if (order.notes!=null) orderNotes.setText(order.notes);
 
         //Crash Here?
-        outOfTown1.setChecked(order.outOfTown1);
-        outOfTown2.setChecked(order.outOfTown2);
-        outOfTown3.setChecked(order.outOfTown3);
-        outOfTown4.setChecked(order.outOfTown4);
-        orderTime.setText(Tools.getFormattedTime(order.time));
+        if (outOfTown1!=null) outOfTown1.setChecked(order.outOfTown1);
+        if (outOfTown2!=null) outOfTown2.setChecked(order.outOfTown2);
+        if (outOfTown3!=null) outOfTown3.setChecked(order.outOfTown3);
+        if (outOfTown4!=null) outOfTown4.setChecked(order.outOfTown4);
+        if (orderTime!=null) orderTime.setText(Tools.getFormattedTime(order.time));
         if (order.address!=null) orderAddress.setText(order.address);
         if (order.apartmentNumber!=null) orderAptNum.setText(order.apartmentNumber);
         if (order.number!=null) orderNumber.setText(order.number);
         if (order.phoneNumber!=null) phoneNumber.setText(order.phoneNumber);
 
-        orderTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewOrderActivity activity = ((NewOrderActivity) getActivity());
-                activity.tools.showTimeSliderDialog(orderTime,order.time,new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        //TODO: CHECKCHECK do we need to set this
-                    }
-                });
-            }
-        });
-        orderTime.setKeyListener(null);
-        orderTime.setFocusable(false);
-        orderTime.setFocusableInTouchMode(false);
+        if (orderTime!=null) {
+            orderTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewOrderActivity activity = ((NewOrderActivity) getActivity());
+                    activity.tools.showTimeSliderDialog(orderTime, order.time, new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            //TODO: CHECKCHECK do we need to set this
+                        }
+                    });
+                }
+            });
+            orderTime.setKeyListener(null);
+            orderTime.setFocusable(false);
+            orderTime.setFocusableInTouchMode(false);
+        }
     }
 
     public void onPause(){

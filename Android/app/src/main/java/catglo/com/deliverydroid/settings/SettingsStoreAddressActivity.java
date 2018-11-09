@@ -221,9 +221,9 @@ public class SettingsStoreAddressActivity extends
 	
 	void centerMapToAddress(AddressInfo addressInfo){
 		if (addressInfo != null){
-			storeAddress = addressInfo.address;
-			storeAddressLat = addressInfo.location.lat;
-			storeAddressLng = addressInfo.location.lng;
+			storeAddress = addressInfo.getAddress();
+			storeAddressLat = addressInfo.getLocation().lat;
+			storeAddressLng = addressInfo.getLocation().lng;
 			centerMapAndSetStoreAddressOverlay();
 		} else {
             Tools.appendLog("NULL ADDRESS INFO");

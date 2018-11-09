@@ -2705,14 +2705,12 @@ public class DataBase extends Object  {
 				
 				do {
 					Order o = new Order(c);
-					AddressInfo ai = new AddressInfo();
-					ai.address = o.address;
-					if (o.isValidated && o.geoPoint != null){
-						ai.location = new MyGeoPoint(o.geoPoint.lat,o.geoPoint.lng);
-					} else {
-						ai.location = null;
+                    MyGeoPoint pont = null;
+					if (o.isValidated && o.geoPoint != null)
+					{
+                        pont = new MyGeoPoint(o.geoPoint.lat, o.geoPoint.lng);
 					}
-					
+                    AddressInfo ai = new AddressInfo(o.address,pont);
 					resultsFromDB.add(ai);
 				} while (c.moveToNext());
 			}

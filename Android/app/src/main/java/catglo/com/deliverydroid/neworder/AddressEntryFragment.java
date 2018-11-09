@@ -1,5 +1,8 @@
 package catglo.com.deliverydroid.neworder;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.location.*;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -13,11 +16,14 @@ import catglo.com.api.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliverydroid.R;
+import catglo.com.deliverydroid.data.MyGeoPoint;
 import catglo.com.widgets.ButtonPadFragment;
 import catglo.com.widgets.DataAwareFragment;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -36,10 +42,39 @@ public class AddressEntryFragment extends ButtonPadFragment {
         super.onItemClick(parent,view,position,id);
         AddressInfo address = addressList.get(position);
 
-        NewOrderActivity activity = (NewOrderActivity)getActivity();
-        activity.order.geoPoint = address.location;
-        activity.order.isValidated = true;
 
+
+        NewOrderActivity activity = (NewOrderActivity)getActivity();
+        if (activity!=null) {
+            LocationManager lm = (LocationManager)activity.getSystemService(Activity.LOCATION_SERVICE);
+            if (lm != null) {
+                @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(lm.getBestProvider(new Criteria(), false));
+
+                //TODO: activity.order.geoPoint = address.getLocation();
+                if (!activity.order.isValidated) {
+                    Geocoder geocoder = new Geocoder(activity);
+                    try {
+                        List<Address> geocoded = geocoder.getFromLocationName(address.getAddress(),
+                                1,
+                                location.getLatitude() - 0.1,
+                                location.getLongitude() - 0.1,
+                                location.getLatitude() + 0.1,
+                                location.getLongitude() + 0.1);
+                        if (geocoded.size()>0)
+                        {
+                            Address result = geocoded.get(0);
+                            MyGeoPoint geopoint = new MyGeoPoint(result.getLatitude(),result.getLongitude());
+                            address.setLocation(geopoint);
+                            activity.order.address = address.getAddress();
+                            activity.order.geoPoint = geopoint;
+                            activity.order.isValidated = true;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
 
@@ -86,9 +121,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
         activity.dataBase.getAddressSuggestionsFor("",addressStrings);
         addressList = new ArrayList<AddressInfo>();
         for (String address:addressStrings){
-            AddressInfo i = new AddressInfo();
-            i.address = address;
-            addressList.add(i);
+            addressList.add(new AddressInfo(address,null));
         }
         ArrayAdapter<AddressInfo> streets = new ArrayAdapter<AddressInfo>(activity, R.layout.out_the_door_address_list_item, addressList);
         if (streets.isEmpty()==false){

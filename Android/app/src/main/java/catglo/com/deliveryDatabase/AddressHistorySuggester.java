@@ -72,7 +72,7 @@ public class AddressHistorySuggester extends GoogleAddressSuggester
 			else { 
 				try {
 					for (AddressInfo address : recientStreetNames){
-						if (address.address.startsWith(originalSearchString)) {
+						if (address.getAddress().startsWith(originalSearchString)) {
 							list.add(address);
 						}
 					}
@@ -101,7 +101,7 @@ public class AddressHistorySuggester extends GoogleAddressSuggester
 		boolean exists = false;
 		for (AddressInfo s : recientStreetNames){
 			try {
-				if (s.address.equalsIgnoreCase(value.address)){
+				if (s.getAddress().equalsIgnoreCase(value.getAddress())){
 					exists = true;
 					break;
 				} 
@@ -115,7 +115,7 @@ public class AddressHistorySuggester extends GoogleAddressSuggester
 		
 		Collections.sort(recientStreetNames, new Comparator<AddressInfo>(){public int compare(AddressInfo lhs, AddressInfo rhs) {
 			try {
-				return lhs.address.compareTo(rhs.address);
+				return lhs.getAddress().compareTo(rhs.getAddress());
 			} catch (NullPointerException e){
 				e.printStackTrace();
 				return -1;

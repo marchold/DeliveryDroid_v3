@@ -28,6 +28,8 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
                                  implements ActionBar.TabListener,
                                             ButtonPadFragment.ButtonPadNextListener {
 
+
+
     SectionsPagerAdapter sectionsPagerAdapter;
     ViewPager viewPager;
     public Order order = new Order();
