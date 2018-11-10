@@ -455,7 +455,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                     }
                     if (!order.isValidated)
                     {
-
+						order.geocode(getApplicationContext());
                     }
 					if (order.isValidated){
 

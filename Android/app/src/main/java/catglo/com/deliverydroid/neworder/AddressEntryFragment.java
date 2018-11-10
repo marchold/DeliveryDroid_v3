@@ -46,33 +46,9 @@ public class AddressEntryFragment extends ButtonPadFragment {
 
         NewOrderActivity activity = (NewOrderActivity)getActivity();
         if (activity!=null) {
-            LocationManager lm = (LocationManager)activity.getSystemService(Activity.LOCATION_SERVICE);
-            if (lm != null) {
-                @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(lm.getBestProvider(new Criteria(), false));
-
-                //TODO: activity.order.geoPoint = address.getLocation();
-                if (!activity.order.isValidated) {
-                    Geocoder geocoder = new Geocoder(activity);
-                    try {
-                        List<Address> geocoded = geocoder.getFromLocationName(address.getAddress(),
-                                1,
-                                location.getLatitude() - 0.1,
-                                location.getLongitude() - 0.1,
-                                location.getLatitude() + 0.1,
-                                location.getLongitude() + 0.1);
-                        if (geocoded.size()>0)
-                        {
-                            Address result = geocoded.get(0);
-                            MyGeoPoint geopoint = new MyGeoPoint(result.getLatitude(),result.getLongitude());
-                            address.setLocation(geopoint);
-                            activity.order.address = address.getAddress();
-                            activity.order.geoPoint = geopoint;
-                            activity.order.isValidated = true;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+            if (!activity.order.isValidated)
+            {
+                activity.order.geocode(activity);
             }
         }
     }

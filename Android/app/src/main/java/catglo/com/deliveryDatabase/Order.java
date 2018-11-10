@@ -1,12 +1,17 @@
 package catglo.com.deliveryDatabase;
 
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
+import android.location.*;
 import android.util.Log;
 import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.MyGeoPoint;
 
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -15,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -419,4 +425,29 @@ public class Order extends NotedObject implements Comparable<Order>, Serializabl
         }
         return numbers.toString();
     }
+
+	public void geocode(Context context) {
+        Geocoder geocoder = new Geocoder(context);
+        try {
+            LocationManager lm = (LocationManager)context.getSystemService(Activity.LOCATION_SERVICE);
+            if (lm != null) {
+                @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(lm.getBestProvider(new Criteria(), false));
+
+
+                List<Address> geocoded = geocoder.getFromLocationName(address,
+                        1,
+                        location.getLatitude() - 0.1,
+                        location.getLongitude() - 0.1,
+                        location.getLatitude() + 0.1,
+                        location.getLongitude() + 0.1);
+                if (geocoded.size() > 0) {
+                    Address result = geocoded.get(0);
+                    geoPoint = new MyGeoPoint(result.getLatitude(), result.getLongitude());
+                    isValidated = true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 }
