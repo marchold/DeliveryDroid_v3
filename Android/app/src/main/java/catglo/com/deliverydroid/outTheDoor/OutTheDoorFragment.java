@@ -2,6 +2,7 @@ package catglo.com.deliverydroid.outTheDoor;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 
 
@@ -1032,11 +1033,13 @@ public class OutTheDoorFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (getActivity()==null || getActivity().isFinishing())
+        Activity activity = getActivity();
+        if (activity==null || activity.isFinishing()) return;
+
         longitude = location.getLongitude();
         latitude = location.getLatitude();
-        final GpsNotesListAdapter adapter = new GpsNotesListAdapter(getActivity());
-        if (adapter.refresh(((OutTheDoorActivity)getActivity()).dataBase,latitude,longitude,true)==false){
+        final GpsNotesListAdapter adapter = new GpsNotesListAdapter(activity);
+        if (adapter.refresh(((OutTheDoorActivity)activity).dataBase,latitude,longitude,true)==false){
             //TODO: Hide list header
         } else {
             gpsNotesList.removeAllViews();

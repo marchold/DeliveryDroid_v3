@@ -401,9 +401,6 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 
                 int zoom = sharedPreferences.getInt("mapZoomLevel",16);
 
-                //	MapController mc = mapView.getController();
-                //	mc.setCenter(new GeoPoint((int)(lat*1e6),(int)(lng*1e6)));
-                //	mc.setZoom(zoom);
 				AndroidPreferences preferencesFacade = new AndroidPreferences(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
 				mapView.getModel().init(preferencesFacade);
 				mapView.setClickable(true);
@@ -507,10 +504,6 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                         IMapViewPosition mvp = mapView.getModel().mapViewPosition;
                         mvp.setMapPosition(new MapPosition(new LatLong(location.getLatitude(), location.getLongitude()), (byte) zoom));
                     }
-
-
-
-
 				}
                 /*
                 try {

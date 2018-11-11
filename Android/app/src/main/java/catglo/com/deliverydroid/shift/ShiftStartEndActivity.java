@@ -86,27 +86,18 @@ public class ShiftStartEndActivity extends ShiftStartEndBaseActivity {
 		moneyCollected = (TextView)findViewById(R.id.moneyCollected);
 		
 		findViewById(R.id.deleteShiftClickable).setOnClickListener(new OnClickListener(){public void onClick(View v) {
-			
-			DialogFragment dialog = new DialogFragment(){
-				@Override
-			    public Dialog onCreateDialog(Bundle savedInstanceState) {
-			        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-			        alertDialogBuilder.setTitle("Delete shift?");
-			        alertDialogBuilder.setMessage("Are you sure you want to delete this shift?");
-			        alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {
-			        	dataBase.deleteShift(whichShift);
-			            dialog.dismiss();
-			            updateUI();
-			        }});
-			        alertDialogBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {
-			            dialog.dismiss();
-			        }});
-			        return alertDialogBuilder.create();
-			    }
-			};
-			dialog.show(getFragmentManager(), "confirm_delete_pay");
-			
-			
+
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ShiftStartEndActivity.this);
+			alertDialogBuilder.setTitle("Delete shift?");
+			alertDialogBuilder.setMessage("Are you sure you want to delete this shift?");
+			alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {
+				dataBase.deleteShift(whichShift);
+				dialog.dismiss();
+				updateUI();
+			}});
+			alertDialogBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}}).show();
 			
 		}});
 		

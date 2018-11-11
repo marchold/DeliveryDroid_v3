@@ -55,30 +55,23 @@ public class GpsNotes extends DeliveryDroidBaseActivity implements LocationListe
 		
 	    addButton = (ImageButton)findViewById(R.id.addButton);
 		addButton.setOnClickListener(new OnClickListener(){public void onClick(View v) {
-			DialogFragment dialogFragment = new DialogFragment(){
-				@Override   
-				public Dialog onCreateDialog(Bundle savedInstanceState) {AlertDialog.Builder alert = new AlertDialog.Builder(GpsNotes.this);  
-					View view = View.inflate(GpsNotes.this, R.layout.gps_notes_add_dialog, null);
-					alert.setView(view);	        
-					final EditText inputName = (EditText)view.findViewById(R.id.editText1);  
-					final CheckBox notify = (CheckBox)view.findViewById(R.id.notification);
-					final CheckBox alarm = (CheckBox)view.findViewById(R.id.alarm);
-			        alert.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int whichButton) {  
-			        	GpsNote newNote = new GpsNote();
-			        	newNote.notes = inputName.getText().toString();
-			        	newNote.lat = latitude;
-			        	newNote.lng = longitude;
-			        	newNote.time = Calendar.getInstance();
-			        	newNote.notification = notify.isChecked();
-			        	newNote.alarm = alarm.isChecked();
-			        	dataBase.saveGpsNote(newNote);  	
-			        	updateList();
-			        }}); 
-			        alert.setNegativeButton(R.string.Discard, new DialogInterface.OnClickListener() { public void onClick(DialogInterface dialog, int whichButton) {}}); 
-			        return alert.create();
-				}
-			};
-			dialogFragment.show(getFragmentManager(), "add_gps_note_dialog");
+			AlertDialog.Builder alert = new AlertDialog.Builder(GpsNotes.this);
+			View view = View.inflate(GpsNotes.this, R.layout.gps_notes_add_dialog, null);
+			alert.setView(view);
+			final EditText inputName = (EditText)view.findViewById(R.id.editText1);
+			final CheckBox notify = (CheckBox)view.findViewById(R.id.notification);
+			final CheckBox alarm = (CheckBox)view.findViewById(R.id.alarm);
+			alert.setPositiveButton(R.string.Save, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int whichButton) {
+				GpsNote newNote = new GpsNote();
+				newNote.notes = inputName.getText().toString();
+				newNote.lat = latitude;
+				newNote.lng = longitude;
+				newNote.time = Calendar.getInstance();
+				newNote.notification = notify.isChecked();
+				newNote.alarm = alarm.isChecked();
+				dataBase.saveGpsNote(newNote);
+				updateList();
+			}}).show();
 		}});
 		
 		listView = (ListView)findViewById(R.id.listView1);

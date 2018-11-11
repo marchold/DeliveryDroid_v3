@@ -413,65 +413,61 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 	
 	
 	public void exportDataDialog(){
-		DialogFragment dialogFragment = new DialogFragment(){
-			@Override   
-			public Dialog onCreateDialog(Bundle savedInstanceState) {
-				AlertDialog.Builder alert = new AlertDialog.Builder(OrderSummaryActivity.this);  
-				final CharSequence[] items = {getString(R.string.today), 
-					  getString(R.string.thisWeek), 
-					  getString(R.string.ThisMonth), 
-					  getString(R.string.ThisYear),
-					  getString(R.string.CustomDateRange)};
-				AlertDialog.Builder builder = new AlertDialog.Builder(OrderSummaryActivity.this);
-				builder.setTitle(getString(R.string.selectDateRange));
-				builder.setItems(items, new DialogInterface.OnClickListener() {
-				@SuppressWarnings("deprecation")
-				public void onClick(DialogInterface dialog, int item) {
-				startDate = Calendar.getInstance();
-				endDate = Calendar.getInstance();
-				Calendar now = Calendar.getInstance();
-				now.setTimeInMillis(System.currentTimeMillis());
-				startDate.setTimeInMillis(System.currentTimeMillis());
-				endDate.setTimeInMillis(System.currentTimeMillis());
-				switch (item) {
-				case 0: startDate.set(Calendar.HOUR_OF_DAY, 0);
-				      endDate.set(Calendar.HOUR_OF_DAY, 0);
-				      endDate.add(Calendar.DAY_OF_YEAR, 1);
-				      exportWhereDialog();
-				      break;
-				case 1: tools.getWorkWeekDates(now,startDate,endDate);
+
+		AlertDialog.Builder alert = new AlertDialog.Builder(OrderSummaryActivity.this);
+		final CharSequence[] items = {getString(R.string.today),
+			  getString(R.string.thisWeek),
+			  getString(R.string.ThisMonth),
+			  getString(R.string.ThisYear),
+			  getString(R.string.CustomDateRange)};
+		AlertDialog.Builder builder = new AlertDialog.Builder(OrderSummaryActivity.this);
+		builder.setTitle(getString(R.string.selectDateRange));
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+		@SuppressWarnings("deprecation")
+		public void onClick(DialogInterface dialog, int item) {
+		startDate = Calendar.getInstance();
+		endDate = Calendar.getInstance();
+		Calendar now = Calendar.getInstance();
+		now.setTimeInMillis(System.currentTimeMillis());
+		startDate.setTimeInMillis(System.currentTimeMillis());
+		endDate.setTimeInMillis(System.currentTimeMillis());
+		switch (item) {
+		case 0: startDate.set(Calendar.HOUR_OF_DAY, 0);
+			  endDate.set(Calendar.HOUR_OF_DAY, 0);
+			  endDate.add(Calendar.DAY_OF_YEAR, 1);
+			  exportWhereDialog();
+			  break;
+		case 1: tools.getWorkWeekDates(now,startDate,endDate);
+		exportWhereDialog();
+		break;
+		case 2: startDate.set(Calendar.DATE, 0);
+				endDate.add(Calendar.MONTH, 1);
+				startDate.set(Calendar.DATE, 1);
 				exportWhereDialog();
 				break;
-				case 2: startDate.set(Calendar.DATE, 0);
-						endDate.add(Calendar.MONTH, 1);
-						startDate.set(Calendar.DATE, 1);
-						exportWhereDialog();
-						break;
-				case 3: startDate.set(Calendar.DAY_OF_YEAR, 1);
-						endDate.add(Calendar.YEAR, 1);
-						endDate.set(Calendar.DAY_OF_YEAR, 0);
-						exportWhereDialog();
-						break;
-				case 4: 
-						tools.getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
-							exportWhereDialog();
-						}});
-					break;
-				}
-				
-				}
-				});
-				builder.setIcon(R.drawable.icon);
-				return builder.create();
-			}
-		};
-		dialogFragment.show(getFragmentManager(), "");
+		case 3: startDate.set(Calendar.DAY_OF_YEAR, 1);
+				endDate.add(Calendar.YEAR, 1);
+				endDate.set(Calendar.DAY_OF_YEAR, 0);
+				exportWhereDialog();
+				break;
+		case 4:
+				tools.getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
+					exportWhereDialog();
+				}});
+			break;
+		}
+
+		}
+		});
+		builder.setIcon(R.drawable.icon);
+		builder.show();
+
 	}
 	
 	public void exportWhereDialog(){
 		DialogFragment dialogFragment = new DialogFragment(){
-			@Override   
-			public Dialog onCreateDialog(Bundle savedInstanceState) {AlertDialog.Builder alert = new AlertDialog.Builder(OrderSummaryActivity.this);  
+			@Override
+			public Dialog onCreateDialog(Bundle savedInstanceState) {AlertDialog.Builder alert = new AlertDialog.Builder(OrderSummaryActivity.this);
 				AlertDialog.Builder builder;
 				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 				View layout = inflater.inflate(R.layout.export_csv_how_dialog, (ViewGroup) findViewById(R.id.linearLayout1));
@@ -571,7 +567,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 					
 					dialog.dismiss();
 				}});
-				
+
 				return dialog;
 			}
 		};

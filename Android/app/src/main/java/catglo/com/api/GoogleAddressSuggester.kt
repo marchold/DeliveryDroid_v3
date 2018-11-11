@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Created by goblets on 2/27/14.
  */
-open class GoogleAddressSuggester(protected val context: Context, var resultListener: AddressListListener) {
+open class GoogleAddressSuggester(protected val context: Context, var resultListener: AddressListListener?) {
 
     private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -32,7 +32,7 @@ open class GoogleAddressSuggester(protected val context: Context, var resultList
     private var placesDetectionClient : PlaceDetectionClient = Places.getPlaceDetectionClient(context)
 //    GeoDataClient.getAutocompletePredictions()
 
-    internal inner class AutocompletePredictor(var query: String) {
+    private inner class AutocompletePredictor(var query: String) {
 
         fun getPredictions(
             bounds: LatLngBounds,
@@ -70,12 +70,12 @@ open class GoogleAddressSuggester(protected val context: Context, var resultList
                 val results = predictor.getPredictions(bounds, typeFilter)
 
                 results.addOnSuccessListener { autocompletePredictions ->
-                    if (resultListener != null /*&& predictor.query == lastQuery*/) {
+                    resultListener?.let {
                         autocompletePredictions.forEach {prediction ->
                             val addressString = prediction.getFullText(null)
                             addressInfoList.add(AddressInfo(addressString.toString()))
                         }
-                        resultListener.commit(addressInfoList, searchAddress)
+                        it.commit(addressInfoList, searchAddress)
                     }
                     autocompletePredictions.release()
                 }

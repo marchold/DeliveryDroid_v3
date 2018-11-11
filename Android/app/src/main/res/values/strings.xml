@@ -761,6 +761,9 @@
     <string name="Undeliverable_mileage_pay">Undeliverable Mileage Page</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="map_downloads">Map Downloads</string>
+    <string name="failed_to_get_good_gps">We failed to get good GPS coordinates for the address. Some features won\'t
+        work without store GPS coordinates.
+    </string>
 
 </resources>
 

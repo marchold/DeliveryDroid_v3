@@ -83,11 +83,19 @@ public class AddressHistoryAutocomplete extends AppCompatAutoCompleteTextView {
 		};
 		
 		//TODO: Address history suggester needs to return GPS coordinates as well as the address so we can save them in the settings and use them for geol
-		suggestor = new AddressHistorySuggester(context,prefKey, new AddressResultListener(){public void onResultAddress(final ArrayList<AddressInfo> results) {post(new Runnable(){public void run(){
-			ArrayAdapter<AddressInfo> streets = new ArrayAdapter<AddressInfo>(context, android.R.layout.simple_dropdown_item_1line, results);
-			AddressHistoryAutocomplete.this.setAdapter(streets);
-			AddressHistoryAutocomplete.this.showDropDown();
-		}});}});
+		if (context!=null) {
+			suggestor = new AddressHistorySuggester(context, prefKey, new AddressResultListener() {
+				public void onResultAddress(final ArrayList<AddressInfo> results) {
+					post(new Runnable() {
+						public void run() {
+							ArrayAdapter<AddressInfo> streets = new ArrayAdapter<AddressInfo>(context, android.R.layout.simple_dropdown_item_1line, results);
+							AddressHistoryAutocomplete.this.setAdapter(streets);
+							AddressHistoryAutocomplete.this.showDropDown();
+						}
+					});
+				}
+			});
+		}
 		
 
     	addTextChangedListener(textWatcher);

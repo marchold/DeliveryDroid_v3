@@ -207,27 +207,18 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     }
 
     void askGoBack(){
-        DialogFragment dialogFragment = new DialogFragment(){
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(NewOrderActivity.this);
-                builder.setMessage(R.string.ba_to_home_from_new_order)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
-                        });
-                // Create the AlertDialog object and return it
-                Dialog dialog = builder.create();
-                return dialog;
-            }
-        };
-        dialogFragment.show(getFragmentManager(),"go_home_dialog_fragment");
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewOrderActivity.this);
+        builder.setMessage(R.string.ba_to_home_from_new_order)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                }).show();
     }
 
     @Override
