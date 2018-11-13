@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+
+            android:id="@+id/markUndeliverable"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/ic_cancel"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/mark_undeliverable"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+
+            android:id="@+id/editOrder"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/ic_edit"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/EDITORDER"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+
+            android:id="@+id/doneButton"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/ic_done"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/Done"
+                android:textSize="20sp"
+                android:textColor="@color/android_blue"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/callstoreButton"
+            android:focusable="true"
+            android:clickable="true"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:focusable="false"
+                android:clickable="false"
+                android:src="@drawable/ic_home_phone"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/call_store"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/next"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/ic_next"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/Next"
+                android:textSize="20sp"
+                android:textColor="@color/android_blue"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+
+
+</LinearLayout>

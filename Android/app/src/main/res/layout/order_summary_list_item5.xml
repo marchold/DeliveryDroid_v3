@@ -32,7 +32,7 @@
         android:background="@drawable/right_side_line"
         android:ellipsize="end"
         android:lines="1"
-        android:text="@string/fake_address"
+        android:text=""
         android:textSize="12sp" />
 
     <TextView

@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+>
 
     <item
-        android:id="@+id/gpsNotesButton"
-        android:icon="@drawable/text_gate_code"
-        android:orderInCategory="102"
-        android:showAsAction="always"
-        android:title="@string/Gate_Codes"/>
+            android:id="@+id/gpsNotesButton"
+            android:icon="@drawable/text_gate_code"
+            android:orderInCategory="102"
+            android:title="@string/Gate_Codes" app:showAsAction="always"/>
 
     <item
-        android:id="@+id/MapIt"
-        android:icon="@drawable/text_map"
-        android:orderInCategory="103"
-        android:showAsAction="always"
-        android:title="@string/map"/>
+            android:id="@+id/MapIt"
+            android:icon="@drawable/text_map"
+            android:orderInCategory="103"
+            android:title="@string/map" app:showAsAction="always"/>
 
     <item
-        android:id="@+id/Navigate"
-        android:icon="@drawable/text_navigate"
-        android:orderInCategory="104"
-        android:showAsAction="always"
-        android:title="@string/Navigate"/>
+            android:id="@+id/Navigate"
+            android:icon="@drawable/text_navigate"
+            android:orderInCategory="104"
+            android:title="@string/Navigate" app:showAsAction="always"/>
 
     <item
-        android:id="@+id/markUndeliverable"
-        android:orderInCategory="105"
-        android:showAsAction="collapseActionView"
-        android:title="Mark Undeliverable"/>
+            android:id="@+id/markUndeliverable"
+            android:orderInCategory="105"
+            android:title="Mark Undeliverable" app:showAsAction="collapseActionView"/>
 
     <item
-        android:id="@+id/editOrder"
-        android:orderInCategory="106"
-        android:showAsAction="collapseActionView"
-        android:title="Edit Order"/>
+            android:id="@+id/editOrder"
+            android:orderInCategory="106"
+            android:title="Edit Order" app:showAsAction="collapseActionView"/>
 
     <item
-        android:id="@+id/callStore"
-        android:orderInCategory="107"
-        android:showAsAction="collapseActionView"
-        android:title="@string/call_store"/>
+            android:id="@+id/callStore"
+            android:orderInCategory="107"
+            android:title="@string/call_store" app:showAsAction="collapseActionView"/>
 
 </menu>

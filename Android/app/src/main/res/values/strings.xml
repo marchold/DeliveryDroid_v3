@@ -96,7 +96,7 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="PreviousDelivery">Previous Delivery</string>
-    <string name="EDITORDER">EDIT ORDER</string>
+    <string name="EDITORDER">Edit Order</string>
     <string name="MinutesAddress">Minutes since order/Address\n</string>
     <string name="StartRunDialogMessage">Choose Yes to if you are returning to the store and the undelivered orders are
         part of the next run. Choose no if you are just organizing the deliveries.
@@ -189,7 +189,7 @@
         in the list of order numbers
     </string>
     <string name="Initial_Order_Number_daigTitle">The order number to start counting from</string>
-    <string name="No_addresses">Address Quick Entry Screen</string>
+    <string name="Address_quick_entry_screen">Address Quick Entry Screen</string>
     <string name="No_addresses_desc">Show a separate address input screen when entering new orders.</string>
     <string name="Store_Address">Store Address</string>
     <string name="Store_Address_desc">The street address of the store where the deliveries originate. Setting this field
@@ -335,7 +335,7 @@
     <string name="Paid">Paid</string>
     <string name="Tip_Amount">Tip Amount</string>
     <string name="Tip">Tip</string>
-    <string name="fake_address">Address</string>
+\
     <string name="fake_note">Notes for this order displayed here</string>
     <string name="pick_list_type">Pick List Display Style</string>
     <string name="Totals">Totals</string>
@@ -764,6 +764,14 @@
     <string name="failed_to_get_good_gps">We failed to get good GPS coordinates for the address. Some features won\'t
         work without store GPS coordinates.
     </string>
+    <string name="attached_to_order">Attached To Order</string>
+    <string name="order_summary_money_issue_order_note">Order Summary • Money Issue • Order note</string>
+    <string name="attached_to_location">Attached To Location</string>
+    <string name="gps_notes_gate_codes_bad_dogs_neighborhood_detail">Gps Notes • Gate Codes • Bad Dogs • Neighborhood
+        Detail
+    </string>
+    <string name="mark_undeliverable">Mark Undeliverable</string>
+    <string name="Invalid_address">Invalid address</string>
 
 </resources>
 

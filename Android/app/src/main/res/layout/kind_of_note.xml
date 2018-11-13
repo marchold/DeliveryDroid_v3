@@ -1,48 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:background="@drawable/underlined"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+              android:layout_width="match_parent"
+              android:background="@drawable/underlined"
+              android:orientation="vertical"
+              android:layout_height="65dp"
+              android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Attached To Order"
-            android:textSize="20sp"
-            android:id="@+id/textView" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attached_to_order"
+                android:textSize="20sp"
+                android:id="@+id/title"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Order Summary •  Money Issue • Order note "
-            android:id="@+id/textView2" />
-    </LinearLayout>
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_summary_money_issue_order_note"
+                android:id="@+id/subTitle"/>
 
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Attached To Location"
-            android:textSize="20sp"
-            android:id="@+id/textView3" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gps Notes • Gate Codes  •  Bad Dogs • Neighborhood Detail"
-            android:id="@+id/textView4" />
-
-    </LinearLayout>
 
 </LinearLayout>

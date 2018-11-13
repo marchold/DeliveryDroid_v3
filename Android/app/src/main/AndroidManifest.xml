@@ -79,7 +79,7 @@
                 android:theme="@style/ActionBarTheme"/>
         <activity
                 android:name=".outTheDoor.OutTheDoorActivity"
-                android:theme="@style/ActionBarTheme"
+                android:theme="@style/ToolBarTheme"
                 android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="Delivery_Droid_Out_The_Door"/>

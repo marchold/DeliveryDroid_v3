@@ -37,6 +37,7 @@ import catglo.com.deliverydroid.*;
 import catglo.com.deliverydroid.bankDrop.BankTillDropActivity;
 import catglo.com.deliverydroid.data.MyGeoPoint;
 import catglo.com.deliverydroid.neworder.NewOrderActivity;
+
 import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
 import catglo.com.deliverydroid.outTheDoor.GpsNotes;
 import catglo.com.deliverydroid.outTheDoor.OutTheDoorActivity;
@@ -409,24 +410,15 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		fragmentContainer = (FrameLayout)findViewById(R.id.fragmentContainerFrame);
 		setSelectedFragment(sharedPreferences.getInt("currentFragment", SORT));	
 		
-		// Gesture detection
-      //  gestureDetector = new GestureDetector(new MyGestureDetector());
-      //  gestureListener = new View.OnTouchListener() {
-       //     public boolean onTouch(View v, MotionEvent event) {
-      //          return gestureDetector.onTouchEvent(event);
-       //     }
-       // };
+
         sortClickable.setOnTouchListener(bluingToucher);
         mapClickable.setOnTouchListener(bluingToucher);
-       // sortUnderline.setOnTouchListener(gestureListener);
-       // mapUnderline.setOnTouchListener(gestureListener);
         orderSummaryButton.setOnTouchListener(bluingToucher);
         outTheDoorButton.setOnTouchListener(bluingToucher);
         bankButton.setOnTouchListener(bluingToucher);
         totalsButton.setOnTouchListener(bluingToucher);
         addOrderButton.setOnTouchListener(bluingToucher);
-        //moreMenuButton.setOnTouchListener(bluingToucher);
-      //  fragmentContainer.setOnTouchListener(gestureListener);
+
         
 	}
 

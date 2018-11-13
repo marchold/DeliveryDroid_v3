@@ -4,10 +4,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
 import catglo.com.deliveryDatabase.Wage;
-import catglo.com.deliverydroid.R;
 
 import catglo.com.deliverydroid.Tools;
-import catglo.com.widgets.ButtonPadFragment;
+import catglo.com.deliverydroid.neworder.ButtonPadFragment;
 import org.joda.time.DateTime;
 
 import java.text.DecimalFormat;

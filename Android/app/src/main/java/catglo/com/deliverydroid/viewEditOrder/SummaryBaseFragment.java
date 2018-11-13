@@ -12,17 +12,16 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import catglo.com.deliveryDatabase.DataBase;
-import catglo.com.deliveryDatabase.Order;
+import catglo.com.deliveryDatabase.*;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 
+
 import java.util.Calendar;
 
 abstract public class SummaryBaseFragment extends Fragment {
-	
+
 	protected TextView deliveryTime;
 	protected TextView orderTime;
 	protected TextView address;
@@ -87,7 +86,7 @@ abstract public class SummaryBaseFragment extends Fragment {
         
 		deliveryTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
 			DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-			activity.tools.showTimeSliderDialog(deliveryTime,order.payedTime,null);
+			activity.tools.showTimeSliderDialog(deliveryTime,order.payedTime,null, false);
 		    return true;
 		}});
 	        
@@ -96,7 +95,7 @@ abstract public class SummaryBaseFragment extends Fragment {
 		orderTime.setText(String.format("%tl:%tM %tp", calendar, calendar, calendar, calendar, calendar, calendar, calendar));
 		orderTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
 			DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-			activity.tools.showTimeSliderDialog(orderTime,order.time,null);
+			activity.tools.showTimeSliderDialog(orderTime,order.time,null, false);
 		    return true;
 		}});
         

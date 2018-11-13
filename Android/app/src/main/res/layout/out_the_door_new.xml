@@ -1,7 +1,357 @@
-<android.support.v4.view.ViewPager
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".outTheDoor.OutTheDoorActivity" />
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:id="@+id/rootLayout"
+                 android:clickable="true"
+                 android:focusable="true"
+>
+
+    <RelativeLayout
+            android:id="@+id/ActionBar"
+            style="@style/action_bar_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/action_bar_height"
+            android:gravity="right" >
+
+        <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="2dp"
+                android:src="@drawable/icon_back" />
+
+        <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="-7dp"
+                android:layout_toRightOf="@+id/imageView1"
+                android:src="@drawable/icon" />
+
+        <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/imageView2"
+                android:text="@string/Out_The_Door"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="13sp" />
+
+        <TextView
+                android:id="@+id/headerDetailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="10sp" />
+
+        <FrameLayout
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+
+                android:layout_toLeftOf="@+id/textView2" >
+        </FrameLayout>
+
+        <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_alignRight="@+id/textView2"
+                android:scaleType="center"
+                android:src="@drawable/action_drop_icon"
+                android:visibility="invisible" />
+
+        <ImageButton
+                android:id="@+id/addButton"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/nothing"
+                android:src="@android:drawable/ic_input_add"
+                android:visibility="invisible" />
+
+        <ImageButton
+                android:visibility="gone"
+                android:id="@+id/moreClickable"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/transparent_button"
+                android:layout_toLeftOf="@+id/arrivedAt"
+                android:src="@drawable/icon_three_dots" />
+
+        <Button
+                android:id="@+id/arrivedAt"
+                style="@style/action_bar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/left_divider"
+
+                android:text="@string/NEXT"
+                android:textAllCaps="true" />
+
+    </RelativeLayout>
+
+    <View
+            android:id="@+id/underline"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_below="@+id/ActionBar"
+            android:background="@color/android_blue" />
+
+
+
+    <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/underline"
+            android:layout_above="@+id/FooterBarLayout" >
+
+        <include
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/out_the_door_form_body" />
+
+
+
+    </ScrollView>
+
+    <LinearLayout
+            android:id="@+id/FooterBarLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="#EEE" >
+
+        <LinearLayout
+                android:id="@+id/textMessageClickable"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+            <ImageButton
+                    android:id="@+id/outTheDoorButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/transparent"
+                    android:clickable="false"
+                    android:padding="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/text_message" />
+
+            <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="@string/textMessage"
+                    android:textColor="#000"
+                    android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/callClickable"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+            <ImageView
+                    android:id="@+id/orderSummaryButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/transparent"
+                    android:clickable="false"
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/text_call" />
+
+            <TextView
+                    android:id="@+id/TextView01b"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="@string/Call"
+                    android:textColor="#000"
+                    android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/gpsNotesButton"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+            <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/transparent"
+                    android:clickable="false"
+                    android:padding="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/text_gate_code" />
+
+            <TextView
+                    android:id="@+id/TextView03"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="@string/Gate_Codes"
+                    android:textColor="#000"
+                    android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/MapIt"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+            <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="false"
+                    android:padding="3dp"
+                    android:src="@drawable/text_map" />
+
+            <TextView
+                    android:id="@+id/TextView04"
+                    android:layout_width="46dp"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="@string/map"
+                    android:textColor="#000"
+                    android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/Navigate"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/transparent"
+                    android:clickable="false"
+                    android:padding="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/text_navigate" />
+
+            <TextView
+                    android:id="@+id/textView1vc"
+                    android:layout_width="40dp"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="@string/Navigate"
+                    android:textColor="#000"
+                    android:textSize="8sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/iconMoreClickable"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+            <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_more" />
+
+            <TextView
+                    android:id="@+id/TextView05"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/MORE"
+                    android:textColor="#000"
+                    android:textSize="8sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/paymentAmountList"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/gray_lt"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+        <ListView
+                android:cacheColorHint="#00000000"
+                android:id="@+id/paymentAmountListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 

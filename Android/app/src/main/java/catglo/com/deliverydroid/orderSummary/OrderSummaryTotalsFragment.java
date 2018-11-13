@@ -12,14 +12,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-
 import catglo.com.deliveryDatabase.DataBase;
-import catglo.com.deliveryDatabase.DataBase.ShiftCounts;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
 import catglo.com.deliverydroid.BaseDeliveryDroidFragment;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
+
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -140,7 +140,7 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 		cashCollectedAmount = tip.payedCash;
 		totalCollectedAmount = tip.payed;
 		cashTipsAmount = tip.cashTips;
-		ShiftCounts counts = dataBase.getShiftCounts(viewingShift);
+		DataBase.ShiftCounts counts = dataBase.getShiftCounts(viewingShift);
 		if (counts.next<=0){
 			int dropRowCount = sharedPreferences.getInt("DropRowCount", 1);
 			float totalDrops = 0;

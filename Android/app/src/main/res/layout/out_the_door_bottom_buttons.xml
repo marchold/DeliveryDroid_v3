@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/toolbarmenucontainer"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" tools:showIn="@layout/out_the_door_activity">
+
+
+    <RelativeLayout
+            android:id="@+id/smsThem"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/text_message"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/textMessage"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/callThem"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/text_call"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/Call"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/gateCodesButton"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/text_gate_code"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/Gate_Codes"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/mapItButton"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/text_map"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/map"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/navigateButton"
+            style="@style/bottom_toolbar_image_container">
+        <ImageButton
+                android:src="@drawable/text_navigate"
+                style="@style/bottom_toolbar_image_button"/>
+        <TextView
+                android:text="@string/Navigate"
+                style="@style/bottom_toolbar_image_label"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -400,7 +400,7 @@
                 android:icon="@drawable/quick_address_entry_screen_simple"
                 android:key="useAddressScreen"
                 android:summary="@string/No_addresses_desc"
-                android:title="@string/No_addresses" />
+                android:title="@string/Address_quick_entry_screen" />
 
             <CheckBoxPreference
                 android:key="useTimeScreen"

@@ -24,8 +24,8 @@ import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 import catglo.com.widgets.AddressAutocomplete;
-import catglo.com.widgets.DataAwareFragment;
 import catglo.com.widgets.Tooltip;
+import org.joda.time.MutableDateTime;
 
 
 import java.sql.Timestamp;
@@ -243,7 +243,7 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
                 @Override
                 public void onClick(View v) {
                     NewOrderActivity activity = ((NewOrderActivity) getActivity());
-                    activity.tools.showTimeSliderDialog(orderTime, order.time, new DialogInterface.OnDismissListener() {
+                    activity.tools.showTimeSliderDialog(orderTime, new MutableDateTime(order.time), new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
                             //TODO: CHECKCHECK do we need to set this

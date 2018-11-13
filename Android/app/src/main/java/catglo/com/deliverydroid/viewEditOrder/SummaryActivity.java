@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.homeScreen.HomeScreenActivity;
+
 
 public class SummaryActivity extends DeliveryDroidBaseActivity {
 
@@ -26,7 +26,7 @@ public class SummaryActivity extends DeliveryDroidBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.summary_activity);
-		getSupportActionBar().hide();
+		
 		Intent intent = getIntent();
         key = intent.getIntExtra("DB Key", -1);
         final boolean openEdit = intent.getBooleanExtra("openEdit", false);

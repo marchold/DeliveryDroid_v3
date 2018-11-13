@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliverydroid.shift.ShiftStartEndBaseActivity;
 import catglo.com.widgets.DateRangeDialogFragment;
@@ -33,6 +32,8 @@ import catglo.com.widgets.DateSlider;
 import catglo.com.widgets.TimeSlider;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
+
 import org.joda.time.DateTime;
 import org.joda.time.MutableDateTime;
 
@@ -87,7 +88,20 @@ public class Tools {
         }
         String currencySymbol;
         try {
+            /*
+             * I got this crash report "doesn't open on Samsung note i717"
 
+            java.lang.RuntimeException: Unable to resume activity {com.catglo.deliverydroid/com.catglo.deliverydroidbase.HomeMapActivity}: java.lang.IllegalArgumentException: Not a supported ISO 3166 country: en
+            at android.app.ActivityThread.performResumeActivity(ActivityThread.java:2124)
+            ...
+            Caused by: java.lang.IllegalArgumentException: Not a supported ISO 3166 country: en
+            at java.util.Currency.getInstance(Currency.java:125)
+            at com.catglo.deliverydroidbase.DeliveryDroidBaseActivity.getFormattedCurrency(DeliveryDroidBaseActivity.java:71)
+            at com.catglo.deliverydroidbase.DragDropListFragment.updateUI(DragDropListFragment.java:154)
+            at com.catglo.deliverydroidbase.DeliveryListBaseFragment.onResume(DeliveryListBaseFragment.java:386)
+
+            So I default to dollar sign
+            */
             currencySymbol = Currency.getInstance(Locale.getDefault()).getSymbol();
         } catch (IllegalArgumentException e) {
             currencySymbol = "$";
@@ -233,7 +247,7 @@ public class Tools {
             case 3:
                 //HTTP navigation
                 LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                @SuppressLint("MissingPermission") Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 try {
                     if (lastKnownLocation!=null){
                         double latitude = lastKnownLocation.getLatitude();
@@ -360,9 +374,8 @@ public class Tools {
 
     public TimeDialog timeDialog;
 
-    //If future time tells if the time picker rolls over days on the current time
     @SuppressWarnings("deprecation")
-    public void showTimeSliderDialog(final TextView deliveryTime, final Timestamp payedTime, final Dialog.OnDismissListener listener) {
+	public void showTimeSliderDialog(final TextView deliveryTime, final Timestamp payedTime, final Dialog.OnDismissListener listener, boolean isFutureTime) {
 		currentTimeDateField=deliveryTime;
 		currentEditTimestamp=payedTime;
 		currentEditCalendar = MutableDateTime.now();
@@ -372,8 +385,8 @@ public class Tools {
 		if (timeDialog==null) {
 			timeDialog = new TimeDialog();
 			Bundle bundle = new Bundle();
-		//	bundle.putSerializable(TimeDialog.DATE_TIME_ARGUMENT, currentEditCalendar.toDateTime());
-        //    bundle.putBoolean("isFutureTime",isFutureTime);
+			bundle.putSerializable(TimeDialog.DATE_TIME_ARGUMENT, currentEditCalendar.toDateTime());
+            bundle.putBoolean("isFutureTime",isFutureTime);
 			timeDialog.setArguments(bundle);
 
 			timeDialog.setOnTimeChangedListener(new TimeDialog.OnTimeChangedListener(){public void onTimeChanged(DateTime newTime, DialogInterface arg0) {
@@ -402,10 +415,7 @@ public class Tools {
 
             @Override
 		    public void onGlobalLayout() {
-
-
-                //TODO: This does not work we need a new way of detecting the on screen keyboard`
-             /*   activityRootView.getWindowVisibleDisplayFrame(r);
+                activityRootView.getWindowVisibleDisplayFrame(r);
                 int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
                 //Log.i("MARC", "height dif " + heightDiff);
                 boolean isOpen = !(heightDiff < 200);
@@ -413,8 +423,7 @@ public class Tools {
                     return;
                 }
                 wasOpened = isOpen;
-                listener.onVisibilityChanged(isOpen);*/
-
+                listener.onVisibilityChanged(isOpen);
             }
 	    });
     }
@@ -456,42 +465,37 @@ public class Tools {
             altPayCheckbox.setText(R.string.Custom);
             altPayCheckbox.setOnClickListener(new View.OnClickListener(){public void onClick(View arg0) {
 
-                DialogFragment dialog = new DialogFragment(){public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                View dialogView = View.inflate(getContext(), R.layout.new_order_custom_mileage_settings_dialog, null);
+                final TextView name = (TextView)dialogView.findViewById(R.id.customName);
+                final TextView value = (TextView)dialogView.findViewById(R.id.customValue);
+                alertDialogBuilder.setView(dialogView);
+                alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        try {
+                            float newAmountValue = parseCurrency(value.getText().toString());
+                            editor.putString(amountKey, value.getText().toString());
+                            editor.putString(labelKey, name.getText().toString());
+                            editor.commit();
+                            altPayCheckbox.setChecked(true);
+                            setCheckboxText(newAmountValue,name.getText().toString(),value.getText().toString(),altPayCheckbox);
 
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                    View dialogView = View.inflate(getActivity(), R.layout.new_order_custom_mileage_settings_dialog, null);
-                    final TextView name = (TextView)dialogView.findViewById(R.id.customName);
-                    final TextView value = (TextView)dialogView.findViewById(R.id.customValue);
-                    alertDialogBuilder.setView(dialogView);
-                    alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            try {
-                                float newAmountValue = parseCurrency(value.getText().toString());
-                                editor.putString(amountKey, value.getText().toString());
-                                editor.putString(labelKey, name.getText().toString());
-                                editor.commit();
-                                altPayCheckbox.setChecked(true);
-                                setCheckboxText(newAmountValue,name.getText().toString(),value.getText().toString(),altPayCheckbox);
-
-                            } catch (NumberFormatException e){
-                                Toast.makeText(getContext(),"Error Parsing "+ value.getText().toString(),Toast.LENGTH_LONG).show();
-                            }
-
+                        } catch (NumberFormatException e){
+                            Toast.makeText(getContext(),"Error Parsing "+ value.getText().toString(),Toast.LENGTH_LONG).show();
                         }
-                    });
-                    alertDialogBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            altPayCheckbox.setChecked(false);
-                        }
-                    });
 
-                    final AlertDialog alertDialog = alertDialogBuilder.create();
-                    return alertDialog;
-                }};
-                dialog.show(activity.getFragmentManager(), "setup_custom_mileage");
+                    }
+                });
+                alertDialogBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        altPayCheckbox.setChecked(false);
+                    }
+                });
+
+                alertDialogBuilder.show();
             }});
         }
         else {
@@ -516,6 +520,7 @@ public class Tools {
             }
         }
     }
+
 
     public static void appendLog(String text)
     {

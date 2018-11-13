@@ -1,18 +1,11 @@
 package catglo.com.deliverydroid.settings
 
-import java.util.ArrayList
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Activity
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.DialogInterface.OnCancelListener
 import android.content.SharedPreferences
-import android.content.SharedPreferences.Editor
-import android.content.res.ColorStateList
-import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.location.*
@@ -24,37 +17,33 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
-import android.view.View.OnClickListener
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import catglo.com.api.GoogleAddressSuggester
 import catglo.com.deliveryDatabase.AddressInfo
-import catglo.com.deliveryDatabase.Order
-import catglo.com.deliverydroid.*
+import catglo.com.deliverydroid.DeliveryDroidMapRenderTheme
+import catglo.com.deliverydroid.DownloadedMap
 import catglo.com.deliverydroid.DownloadedMap.Companion.getMapForCurrentLocation
+import catglo.com.deliverydroid.MapReadyListener
+import catglo.com.deliverydroid.R
 import catglo.com.deliverydroid.data.MyGeoPoint
-import catglo.com.deliverydroid.homeScreen.HomeScreen_MapFragmentActivity
 import catglo.com.widgets.AddressHistoryAutocomplete
 import org.mapsforge.core.graphics.Bitmap
-import org.mapsforge.core.graphics.Color
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.model.MapPosition
-import org.mapsforge.core.model.Point
-import org.mapsforge.core.util.Utils
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 import org.mapsforge.map.android.util.AndroidPreferences
 import org.mapsforge.map.android.util.AndroidUtil
 import org.mapsforge.map.android.view.MapView
 import org.mapsforge.map.layer.cache.TileCache
 import org.mapsforge.map.layer.overlay.Marker
-import org.mapsforge.map.layer.renderer.TileRendererLayer
-import org.mapsforge.map.model.IMapViewPosition
 import org.mapsforge.map.reader.MapFile
 import java.io.IOException
-
+import java.util.*
+import java.util.regex.Pattern
+import catglo.com.deliverydroid.Tools;
 
 class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
     GoogleAddressSuggester.AddressListListener {

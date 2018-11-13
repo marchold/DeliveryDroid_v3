@@ -81,45 +81,47 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 	HomeScreen_Utils util = new HomeScreen_Util();
     HomeScreen_Util.HomeScreenRoutingListener routeTimeEstimateListener;
 	HomeScreen_Util.HomeScreenRoutingListener routeOptimizationListener;
-	
-/*void setOptimizeOn(boolean isOn){
-		boolean oldState = sharedPreferences.getBoolean("optimizeCheckbox", false);
-		
-		if (HomeScreenActivity.alreadyAskedStoreAddress==false){
- 			HomeScreenActivity.alreadyAskedStoreAddress=true;
- 			if (sharedPreferences.getString("storeAddress", "").length()==0) {
- 				isOn=false;
- 				final Context theContext = getActivity().getApplicationContext();
-     			AlertDialog.Builder delBuilder = new AlertDialog.Builder(getActivity());
-					delBuilder.setIcon(R.drawable.icon);
-					delBuilder.setIcon(R.drawable.icon).setTitle(R.string.you_need_store);
-					delBuilder.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
-						public void onClick(final DialogInterface dialog, final int whichButton) {
-							startActivityForResult(new Intent(theContext, SettingsActivity.class), 0);
-						}
-					}).setNegativeButton("No", null);
-					delBuilder.create().show();
-     		}
-     	} 
-		
-		if (isOn){
-			optimizeIcon.setImageResource(R.drawable.icon_opt);
-			optimizeText.setText(R.string.Optimize);
-		} else {
-			optimizeIcon.setImageResource(R.drawable.icon_non_opt);
-			optimizeText.setText(R.string.Manual_Route);
-		}
-		if (oldState!=isOn){
-			prefEditor.putBoolean("optimizeCheckbox", isOn);
-			prefEditor.commit();
-			if (isOn){
-				doRouteOptimization();
-				Toast.makeText(getActivity().getApplicationContext(), R.string.Optimize_Route_Toast, Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(getActivity().getApplicationContext(), R.string.Manual_Route_Toast, Toast.LENGTH_LONG).show();
-			}
-		}
-	}*/
+	private View noMapView;
+	private View downloadMapButton;
+
+	/*void setOptimizeOn(boolean isOn){
+            boolean oldState = sharedPreferences.getBoolean("optimizeCheckbox", false);
+
+            if (HomeScreenActivity.alreadyAskedStoreAddress==false){
+                 HomeScreenActivity.alreadyAskedStoreAddress=true;
+                 if (sharedPreferences.getString("storeAddress", "").length()==0) {
+                     isOn=false;
+                     final Context theContext = getActivity().getApplicationContext();
+                     AlertDialog.Builder delBuilder = new AlertDialog.Builder(getActivity());
+                        delBuilder.setIcon(R.drawable.icon);
+                        delBuilder.setIcon(R.drawable.icon).setTitle(R.string.you_need_store);
+                        delBuilder.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int whichButton) {
+                                startActivityForResult(new Intent(theContext, SettingsActivity.class), 0);
+                            }
+                        }).setNegativeButton("No", null);
+                        delBuilder.create().show();
+                 }
+             }
+
+            if (isOn){
+                optimizeIcon.setImageResource(R.drawable.icon_opt);
+                optimizeText.setText(R.string.Optimize);
+            } else {
+                optimizeIcon.setImageResource(R.drawable.icon_non_opt);
+                optimizeText.setText(R.string.Manual_Route);
+            }
+            if (oldState!=isOn){
+                prefEditor.putBoolean("optimizeCheckbox", isOn);
+                prefEditor.commit();
+                if (isOn){
+                    doRouteOptimization();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.Optimize_Route_Toast, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.Manual_Route_Toast, Toast.LENGTH_LONG).show();
+                }
+            }
+        }*/
 	void setOptimizeOn(boolean isOn){
 		boolean oldState = sharedPreferences.getBoolean("optimizeCheckbox", true);
 		
@@ -201,6 +203,9 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
         }
     	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	mapView = (MapView) findViewById(R.id.mapview);
+    	noMapView = findViewById(R.id.noMapView);
+    	downloadMapButton = findViewById(R.id.downloadMapClickListener);
+
         roundTripTime = (TextView)findViewById(R.id.roundTripTime);
     	driverEarnings = (TextView)findViewById(R.id.driverEarnings);
         //prefEditor = sharedPreferences.edit();
@@ -389,6 +394,12 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		lng = Float.parseFloat(sharedPreferences.getString("centrPoint_lng_s", ""+lng));
         Log.i("MAP","Centring map to "+lng+","+lat);
 
+		downloadMapButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getApplicationContext(),DownloadedMap.class));
+			}
+		});
 
         List<TileCache> tileCaches = new ArrayList<TileCache>();
 
@@ -398,6 +409,9 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			@Override
 			public void onMapReady(@NotNull DownloadedMap map) {
                 MapFile mapFile = new MapFile(map.getMapFile());
+				mapView.setVisibility(View.VISIBLE);
+				noMapView.setVisibility(View.GONE);
+				downloadMapButton.setVisibility(View.GONE);
 
                 int zoom = sharedPreferences.getInt("mapZoomLevel",16);
 

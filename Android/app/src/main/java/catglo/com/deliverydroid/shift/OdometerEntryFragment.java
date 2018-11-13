@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-import catglo.com.widgets.ButtonPadFragment;
+import catglo.com.deliverydroid.neworder.ButtonPadFragment;
 
 /**
  * Created by goblets on 2/25/14.

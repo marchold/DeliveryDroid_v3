@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/textMessageClickable"
-        android:icon="@drawable/text_message"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="Text Message Customer"/>
+            android:id="@+id/textMessageClickable"
+            android:icon="@drawable/text_message"
+            android:orderInCategory="100"
+            android:title="Text Message Customer" app:showAsAction="always"/>
 
     <item
-        android:id="@+id/callClickable"
-        android:icon="@drawable/text_call"
-        android:orderInCategory="101"
-        android:showAsAction="always"
-        android:title="Call Customer"/>
+            android:id="@+id/callClickable"
+            android:icon="@drawable/text_call"
+            android:orderInCategory="101"
+            android:title="Call Customer" app:showAsAction="always"/>
 </menu>

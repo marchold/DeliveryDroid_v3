@@ -3,8 +3,6 @@ package catglo.com.deliverydroid.neworder;
 import android.text.InputType;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import catglo.com.widgets.ButtonPadFragment;
-import catglo.com.widgets.DataAwareFragment;
 
 
 /**

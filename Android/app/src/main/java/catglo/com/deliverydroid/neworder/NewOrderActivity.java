@@ -16,8 +16,6 @@ import android.view.View;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.widgets.ButtonPadFragment;
-import catglo.com.widgets.DataAwareFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 

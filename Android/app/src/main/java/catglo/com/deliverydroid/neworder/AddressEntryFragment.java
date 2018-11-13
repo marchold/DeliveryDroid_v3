@@ -1,8 +1,5 @@
 package catglo.com.deliverydroid.neworder;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.location.*;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,14 +13,9 @@ import catglo.com.api.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.data.MyGeoPoint;
-import catglo.com.widgets.ButtonPadFragment;
-import catglo.com.widgets.DataAwareFragment;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 /**

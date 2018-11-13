@@ -45,8 +45,7 @@ data class DownloadedMap(var title: String,
         @SuppressLint("MissingPermission")
         fun getMapForCurrentLocation(context: Context, litener : MapReadyListener  ) {
             val list = loadMapsList(context)
-            val locationProvider =
-                LocationServices.getFusedLocationProviderClient(context)
+            val locationProvider = LocationServices.getFusedLocationProviderClient(context)
             list.forEach {
                 locationProvider.lastLocation.addOnSuccessListener { location ->
                     if (it.bounds != null) {

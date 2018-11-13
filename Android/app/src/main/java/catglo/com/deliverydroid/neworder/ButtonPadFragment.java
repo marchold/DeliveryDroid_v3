@@ -1,4 +1,4 @@
-package catglo.com.widgets;
+package catglo.com.deliverydroid.neworder;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +29,7 @@ import android.widget.TextView;
 import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
+import catglo.com.widgets.OnTextChangedListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,7 +37,7 @@ import java.util.Iterator;
 /**
  * Created by goblets on 2/16/14.
  */
-public abstract class ButtonPadFragment extends DataAwareFragment implements  OnTextChangedListener, AdapterView.OnItemClickListener {
+public abstract class ButtonPadFragment extends DataAwareFragment implements OnTextChangedListener, AdapterView.OnItemClickListener {
 
 
     private static int VOICE_RECOGNITION_REQUEST_CODE = 100;
@@ -148,7 +149,8 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements  On
         list.setVisibility(View.VISIBLE);
       //  activity.tools.hideOnScreenKeyboard(edit);
 
-
+/*
+//TODO: Fix this so it works, The keyboard listener was firing when it should not
        activity.tools.setKeyboardListener(new DeliveryDroidBaseActivity.OnKeyboardVisibilityListener() {public void onVisibilityChanged(boolean visible) {
             if (visible) {
                 buttons.setVisibility(View.GONE);
@@ -156,7 +158,7 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements  On
             else {
                 //No On Screen Keyboard
                 buttons.setVisibility(View.VISIBLE);
-            }}});
+            }}});*/
 
 
        edit.setOnClickListener(new View.OnClickListener() {

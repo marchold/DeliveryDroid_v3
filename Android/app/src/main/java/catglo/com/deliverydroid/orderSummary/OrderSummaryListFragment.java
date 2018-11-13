@@ -26,12 +26,12 @@ import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-
-import catglo.com.deliveryDatabase.DataBase;
-import catglo.com.deliveryDatabase.Order;
+import catglo.com.deliveryDatabase.*;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -400,7 +400,7 @@ public class OrderSummaryListFragment extends ListFragment  {
 		broadcastReceiver = new BroadcastReceiver() {public void onReceive(Context context, Intent intent) {
     		updateUI();
     	}};
-    	getActivity().registerReceiver(broadcastReceiver, new IntentFilter("catglo.com.deliverydroid.DBCHANGED"));sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+    	getActivity().registerReceiver(broadcastReceiver, new IntentFilter("com.catglo.deliverydroid.DBCHANGED"));sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 		updateUI();
 	}
 	

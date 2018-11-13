@@ -8,13 +8,37 @@
         android:layout_height="wrap_content"
         layout="@layout/optimize_bar" />
 
+    <FrameLayout
+            android:id="@+id/noMapView"
+            android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+        <Button android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+                android:id="@+id/downloadMapClickListener"
+                style="@style/home_screen_extra_button"
+                android:drawableTop="@drawable/map_download"
+                android:text="@string/map_downloads"/>
+
+
+        <TextView android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:textColor="@color/white"
+              android:gravity="center"
+              android:padding="20dp"
+              android:textSize="24dp"
+            android:text="You must download a mapsforge map to view a visual map."/>
+
+
+    </FrameLayout>
+
      <org.mapsforge.map.android.view.MapView
+             android:visibility="gone"
         android:id="@+id/mapview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:clickable="true"
         android:layout_below="@+id/optimizeBar"
     />
-     <!-- debug key 061vUOvKcZ-d5Ffc1iTIga-k-xXljT-CP2d1AYA -->
 
 </RelativeLayout>

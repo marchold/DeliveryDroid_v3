@@ -12,12 +12,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 import catglo.com.widgets.AddressAutocomplete;
+
 
 import java.text.DecimalFormat;
 
@@ -127,14 +127,14 @@ public class SummaryEditFragment extends SummaryBaseFragment {
 		//Delivery Time
         deliveryTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
         	DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-        	activity.tools.showTimeSliderDialog(deliveryTime,order.payedTime,null);
+        	activity.tools.showTimeSliderDialog(deliveryTime,order.payedTime,null, false);
 		    return true;
 		}});
         
         //Order Time
 		orderTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
 			DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-			activity.tools.showTimeSliderDialog(orderTime,order.time,null);
+			activity.tools.showTimeSliderDialog(orderTime,order.time,null, false);
 		    return true;
 		}});
 	

@@ -193,7 +193,7 @@
 
     <ListView
         android:id="@+id/buttonPadList"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonPadEdit"
         android:layout_toLeftOf="@+id/buttonPadButtonLayout"

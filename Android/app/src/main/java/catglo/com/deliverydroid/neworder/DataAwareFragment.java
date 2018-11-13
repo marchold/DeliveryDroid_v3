@@ -1,4 +1,4 @@
-package catglo.com.widgets;
+package catglo.com.deliverydroid.neworder;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
