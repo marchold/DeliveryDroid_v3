@@ -44,6 +44,7 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.download_map_activity)
+        mapsForgeDownloadWebView.loadUrl("http://ftp-stud.hs-esslingen.de/pub/Mirrors/download.mapsforge.org/maps/v5/north-america/us/")
     }
 
     val WRITE_EXTERNAL_STORAGE_REQUEST_CODE: Int = 10001

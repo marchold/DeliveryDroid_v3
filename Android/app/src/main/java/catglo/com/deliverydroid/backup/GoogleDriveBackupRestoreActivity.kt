@@ -2,6 +2,7 @@ package catglo.com.deliverydroid.backup
 
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
@@ -16,6 +17,7 @@ import catglo.com.deliverydroid.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.drive.*
 import com.google.android.gms.drive.query.Filters
 import com.google.android.gms.drive.query.SearchableField
@@ -48,7 +50,11 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
 
     private fun signIn() {
         Log.i("DD", "Start sign in")
-        val googleSignInClient = buildGoogleSignInClient()
+        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestScopes(Drive.SCOPE_FILE)
+            .requestScopes(Drive.SCOPE_APPFOLDER)
+            .build()
+        var googleSignInClient = GoogleSignIn.getClient(this,googleSignInOptions)
         startActivityForResult(googleSignInClient.signInIntent, REQUEST_CODE_SIGN_IN)
     }
 
@@ -127,6 +133,9 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
                 else
                 {
                     //Display sign in error
+                    AlertDialog.Builder(this).setMessage("Sign in error").setPositiveButton(android.R.string.ok,null).setOnDismissListener {
+                        finish()
+                    }.show()
                 }
             }
         }

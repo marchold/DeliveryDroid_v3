@@ -54,6 +54,7 @@ import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.IMapViewPosition;
 import org.mapsforge.map.reader.MapFile;
+import org.mapsforge.map.reader.header.MapFileException;
 import org.mapsforge.map.util.MapPositionUtil;
 
 
@@ -397,7 +398,8 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		downloadMapButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(getApplicationContext(),DownloadedMap.class));
+
+			    startActivity(new Intent(getApplicationContext(),DownloadMapActivity.class));
 			}
 		});
 
@@ -408,27 +410,28 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
         DownloadedMap.Companion.getMapForCurrentLocation(this, new MapReadyListener() {
 			@Override
 			public void onMapReady(@NotNull DownloadedMap map) {
-                MapFile mapFile = new MapFile(map.getMapFile());
-				mapView.setVisibility(View.VISIBLE);
-				noMapView.setVisibility(View.GONE);
-				downloadMapButton.setVisibility(View.GONE);
+                try {
+                    MapFile mapFile = new MapFile(map.getMapFile());
+                    mapView.setVisibility(View.VISIBLE);
+                    noMapView.setVisibility(View.GONE);
+                    downloadMapButton.setVisibility(View.GONE);
 
-                int zoom = sharedPreferences.getInt("mapZoomLevel",16);
+                    int zoom = sharedPreferences.getInt("mapZoomLevel", 16);
 
-				AndroidPreferences preferencesFacade = new AndroidPreferences(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
-				mapView.getModel().init(preferencesFacade);
-				mapView.setClickable(true);
-				mapView.getMapScaleBar().setVisible(true);
-				mapView.setBuiltInZoomControls(true);
+                    AndroidPreferences preferencesFacade = new AndroidPreferences(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
+                    mapView.getModel().init(preferencesFacade);
+                    mapView.setClickable(true);
+                    mapView.getMapScaleBar().setVisible(true);
+                    mapView.setBuiltInZoomControls(true);
 
 
-                tileCaches.add(AndroidUtil.createTileCache(HomeScreen_MapFragmentActivity.this, "AA",
-                        mapView.getModel().displayModel.getTileSize(), 1.0f,
-                        mapView.getModel().frameBufferModel.getOverdrawFactor()));
+                    tileCaches.add(AndroidUtil.createTileCache(HomeScreen_MapFragmentActivity.this, "AA",
+                            mapView.getModel().displayModel.getTileSize(), 1.0f,
+                            mapView.getModel().frameBufferModel.getOverdrawFactor()));
 
-				TileRendererLayer tileRendererLayer = AndroidUtil.createTileRendererLayer(tileCaches.get(0),
-						mapView.getModel().mapViewPosition, mapFile, DeliveryDroidMapRenderTheme.OSMARENDER, false, true, false);
-				mapView.getLayerManager().getLayers().add(tileRendererLayer);
+                    TileRendererLayer tileRendererLayer = AndroidUtil.createTileRendererLayer(tileCaches.get(0),
+                            mapView.getModel().mapViewPosition, mapFile, DeliveryDroidMapRenderTheme.OSMARENDER, false, true, false);
+                    mapView.getLayerManager().getLayers().add(tileRendererLayer);
 
 
 
@@ -453,72 +456,70 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 */
 
 
-                int counter=1;
-                float minLat=Float.MAX_VALUE;
-                float maxLat=Float.MIN_VALUE;
-                float minLng=Float.MAX_VALUE;
-                float maxLng=Float.MIN_VALUE;
+                    int counter = 1;
+                    float minLat = Float.MAX_VALUE;
+                    float maxLat = Float.MIN_VALUE;
+                    float minLng = Float.MAX_VALUE;
+                    float maxLng = Float.MIN_VALUE;
 
-				for (Order order : orders){
-				    if (order.geoPoint.lat == 0 && order.geoPoint.lng == 0)
-                    {
-                        order.isValidated = false;
-                    }
-                    if (!order.isValidated)
-                    {
-						order.geocode(getApplicationContext());
-                    }
-					if (order.isValidated){
+                    for (Order order : orders) {
+                        if (order.geoPoint.lat == 0 && order.geoPoint.lng == 0) {
+                            order.isValidated = false;
+                        }
+                        if (!order.isValidated) {
+                            order.geocode(getApplicationContext());
+                        }
+                        if (order.isValidated) {
 
-						try {
+                            try {
 
-							int imageResource = getResources().getIdentifier("drawable/map"+counter, null, getPackageName());
-                            Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(getResources().getDrawable(imageResource));
-                            bitmap.incrementRefCount();
-                            Marker marker = new Marker(new LatLong(order.geoPoint.lat, order.geoPoint.lng), bitmap, 0, -bitmap.getHeight() / 2) {
-                                @Override public boolean onTap(LatLong geoPoint, Point viewPosition, Point tapPoint) {
-                                    if (contains(viewPosition, tapPoint)) {
-                                        ///Toast.makeText(MainActivity.this, "Urmia, payamasli", Toast.LENGTH_SHORT).show();
-                                        return true;
+                                int imageResource = getResources().getIdentifier("drawable/map" + counter, null, getPackageName());
+                                Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(getResources().getDrawable(imageResource));
+                                bitmap.incrementRefCount();
+                                Marker marker = new Marker(new LatLong(order.geoPoint.lat, order.geoPoint.lng), bitmap, 0, -bitmap.getHeight() / 2) {
+                                    @Override
+                                    public boolean onTap(LatLong geoPoint, Point viewPosition, Point tapPoint) {
+                                        if (contains(viewPosition, tapPoint)) {
+                                            ///Toast.makeText(MainActivity.this, "Urmia, payamasli", Toast.LENGTH_SHORT).show();
+                                            return true;
+                                        }
+                                        return false;
                                     }
-                                    return false;
-                                }
-                            };
-                            mapView.getLayerManager().getLayers().add(marker);
+                                };
+                                mapView.getLayerManager().getLayers().add(marker);
 
-						} catch (Resources.NotFoundException e){
-							Toast.makeText(getApplicationContext(), R.string.error_building_map_markers, Toast.LENGTH_SHORT).show();
-						}
+                            } catch (Resources.NotFoundException e) {
+                                Toast.makeText(getApplicationContext(), R.string.error_building_map_markers, Toast.LENGTH_SHORT).show();
+                            }
 
-						if (order.geoPoint.lat < minLat) minLat = (float) order.geoPoint.lat;
-						if (order.geoPoint.lng < minLng) minLng = (float) order.geoPoint.lng;
-						if (order.geoPoint.lat > maxLat) maxLat = (float) order.geoPoint.lat;
-						if (order.geoPoint.lng < maxLng) maxLng = (float) order.geoPoint.lng;
+                            if (order.geoPoint.lat < minLat) minLat = (float) order.geoPoint.lat;
+                            if (order.geoPoint.lng < minLng) minLng = (float) order.geoPoint.lng;
+                            if (order.geoPoint.lat > maxLat) maxLat = (float) order.geoPoint.lat;
+                            if (order.geoPoint.lng < maxLng) maxLng = (float) order.geoPoint.lng;
 
-						counter++;
-					} else {
-						//TODO: We need an error icon or something, maybe the ! is enough
-					}
-				}
+                            counter++;
+                        } else {
+                            //TODO: We need an error icon or something, maybe the ! is enough
+                        }
 
-				if (counter>1) {
-					float latDif = (maxLat - minLat) / 2;
-					float lngDif = (maxLng - minLng) / 2;
-					IMapViewPosition mvp = mapView.getModel().mapViewPosition;
-					mvp.setMapPosition(new MapPosition(new LatLong(minLat + latDif, minLng + lngDif), (byte) zoom));
-				}
-				else {
-
-				    LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-				    if (locationManager!=null)
-                    {
-                        Criteria criteria = new Criteria();
-                        String bestProvider = locationManager.getBestProvider(criteria, false);
-                        Location location = locationManager.getLastKnownLocation(bestProvider);
-                        IMapViewPosition mvp = mapView.getModel().mapViewPosition;
-                        mvp.setMapPosition(new MapPosition(new LatLong(location.getLatitude(), location.getLongitude()), (byte) zoom));
                     }
-				}
+
+                    if (counter > 1) {
+                        float latDif = (maxLat - minLat) / 2;
+                        float lngDif = (maxLng - minLng) / 2;
+                        IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+                        mvp.setMapPosition(new MapPosition(new LatLong(minLat + latDif, minLng + lngDif), (byte) zoom));
+                    } else {
+
+                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        if (locationManager != null) {
+                            Criteria criteria = new Criteria();
+                            String bestProvider = locationManager.getBestProvider(criteria, false);
+                            Location location = locationManager.getLastKnownLocation(bestProvider);
+                            IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+                            mvp.setMapPosition(new MapPosition(new LatLong(location.getLatitude(), location.getLongitude()), (byte) zoom));
+                        }
+                    }
                 /*
                 try {
                     BoundingBox boundingBox = new BoundingBox(minLat, minLng, maxLat, maxLng);
@@ -530,7 +531,12 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                 }
 */
 
-                mapView.repaint();
+                    mapView.repaint();
+                }catch (MapFileException e)
+                {
+                    e.printStackTrace();
+                    //TODO: should probably remove the map from the cached list of maps
+                }
 
 			}
 		});

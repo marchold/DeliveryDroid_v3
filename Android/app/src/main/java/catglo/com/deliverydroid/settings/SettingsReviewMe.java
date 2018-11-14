@@ -18,7 +18,7 @@ public class SettingsReviewMe extends EditTextPreference {
 	@Override
 	protected void onClick() {
 		final Intent marketIntent;
-		marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:\"Marc Holder Kluver\"")); 
+		marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id="+context.getPackageName()));
 		context.startActivity(marketIntent);
 	}
 

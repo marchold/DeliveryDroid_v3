@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/noMapView"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent" android:layout_height="match_parent" tools:showIn="@layout/my_map_activity">
+
+
+    <Button android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:id="@+id/downloadMapClickListener"
+            style="@style/home_screen_extra_button"
+            android:drawableTop="@drawable/map_download"
+            android:text="@string/map_downloads"/>
+
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:textColor="@color/white"
+              android:gravity="center"
+              android:padding="40dp"
+              android:textSize="24dp"
+              android:text="Delivery droid now uses Open Street Maps. You must download a Mapsforge map to view a visual map in the app."/>
+
+
+</LinearLayout>

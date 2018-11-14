@@ -23,7 +23,9 @@
                 android:layout_margin="20dp"
                 android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="Delivery Droid no longer uses google maps for looking up addresses and generating routes.\n\nIt is now necessary to download a mapsforge point of intrest file for the address autocomplete. Its also necessary to download a mapsforge map file for in app maps and routing.\n\nPlease visit to download the appropriate files.\n\nCopy the files to the root of your SD card."/>
+                  android:text="Please download a mapsforge map for visual maps in the app"/>
+
+        <WebView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/mapsForgeDownloadWebView"></WebView>
 
     </LinearLayout>
 
