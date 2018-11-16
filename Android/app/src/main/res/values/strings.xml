@@ -772,6 +772,16 @@
     </string>
     <string name="mark_undeliverable">Mark Undeliverable</string>
     <string name="Invalid_address">Invalid address</string>
+    <string name="delivery_droid_keeps_all_of_its_order_and_shift_data_a_database_called_deliverydata_sqlite_you_can_upload_a_copy_your_data_to_google_drive_for_backup">
+        Delivery droid keeps all of its order and shift data a database called DeliveryData.SQLite. You can upload a
+        copy your data to Google Drive for backup
+    </string>
+    <string name="copy_database_nto_google_drive">Copy Database To Google Drive</string>
+    <string name="restore_database_nfrom_google_drive">Restore Database From Google Drive</string>
+    <string name="be_careful_with_the_restore_option_as_it_will_replace_your_current_data_with_the_backup_on_google_drive_thereby_deleting_whats_currently_on_the_phone">
+        Be careful with the restore option as it will replace your current data with the backup on google drive thereby
+        deleting whats currently on the phone.
+    </string>
 
 </resources>
 

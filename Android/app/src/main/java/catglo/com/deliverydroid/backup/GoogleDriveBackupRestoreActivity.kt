@@ -10,6 +10,7 @@ import android.os.Environment
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import catglo.com.deliveryDatabase.DataBase
 import catglo.com.deliverydroid.BuildConfig
@@ -46,6 +47,10 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         signIn()
         backup?.setOnClickListener { saveFileToDrive() }
         restore?.setOnClickListener { restoreBackup() }
+
+        contentLoadingProgressBar.show()
+        backup.visibility = View.GONE
+        restore.visibility = View.GONE
     }
 
     private fun signIn() {
@@ -56,13 +61,6 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
             .build()
         var googleSignInClient = GoogleSignIn.getClient(this,googleSignInOptions)
         startActivityForResult(googleSignInClient.signInIntent, REQUEST_CODE_SIGN_IN)
-    }
-
-    private fun buildGoogleSignInClient(): GoogleSignInClient {
-        val signInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestScopes(Drive.SCOPE_FILE)
-            .build()
-        return GoogleSignIn.getClient(this, signInOptions)
     }
 
     var dbFile : File? = null
@@ -118,6 +116,9 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        contentLoadingProgressBar.hide()
+        backup.visibility = View.VISIBLE
+        restore.visibility = View.VISIBLE
         when (requestCode) {
             REQUEST_CODE_SIGN_IN -> {
                 Log.i("DD", "Sign in request code")
@@ -141,10 +142,11 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         }
     }
 
-    protected fun restoreBackup() {
+    private fun restoreBackup() {
         val openOptions = OpenFileActivityOptions.Builder()
-            .setSelectionFilter(Filters.eq(SearchableField.MIME_TYPE, "delivery/mysql"))
+       //     .setSelectionFilter(Filters.eq(SearchableField.MIME_TYPE, "delivery/mysql"))
             .setActivityTitle(getString(R.string.BackupRestoreData))
+            .setMimeType(arrayListOf("delivery/mysql"))
             .build()
 
         mOpenItemTaskSource = TaskCompletionSource()

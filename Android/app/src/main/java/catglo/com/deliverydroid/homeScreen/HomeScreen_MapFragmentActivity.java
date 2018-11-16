@@ -14,8 +14,10 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -505,10 +507,11 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                     }
 
                     if (counter > 1) {
-                        float latDif = (maxLat - minLat) / 2;
-                        float lngDif = (maxLng - minLng) / 2;
+                      //  float latDif = (maxLat - minLat) / 2;
+                      //  float lngDif = (maxLng - minLng) / 2;
                         IMapViewPosition mvp = mapView.getModel().mapViewPosition;
-                        mvp.setMapPosition(new MapPosition(new LatLong(minLat + latDif, minLng + lngDif), (byte) zoom));
+                        mvp.setMapLimit(new BoundingBox(minLat,minLat,maxLat,maxLng));
+//                        mvp.setMapPosition(new MapPosition(new LatLong(minLat + latDif, minLng + lngDif), (byte) zoom));
                     } else {
 
                         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -516,20 +519,36 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                             Criteria criteria = new Criteria();
                             String bestProvider = locationManager.getBestProvider(criteria, false);
                             Location location = locationManager.getLastKnownLocation(bestProvider);
-                            IMapViewPosition mvp = mapView.getModel().mapViewPosition;
-                            mvp.setMapPosition(new MapPosition(new LatLong(location.getLatitude(), location.getLongitude()), (byte) zoom));
+                            if (location==null) {
+                                locationManager.requestSingleUpdate(bestProvider, new LocationListener() {
+                                    @Override
+                                    public void onLocationChanged(Location location) {
+                                        IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+                                        mvp.setMapPosition(new MapPosition(new LatLong(location.getLatitude(), location.getLongitude()), (byte) zoom));
+                                        mapView.repaint();
+                                    }
+
+                                    @Override
+                                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                                    }
+
+                                    @Override
+                                    public void onProviderEnabled(String provider) {
+
+                                    }
+
+                                    @Override
+                                    public void onProviderDisabled(String provider) {
+
+                                    }
+                                },Looper.getMainLooper());
+                            } else {
+                                IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+                                mvp.setMapPosition(new MapPosition(new LatLong(location.getLatitude(), location.getLongitude()), (byte) zoom));
+                            }
                         }
                     }
-                /*
-                try {
-                    BoundingBox boundingBox = new BoundingBox(minLat, minLng, maxLat, maxLng);
-                    mapView.getModel().mapViewPosition.setMapLimit(boundingBox);
-                }
-                catch (IllegalArgumentException e){
-                   e.printStackTrace();
-
-                }
-*/
 
                     mapView.repaint();
                 }catch (MapFileException e)
