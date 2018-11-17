@@ -507,10 +507,17 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                     }
 
                     if (counter > 1) {
-                      //  float latDif = (maxLat - minLat) / 2;
-                      //  float lngDif = (maxLng - minLng) / 2;
-                        IMapViewPosition mvp = mapView.getModel().mapViewPosition;
-                        mvp.setMapLimit(new BoundingBox(minLat,minLat,maxLat,maxLng));
+                    	if (counter==2)
+						{
+							IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+							mvp.setMapPosition(new MapPosition(new LatLong(minLat, maxLng), (byte) zoom));
+						}
+						else {
+							//  float latDif = (maxLat - minLat) / 2;
+							//  float lngDif = (maxLng - minLng) / 2;
+							IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+							mvp.setMapLimit(new BoundingBox(minLat, minLng, maxLat, maxLng));
+						}
 //                        mvp.setMapPosition(new MapPosition(new LatLong(minLat + latDif, minLng + lngDif), (byte) zoom));
                     } else {
 
