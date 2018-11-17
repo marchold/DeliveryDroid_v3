@@ -1,309 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/NewOrderLastScreen"
-    android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:background="#000"
-    android:orientation="vertical" >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools" android:id="@+id/NewOrderLastScreen"
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              android:background="#000"
+              android:orientation="vertical">
 
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
         <LinearLayout
-            android:id="@+id/LinearLayout1"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
+                android:id="@+id/LinearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
             <catglo.com.widgets.RowLayout
-                android:id="@+id/rowLayout00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" >
-
-                <catglo.com.widgets.RowLayout
-                    android:id="@+id/rowLayout2"
+                    android:id="@+id/rowLayout00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp" >
+                    android:layout_margin="10dp">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/rowLayout2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:layout_margin="10dp">
 
-                        <TextView
-                            android:id="@+id/OrderNumberText"
-                            android:layout_width="wrap_content"
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/OrderNumber" />
+                            android:layout_weight="1">
 
-                        <EditText
-                            android:id="@+id/OrderNumber"
-                            android:layout_width="wrap_content"
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/OrderNumber"
+                                android:id="@+id/OrderNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="phone"
+                                android:minWidth="120dp"
+                                android:nextFocusDown="@+id/OrderTime"
+                                android:singleLine="true"
+                                android:textSize="18sp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext|flagNoExtractUi"
-                            android:inputType="phone"
-                            android:minWidth="120dp"
-                            android:nextFocusDown="@+id/OrderTime"
-                            android:singleLine="true"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                            android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/textOrder"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/OrderTime" >
-                        </TextView>
-
-                        <EditText
-                            android:id="@+id/OrderTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="time"
-                            android:minWidth="120dp"
-                            android:nextFocusDown="@+id/OrderCost" />
-                    </LinearLayout>
-                </catglo.com.widgets.RowLayout>
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/OrderTime"
+                                android:id="@+id/OrderTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="time"
+                                android:minWidth="120dp"
+                                android:nextFocusDown="@+id/OrderCost"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
 
                 <catglo.com.widgets.RowLayout
-                    android:id="@+id/rowLayout23"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                        android:id="@+id/rowLayout23"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/widget168"
+
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/OrderTotal"
+                                android:id="@+id/OrderCost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="numberDecimal"
+                                android:minWidth="120dp"
+                                android:nextFocusDown="@+id/otherPay"
+                                android:singleLine="true"
+                                android:textSize="18sp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/OrderTotal" />
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/OrderCost"
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/Extra_Pay"
+                                android:id="@+id/otherPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="numberDecimal"
+                                android:minWidth="120dp"
+                                android:nextFocusDown="@+id/preTip"
+                                android:singleLine="true"
+                                android:textSize="18sp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext|flagNoExtractUi"
-                            android:inputType="numberDecimal"
-                            android:minWidth="100dp"
-                            android:nextFocusDown="@+id/otherPay"
-                            android:singleLine="true"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                            android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/Tip"
+                                android:id="@+id/preTip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="numberDecimal"
+                                android:minWidth="100dp"
+                                android:nextFocusDown="@+id/orderAddress"
+                                android:singleLine="true"
+                                android:textSize="18sp"/>
+                    </android.support.design.widget.TextInputLayout>
 
-                        <TextView
-                            android:id="@+id/TextView01"
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/Extra_Pay" />
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/otherPay"
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/Total_Paid"
+                                android:id="@+id/totalPayed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="numberDecimal"
+                                android:minWidth="120dp"
+                                android:nextFocusDown="@+id/orderAddress"
+                                android:singleLine="true"
+                                android:textSize="18sp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext|flagNoExtractUi"
-                            android:inputType="numberDecimal"
-                            android:minWidth="100dp"
-                            android:nextFocusDown="@+id/preTip"
-                            android:singleLine="true"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/TextView011"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/Tip" />
-
-                        <EditText
-                            android:id="@+id/preTip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionNext|flagNoExtractUi"
-                            android:inputType="numberDecimal"
-                            android:minWidth="100dp"
-                            android:nextFocusDown="@+id/orderAddress"
-                            android:singleLine="true"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                    
-                    
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/TextView011bcd"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/Total_Paid" />
-
-                        <EditText
-                            android:id="@+id/totalPayed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionNext|flagNoExtractUi"
-                            android:inputType="numberDecimal"
-                            android:minWidth="100dp"
-                            android:nextFocusDown="@+id/orderAddress"
-                            android:singleLine="true"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                    
-                </catglo.com.widgets.RowLayout>
-
-                <catglo.com.widgets.RowLayout
-                    android:id="@+id/rowLayout24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/widget169"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/OrderAddress" >
-                        </TextView>
+                            android:orientation="vertical">
 
                         <catglo.com.widgets.AddressAutocomplete
-                            android:id="@+id/orderAddress"
+                                android:id="@+id/orderAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:dropDownWidth="fill_parent"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="textPostalAddress"
+                                android:minWidth="200dp"
+                                android:nextFocusDown="@+id/ApartmentNumber"
+                                android:singleLine="true"
+                                android:hint="@string/OrderAddress"
+                                android:textSize="18sp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:dropDownWidth="fill_parent"
-                            android:imeOptions="actionNext|flagNoExtractUi"
-                            android:inputType="textPostalAddress"
-                            android:minWidth="160dp"
-                            android:nextFocusDown="@+id/ApartmentNumber"
-                            android:singleLine="true"
-                            android:text=""
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                            android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
 
-                        <TextView
-                            android:id="@+id/appartNumberTextLabel"
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/apartmentNumber" android:id="@+id/ApartmentNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:minWidth="60dp"
+                                android:nextFocusDown="@+id/OrderNotes"
+                                android:singleLine="true"
+
+                                android:textSize="18sp"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/apartmentNumber" >
-                        </TextView>
+                            android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/ApartmentNumber"
+
+                        <android.support.design.widget.TextInputEditText
+                                android:hint="@string/phoneNumber"
+                                android:id="@+id/phoneNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionDone|flagNoExtractUi"
+                                android:minWidth="150dp"
+                                android:inputType="phone"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textSize="18sp"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext|flagNoExtractUi"
-                            android:minWidth="40dp"
-                            android:nextFocusDown="@+id/OrderNotes"
-                            android:singleLine="true"
-                            android:text=""
-                            android:textSize="18sp" >
-                        </EditText>
-                    </LinearLayout>
+                            android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
 
-                        <TextView
-                            android:id="@+id/widget170"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/ApartmentNumber"
-                            android:text="@string/OrderNotes" >
-                        </TextView>
+                        <android.support.design.widget.TextInputEditText
+                                android:id="@+id/OrderNotes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/ApartmentNumber"
+                                android:imeOptions="actionNext"
+                                android:minWidth="300dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textSize="18sp"
+                                android:hint="@string/OrderNotes"/>
 
-                        <EditText
-                            android:id="@+id/OrderNotes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/ApartmentNumber"
-                            android:imeOptions="actionNext"
-                            android:minWidth="150dp"
-                            android:singleLine="true"
-                            android:text=""
-                            android:textSize="18sp" >
-                        </EditText>
-                    </LinearLayout>
-                    
-                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                    </android.support.design.widget.TextInputLayout>
 
-                        <TextView
-                            android:id="@+id/widget17x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/phoneNumber" >
-                        </TextView>
-
-                        <EditText
-                            android:id="@+id/phoneNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionDone|flagNoExtractUi"
-                            android:minWidth="150dp"
-                            android:inputType="phone"
-                            android:singleLine="true"
-                            android:text=""
-                            android:textSize="18sp" >
-                        </EditText>
-                    </LinearLayout>
-                    
-                     
                 </catglo.com.widgets.RowLayout>
             </catglo.com.widgets.RowLayout>
 
             <Button
-                android:id="@+id/AddOrder"
-                android:layout_width="150dip"
-                android:layout_height="70dip"
-                android:layout_margin="10dp"
-                android:text="@string/AddOrder" >
+                    android:id="@+id/AddOrder"
+                    android:layout_width="150dip"
+                    android:layout_height="70dip"
+                    android:layout_margin="10dp"
+                    android:background="@color/transparent"
+                    android:textSize="21sp"
+                    android:textColor="@color/android_blue"
+                    android:text="@string/AddOrder">
 
             </Button>
 
-            <include layout="@layout/new_order_custom_checkboxes" />
+            <include layout="@layout/new_order_custom_checkboxes"/>
 
             <TextView
-                android:id="@+id/extraPayTooltip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bubble_point_top_left"
-                android:text="@string/extra_pay_tooltip"
-                android:textColor="@color/black"
-                android:visibility="gone" />
+                    android:id="@+id/extraPayTooltip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bubble_point_top_left"
+                    android:text="@string/extra_pay_tooltip"
+                    android:textColor="@color/black"
+                    android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 

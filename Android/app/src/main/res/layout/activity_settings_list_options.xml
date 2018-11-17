@@ -5,12 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <!--
     <fragment
         android:id="@+id/fragment1"
         android:name="catglo.com.deliverydroid.settings.Settings_ListOptions_Wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1" /> -->
+
+    <fragment
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:name="catglo.com.deliverydroid.settings.SettingsListOptionsFragment" android:id="@+id/fragment1"/>
 
     <FrameLayout
         android:id="@+id/sampleCellContainer"
@@ -19,5 +26,6 @@
         android:background="@color/gray" >
 
     </FrameLayout>
+
 
 </LinearLayout>

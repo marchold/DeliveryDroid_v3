@@ -40,7 +40,7 @@
         <item name="android:textColor">@color/white</item>
 
         <item name="@android:attr/actionBarTabTextStyle">@style/TabStyle</item>
-        <item name="android:homeAsUpIndicator">@drawable/icon_back_ap</item>
+        <item name="android:homeAsUpIndicator">@drawable/icon</item>
     </style>
 
     <style name="ToolBarTheme" parent="Theme.AppCompat.NoActionBar">

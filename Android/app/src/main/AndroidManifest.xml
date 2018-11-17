@@ -99,7 +99,7 @@
         <activity android:name=".shift.ShiftStartEndActivity"/>
         <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
         <activity
-                android:name=".settings.Settings_ListOptions"
+                android:name=".settings.SettingsListOptions"
                 android:exported="false">
             <intent-filter>
                 <action android:name="catglo.com.deliverydroid.Settings_ListOptions"/>
@@ -107,7 +107,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".settings.Settings_ListOptions_Activity"/>
+        <activity android:name=".settings.SettingsListOptionsFragment"/>
 
         <uses-library android:name="com.google.android.maps"/>
 

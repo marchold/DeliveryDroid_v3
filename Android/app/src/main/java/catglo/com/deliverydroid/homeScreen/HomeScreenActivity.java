@@ -13,7 +13,6 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -42,7 +41,7 @@ import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
 import catglo.com.deliverydroid.outTheDoor.GpsNotes;
 import catglo.com.deliverydroid.outTheDoor.OutTheDoorActivity;
 import catglo.com.deliverydroid.settings.SettingsActivity;
-import catglo.com.deliverydroid.settings.Settings_ListOptions;
+import catglo.com.deliverydroid.settings.SettingsListOptions;
 import catglo.com.deliverydroid.shift.ShiftStartEndActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -232,7 +231,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		menuSearchButton.setOnClickListener(menuSearchClickListener);
 		menuCustomizeListButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				startActivity(new Intent(getApplicationContext(), Settings_ListOptions.class));
+				startActivity(new Intent(getApplicationContext(), SettingsListOptions.class));
 				drawerLayout.closeDrawers();
 			}
 		});
@@ -693,7 +692,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 				startActivity(new Intent(getApplicationContext(), GpsNotes.class));
 				return true;
 			case CUSTOMIZE_LIST:
-				Intent i = new Intent(getApplicationContext(),Settings_ListOptions.class);
+				Intent i = new Intent(getApplicationContext(), SettingsListOptions.class);
 				startActivity(i);
 				break;
 		}

@@ -18,14 +18,17 @@ import catglo.com.deliverydroid.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.drive.*
+import com.google.android.gms.drive.events.OpenFileCallback
 import com.google.android.gms.drive.query.Filters
 import com.google.android.gms.drive.query.SearchableField
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
 import kotlinx.android.synthetic.main.backup_to_google_drive_activity.*
 import java.io.*
+import java.lang.Exception
 
 class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
     private var mDriveClient: DriveClient? = null
@@ -120,6 +123,36 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         backup.visibility = View.VISIBLE
         restore.visibility = View.VISIBLE
         when (requestCode) {
+
+            REQUEST_CODE_CREATOR -> {
+
+            }
+
+            REQUEST_CODE_OPEN_ITEM -> {
+                var driveFileId = data?.getParcelableExtra<DriveId>(OpenFileActivityOptions.EXTRA_RESPONSE_DRIVE_ID)
+                val driveFile = driveFileId?.asDriveFile()
+                if (driveFile!=null) {
+                    mDriveResourceClient?.openFile(driveFile, DriveFile.MODE_READ_ONLY, object:OpenFileCallback(){
+                        override fun onContents(driveContents: DriveContents) {
+
+                            FileOutputStream("DeliveryDataImport.SQLite").use {
+                                driveContents.inputStream.copyTo(it)
+                            }
+                        }
+
+                        override fun onProgress(p0: Long, p1: Long) {
+
+                        }
+
+                        override fun onError(p0: Exception) {
+
+                        }
+                    })
+
+                }
+
+            }
+
             REQUEST_CODE_SIGN_IN -> {
                 Log.i("DD", "Sign in request code")
                 // Called after user is signed in.
@@ -152,10 +185,16 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         mOpenItemTaskSource = TaskCompletionSource()
         mDriveClient!!
             .newOpenFileActivityIntentSender(openOptions)
-            .continueWith { task -> startIntentSenderForResult(task.result, REQUEST_CODE_OPEN_ITEM, null, 0, 0, 0)}
+            .continueWith { task ->
+                startIntentSenderForResult(task.result, REQUEST_CODE_OPEN_ITEM, null, 0, 0, 0)
+            }
+
+
         var pickItemTask =  mOpenItemTaskSource!!.task
         pickItemTask
-            .addOnSuccessListener { driveId -> getDatabaseFile(driveId.asDriveFile()) }
+            .addOnSuccessListener { driveId ->
+                getDatabaseFile(driveId.asDriveFile())
+            }
             .addOnFailureListener { Toast.makeText(this,R.string.something_went_wrong, Toast.LENGTH_LONG).show() }
     }
 

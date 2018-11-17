@@ -248,7 +248,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	    	 int imageResource = v.getContext().getResources().getIdentifier("drawable/map"+(index+1), null, v.getContext().getPackageName());
 		   	 icon.setImageResource(imageResource);   	 
 	   	 } else {
-	   		icon.setImageResource(R.id.warningIcon);
+	   		icon.setImageResource(R.drawable.ic_warning);
 	   	 }
 
 
@@ -749,7 +749,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 				startActivity(new Intent(getActivity().getApplicationContext(), ListAddressHistoryActivity.class).putExtra("DB Key", order.primaryKey));
 				break;
 	/*		case 3:{ //Configure list view
-				Intent i = new Intent(getActivity().getApplicationContext(),Settings_ListOptions.class);
+				Intent i = new Intent(getActivity().getApplicationContext(),SettingsListOptions.class);
 				i.putExtra("order", order);
 				startActivity(i);
 				break;
