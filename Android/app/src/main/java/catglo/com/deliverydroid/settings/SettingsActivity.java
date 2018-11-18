@@ -401,111 +401,13 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			});
 		}
 
-		newZipCode = (EditTextPreference) getPreferenceScreen().findPreference("NewZipCode");
-		newZipCode.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-				/*String zipCode = "";
-				//try {
-					zipCode = newValue.toString();
-					StreetList.zipCodes.insert(new ZipCode(zipCode, ZipCode.STATE_NEEDS_LOOKUP,
-							streetList.client));
-					addZipPref(new String("" + zipCode));
-					streetList.saveURLState();
-					return true;
-				//} catch (final Exception e) {
-				//
-				//}
-				*/
-				return false;
-			}
-		});
-		newZipCode.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-			public boolean onPreferenceClick(Preference preference) {
-				/*Iterator<ZipCode> e = StreetList.zipCodes.iterator();
-				float minimumDistance = Float.MAX_VALUE;
-				ZipCode closestUnusedZipcode=null;
-				while (e.hasNext()){
-					ZipCode z = StreetList.zipCodes.get(""+e.next().zipCode);
-					if (z != null && z.state==ZipCode.STATE_NOT_IN_DELIVERY_AREA && z.distance < minimumDistance){
-						minimumDistance=z.distance;
-						closestUnusedZipcode=z;
-					}
-				}
-				final EditTextPreference ps = (EditTextPreference) getPreferenceScreen().findPreference("NewZipCode");
-				if (closestUnusedZipcode!=null){
-					ps.getEditText().setText(""+closestUnusedZipcode.zipCode);
-					ps.setText(""+closestUnusedZipcode.zipCode);
-					return true;
-				} else {
-					//TODO: we should search the net for more close by zip codes.
-					ps.getEditText().setText("");
-					ps.setText("");
-				}*/
-				return false;
-			}	
-		});
 
-		zipCodePrefs = (PreferenceScreen) getPreferenceScreen().findPreference("SetUpZip");
-		
-		final Iterator<ZipCode> keys = StreetList.zipCodes.iterator();
-		while (keys.hasNext()) {
-			final ZipCode z = keys.next();
-			if (z.state == ZipCode.STATE_LOOKUP_SUCCESS || z.state == ZipCode.STATE_NEEDS_LOOKUP) {
-				final String zipCode = ""+z.zipCode;
-				addZipPref(zipCode);
-			}
-		}
 		
 	}
 
-	private void addZipPref(final String zipCode) {
-		// Edit text preference
-		final EditTextPreference editTextPref = new EditTextPreference(this);
-		editTextPref.setDialogTitle("Edit Zip Code");
-		editTextPref.setKey(zipCode);
-		editTextPref.setTitle(zipCode);
-		editTextPref.setSummary("One of your dilevery area zip codes");
-		editTextPref.setText(zipCode);
-		final Editor pedit = prefs.edit();
-		pedit.putString(zipCode, zipCode);
-		pedit.commit();
-
-		zipCodePrefs.addPreference(editTextPref);
-		editTextPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			public boolean onPreferenceClick(final Preference preference) {
-				final EditTextPreference e = (EditTextPreference) preference;
-				e.setText(e.getKey());
-				return false;
-			}
-		});
 
 
 
-		editTextPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-
-			/*	final String oldZip = preference.getKey();
-				final String newZip = newValue.toString();
-				StreetList.zipCodes.remove(oldZip);
-				if (newZip.matches("^[0-9]{5}$")) {
-					StreetList.zipCodes.insert(new ZipCode(newZip,ZipCode.STATE_NEEDS_LOOKUP, streetList.client));
-					final EditTextPreference ps = (EditTextPreference) getPreferenceScreen().findPreference(oldZip);
-					ps.setKey(newZip);
-					ps.setTitle(newZip);
-					ps.setText(newZip);
-					streetList.saveURLState();
-				} else {
-					finish();
-					final Toast toast = Toast.makeText(getApplicationContext(), "Deleted Zip Code " + oldZip,
-							Toast.LENGTH_LONG);
-					toast.show();
-				}*/
-				return true;
-			}
-
-		});
-	}
-	
 	
 	
 	void copyDatabse(final String to, final String from) throws FileNotFoundException, IOException {
@@ -543,15 +445,9 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
 
+	@Override
 	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
-		if (key.startsWith("Zip")) {
-			streetList.exit = true;
-
-			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-			streetList = StreetList.LoadState(this);
-			streetList.addZipCode(prefs.getString(key, ""));
-			streetList.start();
-		}
+		
 
 	}
 

@@ -44,6 +44,9 @@
         <item name="@android:attr/actionBarTabTextStyle">@style/TabStyle</item>
         <item name="android:homeAsUpIndicator">@drawable/icon</item>
         <item name="android:statusBarColor">@color/chea_action_bar_bkgd</item>
+        <item name="android:backgroundStacked">@color/chea_action_bar_bkgd</item>
+        <item name="backgroundStacked">@color/chea_action_bar_bkgd</item>
+        <item name="actionBarItemBackground">@color/chea_action_bar_bkgd</item>
     </style>
 
     <style name="ToolBarTheme" parent="Theme.AppCompat.NoActionBar">
@@ -62,13 +65,14 @@
         <item name="@android:attr/actionBarTabTextStyle">@style/TabStyle</item>
         <item name="android:homeAsUpIndicator">@drawable/icon</item>
         <item name="android:statusBarColor">@color/chea_action_bar_bkgd</item>
+        <item name="android:backgroundStacked">@color/chea_action_bar_bkgd</item>
     </style>
 
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@color/chea_action_bar_bkgd</item>
-        <item name="android:backgroundStacked">#FFF</item>
+        <item name="android:backgroundStacked">@color/chea_action_bar_bkgd</item>
         <item name="android:statusBarColor">@color/chea_action_bar_bkgd</item>
 
     </style>
@@ -368,6 +372,17 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:textSize">8sp</item>
+    </style>
+    <style name="bottom_buttons_out_the_door">
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@color/grey_white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lines">2</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:layout_weight">1</item>
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
 

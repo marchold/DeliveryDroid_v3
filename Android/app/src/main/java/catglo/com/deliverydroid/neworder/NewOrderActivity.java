@@ -86,6 +86,9 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
 
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        actionBar.setBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));
+        actionBar.setStackedBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));
+
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),viewPagerPages);
 
 

@@ -111,6 +111,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 	private ViewGroup rootLayout;
 	private EditText tipTotal;
     private Button markUndeliverableButton;
+    private View undeliverableOverlay;
 
     protected void generatePaymentSuggestionListFor(String soFar) {
 		
@@ -333,7 +334,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 		currentAddress = (TextView) findViewById(R.id.currentAddress);
 		currentCost = (TextView) findViewById(R.id.currentCost);
 		currentWait = (TextView) findViewById(R.id.currentWait);
-
+		undeliverableOverlay = findViewById(R.id.undeliverableOverlay);
 		notesThisOrder = (EditText) findViewById(R.id.notesThisOrder);
 
 		callThemButton =  findViewById(R.id.callClickable);
@@ -427,9 +428,11 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
                 if (undeliverable==true){
                     undeliverable=false;
                     order.undeliverable=false;
+                    undeliverableOverlay.setVisibility(View.GONE);
                 } else {
                     order.undeliverable=true;
                     undeliverable=true;
+                    undeliverableOverlay.setVisibility(View.VISIBLE);
                 }
                 setPaymentEnabledState();
             }
@@ -463,7 +466,12 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
         });
 
 
+
         Button previousOrder = (Button) findViewById(R.id.previousOrder);
+		if (orderCounter ==0) {
+			previousOrder.setVisibility(View.GONE);
+		}
+
         previousOrder.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -478,6 +486,9 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
                     paymentTotal.setText("" + orders.get(orderCounter).payed);
                     next.setText("Next");
                     next.setVisibility(View.VISIBLE);
+                    if (orderCounter ==0) {
+                        previousOrder.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -520,8 +531,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 					
 					tipTotal.setFocusable(true);
 					tipTotal.setFocusableInTouchMode(true);
-					
-					
+
 					//Hide soft keyboard 2 different ways
 					tools.hideOnScreenKeyboard(paymentTotal);
 					
@@ -577,7 +587,8 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 					orders.get(orderCounter).payed = payment;
                     undeliverable = orders.get(orderCounter).undeliverable;
 					orderCounter++;
-					if (orderCounter < orders.size()) {
+                    previousOrder.setVisibility(View.VISIBLE);
+                    if (orderCounter < orders.size()) {
 						notesThisOrder.setText(orders.get(orderCounter).notes);
 					}
 					if (orderCounter < orders.size()) {
@@ -684,6 +695,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
             Order order = orders.get(orderCounter);
             if (order.undeliverable == false) {
                 markUndeliverableButton.setText("Mark Undeliverable");
+                undeliverableOverlay.setVisibility(View.GONE);
                 paymentTotal.setEnabled(true);
                 cash.setEnabled(true);
                 check.setEnabled(true);
@@ -693,6 +705,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
                 paymentTotal.setHint("Payment");
 
             } else {
+                undeliverableOverlay.setVisibility(View.VISIBLE);
                 markUndeliverableButton.setText("Mark Deliverable");
                 ebt.setEnabled(false);
                 split.setEnabled(false);

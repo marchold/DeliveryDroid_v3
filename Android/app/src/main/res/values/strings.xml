@@ -783,5 +783,9 @@
         deleting whats currently on the phone.
     </string>
 
+    <string name="edit_order">Edit Order</string>
+    <string name="previous_order">Previous Order</string>
+    <string name="Call_store">Call Store</string>
+
 </resources>
 
