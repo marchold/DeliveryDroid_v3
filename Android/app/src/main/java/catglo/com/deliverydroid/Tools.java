@@ -457,6 +457,51 @@ public class Tools {
     }
 
 
+    void showAltPayDialog(final CheckBox altPayCheckbox
+            , final String   amountKey
+            , final String   labelKey
+            , final boolean  isChecked)
+    {
+        final String amount = sharedPreferences.getString(amountKey,"0");
+        final String label = sharedPreferences.getString(labelKey,"");
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            View dialogView = View.inflate(getContext(), R.layout.new_order_custom_mileage_settings_dialog, null);
+            final TextView name = (TextView)dialogView.findViewById(R.id.customName);
+            final TextView value = (TextView)dialogView.findViewById(R.id.customValue);
+            name.setText(label);
+            value.setText(amount);
+            alertDialogBuilder.setView(dialogView);
+            alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    try {
+                        float newAmountValue = parseCurrency(value.getText().toString());
+                        editor.putString(amountKey, value.getText().toString());
+                        editor.putString(labelKey, name.getText().toString());
+                        editor.commit();
+                        altPayCheckbox.setChecked(true);
+                        setCheckboxText(newAmountValue,name.getText().toString(),value.getText().toString(),altPayCheckbox);
+                        initOptionalCheckBox(altPayCheckbox,amountKey,labelKey,isChecked);
+
+                    } catch (NumberFormatException e){
+                        Toast.makeText(getContext(),"Error Parsing "+ value.getText().toString(),Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+            alertDialogBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    altPayCheckbox.setChecked(false);
+                }
+            });
+
+            alertDialogBuilder.show();
+
+    }
+
     //This function is shared between add and edit order screens
     public void initOptionalCheckBox(final CheckBox altPayCheckbox
             , final String   amountKey
@@ -473,43 +518,21 @@ public class Tools {
         if (amountValue==0 && label.length()==0){
             //Pop-up dialog box so user can set up custom mileage pay checkboxes.
             altPayCheckbox.setText(R.string.Custom);
-            altPayCheckbox.setOnClickListener(new View.OnClickListener(){public void onClick(View arg0) {
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                View dialogView = View.inflate(getContext(), R.layout.new_order_custom_mileage_settings_dialog, null);
-                final TextView name = (TextView)dialogView.findViewById(R.id.customName);
-                final TextView value = (TextView)dialogView.findViewById(R.id.customValue);
-                alertDialogBuilder.setView(dialogView);
-                alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        try {
-                            float newAmountValue = parseCurrency(value.getText().toString());
-                            editor.putString(amountKey, value.getText().toString());
-                            editor.putString(labelKey, name.getText().toString());
-                            editor.commit();
-                            altPayCheckbox.setChecked(true);
-                            setCheckboxText(newAmountValue,name.getText().toString(),value.getText().toString(),altPayCheckbox);
-
-                        } catch (NumberFormatException e){
-                            Toast.makeText(getContext(),"Error Parsing "+ value.getText().toString(),Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                });
-                alertDialogBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        altPayCheckbox.setChecked(false);
-                    }
-                });
-
-                alertDialogBuilder.show();
-            }});
+            altPayCheckbox.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    showAltPayDialog(altPayCheckbox,amountKey,labelKey,isChecked);
+                }
+            });
         }
         else {
             setCheckboxText(amountValue,label,amount,altPayCheckbox);
+            altPayCheckbox.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showAltPayDialog(altPayCheckbox,amountKey,labelKey,isChecked);
+                    return true;
+                }
+            });
         }
 
 

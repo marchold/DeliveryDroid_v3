@@ -1,54 +1,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Custom Value Name"
-        android:textSize="20sp" />
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_margin="5dp"
+            android:text="@string/set_custom_reimbursement_amount_for_this_delivery" />
 
-    <EditText
-        android:id="@+id/customName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10" >
+    <android.support.design.widget.TextInputLayout
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    </EditText>
+        <android.support.design.widget.TextInputEditText
+                android:hint="@string/custom_value_name"
+                android:id="@+id/customName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        <android.support.design.widget.TextInputEditText
+                android:hint="Mileage Pay Amount"
+                android:id="@+id/customValue"
+                android:layout_width="match_parent"
+                android:inputType="numberSigned|numberDecimal|number"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+    </android.support.design.widget.TextInputLayout>
+
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Mileage Pay Amount"
-        android:textSize="20sp" />
-    
-    <EditText
-        android:id="@+id/customValue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:inputType="numberSigned|numberDecimal|number" />
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            android:text="@string/the_first_time_you_click_a_custom_pay_amount_toggle_this_setup_popup_will_appear"/>
 
+    <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            android:text="@string/next_time_you_click_on_this_toggle_it_will_toggle_the_amount_on_or_off"/>
 
-    
-      <TextView
-          android:id="@+id/textView3"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_margin="5dp"
-          android:text="These checkboxes are for cases where you get paid a custom amount for some trips such." >
-
-    </TextView>
-    
 
 </LinearLayout>

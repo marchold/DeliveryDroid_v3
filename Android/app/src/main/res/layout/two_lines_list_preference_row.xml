@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
-<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/custom_list_view_row_table_row"
-    android:gravity="center_vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="8dip"
-    android:paddingTop="8dip"
-    android:paddingLeft="10dip"
-    android:paddingRight="10dip">
- 
-    <LinearLayout
-        android:orientation="vertical"
-    	android:layout_width="0dip"
-    	android:layout_height="fill_parent"
-    	android:layout_weight="1"
-    	android:padding="0dip">
-     <TextView
-         android:id="@+id/custom_list_view_row_text_view"
-         android:textSize="16sp"
-         android:gravity="center_vertical"
-         android:layout_width="fill_parent" 
-         android:layout_height="22dip" />
-     <TextView
-         android:id="@+id/custom_list_view_row_subtext_view"
-         android:textSize="12sp"
-         android:gravity="center_vertical"
-         android:layout_width="fill_parent" 
-         android:layout_height="18dip" />
-    </LinearLayout>
- 
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/custom_list_view_row_table_row"
+          android:gravity="center_vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="10dp">
+
     <ImageView
-        android:id="@+id/custom_list_view_row_selected_indicator"
-        android:src="@android:drawable/checkbox_on_background"
-        android:layout_width="wrap_content" 
-        android:layout_height="40dip"
-        android:layout_gravity="center_vertical" />
+            android:id="@+id/custom_list_view_row_selected_indicator"
+            android:src="@drawable/check_mark"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="0dip">
+        <TextView
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                tools:text="Google Navigation"
+                android:id="@+id/custom_list_view_row_text_view"
+                android:textSize="18sp"
+
+                android:gravity="center_vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="22dip"/>
+        <TextView
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                tools:text="Some bla akjsdhkjsal kdaksh dasdk sfsad asd asbrtb kmn fdlhuhl w hiuil hjkh kjhk jlashkashdjklasd as"
+                android:id="@+id/custom_list_view_row_subtext_view"
+                android:textSize="12sp"
+                android:lines="1"
+                android:gravity="center_vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
 </TableRow>

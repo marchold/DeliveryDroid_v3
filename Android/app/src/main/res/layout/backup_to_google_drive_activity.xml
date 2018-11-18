@@ -6,7 +6,6 @@
               tools:context=".backup.GoogleDriveBackupRestoreActivity">
 
     <android.support.v4.widget.ContentLoadingProgressBar
-            android:visibility="gone"
             style="?android:attr/progressBarStyleLarge"
             android:id="@+id/contentLoadingProgressBar"
             android:layout_width="match_parent"

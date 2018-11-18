@@ -534,11 +534,10 @@
         <item>6</item>
     </string-array>
 
-    <string name="title_activity_gps_notes">GPS Notes</string>
+    <string name="title_activity_gps_notes">Gate Codes</string>
     <string name="New_note">New note</string>
-    <string name="GPS_notes">GPS notes</string>
-    <string name="gps_notes_no_list_help">Use GPS Notes For:\n *Gate Codes\n *Neighborhood information\n *Angry dog
-        locations. \n\nNotes will be sorted by how far you are from where you were when you entered the note.
+    <string name="GPS_notes">Gate Codes</string>
+    <string name="gps_notes_no_list_help">Gate code notes are sorted by the GPS location where they were entered. This is useful for storing gate codes or warnings about hazards at specific locations
     </string>
 
     <string-array name="gps_notes_list_options">
@@ -547,13 +546,13 @@
     </string-array>
 
     <string name="Delete_this_note">Delete this note?</string>
-    <string name="Edit_GPS_Note">Edit GPS Note</string>
+    <string name="Edit_GPS_Note">Edit Gate Code Note</string>
     <string name="Discard">Discard</string>
     <string name="Save">Save</string>
-    <string name="Add_GPS_Note">Add GPS Note</string>
+    <string name="Add_GPS_Note">Add Gate Code Note</string>
     <string name="Add_GPS_Note_dialog_summary">Enter a note to be tagged with your current GPS location.</string>
     <string name="Orders">Orders</string>
-    <string name="Gps_Notes">Gps Notes</string>
+    <string name="Gps_Notes">Gate Codes</string>
     <string name="Order_Details">Order Details</string>
     <string name="title_activity_summary">Order Details</string>
     <string name="Done">Done</string>
@@ -767,9 +766,6 @@
     <string name="attached_to_order">Attached To Order</string>
     <string name="order_summary_money_issue_order_note">Order Summary • Money Issue • Order note</string>
     <string name="attached_to_location">Attached To Location</string>
-    <string name="gps_notes_gate_codes_bad_dogs_neighborhood_detail">Gps Notes • Gate Codes • Bad Dogs • Neighborhood
-        Detail
-    </string>
     <string name="mark_undeliverable">Mark Undeliverable</string>
     <string name="Invalid_address">Invalid address</string>
     <string name="delivery_droid_keeps_all_of_its_order_and_shift_data_a_database_called_deliverydata_sqlite_you_can_upload_a_copy_your_data_to_google_drive_for_backup">
@@ -786,6 +782,24 @@
     <string name="edit_order">Edit Order</string>
     <string name="previous_order">Previous Order</string>
     <string name="Call_store">Call Store</string>
+    <string name="custom_value_name">Custom Value Name</string>
+    <string name="the_first_time_you_click_a_custom_pay_amount_toggle_this_setup_popup_will_appear">The first time you
+        click a custom pay amount toggle, this setup popup will appear.
+    </string>
+    <string name="next_time_you_click_on_this_toggle_it_will_toggle_the_amount_on_or_off">Next time you click on this
+        toggle it will toggle the amount on or off
+    </string>
+    <string name="set_custom_reimbursement_amount_for_this_delivery">Set custom reimbursement amount for this delivery
+    </string>
+    <string name="where_db_is_stored">Where database is stored</string>
+    <string name="help_store_where_sum">If you select the option below your data will be stored on yours phones external
+        storage where other apps can access the file and its easy for you to find for backup.
+    </string>
+    <string name="help_stored_where_dialog_msg">The default unchecked setting means the database is stored on a special
+        part of your phone only the delivery droid application cal access. This provides the best privacy and security
+        but also makes it hardest to properly back up your database file and file managers will also not be able to find
+        it and you won\'t be able to email it.\nBy selecting keep data on external storage the data will be easily accessible if you want to copy it to your computer or email it to yourself
+    </string>
 
 </resources>
 

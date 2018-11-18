@@ -135,7 +135,15 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
                     mDriveResourceClient?.openFile(driveFile, DriveFile.MODE_READ_ONLY, object:OpenFileCallback(){
                         override fun onContents(driveContents: DriveContents) {
 
-                            FileOutputStream("DeliveryDataImport.SQLite").use {
+                            var databaseFullPath = ""
+                            val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                            databaseFullPath = if (prefs?.getBoolean("DatabaseOnSdcard", false) == true) {
+                                Environment.getExternalStorageDirectory().toString() + "/" + BuildConfig.DATABASE_NAME
+                            } else {
+                                applicationContext.filesDir.toString() + "/" + BuildConfig.DATABASE_NAME
+                            }
+
+                            FileOutputStream(databaseFullPath).use {
                                 driveContents.inputStream.copyTo(it)
                             }
                         }
