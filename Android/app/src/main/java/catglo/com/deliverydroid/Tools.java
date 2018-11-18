@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -57,7 +58,9 @@ public class Tools {
 
     }
 
-    static final Pattern currencyExtractionPattern = Pattern.compile("([0-9,\\s]+)(\\.?)\\s*([0-9]*)");
+    static final Pattern currencyExtractionPattern = Pattern.compile("\\d+\\.?\\d*");
+
+
 
     TextView currentTimeDateField = null;
     Timestamp currentEditTimestamp = null;
@@ -143,13 +146,20 @@ public class Tools {
     public static float parseCurrency(String formattedCurrency) {
         if (formattedCurrency == null || formattedCurrency.length() < 1) return 0;
         Matcher m = currencyExtractionPattern.matcher(formattedCurrency);
-        String s = "";
+        String s;
+        Log.i("REGEX","parseing:"+formattedCurrency);
         if (m.find()) {
-            s = m.group(1) + m.group(2) + m.group(3);
+            Log.i("REGEX","group count = "+m.groupCount());
+            for (int i = 0; i <= m.groupCount();i++)
+            {
+                Log.i("REGEX",i+",parse:"+m.group(i));
+            }
+            s = m.group(0);
+
             try {
-                return Float.parseFloat(s.replaceAll(",",""));
+                return Float.parseFloat(s.replaceAll(",","").replaceAll(" ",""));
             } catch (NumberFormatException e) {
-            	throw new NumberFormatException("Cant convert "+formattedCurrency+" to currency ");
+            	//throw new NumberFormatException("Cant convert "+formattedCurrency+" to currency ");
             }
         }
         return 0;

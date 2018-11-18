@@ -56,8 +56,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	DataBase dataBase;
 
 	private Editor pedit;
-	private EditTextPreference databaseFileMerge;
-	private EditTextPreference databaseFileUse;
+	private Preference databaseFileMerge;
+	private Preference databaseFileUse;
 	private Preference rebuildStreetList;
 	private EditTextPreference centrPoint_lat_s;
 	private EditTextPreference centrPoint_lng_s;
@@ -159,8 +159,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			databaseFileCopy = (EditTextPreference) getPreferenceScreen().findPreference("DatabaseFileCopy");
 			databaseOnSdcard = (CheckBoxPreference) getPreferenceScreen().findPreference("DatabaseOnSdcard");
 			//databaseUpload   = (CheckBoxPreference) getPreferenceScreen().findPreference("DatabaseUpload");
-			databaseFileMerge = (EditTextPreference) getPreferenceScreen().findPreference("DatabaseFileMerge");
-			databaseFileUse = (EditTextPreference) getPreferenceScreen().findPreference("DatabaseFileUse");
+			databaseFileMerge = (Preference) getPreferenceScreen().findPreference("DatabaseFileMerge");
+			databaseFileUse = (Preference) getPreferenceScreen().findPreference("DatabaseFileUse");
 			rebuildStreetList = (Preference) getPreferenceScreen().findPreference("rebuildStreetList");
 			rebuildRegionsList = (Preference)getPreferenceScreen().findPreference("rebuildRegionsList");
             aboutPref = (Preference)getPreferenceScreen().findPreference("aboutPref");
@@ -277,8 +277,14 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 					return true;
 				}
 			});
-			
-			databaseFileUse.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+			databaseFileUse.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+				@Override
+				public boolean onPreferenceClick(Preference preference) {
+					return false;
+				}
+			});
+		/*	databaseFileUse.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				public boolean onPreferenceChange(final Preference preference, final Object newValue) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
 					builder.setMessage(R.string.databaseUseWarning)
@@ -319,7 +325,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 					alert.show();
 					return true;
 				}
-			});
+			});*/
 			
 			databaseOnSdcard.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				public boolean onPreferenceChange(final Preference preference, final Object newValue) {

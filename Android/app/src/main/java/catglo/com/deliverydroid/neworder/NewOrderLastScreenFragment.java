@@ -59,6 +59,8 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
 
     }
 
+    boolean supressListeners = false;
+
     @Override
     public void onResume(){
         super.onResume();
@@ -82,23 +84,27 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
 
         totalPayed.addTextChangedListener(new TextWatcher(){
             public void afterTextChanged(Editable arg0) {
-
+                if (supressListeners) return;
+                supressListeners = true;
                 float payed = Tools.parseCurrency(arg0.toString());
                 float cost = Tools.parseCurrency(orderCost.getText().toString());
                 float tip = Tools.parseCurrency(preTip.getText().toString());
                 if (tip != payed-cost && preTip.isFocused()==false){
-                    if (payed-cost>0){
+                    if (payed-cost>0){  //PONG!
                         preTip.setText(Tools.getFormattedCurrency(payed - cost));
                     } else {
                         preTip.setText("");
                     }
                 }
+                supressListeners = false;
             }
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
         });
         orderCost.addTextChangedListener(new TextWatcher(){
             public void afterTextChanged(Editable arg0) {
+                if (supressListeners) return;
+                supressListeners = true;
                 //If this field changes and preTip is non zero set the totalPayed field, otherwize
                 //do nothing when this field is updated
                 float tip = Tools.parseCurrency(preTip.getText().toString());
@@ -112,23 +118,27 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
                         totalPayed.setText("");
                     }
                 }
+                supressListeners = false;
             }
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
         });
         preTip.addTextChangedListener(new TextWatcher(){
             public void afterTextChanged(Editable arg0) {
+                if (supressListeners) return;
+                supressListeners = true;
                 //Update the total payed field if this one is edited
                 float preTip = Tools.parseCurrency(arg0.toString());
                 float cost = Tools.parseCurrency(orderCost.getText().toString());
                 float total = Tools.parseCurrency(totalPayed.getText().toString());
                 if (total != cost+preTip && totalPayed.isFocused()==false) {
-                    if (cost+preTip>0){
+                    if (cost+preTip>0){//PING!
                         totalPayed.setText(Tools.getFormattedCurrency(cost + preTip));
                     } else {
                         totalPayed.setText("");
                     }
                 }
+                supressListeners = false;
             }
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}

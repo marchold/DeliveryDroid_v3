@@ -109,6 +109,6 @@ public class TimeDialog extends DialogFragment {
         newTime.setHourOfDay(timePicker.getCurrentHour());
         newTime.setMinuteOfHour(timePicker.getCurrentMinute());
 
-        timeChangedListener.onTimeChanged(newTime.toDateTime(),dialogInterface);
+        if (timeChangedListener!=null) timeChangedListener.onTimeChanged(newTime.toDateTime(),dialogInterface);
     }
 }

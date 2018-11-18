@@ -8,15 +8,12 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <catglo.com.widgets.FlowLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#A000"
-
->
-
+        android:background="#A000">
 
         <Button
             android:id="@+id/settings_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/settings_small"
+            android:drawableTop="@drawable/settings"
             android:text="@string/settings" />
 
         <Button

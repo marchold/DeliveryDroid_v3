@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.location.*;
 import android.util.Log;
+import android.widget.Toast;
 import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.MyGeoPoint;
 
@@ -433,17 +434,22 @@ public class Order extends NotedObject implements Comparable<Order>, Serializabl
             if (lm != null) {
                 @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(lm.getBestProvider(new Criteria(), false));
 
+				if (location!=null) {
+					List<Address> geocoded = geocoder.getFromLocationName(address,
+							1,
+							location.getLatitude() - 1,
+							location.getLongitude() - 1,
+							location.getLatitude() + 1,
+							location.getLongitude() + 1);
+					if (geocoded.size() > 0) {
+						Address result = geocoded.get(0);
+						geoPoint = new MyGeoPoint(result.getLatitude(), result.getLongitude());
+						isValidated = true;
 
-                List<Address> geocoded = geocoder.getFromLocationName(address,
-                        1,
-                        location.getLatitude() - 0.1,
-                        location.getLongitude() - 0.1,
-                        location.getLatitude() + 0.1,
-                        location.getLongitude() + 0.1);
-                if (geocoded.size() > 0) {
-                    Address result = geocoded.get(0);
-                    geoPoint = new MyGeoPoint(result.getLatitude(), result.getLongitude());
-                    isValidated = true;
+					}
+				}
+				else {
+                    Toast.makeText(context,"No Location Error",Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (IOException e) {

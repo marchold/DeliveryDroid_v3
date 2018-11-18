@@ -40,11 +40,9 @@ import org.jetbrains.annotations.NotNull;
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.MapPosition;
+import org.mapsforge.core.model.*;
 
-import org.mapsforge.core.model.Point;
+import org.mapsforge.core.util.LatLongUtils;
 import org.mapsforge.core.util.Utils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidPreferences;
@@ -63,6 +61,13 @@ import org.mapsforge.map.util.MapPositionUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Math.floor;
+import static java.lang.Math.log;
+import static java.lang.Math.min;
+import static java.lang.StrictMath.abs;
+import static org.mapsforge.core.util.MercatorProjection.latitudeToPixelY;
+import static org.mapsforge.core.util.MercatorProjection.longitudeToPixelX;
 
 public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 	protected DataBase dataBase;
@@ -334,6 +339,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 	}};
 
 
+
     @SuppressLint("MissingPermission")
 	void updateUI(){
     	//First get all the orders in to an array
@@ -413,6 +419,8 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			@Override
 			public void onMapReady(@NotNull DownloadedMap map) {
                 try {
+                	Context context = getApplicationContext();
+                	if (context==null) return;
                     MapFile mapFile = new MapFile(map.getMapFile());
                     mapView.setVisibility(View.VISIBLE);
                     noMapView.setVisibility(View.GONE);
@@ -459,17 +467,17 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 
 
                     int counter = 1;
-                    float minLat = Float.MAX_VALUE;
-                    float maxLat = Float.MIN_VALUE;
-                    float minLng = Float.MAX_VALUE;
-                    float maxLng = Float.MIN_VALUE;
+                    float minLat = 300;
+                    float maxLat = -300;
+                    float minLng = 300;
+                    float maxLng = -300;
 
                     for (Order order : orders) {
                         if (order.geoPoint.lat == 0 && order.geoPoint.lng == 0) {
                             order.isValidated = false;
                         }
                         if (!order.isValidated) {
-                            order.geocode(getApplicationContext());
+                            order.geocode(context);
                         }
                         if (order.isValidated) {
 
@@ -491,13 +499,13 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                                 mapView.getLayerManager().getLayers().add(marker);
 
                             } catch (Resources.NotFoundException e) {
-                                Toast.makeText(getApplicationContext(), R.string.error_building_map_markers, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, R.string.error_building_map_markers, Toast.LENGTH_SHORT).show();
                             }
 
                             if (order.geoPoint.lat < minLat) minLat = (float) order.geoPoint.lat;
                             if (order.geoPoint.lng < minLng) minLng = (float) order.geoPoint.lng;
                             if (order.geoPoint.lat > maxLat) maxLat = (float) order.geoPoint.lat;
-                            if (order.geoPoint.lng < maxLng) maxLng = (float) order.geoPoint.lng;
+                            if (order.geoPoint.lng > maxLng) maxLng = (float) order.geoPoint.lng;
 
                             counter++;
                         } else {
@@ -513,12 +521,13 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 							mvp.setMapPosition(new MapPosition(new LatLong(minLat, maxLng), (byte) zoom));
 						}
 						else {
-							//  float latDif = (maxLat - minLat) / 2;
-							//  float lngDif = (maxLng - minLng) / 2;
-							IMapViewPosition mvp = mapView.getModel().mapViewPosition;
-							mvp.setMapLimit(new BoundingBox(minLat, minLng, maxLat, maxLng));
+                            float latDif = (maxLat - minLat) / 2;
+                            float lngDif = (maxLng - minLng) / 2;
+                            IMapViewPosition mvp = mapView.getModel().mapViewPosition;
+                            mvp.setMapPosition(new MapPosition(new LatLong(minLat+latDif, maxLng+lngDif),
+                                    (byte)zoom));
+                                    //(byte) LatLongUtils.zoomForBounds(mapView.getDimension(),new BoundingBox(minLat,minLng,maxLat,maxLng),mapView.getModel().displayModel.getTileSize())));
 						}
-//                        mvp.setMapPosition(new MapPosition(new LatLong(minLat + latDif, minLng + lngDif), (byte) zoom));
                     } else {
 
                         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

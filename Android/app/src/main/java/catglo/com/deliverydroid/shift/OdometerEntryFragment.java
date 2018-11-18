@@ -42,7 +42,10 @@ public class OdometerEntryFragment extends ButtonPadFragment {
 
                 String editValue = edit.getEditableText().toString();
                 if (editValue.length()>0) {
-                    int value = Integer.valueOf(editValue);
+                    int value = 0;
+                    try {
+                        value = (int)Float.parseFloat(editValue);
+                    } catch (NumberFormatException e){e.printStackTrace();}
                     if (activity.isStartShift) {
                         activity.shift.odometerAtShiftStart = value;
                     } else {

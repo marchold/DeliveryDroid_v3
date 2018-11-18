@@ -3115,7 +3115,9 @@ public class DataBase extends Object  {
                 , null);
         if (c != null){
             if (c.moveToFirst()){
-                wage.wage = Float.parseFloat(c.getString(c.getColumnIndex("rate")));
+                try {
+                    wage.wage = Float.parseFloat(c.getString(c.getColumnIndex("rate")));
+                } catch (NumberFormatException e){ wage.wage = 0; };
                 wage.id = c.getLong(c.getColumnIndex("ID"));
                 wage.startTime = new MutableDateTime(Order.GetTimeFromString(c.getString(c.getColumnIndex("start"))));
             }
@@ -3132,7 +3134,9 @@ public class DataBase extends Object  {
                 , null);
         if (c != null){
             if (c.moveToFirst()){
-                wage.wage = Float.parseFloat(c.getString(c.getColumnIndex("rate")));
+                try {
+                    wage.wage = Float.parseFloat(c.getString(c.getColumnIndex("rate")));
+                }catch (NumberFormatException e){ wage.wage = 0; };
                 wage.id = c.getLong(c.getColumnIndex("ID"));
                 wage.startTime = new MutableDateTime(Order.GetTimeFromString(c.getString(c.getColumnIndex("start"))));
             }

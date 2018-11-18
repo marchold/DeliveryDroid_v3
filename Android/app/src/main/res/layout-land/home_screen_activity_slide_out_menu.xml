@@ -12,7 +12,7 @@
         <Button
             android:id="@+id/settings_menu_button"
             style="@style/slide_out_menu_button_land"
-            android:drawableTop="@drawable/settings_small"
+            android:drawableTop="@drawable/settings"
             android:text="@string/settings" />
 
         <Button

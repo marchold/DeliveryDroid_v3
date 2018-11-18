@@ -418,39 +418,6 @@
                     android:summary="@string/filter_criteria_summary"
                     android:title="@string/Filter_criteria" />
 
-                <!--
-				<CheckBoxPreference android:key="viewPortBiasing"
-				android:title="Viewport Biasing"
-				android:summary=""
-				/>
-                -->
-
-                <PreferenceScreen
-                    android:key="SetUpZip"
-                    android:summary="@string/DeliveryZipCodesSummery"
-                    android:title="@string/DeliveryZipCodes">
-                    <catglo.com.deliverydroid.settings.SettingsHelpDialog
-                        android:dialogIcon="@drawable/icon"
-                        android:dialogMessage="@string/zipCodesHelp"
-                        android:dialogTitle="@string/help"
-                        android:icon="@drawable/help"
-                        android:key="helpOnZipCodes"
-                        android:negativeButtonText="@null"
-                        android:positiveButtonText="@null"
-                        android:title="@string/help" />
-
-                    <Preference
-                        android:key="rebuildStreetList"
-                        android:summary="@string/RegenStreetListSum"
-                        android:title="@string/RegenStreetListTitle" />
-
-                    <EditTextPreference
-                        android:dialogTitle="@string/NewZipCode"
-                        android:inputType="phone"
-                        android:key="NewZipCode"
-                        android:summary="@string/AddZipCodeSum"
-                        android:title="@string/NewZipCode" />
-                </PreferenceScreen>
                 <PreferenceScreen android:title="@string/Advanced">
                     <EditTextPreference
                         android:dialogTitle="@string/DeliveryCenterLatitude"
@@ -604,35 +571,7 @@
                 android:title="@string/Store_phone_number" />
 
 
-            <!--
-        <PreferenceScreen
-            android:summary="Advanced location settings"
-            android:title="@string/advanced" 
-            android:icon="@drawable/advance">
-            <catglo.com.deliverydroid.SettingsHelpDialog
-                android:icon="@drawable/help"
-                android:dialogIcon="@drawable/icon"
-                android:dialogMessage="@string/centerPointHelp"
-                android:dialogTitle="@string/help"
-                android:key="helpOnZipCodes"
-                android:negativeButtonText="@null"
-                android:positiveButtonText="@null"
-                android:title="@string/help" />
 
-            <CheckBoxPreference
-                android:key="useLabsCode"
-                android:summary="Display dev screens. This will show parts of the app that are under construction."
-                android:title="Labs" />
-            <CheckBoxPreference
-                android:key="useOldCode"
-                android:summary="Uses older more well tested and less feature rich versions. This can be used as a workaround for a problematic update or if you just like the older version."
-                android:title="Use Old Code" />
-            <CheckBoxPreference
-                android:key="generateDevLog"
-                android:summary="Creates a file named dr_log.txt on your sd card with internal info"
-                android:title="Generate Log File" />
-        </PreferenceScreen>
-            -->
 
         </PreferenceScreen>
     </PreferenceCategory>
@@ -662,12 +601,12 @@
                     android:summary="Select this if you would like to keep the database on your sdcard."
                     android:title="Keep data on sdcard" />
 
-                <EditTextPreference
+                <Preference
                     android:dialogTitle="Database backup file name"
                     android:key="DatabaseFileMerge"
                     android:summary="Import order data from a backup you made in the past"
                     android:title="Import database backup" />
-                <EditTextPreference
+                <Preference
                     android:dialogTitle="Database backup file name"
                     android:key="DatabaseFileUse"
                     android:summary="Discard all your current data and use a database backup"
