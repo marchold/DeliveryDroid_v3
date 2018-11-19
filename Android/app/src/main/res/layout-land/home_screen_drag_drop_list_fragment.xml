@@ -12,7 +12,7 @@
         android:id="@+id/include1"
         layout="@layout/optimize_bar" />
 
-    <catglo.com.widgets.DragSortListView
+    <catglo.com.deliverydroid.widgets.DragSortListView
         android:id="@android:id/list"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"

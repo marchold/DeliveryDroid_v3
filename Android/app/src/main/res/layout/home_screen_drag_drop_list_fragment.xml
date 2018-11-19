@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         layout="@layout/optimize_bar" />
  
-    <catglo.com.widgets.DragSortListView
+    <catglo.com.deliverydroid.widgets.DragSortListView
 	    android:id="@android:id/list"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"

@@ -24,7 +24,7 @@ import catglo.com.deliverydroid.AboutActivity
 import catglo.com.deliverydroid.BuildConfig
 import catglo.com.deliverydroid.R
 import catglo.com.deliverydroid.backup.GoogleDriveBackupRestoreActivity
-import catglo.com.widgets.TwoLinesListPreference
+import catglo.com.deliverydroid.widgets.TwoLinesListPreference
 import com.nbsp.materialfilepicker.MaterialFilePicker
 import com.nbsp.materialfilepicker.ui.FilePickerActivity
 

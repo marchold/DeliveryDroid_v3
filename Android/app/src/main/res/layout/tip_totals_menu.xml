@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
-    <catglo.com.widgets.FlowLayout
+    <catglo.com.deliverydroid.widgets.FlowLayout
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:background="#A000"
@@ -33,5 +33,5 @@
             android:enabled="true" />
 
 
-    </catglo.com.widgets.FlowLayout>
+    </catglo.com.deliverydroid.widgets.FlowLayout>
 </FrameLayout>

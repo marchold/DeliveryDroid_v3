@@ -4,14 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-   
-
-
-
-    <net.simonvt.timepicker.TimePicker
+    <TimePicker
         android:id="@+id/timePicker1"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </net.simonvt.timepicker.TimePicker>
+    </TimePicker>
 
 </LinearLayout>

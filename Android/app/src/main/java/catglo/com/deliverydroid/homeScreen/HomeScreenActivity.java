@@ -628,7 +628,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		menu.add(0, SETTINGS, 0, getString(R.string.settings)).setIcon(android.R.drawable.ic_menu_preferences);
 		menu.add(0, NEW_SHIFT, 0, getString(R.string.Shift)).setIcon(R.drawable.ic_menu_guy_clock);
-		menu.add(0, NAV_TO_STORE, 0, getString(R.string.Nav_To_Store)).setIcon(R.drawable.ic_nav);
+		menu.add(0, NAV_TO_STORE, 0, getString(R.string.Nav_To_Store)).setIcon(R.drawable.navigate_small);
 		menu.add(0, SEARCH_HISTORY, 0, getString(R.string.Search_Notes_Or_Addresses)).setIcon(R.drawable.ic_action_search);
 		menu.add(0, GPS_NOTES, 0, getString(R.string.GPS_notes)).setIcon(android.R.drawable.ic_menu_compass);
 	    menu.add(0, CUSTOMIZE_LIST, 0, "Customize List ");

@@ -51,10 +51,10 @@ import catglo.com.deliverydroid.settings.SettingsActivity;
 import catglo.com.deliverydroid.shift.ShiftStartEndDayActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
-import catglo.com.widgets.DragSortController;
-import catglo.com.widgets.DragSortListView;
-import catglo.com.widgets.DragSortListView.DragListener;
-import catglo.com.widgets.DragSortListView.DropListener;
+import catglo.com.deliverydroid.widgets.DragSortController;
+import catglo.com.deliverydroid.widgets.DragSortListView;
+import catglo.com.deliverydroid.widgets.DragSortListView.DragListener;
+import catglo.com.deliverydroid.widgets.DragSortListView.DropListener;
 
 import org.joda.time.DateTime;
 

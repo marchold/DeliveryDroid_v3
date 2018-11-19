@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <catglo.com.widgets.RowLayout
+        <catglo.com.deliverydroid.widgets.RowLayout
             android:id="@+id/RowLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -343,7 +343,7 @@
             
             
             
-        </catglo.com.widgets.RowLayout>
+        </catglo.com.deliverydroid.widgets.RowLayout>
     </ScrollView>
 
 </RelativeLayout>

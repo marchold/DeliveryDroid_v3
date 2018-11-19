@@ -85,7 +85,7 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <catglo.com.widgets.RowLayout
+    <catglo.com.deliverydroid.widgets.RowLayout
         android:id="@+id/RowLayout1"
         android:layout_width="fill_parent"
         android:layout_height="match_parent" >
@@ -121,13 +121,13 @@
             android:background="@color/gray_dk"
             android:padding="15dp" >
 
-            <net.simonvt.timepicker.TimePicker
+            <TimePicker
                 android:id="@+id/timePicker1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView3" >
 
-            </net.simonvt.timepicker.TimePicker>
+            </TimePicker>
 
             <TextView
                 android:id="@+id/textView3"
@@ -139,6 +139,6 @@
         </RelativeLayout>
 
         
-    </catglo.com.widgets.RowLayout>
+    </catglo.com.deliverydroid.widgets.RowLayout>
 
 </LinearLayout>

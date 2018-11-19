@@ -2,7 +2,7 @@ package catglo.com.deliverydroid.homeScreen;
 
 import android.app.Activity;
 import android.view.View.OnTouchListener;
-import catglo.com.widgets.ActivityHostFragment;
+import catglo.com.deliverydroid.widgets.ActivityHostFragment;
 
 
 public class HomeScreen_MapFragment extends ActivityHostFragment {

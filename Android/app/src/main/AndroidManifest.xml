@@ -136,8 +136,7 @@
         </activity>
         <activity
                 android:name=".shift.ShiftSetWageActivity"
-                android:label="@string/title_activity_shift_set_wage"
-                android:theme="@style/ActionBarTheme"/>
+                android:label="@string/wage"/>
         <activity
                 android:name=".shift.ShiftStartEndDayActivity"
                 android:label="@string/title_activity_shift_start_end_day"/>

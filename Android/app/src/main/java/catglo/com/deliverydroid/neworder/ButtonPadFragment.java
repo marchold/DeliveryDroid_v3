@@ -29,7 +29,7 @@ import android.widget.TextView;
 import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.widgets.OnTextChangedListener;
+import catglo.com.deliverydroid.widgets.OnTextChangedListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;

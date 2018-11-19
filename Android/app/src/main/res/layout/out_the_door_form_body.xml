@@ -4,7 +4,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-    <catglo.com.widgets.RowLayout
+    <catglo.com.deliverydroid.widgets.RowLayout
             android:id="@+id/paymentRow1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:text="EBT"/>
         </RadioGroup>
-    </catglo.com.widgets.RowLayout>
+    </catglo.com.deliverydroid.widgets.RowLayout>
 
     <View
             android:id="@+id/hrule1"

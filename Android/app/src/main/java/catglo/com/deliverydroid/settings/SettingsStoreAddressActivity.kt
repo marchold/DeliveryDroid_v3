@@ -29,7 +29,7 @@ import catglo.com.deliverydroid.DownloadedMap.Companion.getMapForCurrentLocation
 import catglo.com.deliverydroid.MapReadyListener
 import catglo.com.deliverydroid.R
 import catglo.com.deliverydroid.data.MyGeoPoint
-import catglo.com.widgets.AddressHistoryAutocomplete
+import catglo.com.deliverydroid.widgets.AddressHistoryAutocomplete
 import org.mapsforge.core.graphics.Bitmap
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.model.MapPosition

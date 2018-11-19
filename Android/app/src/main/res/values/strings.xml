@@ -800,6 +800,7 @@
         but also makes it hardest to properly back up your database file and file managers will also not be able to find
         it and you won\'t be able to email it.\nBy selecting keep data on external storage the data will be easily accessible if you want to copy it to your computer or email it to yourself
     </string>
+    <string name="wage">Wage</string>
 
 </resources>
 

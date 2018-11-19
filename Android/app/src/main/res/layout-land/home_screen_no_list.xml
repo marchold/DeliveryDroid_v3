@@ -32,7 +32,7 @@
         android:textColor="@color/black" />
 
 
-    <catglo.com.widgets.RowLayout
+    <catglo.com.deliverydroid.widgets.RowLayout
         android:id="@+id/rowLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
             android:drawableTop="@drawable/icon_drops"
             android:text="@string/Make_a_Drop" />
 
-    </catglo.com.widgets.RowLayout>
+    </catglo.com.deliverydroid.widgets.RowLayout>
 
 
 </RelativeLayout>

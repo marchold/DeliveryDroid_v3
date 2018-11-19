@@ -323,6 +323,12 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="User Interface">
 
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="showHelpBubbles"
+                android:summary="Uncheck this setting if you do not find the help bubbles useful"
+                android:title="Show help bubbles"/>
+
         <PreferenceScreen
                 android:icon="@drawable/home_screen_settings_icon"
                 android:summary=""
@@ -352,11 +358,6 @@
                         android:targetPackage="catglo.com.deliverydroid"/>
             </PreferenceScreen>
 
-            <CheckBoxPreference
-                    android:defaultValue="true"
-                    android:key="showHelpBubbles"
-                    android:summary="Uncheck this setting if you do not find the help bubbles useful"
-                    android:title="Show help bubbles"/>
         </PreferenceScreen>
 
 
@@ -504,7 +505,7 @@
                         android:summary="@string/autoCutForPasteSum"
                         android:title="@string/autoCutForPaste"/>
 
-                <catglo.com.widgets.TwoLinesListPreference
+                <catglo.com.deliverydroid.widgets.TwoLinesListPreference
                         android:icon="@drawable/navigate_settings_icon"
                         android:defaultValue="1"
                         android:entries="@array/navigation_options"

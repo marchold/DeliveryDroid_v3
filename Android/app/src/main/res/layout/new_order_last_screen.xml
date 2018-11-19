@@ -17,7 +17,7 @@
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
 
-            <catglo.com.widgets.RowLayout
+            <catglo.com.deliverydroid.widgets.RowLayout
                     android:id="@+id/rowLayout00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
-                <catglo.com.widgets.RowLayout
+                <catglo.com.deliverydroid.widgets.RowLayout
                         android:id="@+id/rowLayout23"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content">
@@ -150,7 +150,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                        <catglo.com.widgets.AddressAutocomplete
+                        <catglo.com.deliverydroid.widgets.AddressAutocomplete
                                 android:id="@+id/orderAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
                     </android.support.design.widget.TextInputLayout>
 
                 </catglo.com.widgets.RowLayout>
-            </catglo.com.widgets.RowLayout>
+            </catglo.com.deliverydroid.widgets.RowLayout>
 
             <Button
                     android:id="@+id/AddOrder"

@@ -16,7 +16,7 @@ import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
-import catglo.com.widgets.AddressAutocomplete;
+import catglo.com.deliverydroid.widgets.AddressAutocomplete;
 
 
 import java.text.DecimalFormat;

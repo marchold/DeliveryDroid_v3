@@ -8,7 +8,7 @@
 
 
 
-    <catglo.com.widgets.EditTextKeyboardSafe
+    <catglo.com.deliverydroid.widgets.EditTextKeyboardSafe
         android:id="@+id/buttonPadEdit"
         android:layout_width="250dp"
         android:background="@drawable/apptheme_textfield_activated_holo_light"
