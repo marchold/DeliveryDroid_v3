@@ -1,7 +1,5 @@
-![](https://lh3.ggpht.com/uYmZBUM6scsE4RRVbiGySZagWHne_JtYiJokCfhfVjzlNWiVwujpqWhrV7qk6VZwTqA=s360-rw)
-
-This is the 3rd revision of [Delivery Droid](https://play.google.com/store/apps/details?id=com.catglo.deliverydroid "Delivery Droid") 
-
-The 2nd revision uses google API's that are no longer public so the address autocomplete no longer works. The 3rd revision will use [MapsForge](https://github.com/mapsforge/mapsforge "MapsForge") so as not to rely on google as much. 
+This is the 4rd revision of [Delivery Droid](https://play.google.com/store/apps/details?id=com.catglo.deliverydroid "Delivery Droid") 
 
 If you want to build the project check out the [build instructions](https://github.com/marchold/DeliveryDroid_v3/blob/master/HowToBuild.md) 
+
+While this code is in the develop branch it will be for new exparimental like OCR and other features that are in the incubation stage. The master branch will be for fixing bugs only and will not be getting any new features until they are developed in this branch.
