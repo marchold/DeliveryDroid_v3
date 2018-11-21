@@ -15,6 +15,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -42,6 +45,7 @@ import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 import catglo.com.deliverydroid.homeScreen.HomeScreenActivity;
+import catglo.com.deliverydroid.neworder.NewOrderActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
 import java.text.DecimalFormat;
@@ -50,7 +54,7 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
+public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements ActionBar.TabListener {
 	private static final int EDIT_ORDER = 1;
 	private static final int PREVIOUS_ORDER = 2;
 	private static final int CALL_STORE = 3;
@@ -196,6 +200,9 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.out_the_door_new);
+
+
+
 
 		inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -749,7 +756,22 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 		textUpdateThread.interrupt();
 	}
 
-	class everyMinute implements Runnable {
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    class everyMinute implements Runnable {
 		// @Override
 		public void run() {
 			while (!Thread.currentThread().isInterrupted()) {
@@ -787,7 +809,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 
 				currentAddress.setText(orders.get(orderCounter).address + " " + orders.get(orderCounter).apartmentNumber);
 				currentWait.setText("" + minutesAgo);
-				currentCost.setText("$" + orders.get(orderCounter).cost);
+				currentCost.setText(Tools.currencySymbol() + orders.get(orderCounter).cost);
 
 				String pending = "";// new
 									// String(getString(R.string.MinutesAddress));
@@ -927,7 +949,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity {
 	};
 
 	void todaysTips() {
-		final DecimalFormat currency = new DecimalFormat("$#0.00");
+		final DecimalFormat currency = new DecimalFormat(Tools.currencySymbol()+"#0.00");
 
 		// Get tip totals from database
 		TipTotalData t = dataBase.getTipTotal(this, DataBase.Shift + " = " + dataBase.getCurShift() + " AND " + DataBase.Payed + ">0",

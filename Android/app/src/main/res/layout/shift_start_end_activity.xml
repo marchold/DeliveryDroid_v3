@@ -95,7 +95,8 @@
         android:layout_height="56dp"
         android:layout_weight="0.00"
         android:background="@color/FooterBarColor" >
-
+<!--
+  The hours screen never really worked all that well so I took it out until someone has time to make it nice
         <LinearLayout
             android:id="@+id/timeClockClickable"
             android:layout_width="fill_parent"
@@ -129,54 +130,18 @@
                 android:textAllCaps="true"
                 android:textColor="#000"
                 android:textSize="8sp" />
-        </LinearLayout>
+        </LinearLayout> -->
+
 
         <LinearLayout
-            android:id="@+id/odometerClickable"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" 
-            android:visibility="gone"
-            >
-
-            <ImageButton
-                android:id="@+id/odometerButton"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="-5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:background="#0000"
-                android:clickable="false"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/icon_odometer" />
-
-            <TextView
-                android:id="@+id/TextView03"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:lines="2"
-                android:text="@string/Odometer"
-                android:textAllCaps="true"
-                android:textColor="#000"
-                android:textSize="8sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/newShiftClickable"
+            android:id="@+id/newShiftButton"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/newShiftButton"
+                android:id="@+id/newShiftButtonView"
                 android:layout_width="wrap_content"
                 android:layout_height="38dp"
                 android:layout_gravity="center"
@@ -190,7 +155,7 @@
                 android:src="@drawable/add_order_plus" />
 
             <TextView
-                android:id="@+id/TextView04"
+                android:id="@+id/TextView024"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"

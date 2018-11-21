@@ -113,6 +113,7 @@ dependencies {
 
     implementation 'com.nbsp:library:1.8'
 
+    implementation 'com.alex-zaitsev:meternumberpicker:1.0.4'
 
 
 }

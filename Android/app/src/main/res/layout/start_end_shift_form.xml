@@ -1,295 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-   <ScrollView
-       xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-   
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent" android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <RelativeLayout
+        <RelativeLayout
                 android:id="@+id/contentLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                
-                android:padding="15dp" >
+                android:padding="15dp">
 
-                <TextView
+            <TextView
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:text="@string/Current_Shift"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/chea_list_light_text"/>
 
-                <TextView
+            <TextView
                     android:id="@+id/currentShiftNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView1"
+                    android:gravity="center_horizontal"
+                    android:layout_alignEnd="@id/textView1"
+                    android:layout_alignStart="@+id/textView1"
                     android:layout_below="@+id/textView1"
-                    android:text="43"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    tools:text="43"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-                <TextView
+            <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/textView1"
                     android:layout_alignBottom="@+id/textView1"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="@string/deliveries"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/chea_list_light_text"/>
 
-                <TextView
+            <TextView
                     android:id="@+id/deliveries"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/currentShiftNumber"
                     android:layout_alignBottom="@+id/currentShiftNumber"
-                    android:layout_alignRight="@+id/textView3"
-                    android:text="14"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:layout_alignEnd="@+id/textView3"
+                    android:layout_alignStart="@id/textView3"
+                    android:gravity="center"
+                    tools:text="14"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+            <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:id="@+id/contentLayout2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+            >
 
                 <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/currentShiftNumber"
-                    android:layout_below="@+id/deliveries"
-                    android:layout_marginTop="25dp"
-                    android:text="@string/hoursWorked"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white" />
+                        android:gravity="center_vertical"
 
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/textView5"
-                    android:layout_marginBottom="15dp"
-                    android:background="@color/android_blue" />
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/MoneyCollected"
+                        android:textColor="@color/chea_list_light_text"/>
 
                 <TextView
-                    android:id="@+id/textView1a"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/view1"
-                    android:layout_below="@+id/view1"
-                    android:text="@string/shiftStartTime"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
+                        android:gravity="center_vertical"
+                        android:textSize="20sp"
+                        android:id="@+id/moneyCollected"
+                        android:layout_width="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_height="match_parent"
+                        tools:text="$248.64"/>
 
-                <EditText
-                    android:id="@+id/shiftStartTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView1a"
-                    android:layout_alignBottom="@+id/textView1a"
-                    android:layout_toRightOf="@+id/textView5"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:text="9:07pm Monday"
-                    android:textSize="20sp" />
+            </LinearLayout>
 
-                <EditText
-                    android:id="@+id/shiftEndTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/shiftStartTime"
-                    android:layout_below="@+id/shiftStartTime"
-                    android:layout_marginTop="5dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:text="2:20am Tuesday "
-                    android:textSize="20dp" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/shiftEndTime"
-                    android:layout_alignLeft="@+id/textView1a"
-                    android:text="@string/shiftEndTime"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/hoursWorked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/shiftEndTime"
-                    android:layout_below="@+id/shiftEndTime"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="6h 43m"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/hoursWorked"
-                    android:layout_alignBottom="@+id/hoursWorked"
-                    android:layout_alignLeft="@+id/textView6"
-                    android:text="@string/hoursWorked"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/textView5"
-                    android:layout_toRightOf="@+id/view1"
-                    android:src="@drawable/icon_clock" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
+        <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
                 android:id="@+id/odometerLayout"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:padding="15dp">
+                android:layout_height="match_parent">
+
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+
+
+                <FrameLayout android:layout_margin="5dp" android:layout_weight="1" android:layout_width="fill_parent"
+                             android:layout_height="wrap_content">
+                    <TextView
+                            android:gravity="center_horizontal"
+                            android:textAllCaps="true"
+                            android:textSize="14sp"
+                            android:id="@+id/textView1a"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shiftStartTime"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/chea_list_light_text"/>
+
+                    <EditText
+                            android:gravity="center_horizontal"
+                            android:id="@+id/shiftStartTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            tools:text="9:07pm Monday"
+                            android:textSize="20sp"/>
+                </FrameLayout>
+
+                <FrameLayout android:layout_margin="5dp" android:layout_weight="1" android:layout_width="fill_parent"
+                             android:layout_height="wrap_content">
+
+                    <EditText
+                            android:gravity="center_horizontal"
+                            android:id="@+id/shiftEndTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            tools:text="2:20am Tuesday "
+                            android:textSize="20sp"/>
+
+                    <TextView
+                            android:gravity="center_horizontal"
+                            android:textAllCaps="true"
+                            android:textSize="14sp"
+                            android:id="@+id/textView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shiftEndTime"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/chea_list_light_text"/>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout android:gravity="center_horizontal" android:layout_width="match_parent"
+                          android:layout_height="wrap_content" android:orientation="horizontal">
+
 
                 <TextView
-                    android:id="@+id/TextView01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/Odometer"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white" />
+                        android:id="@+id/hoursWorked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        tools:text="6h 43m"
+                        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-                <View
-                    android:id="@+id/View01"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignLeft="@+id/TextView01"
-                    android:layout_below="@+id/TextView01"
-                    android:background="@color/android_blue" />
 
-                <TextView
-                    android:id="@+id/TextView02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/View01"
-                    android:layout_below="@+id/View01"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/Starting_odometer"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
-
-                <EditText
-                    android:id="@+id/startingOdometer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/TextView02"
-                    android:layout_alignBottom="@+id/TextView02"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toRightOf="@+id/TextView02"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:text="47,163"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/endingOdometer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/startingOdometer"
-                    android:layout_below="@+id/startingOdometer"
-                    android:layout_marginTop="5dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:text="47,635"
-                    android:textSize="20sp" />
+                <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/icon_clock"/>
 
                 <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/endingOdometer"
-                    android:layout_alignLeft="@+id/TextView02"
-                    android:text="@string/End_odometer"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:text="@string/hoursWorked"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"/>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+            <LinearLayout
+                    android:layout_marginTop="40dp" android:orientation="horizontal" android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+
+
+                <FrameLayout android:layout_margin="5dp" android:layout_weight="1" android:layout_width="fill_parent"
+                             android:layout_height="wrap_content">
+                    <TextView
+                            android:gravity="center_horizontal"
+                            android:textAllCaps="true"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Starting_odometer"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/chea_list_light_text"/>
+
+                    <EditText
+                            android:gravity="center_horizontal"
+                            android:id="@+id/startingOdometer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            tools:text="100704"
+                            android:textSize="20sp"/>
+                </FrameLayout>
+
+                <FrameLayout android:layout_margin="5dp" android:layout_weight="1" android:layout_width="fill_parent"
+                             android:layout_height="wrap_content">
+
+                    <EditText
+                            android:gravity="center_horizontal"
+                            android:id="@+id/endingOdometer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            tools:text="123456"
+                            android:textSize="20sp"/>
+
+                    <TextView
+                            android:gravity="center_horizontal"
+                            android:textAllCaps="true"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/End_odometer"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/chea_list_light_text"/>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout android:gravity="center_horizontal" android:layout_width="match_parent"
+                          android:layout_height="wrap_content" android:orientation="horizontal">
+
 
                 <TextView
-                    android:id="@+id/milesDrivenLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/totalMilesDriven"
-                    android:layout_alignBottom="@+id/totalMilesDriven"
-                    android:layout_alignLeft="@+id/textView8"
-                    android:text="@string/Odometer_total"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
+                        android:id="@+id/totalMilesDriven"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        tools:text="6h 43m"
+                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
 
                 <TextView
-                    android:id="@+id/totalMilesDriven"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/endingOdometer"
-                    android:layout_below="@+id/endingOdometer"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="652"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:text="@string/Odometer_total"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"/>
 
-            </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/contentLayout"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:padding="15dp" >
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/TextView05"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/TOTALS"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white" />
 
-                <View
-                    android:id="@+id/View02"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignLeft="@+id/TextView05"
-                    android:layout_below="@+id/TextView05"
-                    android:background="@color/android_blue" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/View02"
-                    android:layout_below="@+id/View02"
-                    android:layout_marginTop="19dp"
-                    android:text="@string/MoneyCollected"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/moneyCollected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView4"
-                    android:layout_alignBottom="@+id/textView4"
-                    android:layout_marginLeft="21dp"
-                    android:layout_toRightOf="@+id/textView4"
-                    android:text="$248.64"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+
+
+    </LinearLayout>
+</ScrollView>

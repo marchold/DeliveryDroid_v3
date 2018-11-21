@@ -31,7 +31,7 @@
         <!--android:layoutDirection="ltr"-->
 
         <!-- hour -->
-        <net.simonvt.numberpicker.NumberPicker
+        <NumberPicker
             android:id="@+id/hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             />
 
         <!-- minute -->
-        <net.simonvt.numberpicker.NumberPicker
+        <NumberPicker
             android:id="@+id/minute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
     </LinearLayout>
 
     <!-- AM / PM -->
-    <net.simonvt.numberpicker.NumberPicker
+    <NumberPicker
         android:id="@+id/amPm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

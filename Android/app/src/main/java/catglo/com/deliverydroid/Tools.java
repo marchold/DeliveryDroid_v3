@@ -26,13 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import catglo.com.deliveryDatabase.DataBase;
-import catglo.com.deliverydroid.shift.ShiftStartEndBaseActivity;
 import catglo.com.deliverydroid.widgets.DateRangeDialogFragment;
 import catglo.com.deliverydroid.widgets.DateRangeSlider;
 import catglo.com.deliverydroid.widgets.DateSlider;
 import catglo.com.deliverydroid.widgets.TimeSlider;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+
 
 
 import org.joda.time.DateTime;
@@ -46,6 +44,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Locale;
@@ -79,46 +78,32 @@ public class Tools {
         }
     };
     private Activity activity;
-    public RequestQueue requestQue;
 
-    public static String getFormattedCurrency(Float f) {
-        return getFormattedCurrency(f,"0");
+
+
+    public static String currencySymbol()
+    {
+        try {
+            return Currency.getInstance(Locale.getDefault()).getSymbol().replaceAll("\\w", "");
+        } catch (Exception e) {
+            return NumberFormat.getCurrencyInstance().getCurrency().getSymbol();
+        }
     }
 
-    public static String getFormattedCurrency(Float f, String s) {
+    public static String getFormattedCurrency(Float f) {
         if (f.isNaN()) {
-            return "";
-        }
-        String currencySymbol;
-        try {
-            /*
-             * I got this crash report "doesn't open on Samsung note i717"
-
-            java.lang.RuntimeException: Unable to resume activity {com.catglo.deliverydroid/com.catglo.deliverydroidbase.HomeMapActivity}: java.lang.IllegalArgumentException: Not a supported ISO 3166 country: en
-            at android.app.ActivityThread.performResumeActivity(ActivityThread.java:2124)
-            ...
-            Caused by: java.lang.IllegalArgumentException: Not a supported ISO 3166 country: en
-            at java.util.Currency.getInstance(Currency.java:125)
-            at com.catglo.deliverydroidbase.DeliveryDroidBaseActivity.getFormattedCurrency(DeliveryDroidBaseActivity.java:71)
-            at com.catglo.deliverydroidbase.DragDropListFragment.updateUI(DragDropListFragment.java:154)
-            at com.catglo.deliverydroidbase.DeliveryListBaseFragment.onResume(DeliveryListBaseFragment.java:386)
-
-            So I default to dollar sign
-            */
-            currencySymbol = Currency.getInstance(Locale.getDefault()).getSymbol();
-        } catch (IllegalArgumentException e) {
-            currencySymbol = "$";
+            return currencySymbol()+"0.0";
         }
         try {
             DecimalFormat currency = new DecimalFormat("#0.00");
             currency.setMaximumFractionDigits(Currency.getInstance(Locale.getDefault()).getDefaultFractionDigits());
             currency.setMinimumFractionDigits(Currency.getInstance(Locale.getDefault()).getDefaultFractionDigits());
-            return currencySymbol + currency.format(f);
+            return currencySymbol() + currency.format(f);
         } catch (IllegalArgumentException e2) {
             DecimalFormat currency = new DecimalFormat("#0.00");
             currency.setMaximumFractionDigits(2);
             currency.setMinimumFractionDigits(2);
-            return currencySymbol + currency.format(f);
+            return currencySymbol() + currency.format(f);
         }
 
     }
@@ -285,14 +270,13 @@ public class Tools {
 
     public void showOnScreenKeyboard(View paymentTotal2){
 		InputMethodManager mgr = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-		mgr.showSoftInput(paymentTotal2, InputMethodManager.SHOW_IMPLICIT);
+		mgr.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
 
 	}
 
     public void hideOnScreenKeyboard(View paymentTotal){
 		InputMethodManager inputMethodManager=(InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-	    inputMethodManager.toggleSoftInputFromWindow(paymentTotal.getApplicationWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-	    inputMethodManager.hideSoftInputFromWindow(paymentTotal.getWindowToken(), 0);
+	    inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 	}
 
     void showTimeSliderDialog(final EditText field, final Timestamp time, final Dialog.OnDismissListener listener){
@@ -301,35 +285,26 @@ public class Tools {
         currentEditCalendar = MutableDateTime.now();
         currentEditCalendar.setMillis(time.getTime());
 
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            if (timeDialog==null || timeDialog.isAdded()==false) {
-                timeDialog = new TimeDialog();
+        if (timeDialog==null || timeDialog.isAdded()==false) {
+            timeDialog = new TimeDialog();
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(TimeDialog.DATE_TIME_ARGUMENT, currentEditCalendar.toDateTime());
-                timeDialog.setArguments(bundle);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(TimeDialog.DATE_TIME_ARGUMENT, currentEditCalendar.toDateTime());
+            timeDialog.setArguments(bundle);
 
-                timeDialog.setOnTimeChangedListener(new TimeDialog.OnTimeChangedListener(){public void onTimeChanged(DateTime newTime, DialogInterface arg0) {
-                    time.setTime(newTime.getMillis());
+            timeDialog.setOnTimeChangedListener(new TimeDialog.OnTimeChangedListener(){public void onTimeChanged(DateTime newTime, DialogInterface arg0) {
+                time.setTime(newTime.getMillis());
 
-                    field.setText(String.format("%tl:%tM %tp", newTime.toCalendar(null), newTime.toCalendar(null), newTime.toCalendar(null)));
-                      currentEditTimestamp.setTime(newTime.getMillis());
-                      currentEditCalendar.setMillis(newTime.getMillis());
+                field.setText(String.format("%tl:%tM %tp", newTime.toCalendar(null), newTime.toCalendar(null), newTime.toCalendar(null)));
+                  currentEditTimestamp.setTime(newTime.getMillis());
+                  currentEditCalendar.setMillis(newTime.getMillis());
 
-                    if (listener!=null) listener.onDismiss(arg0);
-                    timeDialog=null;
-                }});
-                timeDialog.show(activity.getFragmentManager(), "time_picker_dialog");
-            }
+                if (listener!=null) listener.onDismiss(arg0);
+                timeDialog=null;
+            }});
+            timeDialog.show(activity.getFragmentManager(), "time_picker_dialog");
         }
-        else
-        if (timeSlider==null || timeSlider.isShowing()==false) {
-            timeSlider = new TimeSlider(activity, mDateSetListener, currentEditCalendar,"Set Time");
-            if (listener!=null)
-                timeSlider.setOnDismissListener(listener);
-            timeSlider.show();
-        }
-     }
+    }
 
     public void showTimeSliderDialog(final TextView field, final MutableDateTime time, final Dialog.OnDismissListener listener){
     	currentTimeDateField=field;
@@ -356,31 +331,6 @@ public class Tools {
 
 	 }
 
-    protected void showTimeSliderDialog(final TextView field, final MutableDateTime dateTime, final ShiftStartEndBaseActivity listener) {
-		currentTimeDateField=field;
-		currentEditTimestamp=new Timestamp(dateTime.getMillis());
-		currentEditCalendar=dateTime;
-
-        if (timeDialog==null) {
-            timeDialog = new TimeDialog();
-
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(TimeDialog.DATE_TIME_ARGUMENT, currentEditCalendar.toDateTime());
-            timeDialog.setArguments(bundle);
-
-            timeDialog.setOnTimeChangedListener(new TimeDialog.OnTimeChangedListener(){public void onTimeChanged(DateTime newTime, DialogInterface arg0) {
-                dateTime.setDate(newTime);
-
-                field.setText(String.format("%tl:%tM %tp", newTime.toCalendar(null), newTime.toCalendar(null), newTime.toCalendar(null)));
-                currentEditTimestamp.setTime(newTime.getMillis());
-                currentEditCalendar.setMillis(newTime.getMillis());
-                timeDialog=null;
-                if (listener!=null) listener.onDismiss(arg0);
-            }});
-            timeDialog.show(activity.getFragmentManager(), "time_picker_dialog");
-        }
-
-	}
 
     public TimeDialog timeDialog;
 
@@ -448,7 +398,7 @@ public class Tools {
         }
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         this.activity = activity;
-        requestQue = Volley.newRequestQueue(activity);
+
         return dataBase;
     }
 

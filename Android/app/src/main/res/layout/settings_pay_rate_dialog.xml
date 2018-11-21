@@ -44,17 +44,17 @@
         android:orientation="horizontal"
        >
 
-        <net.simonvt.datepicker.DatePicker
+        <DatePicker
             android:id="@+id/datePicker1"
             android:layout_width="150dp"
             android:layout_height="wrap_content" >
-        </net.simonvt.datepicker.DatePicker>
+        </DatePicker>
 
-        <net.simonvt.timepicker.TimePicker
+        <TimePicker
             android:id="@+id/timePicker1"
             android:layout_width="150dp"
             android:layout_height="wrap_content" >
-        </net.simonvt.timepicker.TimePicker>
+        </TimePicker>
         
         </LinearLayout>
 

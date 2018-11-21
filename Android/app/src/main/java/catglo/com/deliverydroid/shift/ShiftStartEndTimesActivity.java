@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 
 import catglo.com.deliveryDatabase.Wage;
+import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Tools;
 import org.joda.time.DateTime;
@@ -27,7 +28,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
-public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
+public class ShiftStartEndTimesActivity extends DeliveryDroidBaseActivity {
 
 	private Button setShiftToTimesToOrderTimesButton;
 	private Button hourlyPayRateAutocomplete;
@@ -38,50 +39,27 @@ public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState, R.layout.start_end_shift_hours_worked);
-		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.start_end_shift_hours_worked);
+
 		setShiftToTimesToOrderTimesButton = (Button)findViewById(R.id.setShiftTimesToOrderTimes);
 	}
 
-/*	class MyDialogFragment extends DialogFragment{
-	    Context mContext;
-	    public MyDialogFragment() {
-	        mContext = getActivity();
-	    }
-	    @Override
-	    public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
-	        alertDialogBuilder.setTitle("Really?");
-	        alertDialogBuilder.setMessage("Are you sure?");
-	        //null should be your on click listener
-	        alertDialogBuilder.setPositiveButton("OK", null);
-	        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-	                dialog.dismiss();
-	            }
-	        });
-
-
-	        return alertDialogBuilder.create();
-	    }
-	}*/
+/*
 	
-	
-	@Override
+	//@Override
     public void updateUI(){
-		super.updateUI();
+	//	super.updateUI();
 		String text;
 		
 		DateTime now = new DateTime();
-		MutableDateTime dt = dataBase.firstOrderTimeForShift(shift.primaryKey);
+		MutableDateTime dt = dataBase.firstOrderTimeForShift(getShift().primaryKey);
 		if (dt==null)dt=MutableDateTime.now();
 		long timeInMillsFirst = dt.getMillis();
 	
 		long timeInMillsLast;
 		try {
-			timeInMillsLast = dataBase.lastOrderTimeForShift(shift.primaryKey).getMillis();
+			timeInMillsLast = dataBase.lastOrderTimeForShift(getShift().primaryKey).getMillis();
 
 		} catch (NullPointerException e) {
 			timeInMillsLast = dt.getMillis();
@@ -93,7 +71,7 @@ public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
 		Hours hoursAgoStart = Hours.hoursBetween(firstShift, now);
 		Hours hoursAgoEnd = Hours.hoursBetween(lastShift, now);
 		
-		if (hoursAgoEnd.getHours()!=0 && hoursAgoStart.getHours()!=0 && dataBase.isTodaysShift(shift)){
+		if (hoursAgoEnd.getHours()!=0 && hoursAgoStart.getHours()!=0 && dataBase.isTodaysShift(getShift())){
 	
 			text = "Your first order was "+hoursAgoStart+" hours ago and your last order was "+hoursAgoEnd+" hours ago. Set as shift times ";
 			setShiftToTimesToOrderTimesButton.setText(text);
@@ -102,26 +80,22 @@ public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
 			setShiftToTimesToOrderTimesButton.setVisibility(View.GONE);
 		}
 		
-		/*
-		wageHistory = dataBase.wageHistory();		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,wageHistory);
-		hourlyPayRateAutocomplete.setAdapter(adapter);
-		*/
+
 		
 		hourlyPayRateAutocomplete = (Button)findViewById(R.id.hourlyPayRateAutocomplete);
 		hourlyPayRateAutocomplete.setOnClickListener(new OnClickListener(){public void onClick(View v) {
 			Intent intent = new Intent(getApplicationContext(),ShiftSetWageActivity.class);
-			intent.putExtra("ID",shift.primaryKey);
+			intent.putExtra("ID", getShift().primaryKey);
 			startActivity(intent);
 		}});
-		if (!dataBase.isTodaysShift(shift)){
+		if (!dataBase.isTodaysShift(getShift())){
 			hourlyPayRateAutocomplete.setVisibility(View.GONE);
 		}
 		
 		
 		currentWage = dataBase.currentWage();
 		
-		todaysWageTransitions = dataBase.wageTransitionsForShift(shift);
+		todaysWageTransitions = dataBase.wageTransitionsForShift(getShift());
 		hourlyPayRatesToday = (ViewGroup)findViewById(R.id.dayHoursLabels);
 		hourlyPayRatesToday.removeAllViews();
 		int count=0;
@@ -156,7 +130,7 @@ public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
 			
 			howLongAgo.setOnClickListener(new OnClickListener(){public void onClick(View v) {
 				tools.showTimeSliderDialog(howLongAgo,wage.startTime,new Dialog.OnDismissListener(){public void onDismiss(DialogInterface dialog) {
-					dataBase.saveWage(wage,shift);
+					dataBase.saveWage(wage, getShift());
 				}});
 			}});
 			payRate.setOnClickListener(new OnClickListener(){public void onClick(View v) {
@@ -177,7 +151,7 @@ public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
 				        
 				        alertDialogBuilder.setPositiveButton("OK",new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {
 				        	String value = rateInput.getText().toString();
-				        	dataBase.saveWage(wage, shift);
+				        	dataBase.saveWage(wage, getShift());
 				        	dialog.dismiss();
 				        }});
 
@@ -203,18 +177,9 @@ public class ShiftStartEndTimesActivity extends ShiftStartEndBaseActivity {
 	
 	@Override
 	public void onPause(){
-		/*
-		String wageString = hourlyPayRateAutocomplete.getText().toString();
-		if (wageString.length()>0){
-			float wage = Float.parseFloat(wageString);
-			DecimalFormat df = new DecimalFormat("#.##");
-			if (df.format(wage).equalsIgnoreCase(df.format(currentWage.wage))==false){
-				dataBase.setWage(wage,shift,DateTime.now());
-			}
-		}
-		*/
-		
+
+
 		super.onPause();
 	}
-
+*/
 }

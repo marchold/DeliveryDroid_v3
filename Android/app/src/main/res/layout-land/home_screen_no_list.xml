@@ -100,6 +100,12 @@
             android:drawableTop="@drawable/icon_drops"
             android:text="@string/Make_a_Drop" />
 
+        <Button android:id="@+id/downloadMapClickListener"
+                style="@style/home_screen_extra_button"
+                android:drawableTop="@drawable/map_download"
+                android:text="@string/map_downloads"/>
+
+
     </catglo.com.deliverydroid.widgets.RowLayout>
 
 

@@ -68,5 +68,12 @@
             style="@style/slide_out_menu_button_land"
             android:drawableTop="@drawable/icon_sum"
             android:text="@string/Totals" />
-        
-    </catglo.com.deliverydroid.widgets.FlowLayout>
+
+    <Button
+            android:id="@+id/map_downloads"
+            style="@style/slide_out_menu_button"
+            android:drawableTop="@drawable/map_download"
+            android:text="@string/map_downloads" />
+
+
+</catglo.com.deliverydroid.widgets.FlowLayout>
