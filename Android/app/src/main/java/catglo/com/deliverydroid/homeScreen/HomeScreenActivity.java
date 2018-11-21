@@ -62,9 +62,10 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	private View sortUnderline;
 	private View mapUnderline;
 	private FrameLayout fragmentContainer;
+	private Button mapDownloadsButon;
 
 
-    public HomeScreenActivity() {
+	public HomeScreenActivity() {
 		super();
 	}
 
@@ -181,6 +182,14 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		menuSearchButton = (Button) findViewById(R.id.search_menu_button);
 		menuCustomizeListButton = (Button) findViewById(R.id.customize_list_menu_button);
 		menuCallStoreListButton = (Button) findViewById(R.id.call_store_menu_button);
+		mapDownloadsButon = (Button)findViewById(R.id.map_downloads);
+		mapDownloadsButon.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getApplicationContext(), DownloadMapActivity.class));
+				drawerLayout.closeDrawers();
+			}
+		});
 		menuSettingsButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), 0);

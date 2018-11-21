@@ -48,21 +48,21 @@
             android:id="@+id/TipsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$0.00"
+            tools:text="$0.00"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/MileageEarned"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$0.00"
+            tools:text="$0.00"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/DriverEarnings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$0.00"
+            tools:text="$0.00"
             android:textSize="18sp" />
     </LinearLayout>
 

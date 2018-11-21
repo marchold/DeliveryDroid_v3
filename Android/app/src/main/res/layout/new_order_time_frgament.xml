@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical">
 
     <TextView
+        tools:text="7:31 am Tue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/timeLabel"
@@ -12,6 +13,7 @@
         android:textSize="20sp"/>
 
     <TextView
+            tools:text="in 28 minutes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inMinutes"
@@ -19,10 +21,10 @@
         android:layout_below="@+id/timeLabel"
         android:textSize="20sp"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_below="@+id/inMinutes"
         android:id="@+id/timeLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
@@ -30,16 +32,26 @@
         android:orientation="horizontal">
 
         <TimePicker
-            android:id="@+id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                android:paddingRight="0dp"
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"/>
 
         <NumberPicker
-            android:id="@+id/numberPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                android:layout_marginBottom="70dp"
+                android:layout_alignBottom="@+id/timePicker"
+                android:layout_alignParentRight="true"
+                android:id="@+id/numberPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+
+        <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/next_button"
+                     android:src="@drawable/page_next" android:layout_alignParentRight="true"
+                     android:layout_alignBottom="@+id/timePicker"
+                     android:layout_marginBottom="10dp"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -75,14 +87,5 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/timeLayout"
-        android:layout_alignRight="@+id/timeLayout"
-        android:layout_below="@+id/linearLayout"
-        android:layout_marginTop="31dp"
-        android:background="@color/transparent"
-        android:src="@drawable/selector_next" />
+
 </RelativeLayout>

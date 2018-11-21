@@ -84,7 +84,8 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         actionBar.setBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));
         actionBar.setStackedBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));

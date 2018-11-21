@@ -622,9 +622,7 @@
     <string name="Shifts_and_Hours">Shifts and Hours</string>
     <string name="set_amount_per_hour">Set how you start shifts and the amount you earn per hour.</string>
     <string name="hourly_pay">Hourly pay</string>
-    <string name="track_odometer_summary">Select if you want to have the ability to enter the odometer values for
-        shifts
-    </string>
+    <string name="track_odometer_summary">Select if you want to have the ability to enter the odometer values for shifts</string>
     <string name="track_odometer">Track Odometer</string>
     <string name="estimate_hours_from_orders_summary">Select and the app uses the times of the first and last order as
         the shift start end times. This will be automatic but less accurate.
@@ -801,6 +799,16 @@
         it and you won\'t be able to email it.\nBy selecting keep data on external storage the data will be easily accessible if you want to copy it to your computer or email it to yourself
     </string>
     <string name="wage">Wage</string>
+    <string name="many_thanks_to_chea_yeam_at_zendiv_com_any_nice_looking_graphics_or_icons_in_the_app_were_made_by_him">
+        Many thanks to Chea Yeam at ZenDiv.com, Any nice looking graphics or icons in the app were made by him.
+    </string>
+    <string name="we_use_android_drag_sort_list_view_nmany_thanks_to_carl_a_bauer_and_the_other_contributors">We use
+        android Drag Sort List View. Many thanks to Carl A. Bauer and the other contributors
+    </string>
+    <string name="we_use_android_flow_layout_nmany_thanks_to_artem_votincev_ncopyright_c_2011_artem_votincev_apmem_org_nall_rights_reserved">
+        We use android Flow Layout. Many thanks to Artem Votincev Copyright (c) 2011, Artem Votincev (apmem.org) All
+        rights reserved.
+    </string>
 
 </resources>
 

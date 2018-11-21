@@ -21,8 +21,6 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="calendarViewStyle">@style/Widget.Holo.CalendarView</item>
         <item name="datePickerStyle">@style/Widget.Holo.DatePicker</item>
-        <item name="numberPickerStyle">@style/NPWidget.Holo.NumberPicker</item>
-        <item name="timePickerStyle">@style/NPWidget.Holo.NumberPicker</item>
 
         <item name="android:statusBarColor">@color/chea_action_bar_bkgd</item>
     </style>
@@ -32,8 +30,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="calendarViewStyle">@style/Widget.Holo.CalendarView</item>
         <item name="datePickerStyle">@style/Widget.Holo.DatePicker</item>
-        <item name="numberPickerStyle">@style/NPWidget.Holo.NumberPicker</item>
-        <item name="timePickerStyle">@style/NPWidget.Holo.NumberPicker</item>
+
 
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionBarTheme.OverFlow</item>
@@ -53,8 +50,6 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="calendarViewStyle">@style/Widget.Holo.CalendarView</item>
         <item name="datePickerStyle">@style/Widget.Holo.DatePicker</item>
-        <item name="numberPickerStyle">@style/NPWidget.Holo.NumberPicker</item>
-        <item name="timePickerStyle">@style/NPWidget.Holo.NumberPicker</item>
 
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionBarTheme.OverFlow</item>
@@ -330,7 +325,6 @@
         <item name="android:textColor">@color/chea_header_bar_green</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:text">$7.99</item>
     </style>
 
     <style name="details_view_header_data_layout">
@@ -386,5 +380,21 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="MeterNumberPickerStyle">
+        <item name="mnp_min">0</item>
+        <item name="mnp_max">9</item>
+        <item name="mnp_textColor">@android:color/white</item>
+        <item name="mnp_textSize">50sp</item>
+        <item name="mnp_paddingHorizontal">5dp</item>
+        <item name="mnp_paddingVertical">25dp</item>
+    </style>
+
+    <style name="MeterViewStyle">
+        <item name="mv_firstColor">@android:color/transparent</item>
+        <item name="mv_numberOfFirst">6</item>
+        <item name="mv_numberOfSecond">0</item>
+        <item name="mv_pickerStyle">@style/MeterNumberPickerStyle</item>
+        <item name="mv_secondColor">@android:color/transparent</item>
+    </style>
 
 </resources>

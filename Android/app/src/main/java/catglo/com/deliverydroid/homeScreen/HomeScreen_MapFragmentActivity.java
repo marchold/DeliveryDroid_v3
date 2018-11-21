@@ -175,23 +175,6 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		}
 	}
 	
-	/*private class TouchOverlay extends com.google.android.maps.Overlay {
-        int lastZoomLevel = -1;
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event, MapView mapview) {
-            if (event.getAction() == 1) {
-                if (lastZoomLevel == -1)
-                    lastZoomLevel = mapView.getZoomLevel();
-
-                if (mapView.getZoomLevel() != lastZoomLevel) {
-                    onZoom(mapView.getZoomLevel());
-                    lastZoomLevel = mapView.getZoomLevel();
-                }
-            }
-            return false;
-        }
-    }*/
 
     public void onZoom(int level) {
     	Editor editor = sharedPreferences.edit();

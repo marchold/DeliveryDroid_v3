@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/version"
-            android:text="1.0"
+            android:text="3.0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -45,7 +45,7 @@
 
         <TextView
             android:layout_marginTop="10dp"
-            android:text="Many thanks to Chea Yeam at ZenDiv.com, Any nice looking graphics or icons in the app were made by him."
+            android:text="@string/many_thanks_to_chea_yeam_at_zendiv_com_any_nice_looking_graphics_or_icons_in_the_app_were_made_by_him"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -63,7 +63,7 @@
 
         <TextView
             android:layout_marginTop="10dp"
-            android:text="We use android Drag Sort List View.\nMany thanks to Carl A. Bauer and the other contributors"
+            android:text="@string/we_use_android_drag_sort_list_view_nmany_thanks_to_carl_a_bauer_and_the_other_contributors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -84,7 +84,7 @@
 
         <TextView
             android:layout_marginTop="10dp"
-            android:text="We use android Flow Layout.\nMany thanks to Artem Votincev\nCopyright (c) 2011, Artem Votincev (apmem.org)\nAll rights reserved."
+            android:text="@string/we_use_android_flow_layout_nmany_thanks_to_artem_votincev_ncopyright_c_2011_artem_votincev_apmem_org_nall_rights_reserved"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -92,15 +92,6 @@
             android:textAppearance="@android:style/TextAppearance.Small" />
 
 
-        <TextView
-            android:id="@+id/legal"
-            android:layout_marginTop="10dp"
-            android:text="Legal Notices"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="true"
-            android:gravity="center_horizontal"
-            android:textAppearance="@android:style/TextAppearance.Small" />
 
 
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools">
+
+    <com.alexzaitsev.meternumberpicker.MeterView
+            android:id="@+id/meterView"
+            style="@style/MeterViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:id="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/meterView"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/milesDriven"/>
+
+    <TextView
+            android:visibility="gone"
+            tools:text="643"
+            android:layout_margin="5dp"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/meterView"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/milesDriven"/>
+
+</android.support.constraint.ConstraintLayout>

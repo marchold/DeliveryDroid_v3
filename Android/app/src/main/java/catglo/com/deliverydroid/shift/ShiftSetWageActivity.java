@@ -16,7 +16,7 @@ public class ShiftSetWageActivity extends DeliveryDroidBaseActionBarActivity imp
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shift_set_wage_activity);
+        setContentView(R.layout.shift_set_wage_dialog);
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("ID", -1);

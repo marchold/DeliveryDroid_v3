@@ -224,7 +224,7 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                </catglo.com.widgets.RowLayout>
+                </catglo.com.deliverydroid.widgets.RowLayout>
             </catglo.com.deliverydroid.widgets.RowLayout>
 
             <Button

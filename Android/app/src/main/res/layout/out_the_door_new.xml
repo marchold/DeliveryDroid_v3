@@ -107,7 +107,8 @@
 
     </RelativeLayout>
 
-    <View
+    <ProgressBar
+            android:indeterminate="false"
             android:id="@+id/underline"
             android:layout_width="match_parent"
             android:layout_height="4dp"

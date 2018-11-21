@@ -51,6 +51,12 @@ xmlns:android="http://schemas.android.com/apk/res/android"
              style="@style/slide_out_menu_button"
              android:drawableTop="@drawable/text_call_small"
              android:text="@string/call_store" />
+
+        <Button
+                android:id="@+id/map_downloads"
+                style="@style/slide_out_menu_button"
+                android:drawableTop="@drawable/map_download"
+                android:text="@string/map_downloads" />
          
     </catglo.com.deliverydroid.widgets.FlowLayout>
 </FrameLayout>
