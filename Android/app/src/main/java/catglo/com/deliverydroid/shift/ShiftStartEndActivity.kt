@@ -136,7 +136,6 @@ class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
                     if (meterView.value<shift.odometerAtShiftStart)
                     {
                         Toast.makeText(this@ShiftStartEndActivity,"Distance going backwards ",Toast.LENGTH_LONG).show()
-                        endingOdometer.performClick()
                     }
                     shift.odometerAtShiftStart = meterView.value
                     dataBase.saveShift(shift)
