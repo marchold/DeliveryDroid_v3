@@ -232,6 +232,9 @@
                         android:summary="@string/hourly_pay_rate"
                         android:title="@string/Pay_rate"/>
 
+<!--
+We should bring back dual wage once we have a really good wage management system in place.
+For now its just a buggy thing.
 
                 <CheckBoxPreference
                         android:key="dual_wage"
@@ -264,6 +267,8 @@
                         android:key="pay_rate_location_aware"
                         android:summary="@string/location_aware_setting_summary"
                         android:title="@string/Location_Aware"/>
+
+-->
 
                 <PreferenceScreen
                         android:icon="@drawable/store_address"

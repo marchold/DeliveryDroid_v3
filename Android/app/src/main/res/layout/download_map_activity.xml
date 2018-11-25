@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,12 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".homeScreen.DownloadMapActivity" tools:layout_editor_absoluteY="81dp">
 
-    <android.support.v7.widget.RecyclerView
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            android:visibility="gone"
-            android:id="@+id/downloadedMapList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
 
     <LinearLayout android:orientation="vertical"
                   android:id="@+id/noDownloadsHelpView"
@@ -20,13 +15,96 @@
                   android:layout_height="match_parent">
 
         <TextView
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Please download a mapsforge map for visual maps in the app"/>
+                android:layout_height="wrap_content"
+                android:text="@string/get_your_map_file"/>
 
-        <WebView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/mapsForgeDownloadWebView"></WebView>
+        <RadioGroup android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/mapDownloadRadioGroup">
+            <RadioButton
+                    android:id="@+id/automaticDownloadRadio"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/automatically_download_maps_from_p2p_file_sharing_networks"/>
+
+            <RadioButton
+                    android:id="@+id/manualDownloadRadio"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/download_them_to_your_computer_and_transfer_them_to_your_phone_over_usb"/>
+
+
+            <RadioButton
+                    android:id="@+id/generateMapRadio"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/generate_them_yourself"/>
+
+        </RadioGroup>
+
+
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                style="@style/Widget.MaterialComponents.TabLayout"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Downloaded Maps"/>
+
+            <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available Maps"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/downloadedMapList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/downloadableMapList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        <RelativeLayout
+                android:id="@+id/helpView"
+                android:layout_width="wrap_content" android:layout_height="match_parent">
+
+
+            <TextView
+                    android:id="@+id/helpText"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20dp"
+                    tools:text="this is help text explaining"/>
+
+            <TextView
+                    android:id="@+id/helpLink"
+                    android:layout_width="wrap_content" android:layout_marginRight="20dp" android:layout_height="wrap_content" android:layout_marginLeft="20dp"
+                    tools:text="http:/bla.asdas/com/asd.hrml" android:textColor="@color/android_blue"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

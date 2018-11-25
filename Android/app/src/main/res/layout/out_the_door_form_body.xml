@@ -13,7 +13,7 @@
 
         <EditText
                 android:id="@+id/paymentTotal"
-                android:layout_width="100dip"
+                android:layout_width="120dip"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:hint="@string/Payment"
@@ -23,7 +23,7 @@
 
         <EditText
                 android:id="@+id/paymentTotal_2"
-                android:layout_width="100dip"
+                android:layout_width="120dip"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/hrule_2"
                 android:hint="@string/Split_Payment"
@@ -34,20 +34,21 @@
 
         <EditText
                 android:id="@+id/tipAmount"
-                android:layout_width="100dip"
+                android:layout_width="120dip"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:hint="@string/Tip_Amount"
                 android:imeOptions="flagNoExtractUi"
                 android:inputType="numberDecimal"
-                android:textSize="18sp"/>
+                android:textSize="20sp"/>
 
         <Button
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:id="@+id/split_order"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
+                android:layout_width="120dip"
+                android:layout_height="48dp"
                 android:text="@string/SplitOrder"
-                android:textSize="18sp"/>
+                android:textSize="20sp"/>
 
         <RadioGroup
                 android:id="@+id/cash_check_card"
@@ -56,24 +57,32 @@
                 android:orientation="horizontal">
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/cash_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Cash"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/check_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Check"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/credit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Credit"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/ebt_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,24 +98,32 @@
                 android:visibility="gone">
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/cash_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cash"></RadioButton>
+                    android:text="Cash"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/check_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Check"></RadioButton>
+                    android:text="Check"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/credit_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Credit"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/ebt_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -445,9 +462,11 @@
             android:layout_below="@id/notesThisOrder">
 
         <Button
+                android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1"
                 android:drawableTop="@drawable/ic_cancel"
                 android:id="@+id/markUndeliverable"
-                android:text="@string/mark_undeliverable" style="@style/bottom_buttons_out_the_door"/>
+                android:text="@string/mark_undeliverable"
+                android:background="@color/transparent"/>
 
         <Button android:layout_height="match_parent" android:layout_width="match_parent"
                 android:drawableTop="@drawable/ic_edit"

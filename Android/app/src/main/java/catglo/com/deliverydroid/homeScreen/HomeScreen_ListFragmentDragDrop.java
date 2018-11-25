@@ -16,7 +16,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +35,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.ListFragment;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
@@ -74,26 +74,26 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	protected TextView driverEarnings;
 	protected ProgressBar pleaseWaitForDriverEarnings;
 	protected ImageView errorIcon;
-	protected Button navToStore;
-	protected Button settings;
-	protected Button hourlyPayButton;
+	protected View navToStore;
+	protected View settings;
+	protected View hourlyPayButton;
 	protected TextView helpBubble;
 	protected ViewGroup optimizeClickable;
 	protected ImageView optimizeIcon;
 	protected boolean isSwitchWageButton=false;
 	protected TextView optimizeText;
 	protected ViewGroup roundTripTimeArea;
-	protected Button makeADropButton;
+	protected View makeADropButton;
 	
 	HomeScreen_Utils util = new HomeScreen_Util();
 	protected HomeScreen_Util.HomeScreenRoutingListener routeTimeEstimateListener;
 	protected HomeScreen_Util.HomeScreenRoutingListener routeOptimizationListener;
-    private Button menuGpsNotesButton;
-    private Button menuShiftButton;
-    private Button menuSearchButton;
-    private Button orderSummaryButton;
+    private View menuGpsNotesButton;
+    private View menuShiftButton;
+    private View menuSearchButton;
+    private View orderSummaryButton;
     private View helpIcon;
-	private Button downloadMapsButton;
+	private View downloadMapsButton;
 
 	public HomeScreen_ListFragmentDragDrop() {
 		super();
@@ -455,17 +455,17 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
         driverEarnings = (TextView)view.findViewById(R.id.driverEarnings);
         pleaseWaitForDriverEarnings = (ProgressBar)view.findViewById(R.id.progressBarRoundTrip);
         errorIcon = (ImageView)view.findViewById(R.id.errorIcon);
-        navToStore = (Button)view.findViewById(R.id.navToStore);
-        settings = (Button)view.findViewById(R.id.settings);
-        hourlyPayButton = (Button)view.findViewById(R.id.clockOutAndBackup);
-        callStore = (Button)view.findViewById(R.id.callstoreButton);
-        smsStore = (Button)view.findViewById(R.id.smsStoreButton);
+        navToStore = view.findViewById(R.id.navToStore);
+        settings = view.findViewById(R.id.settings);
+        hourlyPayButton = view.findViewById(R.id.clockOutAndBackup);
+        callStore = view.findViewById(R.id.callstoreButton);
+        smsStore = view.findViewById(R.id.smsStoreButton);
 
-        downloadMapsButton      = (Button)noListAltView.findViewById(R.id.downloadMapClickListener);
-        menuGpsNotesButton      = (Button)noListAltView.findViewById(R.id.menuGpsNotesClickListener);
-        menuShiftButton         = (Button)noListAltView.findViewById(R.id.menuShiftClickListener);
-        menuSearchButton        = (Button)noListAltView.findViewById(R.id.menuSearchClickListener);
-        orderSummaryButton      = (Button)noListAltView.findViewById(R.id.orderSummaryClickable);//Not sure what this one dies
+        downloadMapsButton      =  noListAltView.findViewById(R.id.downloadMapClickListener);
+        menuGpsNotesButton      =  noListAltView.findViewById(R.id.menuGpsNotesClickListener);
+        menuShiftButton         =  noListAltView.findViewById(R.id.menuShiftClickListener);
+        menuSearchButton        =  noListAltView.findViewById(R.id.menuSearchClickListener);
+        orderSummaryButton      =  noListAltView.findViewById(R.id.orderSummaryClickable);//Not sure what this one dies
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
@@ -478,7 +478,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
         optimizeText = (TextView)view.findViewById(R.id.optimizeRouteText);
         roundTripTimeArea = (ViewGroup)view.findViewById(R.id.roundTripTimeArea);
         
-        makeADropButton = (Button)view.findViewById(R.id.makeADropButton);
+        makeADropButton = view.findViewById(R.id.makeADropButton);
 
 		orderListView = (DragSortListView)view.findViewById(android.R.id.list);
 	    
@@ -577,17 +577,18 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
   		String curWage = df.format(currentWage.wage);
   		final float inStoreRate = Tools.parseCurrency(sharedPreferences.getString("hourly_rate", "0"));
 
-        if (sharedPreferences.getBoolean("dual_wage", false) && onRoadWage.equalsIgnoreCase(curWage)){
+  		//TODO: Bring back when we have good hourly pay for now just alwayse set the visibility to gone
+        hourlyPayButton.setVisibility(View.GONE);
+  		/*if (sharedPreferences.getBoolean("dual_wage", false) && onRoadWage.equalsIgnoreCase(curWage)){
 			isSwitchWageButton=true;
 			hourlyPayButton.setVisibility(View.VISIBLE);
-			hourlyPayButton.setText(getString(R.string.Set_Pay_Rate_To)+" "+ Tools.getFormattedCurrency(inStoreRate));
+		//TODO:	hourlyPayButton.setText(getString(R.string.Set_Pay_Rate_To)+" "+ Tools.getFormattedCurrency(inStoreRate));
 		} else {
 			if (sharedPreferences.getBoolean("pay_rate_button", false)){
 				hourlyPayButton.setVisibility(View.VISIBLE);
 			} else {
 				hourlyPayButton.setVisibility(View.GONE);
 			}
-			hourlyPayButton.setText(getString(R.string.Time_clock));
 		}
         hourlyPayButton.setOnClickListener(new View.OnClickListener(){public void onClick(View v) {
         	if (isSwitchWageButton){
@@ -599,7 +600,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 				startActivity(intent);
         	}
 		}});
-		
+		*/
 		
 		
 		if (orders!=null && orders.size()>0){
@@ -764,8 +765,8 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	}
 
 	boolean[] listChoices = new boolean[7];
-	private Button callStore;
-	private Button smsStore;
+	private View callStore;
+	private View smsStore;
 	protected void showListConfigOptions() {
 		
 		

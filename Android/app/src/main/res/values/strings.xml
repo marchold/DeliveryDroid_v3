@@ -755,7 +755,7 @@
     <string name="undeliverable_mileagepay_summary">Check if you receive mileage pay for orders that are marked
         undeliverable
     </string>
-    <string name="Undeliverable_mileage_pay">Undeliverable Mileage Page</string>
+    <string name="Undeliverable_mileage_pay">Undeliverable Mileage Pay</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="map_downloads">Map Downloads</string>
     <string name="failed_to_get_good_gps">We failed to get good GPS coordinates for the address. Some features won\'t
@@ -768,12 +768,12 @@
     <string name="Invalid_address">Invalid address</string>
     <string name="delivery_droid_keeps_all_of_its_order_and_shift_data_a_database_called_deliverydata_sqlite_you_can_upload_a_copy_your_data_to_google_drive_for_backup">
         Delivery droid keeps all of its order and shift data a database called DeliveryData.SQLite. You can upload a
-        copy your data to Google Drive for backup
+        copy of your data to Google Drive for safe keeping
     </string>
     <string name="copy_database_nto_google_drive">Copy Database To Google Drive</string>
     <string name="restore_database_nfrom_google_drive">Restore Database From Google Drive</string>
     <string name="be_careful_with_the_restore_option_as_it_will_replace_your_current_data_with_the_backup_on_google_drive_thereby_deleting_whats_currently_on_the_phone">
-        Be careful with the restore option as it will replace your current data with the backup on google drive thereby
+        Be careful with the restore option as it will replace all the Delivery Droid data on your phone with a backup from Google Drive thereby
         deleting whats currently on the phone.
     </string>
 
@@ -808,6 +808,29 @@
     <string name="we_use_android_flow_layout_nmany_thanks_to_artem_votincev_ncopyright_c_2011_artem_votincev_apmem_org_nall_rights_reserved">
         We use android Flow Layout. Many thanks to Artem Votincev Copyright (c) 2011, Artem Votincev (apmem.org) All
         rights reserved.
+    </string>
+    <string name="automatically_download_maps_from_p2p_file_sharing_networks">Automatically download maps from p2p file
+        sharing networks.
+    </string>
+    <string name="download_them_to_your_computer_and_transfer_them_to_your_phone_over_usb">Download them to your
+        computer and transfer them to your phone over USB.
+    </string>
+    <string name="generate_them_yourself">Generate them yourself</string>
+    <string name="get_your_map_file">Get your map file</string>
+    <string name="map_bittorrent_desc">This is the recommended way of getting maps in the app. With this option you
+        download map files from other people and the maps on your phone are available for new users to download.
+    </string>
+    <string name="map_download_desc">Mapsforge maps are available for download from the maps forge download website. The
+        downloads are not reliable to a mobile device so its recommended you use a computer then copy the map files to
+        your phone with a usb cable.
+    </string>
+    <string name="map_create_desc">Its possible to create your own map file from Open Street Maps data. This is the most
+        complex method and is typically not necessary. Visit the Mapsforge github page for instructions on how to create
+        map files.
+    </string>
+    <string name="delivery_drd_dta_bkup">Delivery Droid Database Backup</string>
+    <string name="delivery_droid_now_uses_open_street_maps_you_must_download_a_mapsforge_map_to_view_a_visual_map_in_the_app">
+        Delivery droid now uses Open Street Maps. You must download a Mapsforge map to view a visual map in the app.
     </string>
 
 </resources>

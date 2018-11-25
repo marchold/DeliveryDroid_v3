@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,27 +14,7 @@
                     android:orientation="vertical"
                     android:padding="5dp">
 
-        <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
-                android:src="@drawable/icon"/>
 
-        <TextView
-                android:id="@+id/SpeechBubbleHelp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/imageView1"
-                android:layout_marginBottom="-15dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="-30dp"
-                android:layout_toLeftOf="@+id/imageView1"
-                android:background="@drawable/speech_bubble_7"
-                android:text="@string/set_store_address_help_bubble"
-                android:textColor="@color/black"/>
 
 
         <catglo.com.deliverydroid.widgets.RowLayout
@@ -45,66 +25,90 @@
                 android:layout_alignParentRight="true">
 
 
-            <Button android:id="@+id/downloadMapClickListener"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/map_download"
-                    android:text="@string/map_downloads"/>
+            <RelativeLayout android:id="@+id/downloadMapClickListener"
+                    style="@style/button_icon_container">
+                <ImageView android:src="@drawable/map_download"
+                           style="@style/button_icon_image"/>
+                <TextView android:text="@string/map_downloads"
+                        style="@style/button_icon_text"/>
+            </RelativeLayout>
 
 
-            <Button
-                    android:id="@+id/menuGpsNotesClickListener"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/gps_notes"
-                    android:text="@string/Gps_Notes"/>
+            <RelativeLayout android:id="@+id/menuGpsNotesClickListener"
+                            style="@style/button_icon_container">
+                <ImageView android:src="@drawable/gps_notes"
+                           style="@style/button_icon_image"/>
+                <TextView android:text="@string/Gps_Notes"
+                          style="@style/button_icon_text"/>
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/menuShiftClickListener"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/shift"
-                    android:text="@string/Shift"/>
 
-            <Button
-                    android:id="@+id/menuSearchClickListener"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/search"
-                    android:text="@string/Search_Notes_Or_Addresses"/>
+            <RelativeLayout android:id="@+id/menuShiftClickListener"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/shift" style="@style/button_icon_image"/>
+                <TextView android:text="@string/Shift"  style="@style/button_icon_text"/>
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/navToStore"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/navigate_small"
-                    android:text="@string/Nav_To_Store"/>
+            <RelativeLayout android:id="@+id/menuSearchClickListener"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/search" style="@style/button_icon_image"/>
+                <TextView android:text="@string/Search_Notes_Or_Addresses"  style="@style/button_icon_text"/>
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/clockOutAndBackup"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/stopwatch_money"
-                    android:text="@string/Time_clock"/>
+            <RelativeLayout android:id="@+id/navToStore"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/navigate_small" style="@style/button_icon_image"/>
+                <TextView android:text="@string/Nav_To_Store"  style="@style/button_icon_text"/>
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/settings"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/settings"
-                    android:text="@string/settings"/>
 
-            <Button
-                    android:id="@+id/callstoreButton"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/text_call"
-                    android:text="@string/call_store"/>
+            <RelativeLayout android:id="@+id/clockOutAndBackup"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/stopwatch_money" style="@style/button_icon_image"/>
+                <TextView android:text="@string/Time_clock"  style="@style/button_icon_text"/>
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/smsStoreButton"
-                    style="@style/home_screen_extra_button"
-                    android:drawableTop="@drawable/text_message"
-                    android:text="@string/sms_store"/>
+            <RelativeLayout android:id="@+id/settings"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/settings" style="@style/button_icon_image"/>
+                <TextView android:text="@string/settings"  style="@style/button_icon_text"/>
+            </RelativeLayout>
 
-            <Button
-                    android:id="@+id/makeADropButton"
-                    style="@style/home_screen_extra_button"
-                    android:drawableLeft="@drawable/error_icon"
-                    android:drawableTop="@drawable/icon_drops"
-                    android:text="@string/Make_a_Drop"/>
+
+            <RelativeLayout android:id="@+id/callstoreButton"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/text_call" style="@style/button_icon_image"/>
+                <TextView android:text="@string/call_store"  style="@style/button_icon_text"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/smsStoreButton"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/text_message" style="@style/button_icon_image"/>
+                <TextView android:text="@string/sms_store"  style="@style/button_icon_text"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:id="@+id/makeADropButton"  style="@style/button_icon_container">
+                <ImageView android:src="@drawable/icon_drops" style="@style/button_icon_image"/>
+                <TextView android:text="@string/Make_a_Drop"  style="@style/button_icon_text"/>
+            </RelativeLayout>
+
+            <RelativeLayout android:layout_width="300dp" android:layout_height="130dp">
+                <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/icon"/>
+
+                <TextView
+                        android:id="@+id/SpeechBubbleHelp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/imageView1"
+                        android:layout_marginBottom="-15dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="-30dp"
+                        android:layout_toLeftOf="@+id/imageView1"
+                        android:background="@drawable/speech_bubble_7"
+                        android:text="@string/set_store_address_help_bubble"
+                        android:textColor="@color/black"/>
+
+            </RelativeLayout>
 
         </catglo.com.deliverydroid.widgets.RowLayout>
 
@@ -112,4 +116,4 @@
     </RelativeLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,31 +4,23 @@ package catglo.com.deliverydroid.backup
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import catglo.com.deliveryDatabase.DataBase
+import androidx.appcompat.app.AppCompatActivity
 import catglo.com.deliverydroid.BuildConfig
 import catglo.com.deliverydroid.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.Scope
 import com.google.android.gms.drive.*
 import com.google.android.gms.drive.events.OpenFileCallback
-import com.google.android.gms.drive.query.Filters
-import com.google.android.gms.drive.query.SearchableField
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
 import kotlinx.android.synthetic.main.backup_to_google_drive_activity.*
 import java.io.*
-import java.lang.Exception
 
 class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
     private var mDriveClient: DriveClient? = null
@@ -51,7 +43,7 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         backup?.setOnClickListener { saveFileToDrive() }
         restore?.setOnClickListener { restoreBackup() }
 
-        contentLoadingProgressBar.show()
+    //    contentLoadingProgressBar.show()
         backup.visibility = View.GONE
         restore.visibility = View.GONE
     }
@@ -94,7 +86,7 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
 
             val metadataChangeSet = MetadataChangeSet.Builder()
                 .setMimeType("delivery/mysql")
-                .setTitle("Delivery Droid Database Backup")
+                .setTitle(getString(R.string.delivery_drd_dta_bkup))
                 .build()
             // Set up options to configure and display the create file activity.
             val createFileActivityOptions = CreateFileActivityOptions.Builder()
@@ -119,7 +111,7 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        contentLoadingProgressBar.hide()
+  //      contentLoadingProgressBar.hide()
         backup.visibility = View.VISIBLE
         restore.visibility = View.VISIBLE
         when (requestCode) {

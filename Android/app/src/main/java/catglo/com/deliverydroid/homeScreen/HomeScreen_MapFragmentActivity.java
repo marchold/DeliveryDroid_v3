@@ -11,7 +11,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -42,28 +41,21 @@ import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.*;
 
-import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.core.util.Utils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidPreferences;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.overlay.Marker;
-import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.IMapViewPosition;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.reader.header.MapFileException;
-import org.mapsforge.map.util.MapPositionUtil;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.floor;
-import static java.lang.Math.log;
 import static java.lang.Math.min;
 import static java.lang.StrictMath.abs;
 import static org.mapsforge.core.util.MercatorProjection.latitudeToPixelY;
@@ -186,24 +178,24 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
-        setContentView(R.layout.my_map_activity);
+      //  getSupportActionBar().hide();
+        setContentView(R.layout.home_screen_map_fragment);
         if (dataBase == null) {
         	dataBase = new DataBase(getApplicationContext());
         	dataBase.open();
         }
     	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	mapView = (MapView) findViewById(R.id.mapview);
+    	mapView = findViewById(R.id.mapview);
     	noMapView = findViewById(R.id.noMapView);
     	downloadMapButton = findViewById(R.id.downloadMapClickListener);
 
-        roundTripTime = (TextView)findViewById(R.id.roundTripTime);
-    	driverEarnings = (TextView)findViewById(R.id.driverEarnings);
+        roundTripTime = findViewById(R.id.roundTripTime);
+    	driverEarnings = findViewById(R.id.driverEarnings);
         //prefEditor = sharedPreferences.edit();
         optimizeClickable = (ViewGroup)findViewById(R.id.optimizeClickable);
-        optimizeIcon = (ImageView)findViewById(R.id.optimizeIcon);
+        optimizeIcon = findViewById(R.id.optimizeIcon);
         optimizeText = (TextView)findViewById(R.id.optimizeRouteText);
-       
+
         pleaseWaitForDriverEarnings = (ProgressBar)findViewById(R.id.progressBarRoundTrip);
         errorIcon = (ImageView)findViewById(R.id.errorIcon);
         

@@ -2,9 +2,8 @@ package catglo.com.deliverydroid;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 

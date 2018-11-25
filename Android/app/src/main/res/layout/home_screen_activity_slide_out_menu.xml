@@ -5,58 +5,59 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-    <catglo.com.deliverydroid.widgets.FlowLayout
+    <LinearLayout android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="#A000">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/settings"
-            android:text="@string/settings" />
+            android:text="@string/settings"
+            app:icon="@drawable/settings"
+        />
 
-        <Button
-            android:id="@+id/navigate_menu_button"
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/navigate_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/navigate_small"
+                app:icon="@drawable/navigate_small"
             android:text="@string/Nav_To_Store" />
 
-        <Button
-            android:id="@+id/gps_notes_menu_button"
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/gps_notes_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/gps_notes"
+                app:icon="@drawable/gps_notes"
             android:text="@string/Gps_Notes" />
 
-        <Button
-            android:id="@+id/shift_menu_button"
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/shift_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/shift"
+                app:icon="@drawable/shift"
             android:text="@string/Shift" />
 
-        <Button
-            android:id="@+id/search_menu_button"
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/search_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/search"
+                app:icon="@drawable/search"
             android:text="@string/Search_Notes_Or_Addresses" />
 
-        <Button
-            android:id="@+id/customize_list_menu_button"
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/customize_list_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/customize_list"
+                app:icon="@drawable/customize_list"
             android:text="@string/Customize_List_View" />
-        
-         <Button
-             android:id="@+id/call_store_menu_button"
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/call_store_menu_button"
              style="@style/slide_out_menu_button"
-             android:drawableTop="@drawable/text_call_small"
+                app:icon="@drawable/text_call_small"
              android:text="@string/call_store" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/map_downloads"
                 style="@style/slide_out_menu_button"
-                android:drawableTop="@drawable/map_download"
+                app:icon="@drawable/map_download"
                 android:text="@string/map_downloads" />
          
-    </catglo.com.deliverydroid.widgets.FlowLayout>
+    </LinearLayout>
 </FrameLayout>

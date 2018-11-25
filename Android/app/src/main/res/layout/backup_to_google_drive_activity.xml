@@ -5,7 +5,7 @@
               android:orientation="vertical"
               tools:context=".backup.GoogleDriveBackupRestoreActivity">
 
-    <android.support.v4.widget.ContentLoadingProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:id="@+id/contentLoadingProgressBar"
             android:layout_width="match_parent"

@@ -14,10 +14,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +26,10 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
+import androidx.core.app.ActivityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import catglo.com.deliveryDatabase.StreetList;
 import catglo.com.deliveryDatabase.ZipCode;
 import catglo.com.deliverydroid.*;
@@ -367,6 +367,8 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
             } else {
                 String onRoadRateString = sharedPreferences.getString("hourly_rate_on_road", "");
 
+                //This switch wage on out the door feature is currently defunct
+				//The dual wage and wage tracking in general should be re-visited
                 if (sharedPreferences.getBoolean("switch_on_out_the_door", false)){
                     float onRoadRate = Tools.parseCurrency(onRoadRateString);
                     dataBase.setWage(onRoadRate, dataBase.getShift(dataBase.getCurShift()), DateTime.now());

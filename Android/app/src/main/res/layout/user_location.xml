@@ -18,7 +18,7 @@
 <TextView android:text="Enter the store's zip code. Then a list of street names near the store will download." android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 </TableRow>
 <TableRow android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
-<android.support.v7.widget.AppCompatAutoCompleteTextView android:hint="Store Address" android:id="@+id/storeAddress" android:layout_width="230dip" android:layout_height="wrap_content"/>
+<androidx.appcompat.widget.AppCompatAutoCompleteTextView android:hint="Store Address" android:id="@+id/storeAddress" android:layout_width="230dip" android:layout_height="wrap_content"/>
 <ImageButton android:id="@+id/look_up_store_address" android:scaleType="fitXY"  android:src="@android:drawable/ic_menu_search" android:layout_width="50dip" android:layout_height="48dip"/>
 </TableRow>
 

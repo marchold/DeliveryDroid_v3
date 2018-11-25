@@ -3,7 +3,6 @@ package catglo.com.deliverydroid.widgets;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -13,6 +12,7 @@ import android.widget.ArrayAdapter;
 
 import android.widget.Filterable;
 import android.widget.ListAdapter;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import catglo.com.deliveryDatabase.AddressHistorySuggester;
 import catglo.com.deliveryDatabase.AddressHistorySuggester.AddressResultListener;
 import catglo.com.deliveryDatabase.AddressInfo;

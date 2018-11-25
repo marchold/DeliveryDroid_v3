@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
             android:layout_alignParentTop="true"
             android:id="@+id/topToolbar"
             android:layout_width="match_parent"
@@ -22,9 +22,9 @@
             <include layout="@layout/out_the_door_top_buttons"/>
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
             android:layout_below="@id/topToolbar"
             android:id="@+id/pager"
             android:layout_width="match_parent"

@@ -4,8 +4,7 @@ import android.app.backup.BackupManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import catglo.com.deliveryDatabase.DataBase;
 
 
@@ -31,34 +30,24 @@ public class DeliveryDroidBaseActivity extends AppCompatActivity implements Tool
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		if (getSupportActionBar()!=null) getSupportActionBar().hide();
+		if (getActionBar()!=null) getActionBar().hide();
         dataBase = tools.create(this);
-
-
     	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-  
     }
 	
 	 @Override
 	  public void onStart() {
 	    super.onStart();
-
-
-	 //   EasyTracker.getInstance(this).activityStart(this);  // Add this method.
 	  }
 
 	  @Override
 	  public void onStop() {
 	    super.onStop();
-	    
-	   // EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	  }
 	  
 	
     @Override
 	protected void onResume() {
-		//dataBase.open();
 		super.onResume();
 		
 		BackupManager b = new BackupManager(this);
@@ -72,6 +61,7 @@ public class DeliveryDroidBaseActivity extends AppCompatActivity implements Tool
 		//dataBase.close();
 		super.onPause();
 	}
+
 
 
    

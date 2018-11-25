@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="catglo.com.deliverydroid">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -19,15 +20,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="@string/maps_API_KEY"/>
-
         <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version"/>
-
         <meta-data
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="ocr"/>
@@ -95,7 +93,7 @@
                 android:theme="@style/AppTheme"/>
         <!-- <activity android:name=".Settings_DropPrefsActivity" /> -->
 
-        <activity android:name=".shift.ShiftStartEndActivity"/>
+        <activity android:name=".shift.ShiftStartEndActivity"  android:theme="@style/AppTheme"/>
         <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
         <activity
                 android:name=".settings.SettingsListOptions"
@@ -149,9 +147,6 @@
                 android:exported="false"
                 android:label="@string/app_name"/>
 
-
-
-
         <activity
                 android:name=".settings.SettingsStoreAddressActivity"
                 android:exported="false"
@@ -164,6 +159,12 @@
         </activity>
         <activity android:name=".homeScreen.DownloadMapActivity">
         </activity>
+
+        <service
+                android:name="catglo.com.MapFileSharingService"
+                android:enabled="true"
+                android:exported="false">
+        </service>
     </application>
 
 </manifest>

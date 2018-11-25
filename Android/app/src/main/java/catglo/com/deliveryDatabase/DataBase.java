@@ -2368,7 +2368,6 @@ public class DataBase extends Object  {
             e.printStackTrace();
         }
         init.put("rate", rate);
-        db.insertOrThrow("hours_worked", null, init);
 
         dataDidJustChange();
     }}
@@ -3145,59 +3144,6 @@ public class DataBase extends Object  {
         return wage;
     }}
 
-    /*
-        public ArrayList<Wage> wageTransitionsForShift(Shift shift) {synchronized (DataBase.class){
-            ArrayList<Wage> wages = new ArrayList<Wage>();
-            Cursor c;
-
-            Shift lastShift = getShift(shift.primaryKey-1);
-            MutableDateTime timeOfFirstOrderThisShift = new MutableDateTime(firstOrderTimeForShift(shift.primaryKey));
-            MutableDateTime timeOfLastOrderLastShift = new MutableDateTime(lastOrderTimeForShift(shift.primaryKey-1));
-
-            MutableDateTime start;
-            if (lastShift.endTime.isAfter(timeOfLastOrderLastShift) && lastShift.endTime.isBefore(timeOfFirstOrderThisShift)){
-                start = lastShift.endTime;
-            } else {
-                start = timeOfLastOrderLastShift;
-            }
-
-
-            String query;
-            Log.i("CURSOR","TodaysShiftCount"+TodaysShiftCount+"<shift.primaryKey "+shift.primaryKey);
-
-            if (TodaysShiftCount>shift.primaryKey){
-
-                MutableDateTime firstOrderNextShift = new MutableDateTime(firstOrderTimeForShift(shift.primaryKey+1));
-                MutableDateTime lastOtderThisShift =  new MutableDateTime(lastOrderTimeForShift(shift.primaryKey));
-                MutableDateTime end;
-                if (shift.endTime.isAfter(lastOtderThisShift) && shift.endTime.isBefore(firstOrderNextShift)){
-                    end = shift.endTime;
-                } else {
-                    end = firstOrderNextShift;
-                }
-
-                query = "SELECT * FROM `hours_worked` WHERE `start` > '"+GetDateString(start)+"'  AND  `start` < '"+GetDateString(end)+"' ORDER BY `start` DESC ";
-            } else {
-                query = "SELECT * FROM `hours_worked` WHERE `start` > '"+GetDateString(start)+"'  ORDER BY `start` DESC ";
-            }
-            Log.i("CURSOR",query);
-            c = db.rawQuery(query, null);
-            if (c != null){
-                if (c.moveToFirst()){
-                    do {
-                        Wage wage = new Wage();
-                        wage.wage = Float.parseFloat(c.getString(c.getColumnIndex("rate")));
-                        wage.id = c.getLong(c.getColumnIndex("ID"));
-                        wage.startTime = new DateTime(Order.GetTimeFromString(c.getString(c.getColumnIndex("start"))));
-                        wages.add(wage);
-                    } while (c.moveToNext());
-                }
-                c.close();
-            }
-
-            return wages;
-        }}
-        */
     public ArrayList<Wage> wageTransitionsForShift(Shift shift) {synchronized (DataBase.class){
         ArrayList<Wage> wages = new ArrayList<Wage>();
         Cursor c;

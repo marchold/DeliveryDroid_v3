@@ -7,23 +7,21 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+
 import android.view.View;
 
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.R;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
-                                 implements ActionBar.TabListener,
+                                 implements androidx.appcompat.app.ActionBar.TabListener,
                                             ButtonPadFragment.ButtonPadNextListener {
 
 
@@ -36,13 +34,15 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onNextButtonPressed() {
-        int i = getSupportActionBar().getSelectedNavigationIndex();
+        int i = getActionBar().getSelectedNavigationIndex();
         try {
-            getSupportActionBar().selectTab(getSupportActionBar().getTabAt(i+1));
+            getActionBar().selectTab(getActionBar().getTabAt(i+1));
         } catch (IndexOutOfBoundsException e){
             //TODO: maybe focus whatever seems like the next logical thing in the last screen frag on tablet
         }
     }
+
+
 
     public enum Pages {
         number,price,phone,address,time,order;
@@ -81,8 +81,8 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
 
 
         // Set up the action bar.
-        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        final androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(androidx.appcompat.app.ActionBar.NAVIGATION_MODE_TABS);
 
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -109,20 +109,20 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
         }
     }
 
-
-
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabSelected(androidx.appcompat.app.ActionBar.Tab tab, androidx.fragment.app.FragmentTransaction ft) {
         int position = tab.getPosition();
         viewPager.setCurrentItem(position);
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabUnselected(androidx.appcompat.app.ActionBar.Tab tab, androidx.fragment.app.FragmentTransaction ft) {
+
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabReselected(androidx.appcompat.app.ActionBar.Tab tab, androidx.fragment.app.FragmentTransaction ft) {
+
     }
 
     public int getFragmentIndex(Pages fragmentPage){
@@ -147,14 +147,11 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
         return (DataAwareFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + index);
     }
 
-    /**
-     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/viewPagerPages.
-     */
+
     static public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         ArrayList<Pages> viewPagerPages;
-        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Pages> viewPagerPages) {
+        public SectionsPagerAdapter(androidx.fragment.app.FragmentManager fm, ArrayList<Pages> viewPagerPages) {
             super(fm);
             this.viewPagerPages = viewPagerPages;
 

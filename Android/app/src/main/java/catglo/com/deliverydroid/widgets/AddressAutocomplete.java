@@ -2,7 +2,6 @@ package catglo.com.deliverydroid.widgets;
 
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -10,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
 
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import catglo.com.api.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
