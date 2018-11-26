@@ -17,13 +17,11 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import catglo.com.deliveryDatabase.*;
 import catglo.com.deliveryDatabase.TipTotalData.PayRatePieriod;
 import catglo.com.deliverydroid.BuildConfig;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.backup.TableValues;
 
 
@@ -2605,7 +2603,7 @@ public class DataBase extends Object  {
                 }
 
                 float  cost = c.getFloat(costCol);
-                String costString = Tools.getFormattedCurrency(cost);
+                String costString = Utils.getFormattedCurrency(cost);
 
                 float paymentSplit = c.getFloat(payment2Col);
                 float payed = c.getFloat(paymentCol);
@@ -2619,15 +2617,15 @@ public class DataBase extends Object  {
                 String tipString;
                 if (paymentSplit>0){
                     paymentAmountString =
-                            Tools.getFormattedCurrency(payed)
-                                    +" + "+ Tools.getFormattedCurrency(paymentSplit)
-                                    +" = "+ Tools.getFormattedCurrency(paymentSplit + payed);
+                            Utils.getFormattedCurrency(payed)
+                                    +" + "+ Utils.getFormattedCurrency(paymentSplit)
+                                    +" = "+ Utils.getFormattedCurrency(paymentSplit + payed);
 
                     Log.i("MARC","payment type = "+paymentType);
                     paymentTypeString = paymentTypeString(paymentType)
                             +" & "+   paymentTypeString(paymentTypeSplit);
 
-                    tipString = Tools.getFormattedCurrency(payed + paymentSplit - cost);
+                    tipString = Utils.getFormattedCurrency(payed + paymentSplit - cost);
 
                 } else {
                     if (isUndeliverable){
@@ -2640,8 +2638,8 @@ public class DataBase extends Object  {
                         tipString = "";
                         paymentTypeString   = context.getString(R.string.undelivered);
                     } else {
-                        tipString = Tools.getFormattedCurrency(payed - cost);
-                        paymentAmountString =  Tools.getFormattedCurrency(payed);
+                        tipString = Utils.getFormattedCurrency(payed - cost);
+                        paymentAmountString =  Utils.getFormattedCurrency(payed);
                         if (paymentType>=0) {
                             paymentTypeString = paymentTypeString(paymentType);
                         } else {
@@ -2660,7 +2658,7 @@ public class DataBase extends Object  {
                 }
                 if (extraPay>0){
                     sb.append(context.getResources().getString(R.string.Extra_Pay));
-                    sb.append(":"+ Tools.getFormattedCurrency(extraPay));
+                    sb.append(":"+ Utils.getFormattedCurrency(extraPay));
                     sb.append("  ");
                 }
 
@@ -2671,7 +2669,7 @@ public class DataBase extends Object  {
                 }
 
                 if (extraPay>0){
-                    sb.append("Extra Pay:"+ Tools.getFormattedCurrency(extraPay));
+                    sb.append("Extra Pay:"+ Utils.getFormattedCurrency(extraPay));
                 }
 
                 String otherString = sb.toString();
@@ -3071,7 +3069,7 @@ public class DataBase extends Object  {
                 do {
                     String wage = c.getString(0);
                     try {
-                        wage = catglo.com.deliverydroid.Tools.getFormattedCurrency(Tools.parseCurrency(wage));
+                        wage = Utils.getFormattedCurrency(Utils.parseCurrency(wage));
                     } catch (Exception e){
                         e.printStackTrace();
                     }

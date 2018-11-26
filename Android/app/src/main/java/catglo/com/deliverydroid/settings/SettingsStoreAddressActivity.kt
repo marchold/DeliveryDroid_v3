@@ -43,7 +43,7 @@ import org.mapsforge.map.reader.MapFile
 import java.io.IOException
 import java.util.*
 import java.util.regex.Pattern
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 
 class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
     GoogleAddressSuggester.AddressListListener {
@@ -95,7 +95,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
         autocomplete!!.setSelectAllOnFocus(true)
         autocomplete!!.setText(storeAddress)
         save!!.setOnClickListener {
-            Tools.appendLog("\nSaving Store Address $storeAddressLat,$storeAddressLng")
+            Utils.appendLog("\nSaving Store Address $storeAddressLat,$storeAddressLng")
 
 
             if (storeAddressLat == 0.0 || storeAddressLng == 0.0 || storeAddressLat > 360 || storeAddressLng > 360) {
@@ -105,10 +105,10 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
                     .setMessage(R.string.failed_to_get_good_gps)
                     .setPositiveButton("Try Again") { dialog, which ->
                         //Do nothing
-                        Tools.appendLog(" Selected Dialog Try Again ")
+                        Utils.appendLog(" Selected Dialog Try Again ")
                     }
                     .setNegativeButton("Ignore") { dialog, which ->
-                        Tools.appendLog(" Selected Dialog Ignore ")
+                        Utils.appendLog(" Selected Dialog Ignore ")
 
                         saveAndExit()
                     }
@@ -119,7 +119,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
         }
         cancel!!.setOnClickListener { finish() }
         lookUpGps!!.setOnClickListener {
-            Tools.appendLog("\nLooking up GPS coordinates")
+            Utils.appendLog("\nLooking up GPS coordinates")
 
             if (locationAccuracyInMeters == 0f) {
                 synchronized(this@SettingsStoreAddressActivity) {
@@ -128,7 +128,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
                     progressDialog!!.setCancelable(true)
                     progressDialog!!.setOnCancelListener {
                         synchronized(this@SettingsStoreAddressActivity) {
-                            Tools.appendLog("    Dialog cancled")
+                            Utils.appendLog("    Dialog cancled")
                             progressDialog = null
                         }
                     }
@@ -169,7 +169,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
         prefEditor.putString("centrPoint_lng_s", "" + storeAddressLng)
         prefEditor.apply()
         finish()
-        Tools.appendLog("Saved Store Address $storeAddressLat,$storeAddressLng")
+        Utils.appendLog("Saved Store Address $storeAddressLat,$storeAddressLng")
 
 
     }
@@ -204,7 +204,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
 
     override fun commit(addressList: ArrayList<AddressInfo>, searchString: String) {
         if (addressList.size >0){
-//            Tools.appendLog("Got geocoded "+searchString);
+//            Utils.appendLog("Got geocoded "+searchString);
             val geocoder = Geocoder(this)
             try {
                 val lm = getSystemService(Activity.LOCATION_SERVICE) as LocationManager
@@ -232,7 +232,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
 
             centerMapToAddress(addressList[0]);
         } else {
-            Tools.appendLog("Empty address list for geocode attempt");
+            Utils.appendLog("Empty address list for geocode attempt");
         }
     }
 
@@ -245,7 +245,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
             storeAddressLng = addressInfo.location!!.lng
             centerMapAndSetStoreAddressOverlay()
         } else {
-            Tools.appendLog("NULL ADDRESS INFO")
+            Utils.appendLog("NULL ADDRESS INFO")
         }
     }
 
@@ -365,9 +365,9 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
             useCurrentCoordinates()
             progressDialog!!.dismiss()
             progressDialog = null
-            Tools.appendLog("   dismiss dialog because we got the data we needed")
+            Utils.appendLog("   dismiss dialog because we got the data we needed")
         }
-        Tools.appendLog("   onLocationChanged $currentLatitude,$currentLongitude")
+        Utils.appendLog("   onLocationChanged $currentLatitude,$currentLongitude")
         Log.i("MAP", "Location changed accurate to meters $locationAccuracyInMeters")
     }
 

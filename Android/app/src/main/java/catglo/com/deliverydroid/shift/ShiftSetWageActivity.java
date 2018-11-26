@@ -69,7 +69,7 @@ public class ShiftSetWageActivity extends DeliveryDroidBaseActionBarActivity imp
 				
 				String wageString = wagePad.edit.getEditableText().toString();
 				if (wageString.length()>0){
-					float wage = Tools.parseCurrency(wageString);
+					float wage = Utils.parseCurrency(wageString);
 					DecimalFormat df = new DecimalFormat("#.##");
 					
 					if (dataBase.isTodaysShift(shift)){

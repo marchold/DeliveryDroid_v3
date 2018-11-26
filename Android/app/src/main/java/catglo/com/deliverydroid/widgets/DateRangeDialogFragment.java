@@ -82,7 +82,7 @@ public class DateRangeDialogFragment extends DialogFragment {
 	        		
 	        		dialog.dismiss();
 	        		
-	        		activity.tools.onDateRangeDialogClosed(start, stop);
+	        		activity.getTools().onDateRangeDialogClosed(start, stop);
 	        	}else {
 	        		showEnd();
 	        	}

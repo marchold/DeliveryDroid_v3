@@ -15,7 +15,7 @@ import android.widget.TimePicker;
 
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 
 
 import org.joda.time.DateTime;
@@ -53,7 +53,7 @@ public class TimeFragment extends DataAwareFragment implements TimePicker.OnTime
 
         time = new MutableDateTime(((NewOrderActivity)getActivity()).order.time.getTime());
 
-        timeLabel.setText(Tools.getFormattedTimeDay(time.toGregorianCalendar()));
+        timeLabel.setText(Utils.getFormattedTimeDay(time.toGregorianCalendar()));
 
         nextButton.setOnClickListener(new View.OnClickListener() { public void onClick(final View v) {
             ((ButtonPadFragment.ButtonPadNextListener)getActivity()).onNextButtonPressed();
@@ -167,7 +167,7 @@ public class TimeFragment extends DataAwareFragment implements TimePicker.OnTime
             DataAwareFragment lastScreenFragment = (DataAwareFragment)  activity.getFragment(NewOrderActivity.Pages.order);
             if (lastScreenFragment!=null) lastScreenFragment.onDataChanged();
         }
-        timeLabel.setText(Tools.getFormattedTimeDay(time.toGregorianCalendar()));
+        timeLabel.setText(Utils.getFormattedTimeDay(time.toGregorianCalendar()));
         inMinutes.setText("In "+Minutes.minutesBetween(DateTime.now(),time).getMinutes()+" minutes");
 
     }

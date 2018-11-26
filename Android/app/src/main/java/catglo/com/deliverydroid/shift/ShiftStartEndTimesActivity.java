@@ -1,30 +1,13 @@
 package catglo.com.deliverydroid.shift;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.app.DialogFragment;
-import android.text.InputType;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 
 import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
-import org.joda.time.DateTime;
-import org.joda.time.Hours;
-import org.joda.time.Minutes;
-import org.joda.time.MutableDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
@@ -104,7 +87,7 @@ public class ShiftStartEndTimesActivity extends DeliveryDroidBaseActivity {
 			count++;
 			View row = View.inflate(getApplicationContext(), R.layout.activity_shift_start_end_times_payment_rate_row, null);
 			final TextView payRate = (TextView)row.findViewById(R.id.rate);
-			payRate.setText(Tools.getFormattedCurrency(wage.wage));
+			payRate.setText(Utils.getFormattedCurrency(wage.wage));
 			final TextView howLongAgo = (TextView)row.findViewById(R.id.date);
 			
 			Minutes minutesAgo = Minutes.minutesBetween(wage.startTime,now);
@@ -144,7 +127,7 @@ public class ShiftStartEndTimesActivity extends DeliveryDroidBaseActivity {
 				        alertDialogBuilder.setMessage(getString(R.string.Change_pay_rate_starting_at)+" "+wage.startTime.getHourOfDay()+":"+wage.startTime.getMinuteOfHour()+" ("+minutesAgo.getMinutes()+" "+getString(R.string.minutes_ago)+")");
 				        
 				        final EditText rateInput = new EditText(getApplicationContext());
-				        rateInput.setText(Tools.getFormattedCurrency(wage.wage));
+				        rateInput.setText(Utils.getFormattedCurrency(wage.wage));
 				        rateInput.setInputType(InputType.TYPE_CLASS_NUMBER);
 				        
 				        alertDialogBuilder.setView(rateInput);

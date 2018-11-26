@@ -14,65 +14,14 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
-        <TextView
-                android:layout_margin="10dp"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/get_your_map_file"/>
+        <androidx.appcompat.widget.Toolbar
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                                           android:layout_height="55dp">
 
-        <RadioGroup android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:id="@+id/mapDownloadRadioGroup">
-            <RadioButton
-                    android:id="@+id/automaticDownloadRadio"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/automatically_download_maps_from_p2p_file_sharing_networks"/>
+        </androidx.appcompat.widget.Toolbar>
 
-            <RadioButton
-                    android:id="@+id/manualDownloadRadio"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/download_them_to_your_computer_and_transfer_them_to_your_phone_over_usb"/>
-
-
-            <RadioButton
-                    android:id="@+id/generateMapRadio"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/generate_them_yourself"/>
-
-        </RadioGroup>
-
-
-
-        <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                style="@style/Widget.MaterialComponents.TabLayout"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-
-            <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Downloaded Maps"/>
-
-            <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Available Maps"/>
-
-        </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_margin="10dp"
@@ -80,14 +29,7 @@
                 android:id="@+id/downloadedMapList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:layout_margin="10dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:id="@+id/downloadableMapList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
+        
         <RelativeLayout
                 android:id="@+id/helpView"
                 android:layout_width="wrap_content" android:layout_height="match_parent">

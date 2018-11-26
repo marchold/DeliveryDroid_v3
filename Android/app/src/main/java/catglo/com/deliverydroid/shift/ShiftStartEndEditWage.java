@@ -12,7 +12,7 @@ import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 
 
 public class ShiftStartEndEditWage extends DeliveryDroidBaseActivity {
@@ -50,9 +50,9 @@ public class ShiftStartEndEditWage extends DeliveryDroidBaseActivity {
 	public void onResume(){
 		super.onResume();
 		
-		shift = dataBase.getShift(whichShift);
-		wage = dataBase.getWage(whichWage);
-		saveShiftTime = dataBase.isWageFirstInShift(wage,shift);
+		shift = getDataBase().getShift(whichShift);
+		wage = getDataBase().getWage(whichWage);
+		saveShiftTime = getDataBase().isWageFirstInShift(wage,shift);
 		
 		
 		timePicker.setCurrentHour(wage.startTime.getHourOfDay());
@@ -60,7 +60,7 @@ public class ShiftStartEndEditWage extends DeliveryDroidBaseActivity {
 		
 		//TODO: Check the next wage transition and if it exists don't let the time picker scroll past it.
 		
-		payRate.setText(Tools.getFormattedCurrency(wage.wage));
+		payRate.setText(Utils.getFormattedCurrency(wage.wage));
 		
 	//	if (saveShiftTime){
 		deleteButton.setVisibility(View.INVISIBLE);
@@ -94,15 +94,15 @@ public class ShiftStartEndEditWage extends DeliveryDroidBaseActivity {
 	@Override
 	public void onPause(){
 		
-		wage.wage = Tools.parseCurrency(payRate.getText().toString());
+		wage.wage = Utils.parseCurrency(payRate.getText().toString());
 	
 		wage.startTime.setHourOfDay(timePicker.getCurrentHour());
 		wage.startTime.setMinuteOfHour(timePicker.getCurrentMinute());
-		dataBase.saveWage(wage, shift);
+		getDataBase().saveWage(wage, shift);
 		
 		if (saveShiftTime){
 			shift.startTime = wage.startTime;
-			dataBase.saveShift(shift);
+			getDataBase().saveShift(shift);
 		}
 		
 		super.onPause();

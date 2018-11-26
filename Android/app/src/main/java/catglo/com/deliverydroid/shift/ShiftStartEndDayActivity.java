@@ -12,12 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Shift;
 import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.widgets.MyScrollView;
 import catglo.com.deliverydroid.widgets.MyScrollView.ScrollViewListener;
 import org.joda.time.Hours;
@@ -79,16 +78,16 @@ public class ShiftStartEndDayActivity extends DeliveryDroidBaseActivity {
 	}
 	
 	private void updateUI(){
-		shift = dataBase.getShift(whichShift);
+		shift = getDataBase().getShift(whichShift);
 
-		todaysWageTransitions = dataBase.wageTransitionsForShift(shift);
+		todaysWageTransitions = getDataBase().wageTransitionsForShift(shift);
 		Collections.sort(todaysWageTransitions,new Comparator<Wage>(){public int compare(Wage lhs, Wage rhs) {
 			return lhs.startTime.compareTo(rhs.startTime);
 		}});
 		
 		//We need to determine the range of hours to show. Starting at the shift start time (or the first order time if the shift start time is zero)
 		//If the shift start time is after the first order time for the shift use the first order time
-		MutableDateTime fisrtOrderTime = dataBase.firstOrderTimeForShift(whichShift);
+		MutableDateTime fisrtOrderTime = getDataBase().firstOrderTimeForShift(whichShift);
 		MutableDateTime calendarStart;
 		if (fisrtOrderTime != null && (shift.startTime.isBefore(600000000) || fisrtOrderTime.isBefore(shift.startTime))){
 			calendarStart = new MutableDateTime(fisrtOrderTime);
@@ -109,7 +108,7 @@ public class ShiftStartEndDayActivity extends DeliveryDroidBaseActivity {
 		}
 		
 		MutableDateTime calendarEnd = new MutableDateTime(shift.endTime);
-		MutableDateTime lastOrderTime = dataBase.lastOrderTimeForShift(whichShift);
+		MutableDateTime lastOrderTime = getDataBase().lastOrderTimeForShift(whichShift);
 		MutableDateTime lastWageTransition = null;
 		MutableDateTime shiftEndGuess;
 		if (todaysWageTransitions.size()>=1){
@@ -213,7 +212,7 @@ public class ShiftStartEndDayActivity extends DeliveryDroidBaseActivity {
 			
 			Minutes bottomMin;
 			
-			if (dataBase.isTodaysShift(shift)){
+			if (getDataBase().isTodaysShift(shift)){
 				if (todaysWageTransitions.size()==i){
 					//If its the last wage transition the shift end goes to now
 					bottomMin = Minutes.minutesBetween( calendarStart,shiftEndGuess);
@@ -250,7 +249,7 @@ public class ShiftStartEndDayActivity extends DeliveryDroidBaseActivity {
 			wageRangeOverlay.setLayoutParams(lp);
 			
 			TextView overlayLabel = (TextView)wageRangeOverlay.findViewById(R.id.textView1);
-			overlayLabel.setText(Tools.getFormattedCurrency(wage.wage)+getString(R.string.Per_Hour));
+			overlayLabel.setText(Utils.getFormattedCurrency(wage.wage)+getString(R.string.Per_Hour));
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			if ((i&1)==1){
 				wageRangeOverlay.setBackgroundColor(getResources().getColor(R.color.pay_range_1));
@@ -356,7 +355,7 @@ public class ShiftStartEndDayActivity extends DeliveryDroidBaseActivity {
 			intent.putExtra("ID",shift.primaryKey);
 			startActivity(intent);
 		}});
-		if (dataBase.isTodaysShift(shift)){
+		if (getDataBase().isTodaysShift(shift)){
 			clockInOutButton.setVisibility(View.VISIBLE);
 			payRateButton.setVisibility(View.VISIBLE);
 			clockInOutButton.setOnClickListener(new OnClickListener(){public void onClick(View v) {

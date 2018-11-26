@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class BankTillDropActivity extends DeliveryDroidBaseActivity implements O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bank_till_drop);
 
-        getSupportActionBar().hide();
+    //    getSupportActionBar().hide();
 
         dropsContainer = (LinearLayout) findViewById(R.id.DropsContainer);
         bankField = (EditText) findViewById(R.id.hourlyPayRate); //Borrowed from store
@@ -91,7 +91,7 @@ public class BankTillDropActivity extends DeliveryDroidBaseActivity implements O
 		float creditTotal=0;
 		float checkTotal=0;
 		float ebtTotal=0;
-		dropRowCount = sharedPreferences.getInt("DropRowCount", 1);
+		dropRowCount = getSharedPreferences().getInt("DropRowCount", 1);
 		if (dropRowCount<1)dropRowCount=1;
 		
 		try {
@@ -122,36 +122,36 @@ public class BankTillDropActivity extends DeliveryDroidBaseActivity implements O
         }
 		if (total < -0.1) {
 			totalType.setText(R.string.workOwsYou);
-			totalField.setText(Tools.getFormattedCurrency(-total));
+			totalField.setText(Utils.getFormattedCurrency(-total));
 		} else if (total > 0.1){
 			totalType.setText(R.string.youOweWork);
-			totalField.setText(Tools.getFormattedCurrency(total));
+			totalField.setText(Utils.getFormattedCurrency(total));
 		} else {
 			totalField.setText(" ");		
 		}
-		totalCash.setText(Tools.getFormattedCurrency(cashTotal));
-		totalCredit.setText(Tools.getFormattedCurrency(creditTotal));
-		totalCheck.setText(Tools.getFormattedCurrency(checkTotal));
-		totalEBT.setText(Tools.getFormattedCurrency(ebtTotal));
+		totalCash.setText(Utils.getFormattedCurrency(cashTotal));
+		totalCredit.setText(Utils.getFormattedCurrency(creditTotal));
+		totalCheck.setText(Utils.getFormattedCurrency(checkTotal));
+		totalEBT.setText(Utils.getFormattedCurrency(ebtTotal));
 	}
 	
 	String formatMoney(Float value){
 		if (value == 0)
 			return "";
-		return Tools.getFormattedCurrency(value);
+		return Utils.getFormattedCurrency(value);
 	}
 	
 	void initDrops(){
-		prefEditor = sharedPreferences.edit();
-        dropRowCount = sharedPreferences.getInt("DropRowCount", 1);
+		prefEditor = getSharedPreferences().edit();
+        dropRowCount = getSharedPreferences().getInt("DropRowCount", 1);
         if (dropRowCount<1)dropRowCount=1;
         for (int i = 0; i < dropRowCount; i++){
         	addDropRow();
-        	dropps.get(i).value.setText(formatMoney(sharedPreferences.getFloat("drop_val_"+i, 0)));
-        	dropps.get(i).kind.setSelection(sharedPreferences.getInt("drop_kind_"+i, 0));
+        	dropps.get(i).value.setText(formatMoney(getSharedPreferences().getFloat("drop_val_"+i, 0)));
+        	dropps.get(i).kind.setSelection(getSharedPreferences().getInt("drop_kind_"+i, 0));
         }	
-        bankField.setText(formatMoney(sharedPreferences.getFloat("BankAmount", 0)));
-        myBank.setText(formatMoney(sharedPreferences.getFloat("MyMoney", 0)));
+        bankField.setText(formatMoney(getSharedPreferences().getFloat("BankAmount", 0)));
+        myBank.setText(formatMoney(getSharedPreferences().getFloat("MyMoney", 0)));
         calculateTotal();
 	}
 	

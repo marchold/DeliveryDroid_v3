@@ -51,7 +51,7 @@ public class GpsNotes extends DeliveryDroidBaseActivity implements LocationListe
 		setContentView(R.layout.gps_notes_activity);
 		//getSupportActionBar().hide();
 
-		loadOrders = sharedPreferences.getBoolean("loadOrders_gps_notes", false);
+		loadOrders = getSharedPreferences().getBoolean("loadOrders_gps_notes", false);
 		
 	    addButton = (ImageButton)findViewById(R.id.addButton);
 		addButton.setOnClickListener(new OnClickListener(){public void onClick(View v) {
@@ -153,7 +153,7 @@ public class GpsNotes extends DeliveryDroidBaseActivity implements LocationListe
 	}
 	
 	void updateList(){
-		Editor editor = sharedPreferences.edit();
+		Editor editor = getSharedPreferences().edit();
 		editor.putBoolean("loadOrders_gps_notes", loadOrders);
 		editor.commit();
 		if (loadOrders) {

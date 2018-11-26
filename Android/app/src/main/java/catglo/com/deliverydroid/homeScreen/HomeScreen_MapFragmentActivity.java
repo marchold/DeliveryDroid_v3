@@ -268,7 +268,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
         TipTotalData tip = dataBase.getTipTotal(this,DataBase.Shift+"="+dataBase.getCurShift()+" AND "+DataBase.Payed+" >= 0",
         		"WHERE shifts.ID="+DataBase.TodaysShiftCount);
 		final float totalTipsMade = tip.payed-tip.cost;
-		driverEarnings.setText(Tools.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
+		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		
         updateUI();
         
@@ -588,7 +588,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		int maxLng=Integer.MIN_VALUE;
 
 
-        Tools.appendLog("\nBuilding Map Overlays");
+        Utils.appendLog("\nBuilding Map Overlays");
 
 		try {
 			String storeAddress = sharedPreferences.getString("storeAddress", "");
@@ -601,22 +601,22 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			int storeAddressLat = 0;
             int storeAddressLng = 0;
             if (lastKnownLocation!=null) {
-                Tools.appendLog("    lastKnownLocation was != null");
+                Utils.appendLog("    lastKnownLocation was != null");
                 storeAddressLat = sharedPreferences.getInt("storeAddressLat", (int) (lastKnownLocation.getLatitude() / 1e6));
                 storeAddressLng = sharedPreferences.getInt("storeAddressLng", (int) (lastKnownLocation.getLongitude() / 1e6));
             } else {
-                Tools.appendLog("    lastKnownLocation was == null");
+                Utils.appendLog("    lastKnownLocation was == null");
             }
             if (storeAddressLat==0 || storeAddressLng==0){
-                Tools.appendLog("    storeAddressLat==0 || storeAddressLng==0");
+                Utils.appendLog("    storeAddressLat==0 || storeAddressLng==0");
                 if (lastKnownLocation != null) {
-                    Tools.appendLog("    setting store address to last known location");
+                    Utils.appendLog("    setting store address to last known location");
                     storeAddressLat = (int) (lastKnownLocation.getLatitude()*1E6);
                     storeAddressLng = (int) (lastKnownLocation.getLongitude()*1E6);
                 }
             }
 
-            Tools.appendLog("    Using gps coordinates "+storeAddressLat+","+storeAddressLng);
+            Utils.appendLog("    Using gps coordinates "+storeAddressLat+","+storeAddressLng);
 
 			GeoPoint geoPoint = new GeoPoint(storeAddressLat,storeAddressLng);
 			

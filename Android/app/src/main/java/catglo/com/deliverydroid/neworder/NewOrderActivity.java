@@ -10,19 +10,21 @@ import android.os.Bundle;
 
 import android.view.View;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.R;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
-                                 implements androidx.appcompat.app.ActionBar.TabListener,
-                                            ButtonPadFragment.ButtonPadNextListener {
+                                 implements ButtonPadFragment.ButtonPadNextListener, TabLayout.BaseOnTabSelectedListener {
 
 
 
@@ -30,13 +32,14 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     ViewPager viewPager;
     public Order order = new Order();
     private View tabletPane;
+    private TabLayout tabLayout;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onNextButtonPressed() {
-        int i = getActionBar().getSelectedNavigationIndex();
+        int i = tabLayout.getSelectedTabPosition();
         try {
-            getActionBar().selectTab(getActionBar().getTabAt(i+1));
+            tabLayout.getTabAt(i+1).select();
         } catch (IndexOutOfBoundsException e){
             //TODO: maybe focus whatever seems like the next logical thing in the last screen frag on tablet
         }
@@ -80,48 +83,44 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
         }
 
 
+  //      setSupportActionBar(findViewById(R.id.toolbar));
+
         // Set up the action bar.
-        final androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(androidx.appcompat.app.ActionBar.NAVIGATION_MODE_TABS);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        actionBar.setBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));
-        actionBar.setStackedBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));
 
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),viewPagerPages);
 
+        tabLayout = findViewById(R.id.tabLayout);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                tabLayout.getTabAt(position).select();
             }
         });
         for (int i = 0; i < sectionsPagerAdapter.getCount(); i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(sectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(sectionsPagerAdapter.getPageTitle(i));
+            tabLayout.addTab(tab);
         }
+        tabLayout.addOnTabSelectedListener(NewOrderActivity.this);
     }
 
+
     @Override
-    public void onTabSelected(androidx.appcompat.app.ActionBar.Tab tab, androidx.fragment.app.FragmentTransaction ft) {
+    public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
         viewPager.setCurrentItem(position);
     }
 
     @Override
-    public void onTabUnselected(androidx.appcompat.app.ActionBar.Tab tab, androidx.fragment.app.FragmentTransaction ft) {
+    public void onTabUnselected(TabLayout.Tab tab) {
 
     }
 
     @Override
-    public void onTabReselected(androidx.appcompat.app.ActionBar.Tab tab, androidx.fragment.app.FragmentTransaction ft) {
+    public void onTabReselected(TabLayout.Tab tab) {
 
     }
 

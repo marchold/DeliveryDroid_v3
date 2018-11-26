@@ -28,8 +28,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import catglo.com.deliveryDatabase.*;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
-import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
 
@@ -154,7 +153,7 @@ public class OrderSummaryListFragment extends ListFragment  {
 			
 			final HashMap<String, String> map = new HashMap<String, String>();
 			map.put("number", order.number);
-			map.put("cost", "" + Tools.getFormattedCurrency(order.cost));
+			map.put("cost", "" + Utils.getFormattedCurrency(order.cost));
 			
 			Float payed=0f;
 			Float paid1=0f;
@@ -171,9 +170,9 @@ public class OrderSummaryListFragment extends ListFragment  {
 				map.put("tip",   "");
 				
 			} else {
-				map.put("payed", "" + Tools.getFormattedCurrency(payed));
-				map.put("payed1", "" + Tools.getFormattedCurrency(paid1));
-				map.put("tip", Tools.getFormattedCurrency(payed - order.cost));
+				map.put("payed", "" + Utils.getFormattedCurrency(payed));
+				map.put("payed1", "" + Utils.getFormattedCurrency(paid1));
+				map.put("tip", Utils.getFormattedCurrency(payed - order.cost));
 			}
 			
 			map.put("notes", order.notes);
@@ -326,7 +325,7 @@ public class OrderSummaryListFragment extends ListFragment  {
                         if (paidSplit > 0) {
                             switch (currentListView) {
                                 case 0:
-                                    payed.setText(map.get("payed1") + "+" + Tools.getFormattedCurrency(paidSplit));
+                                    payed.setText(map.get("payed1") + "+" + Utils.getFormattedCurrency(paidSplit));
                                     break;
                                 default:
                                 case 1:

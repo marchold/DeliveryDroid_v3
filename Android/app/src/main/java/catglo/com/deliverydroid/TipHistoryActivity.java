@@ -73,7 +73,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
     @Override
 	public void onPause(){
 		super.onPause();
-		Editor editor = sharedPreferences.edit();
+		Editor editor = getSharedPreferences().edit();
 		editor.putInt("TipScrollPosition", scrollView.getScrollY());
 		editor.commit();
 	}
@@ -83,7 +83,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 	@Override
 	public void onResume(){
 		super.onResume();
-		scrollView.scrollTo(0, sharedPreferences.getInt("TipScrollPosition", 0));
+		scrollView.scrollTo(0, getSharedPreferences().getInt("TipScrollPosition", 0));
 	}
 	
 	
@@ -128,9 +128,9 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 
 
         startDate = (Calendar) now.clone();
-		startDate.setTimeInMillis(sharedPreferences.getLong("tipHistorystartDate", (((Calendar) now.clone()).getTimeInMillis())));
+		startDate.setTimeInMillis(getSharedPreferences().getLong("tipHistorystartDate", (((Calendar) now.clone()).getTimeInMillis())));
 		endDate = (Calendar) now.clone();
-		endDate.setTimeInMillis(sharedPreferences.getLong("tipHistoryendDate", (((Calendar) now.clone()).getTimeInMillis())));
+		endDate.setTimeInMillis(getSharedPreferences().getLong("tipHistoryendDate", (((Calendar) now.clone()).getTimeInMillis())));
 	
 		moreClickable = findViewById(R.id.moreClickable);
 		moreClickable.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
@@ -142,7 +142,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 		}});
 		
 		filterLayout = findViewById(R.id.filterLayout);
-        if (sharedPreferences.getBoolean("show_tip_totals_day_filter", true)){
+        if (getSharedPreferences().getBoolean("show_tip_totals_day_filter", true)){
             filterLayout.setVisibility(View.VISIBLE);
             filterMenuButton.setText(R.string.Hide_weekday_filters);
         } else {
@@ -159,13 +159,13 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 		friday = (CheckBox)findViewById(R.id.friday);
 		saturday = (CheckBox)findViewById(R.id.saturday);
 		sunday = (CheckBox)findViewById(R.id.sunday);
-		monday.setChecked(sharedPreferences.getBoolean("tipHistoryMonday", true));
-		tuesday.setChecked(sharedPreferences.getBoolean("tipHistoryTuesday", true));
-		wendsday.setChecked(sharedPreferences.getBoolean("tipHistoryWendsday", true));
-		thursday.setChecked(sharedPreferences.getBoolean("tipHistoryThursday", true));
-		friday.setChecked(sharedPreferences.getBoolean("tipHistoryFriday", true));
-		saturday.setChecked(sharedPreferences.getBoolean("tipHistorySaturday", true));
-		sunday.setChecked(sharedPreferences.getBoolean("tipHistorySunday", true));
+		monday.setChecked(getSharedPreferences().getBoolean("tipHistoryMonday", true));
+		tuesday.setChecked(getSharedPreferences().getBoolean("tipHistoryTuesday", true));
+		wendsday.setChecked(getSharedPreferences().getBoolean("tipHistoryWendsday", true));
+		thursday.setChecked(getSharedPreferences().getBoolean("tipHistoryThursday", true));
+		friday.setChecked(getSharedPreferences().getBoolean("tipHistoryFriday", true));
+		saturday.setChecked(getSharedPreferences().getBoolean("tipHistorySaturday", true));
+		sunday.setChecked(getSharedPreferences().getBoolean("tipHistorySunday", true));
 		
 		monday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
@@ -208,12 +208,12 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 			finish();
 		}});
 		
-		prefEditor = sharedPreferences.edit();
+		prefEditor = getSharedPreferences().edit();
 		
 		dateRangeContent = (ViewGroup)findViewById(R.id.dateRangeContent);
 
 
-		if (sharedPreferences.getBoolean("dateRangeIndicator", true)){
+		if (getSharedPreferences().getBoolean("dateRangeIndicator", true)){
 			dateRangeContent.setVisibility(View.VISIBLE);
 		} else {
 			dateRangeContent.setVisibility(View.GONE);
@@ -229,7 +229,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.tip_totals_spinner_in_toolbar, listValues);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dateRangeSpinner.setAdapter(adapter);
-		dateRangeSpinner.setSelection(sharedPreferences.getInt("tipHistorySpinnerDefault", 1));
+		dateRangeSpinner.setSelection(getSharedPreferences().getInt("tipHistorySpinnerDefault", 1));
 		dateRangeSpinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				prefEditor.putInt("tipHistorySpinnerDefault", arg2);
@@ -246,7 +246,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 		                endDateField.setText((endDate.get(Calendar.MONTH)+1)+"/"+endDate.get(Calendar.DAY_OF_MONTH)+"/"+endDate.get(Calendar.YEAR));
 		                updateUI();
 		                break;
-		        case 1: tools.getWorkWeekDates(now,startDate,endDate);
+		        case 1: getTools().getWorkWeekDates(now,startDate,endDate);
 				        startDateField.setText((startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.DAY_OF_MONTH)+"/"+startDate.get(Calendar.YEAR));
 		                endDateField.setText((endDate.get(Calendar.MONTH)+1)+"/"+endDate.get(Calendar.DAY_OF_MONTH)+"/"+endDate.get(Calendar.YEAR));
 		                updateUI(); 
@@ -266,7 +266,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 		                updateUI();
 		                break;
 		        case 4: 
-		        		tools.getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
+		        		getTools().getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
 		        			startDateField.setText((startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.DAY_OF_MONTH)+"/"+startDate.get(Calendar.YEAR));
 			                endDateField.setText((endDate.get(Calendar.MONTH)+1)+"/"+endDate.get(Calendar.DAY_OF_MONTH)+"/"+endDate.get(Calendar.YEAR));
 			                updateUI();
@@ -281,13 +281,13 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
         startDateField = (EditText) findViewById(R.id.hourlyPayRate);
         endDateField = (EditText) findViewById(R.id.totalCash);
         
-        tools.getWorkWeekDates(now,startDate,endDate);
+        getTools().getWorkWeekDates(now,startDate,endDate);
         startDateField.setText((startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.DAY_OF_MONTH)+"/"+startDate.get(Calendar.YEAR));
         endDateField.setText((endDate.get(Calendar.MONTH)+1)+"/"+endDate.get(Calendar.DAY_OF_MONTH)+"/"+endDate.get(Calendar.YEAR));
       
         OnTouchListener dateTouchListener = new OnTouchListener(){public boolean onTouch(View v, MotionEvent event) {
         	if (event.getAction() == MotionEvent.ACTION_DOWN){
-        		tools.getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
+        		getTools().getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
         			startDateField.setText((startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.DAY_OF_MONTH)+"/"+startDate.get(Calendar.YEAR));
 	                endDateField.setText((endDate.get(Calendar.MONTH)+1)+"/"+endDate.get(Calendar.DAY_OF_MONTH)+"/"+endDate.get(Calendar.YEAR));
 	                updateUI();
@@ -328,12 +328,12 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 			getString(R.string.startDate)+":"+(startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.DAY_OF_MONTH)+"/"+startDate.get(Calendar.YEAR)+"  "+
 			getString(R.string.endDate)+":"+(startDate.get(Calendar.MONTH)+1)+"/"+endDate.get(Calendar.DAY_OF_MONTH)+"/"+endDate.get(Calendar.YEAR)+"  "+
 			getString(R.string.deliveries) +":"+(tips.deliveries)+"\n"+
-			getString(R.string.tipsMade) +":"+ Tools.getFormattedCurrency(tips.payed - tips.cost)+"\n"+
-			getString(R.string.DriverEarnings) +":"+ Tools.getFormattedCurrency(tips.total)+"\n"+
-			getString(R.string.bestTip) +":"+ Tools.getFormattedCurrency(tips.bestTip)+"\n"+
-			getString(R.string.averageTip) +":"+ Tools.getFormattedCurrency(tips.averageTip)+"\n"+
-			getString(R.string.worstTip) +":"+ Tools.getFormattedCurrency(tips.worstTip)+ "\n"+
-			getString(R.string.hoursWorked) +":"+ Tools.getFormattedCurrency(tips.hours)+ "\n"+
+			getString(R.string.tipsMade) +":"+ Utils.getFormattedCurrency(tips.payed - tips.cost)+"\n"+
+			getString(R.string.DriverEarnings) +":"+ Utils.getFormattedCurrency(tips.total)+"\n"+
+			getString(R.string.bestTip) +":"+ Utils.getFormattedCurrency(tips.bestTip)+"\n"+
+			getString(R.string.averageTip) +":"+ Utils.getFormattedCurrency(tips.averageTip)+"\n"+
+			getString(R.string.worstTip) +":"+ Utils.getFormattedCurrency(tips.worstTip)+ "\n"+
+			getString(R.string.hoursWorked) +":"+ Utils.getFormattedCurrency(tips.hours)+ "\n"+
 			getString(R.string.milesDriven) +":"+tips.odometerTotal+ "\n";
     }
     
@@ -382,14 +382,14 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
     	}
     	
     	
-    	TipTotalData tips = dataBase.getTipTotal(getApplicationContext(),sqlQuery,shiftSqlQuery);
+    	TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(),sqlQuery,shiftSqlQuery);
     	
     	
-    	tipsMade.setText(Tools.getFormattedCurrency(tips.payed - tips.cost));
-    	driverEarnings.setText(Tools.getFormattedCurrency(tips.total));
-    	bestTip.setText(Tools.getFormattedCurrency(tips.bestTip));
-    	if (Float.isNaN(tips.averageTip)==false) averageTip.setText(Tools.getFormattedCurrency(tips.averageTip));
-    	worstTip.setText(Tools.getFormattedCurrency(tips.worstTip));
+    	tipsMade.setText(Utils.getFormattedCurrency(tips.payed - tips.cost));
+    	driverEarnings.setText(Utils.getFormattedCurrency(tips.total));
+    	bestTip.setText(Utils.getFormattedCurrency(tips.bestTip));
+    	if (Float.isNaN(tips.averageTip)==false) averageTip.setText(Utils.getFormattedCurrency(tips.averageTip));
+    	worstTip.setText(Utils.getFormattedCurrency(tips.worstTip));
     	totalDeliveries.setText(""+tips.deliveries);
     	milesDriven.setText(""+tips.odometerTotal);
     	
@@ -408,7 +408,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
     	}
     	averagePayRateValue = (totalPay/totalHours)*60;
     	
-    	averagePayRate.setText(Tools.getFormattedCurrency(averagePayRateValue));
+    	averagePayRate.setText(Utils.getFormattedCurrency(averagePayRateValue));
     	
     	
 		//If there was more than 1 pay rate show the breakdown of the top 2
@@ -421,11 +421,11 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 	    	PayRatePieriod prp = payRates.get(0);
 			DecimalFormat df = new DecimalFormat("#.##");
 			hoursWorked[1].setText(df.format(prp.hours)+"");
-			hoursWorkedTitle[1].setText("Hours @ "+ Tools.getFormattedCurrency(prp.hourlyPay * 60));
+			hoursWorkedTitle[1].setText("Hours @ "+ Utils.getFormattedCurrency(prp.hourlyPay * 60));
 			
 			prp = payRates.get(1);
 			hoursWorked[2].setText(df.format(prp.hours)+"");
-			hoursWorkedTitle[2].setText("Hours @ "+ Tools.getFormattedCurrency(prp.hourlyPay * 60));
+			hoursWorkedTitle[2].setText("Hours @ "+ Utils.getFormattedCurrency(prp.hourlyPay * 60));
 			
 			
 			hoursWorked[1].setVisibility(View.VISIBLE);
@@ -455,7 +455,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 
 
     void emailResults(){
-        TipTotalData tips = dataBase.getTipTotal(getApplicationContext(),
+        TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(),
                 " Payed >= 0 AND `"+ DataBase.Time + "` >= '"+String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND `"+ DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate)+"'",
                 "WHERE shifts.TimeStart >= '"+String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
@@ -473,7 +473,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 
     void smsResults(){
         //TODO: Update to include new fields like e-mail
-        TipTotalData tips = dataBase.getTipTotal(getApplicationContext(),
+        TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(),
                 " Payed >= 0 AND `"+ DataBase.Time + "` >= '"+String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND `"+ DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate)+"'",
                 "WHERE shifts.TimeStart >= '"+String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
@@ -488,8 +488,8 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
     }
 
     void toggleFilter(){
-        Editor editor = sharedPreferences.edit();
-        if (sharedPreferences.getBoolean("show_tip_totals_day_filter", true)){
+        Editor editor = getSharedPreferences().edit();
+        if (getSharedPreferences().getBoolean("show_tip_totals_day_filter", true)){
             filterLayout.setVisibility(View.GONE);
             editor.putBoolean("show_tip_totals_day_filter", false);
             filterMenuButton.setText(R.string.Show_weekday_filters);

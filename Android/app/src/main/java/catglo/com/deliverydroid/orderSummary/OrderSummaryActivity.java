@@ -156,7 +156,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
     private void swtichToViewType(int viewType) {
         dropDownMenu.setVisibility(View.GONE);
 
-        Editor prefEditor = sharedPreferences.edit();
+        Editor prefEditor = getSharedPreferences().edit();
         prefEditor.putInt("showListView", viewType);
         prefEditor.commit();
 
@@ -202,7 +202,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
     }
 
     private void setupHeaderViews() {
-        ShiftCounts counts = dataBase.getShiftCounts(viewingShift);
+        ShiftCounts counts = getDataBase().getShiftCounts(viewingShift);
         if (counts.prev<=0){
             previousShift.setText("");
             thisShift.setText(getString(R.string.Shift)+" 1");
@@ -215,8 +215,8 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
         } else {
             nextShift.setText(getString(R.string.Shift)+" "+counts.next);
         }
-        numberOfOrders.setText(""+dataBase.getNumberOfOrdersInShift(viewingShift));
-        ArrayList<Order> orders = dataBase.getShiftOrderArray(viewingShift);
+        numberOfOrders.setText(""+ getDataBase().getNumberOfOrdersInShift(viewingShift));
+        ArrayList<Order> orders = getDataBase().getShiftOrderArray(viewingShift);
         if (orders.size()>0){
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(orders.get(0).time.getTime());
@@ -228,8 +228,8 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
     void flingRight(){
         viewFlipper.setInAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_left_in));
         viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_left_out));
-        if (viewingShift < dataBase.getCurShift()) {
-            flipViews(dataBase.getNextShiftNumber(viewingShift));
+        if (viewingShift < getDataBase().getCurShift()) {
+            flipViews(getDataBase().getNextShiftNumber(viewingShift));
             viewFlipper.showPrevious();
         }
     }
@@ -237,7 +237,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
         viewFlipper.setInAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_right_in));
         viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_right_out));
         if (viewingShift > 0) {
-            flipViews(dataBase.getPrevoiusShiftNumber(viewingShift));
+            flipViews(getDataBase().getPrevoiusShiftNumber(viewingShift));
             viewFlipper.showNext();
         }
     }
@@ -279,7 +279,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
         addOrderButton = findViewById(R.id.add_order_menu_button);
         addOrderButton.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
             Order o = new Order();
-            o.primaryKey = (int) dataBase.add(o,viewingShift);
+            o.primaryKey = (int) getDataBase().add(o,viewingShift);
             Intent  i = new Intent(getApplicationContext(),SummaryActivity.class);
             i.putExtra("openEdit", true);
             i.putExtra("DB Key", o.primaryKey);
@@ -293,7 +293,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 
 
         if (savedInstanceState==null){
-            viewingShift = dataBase.getCurShift();
+            viewingShift = getDataBase().getCurShift();
         } else {
             viewingShift = savedInstanceState.getInt("viewingShift");
         }
@@ -367,9 +367,9 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
         double y = Math.pow(height/dm.ydpi,2);
         double screenInches = Math.sqrt(x+y);
         if (screenInches>5){
-            viewType = sharedPreferences.getInt("showListView", VIEW_TYPE_SPLIT);
+            viewType = getSharedPreferences().getInt("showListView", VIEW_TYPE_SPLIT);
         } else {
-            viewType = sharedPreferences.getInt("showListView", VIEW_TYPE_DETAILS);
+            viewType = getSharedPreferences().getInt("showListView", VIEW_TYPE_DETAILS);
         }
         use2ndView = false;
         flipViews(viewingShift);
@@ -437,7 +437,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
                         endDate.add(Calendar.DAY_OF_YEAR, 1);
                         exportWhereDialog();
                         break;
-                    case 1: tools.getWorkWeekDates(now,startDate,endDate);
+                    case 1: getTools().getWorkWeekDates(now,startDate,endDate);
                         exportWhereDialog();
                         break;
                     case 2: startDate.set(Calendar.DATE, 0);
@@ -451,7 +451,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
                         exportWhereDialog();
                         break;
                     case 4:
-                        tools.getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
+                        getTools().getDateRangeDialog(startDate,endDate,new OnDismissListener(){public void onDismiss(DialogInterface dialog) {
                             exportWhereDialog();
                         }});
                         break;
@@ -513,7 +513,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
                         pd = ProgressDialog.show(OrderSummaryActivity.this, "Exporting...", "This may take a minute", true, false);//cancelable)//.show(this, "Working..", "Calculating Pi", true, false);
 
                         Thread csvThread = new Thread(new Runnable(){public void run(){
-                            String csvData = dataBase.getCSVData(startDate,endDate,pd,OrderSummaryActivity.this);
+                            String csvData = getDataBase().getCSVData(startDate,endDate,pd,OrderSummaryActivity.this);
                             if (exportTo.getSelectedItemPosition()==1){
                                 fileName = fileNameEditor.getEditableText().toString()+".csv";
                             } else {
@@ -577,7 +577,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
                         "Delete this record?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int whichButton) {
                         //Log.i("Delivery Driver", "User Y/N Delete Order");
-                        dataBase.delete(recordToDelete);
+                        getDataBase().delete(recordToDelete);
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int whichButton) {
@@ -595,14 +595,14 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
             @Override
             public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-                TipTotalData tip = dataBase.getTipTotal(OrderSummaryActivity.this,DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0",
+                TipTotalData tip = getDataBase().getTipTotal(OrderSummaryActivity.this,DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0",
                         "WHERE shifts.ID="+viewingShift);
 
                 return new AlertDialog.Builder(OrderSummaryActivity.this).setIcon(R.drawable.icon).setTitle(
                         "Delete this shift and all "+tip.deliveries+" order records?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int whichButton) {
-                        dataBase.deleteShift(viewingShift);
-                        viewingShift=dataBase.getNextShiftNumber(viewingShift);
+                        getDataBase().deleteShift(viewingShift);
+                        viewingShift= getDataBase().getNextShiftNumber(viewingShift);
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int whichButton) {
@@ -637,7 +637,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
                         Calendar c = Calendar.getInstance();
                         c.set(input.getYear(), input.getMonth(), input.getDayOfMonth());
 
-                        int shift = dataBase.findShiftForTime(c);
+                        int shift = getDataBase().findShiftForTime(c);
                         if (shift>=0){
                             viewingShift=shift;
                             if (orderListSummaryFragment!=null) {

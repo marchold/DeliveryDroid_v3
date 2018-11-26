@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.widgets.AddressAutocomplete;
 import catglo.com.deliverydroid.widgets.Tooltip;
 import org.joda.time.MutableDateTime;
@@ -86,12 +86,12 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
             public void afterTextChanged(Editable arg0) {
                 if (supressListeners) return;
                 supressListeners = true;
-                float payed = Tools.parseCurrency(arg0.toString());
-                float cost = Tools.parseCurrency(orderCost.getText().toString());
-                float tip = Tools.parseCurrency(preTip.getText().toString());
+                float payed = Utils.parseCurrency(arg0.toString());
+                float cost = Utils.parseCurrency(orderCost.getText().toString());
+                float tip = Utils.parseCurrency(preTip.getText().toString());
                 if (tip != payed-cost && preTip.isFocused()==false){
                     if (payed-cost>0){  //PONG!
-                        preTip.setText(Tools.getFormattedCurrency(payed - cost));
+                        preTip.setText(Utils.getFormattedCurrency(payed - cost));
                     } else {
                         preTip.setText("");
                     }
@@ -107,12 +107,12 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
                 supressListeners = true;
                 //If this field changes and preTip is non zero set the totalPayed field, otherwize
                 //do nothing when this field is updated
-                float tip = Tools.parseCurrency(preTip.getText().toString());
-                float cost = Tools.parseCurrency(arg0.toString());
-                float total = Tools.parseCurrency(totalPayed.getText().toString());
+                float tip = Utils.parseCurrency(preTip.getText().toString());
+                float cost = Utils.parseCurrency(arg0.toString());
+                float total = Utils.parseCurrency(totalPayed.getText().toString());
                 if (tip!=0 && total != cost+tip && totalPayed.isFocused()==false){
                     if (cost+tip>0){
-                        totalPayed.setText(Tools.getFormattedCurrency(cost + tip));
+                        totalPayed.setText(Utils.getFormattedCurrency(cost + tip));
                     }
                     else {
                         totalPayed.setText("");
@@ -128,12 +128,12 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
                 if (supressListeners) return;
                 supressListeners = true;
                 //Update the total payed field if this one is edited
-                float preTip = Tools.parseCurrency(arg0.toString());
-                float cost = Tools.parseCurrency(orderCost.getText().toString());
-                float total = Tools.parseCurrency(totalPayed.getText().toString());
+                float preTip = Utils.parseCurrency(arg0.toString());
+                float cost = Utils.parseCurrency(orderCost.getText().toString());
+                float total = Utils.parseCurrency(totalPayed.getText().toString());
                 if (total != cost+preTip && totalPayed.isFocused()==false) {
                     if (cost+preTip>0){//PING!
-                        totalPayed.setText(Tools.getFormattedCurrency(cost + preTip));
+                        totalPayed.setText(Utils.getFormattedCurrency(cost + preTip));
                     } else {
                         totalPayed.setText("");
                     }
@@ -173,14 +173,14 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
 
             Order order = activity.order;
             try {
-                order.cost  = Tools.parseCurrency(s);
+                order.cost  = Utils.parseCurrency(s);
             } catch (Exception e) {
                 order.cost  = 0;
             }
 
             s = extraPay.getEditableText().toString();
             try {
-                order.extraPay  = Tools.parseCurrency(s);
+                order.extraPay  = Utils.parseCurrency(s);
             } catch (Exception e) {
                 order.extraPay  = 0;
             }
@@ -190,7 +190,7 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
 
             s = preTip.getEditableText().toString();
             try {
-                order.payed2 = Tools.parseCurrency(s);
+                order.payed2 = Utils.parseCurrency(s);
             } catch (Exception e) {
                 order.payed2 = 0f;
             }
@@ -230,10 +230,10 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
 
     void setFieldsForOrder(final Order order){
         if (order.cost!=0){
-            orderCost.setText(Tools.getFormattedCurrency(order.cost));
+            orderCost.setText(Utils.getFormattedCurrency(order.cost));
         }
         if (order.extraPay!=0){
-            extraPay.setText(Tools.getFormattedCurrency(order.extraPay));
+            extraPay.setText(Utils.getFormattedCurrency(order.extraPay));
         }
         if (order.notes!=null) orderNotes.setText(order.notes);
 
@@ -242,7 +242,7 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
         if (outOfTown2!=null) outOfTown2.setChecked(order.outOfTown2);
         if (outOfTown3!=null) outOfTown3.setChecked(order.outOfTown3);
         if (outOfTown4!=null) outOfTown4.setChecked(order.outOfTown4);
-        if (orderTime!=null) orderTime.setText(Tools.getFormattedTime(order.time));
+        if (orderTime!=null) orderTime.setText(Utils.getFormattedTime(order.time));
         if (order.address!=null) orderAddress.setText(order.address);
         if (order.apartmentNumber!=null) orderAptNum.setText(order.apartmentNumber);
         if (order.number!=null) orderNumber.setText(order.number);
@@ -283,8 +283,8 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
 
     private void writeFieldsToOrder() {
         Order order = ((NewOrderActivity)getActivity()).order;
-        order.cost = Tools.parseCurrency(totalPayed.getText().toString());
-        order.extraPay = Tools.parseCurrency(extraPay.getText().toString());
+        order.cost = Utils.parseCurrency(totalPayed.getText().toString());
+        order.extraPay = Utils.parseCurrency(extraPay.getText().toString());
 
         order.phoneNumber = phoneNumber.getText().toString();
         order.notes = orderNotes.getText().toString();

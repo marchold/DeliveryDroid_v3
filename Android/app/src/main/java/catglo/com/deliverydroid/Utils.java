@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,9 +50,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Tools {
+public class Utils {
 
-    public Tools(){
+    public Utils(){
 
     }
 
@@ -461,7 +460,7 @@ public class Tools {
         final String amount = sharedPreferences.getString(amountKey,"0");
         final String label = sharedPreferences.getString(labelKey,"");
 
-        final float amountValue = Tools.parseCurrency(amount);
+        final float amountValue = Utils.parseCurrency(amount);
         altPayCheckbox.setChecked(isChecked);
         altPayCheckbox.setEnabled(true);
 
@@ -492,11 +491,11 @@ public class Tools {
         //If the label is empty use the amount as the label
         if (Math.abs(amountValue) > 0) {
             if (label.length()==0) {
-                float f = Tools.parseCurrency(amount);
+                float f = Utils.parseCurrency(amount);
                 if (f >= 0) {
-                    altPayCheckbox.setText(Tools.getFormattedCurrency(f));
+                    altPayCheckbox.setText(Utils.getFormattedCurrency(f));
                 } else {
-                    altPayCheckbox.setText(Tools.getFormattedCurrency(-f));
+                    altPayCheckbox.setText(Utils.getFormattedCurrency(-f));
                 }
             } else {
                 altPayCheckbox.setText(label);

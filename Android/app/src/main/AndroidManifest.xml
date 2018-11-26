@@ -93,7 +93,9 @@
                 android:theme="@style/AppTheme"/>
         <!-- <activity android:name=".Settings_DropPrefsActivity" /> -->
 
-        <activity android:name=".shift.ShiftStartEndActivity"  android:theme="@style/AppTheme"/>
+        <activity
+                android:name=".shift.ShiftStartEndActivity"
+                android:theme="@style/AppTheme"/>
         <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
         <activity
                 android:name=".settings.SettingsListOptions"
@@ -165,6 +167,9 @@
                 android:enabled="true"
                 android:exported="false">
         </service>
+
+        <activity android:name=".homeScreen.ChooseDownloadActivity"    android:theme="@style/ActionBarTheme" android:label="@string/choose_map">
+        </activity>
     </application>
 
 </manifest>

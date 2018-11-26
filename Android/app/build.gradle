@@ -26,8 +26,8 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 162
-        versionName "5.12"
+        versionCode 163
+        versionName "5.13"
     }
     productFlavors {
         free {
@@ -48,7 +48,7 @@ android {
             dimension "version"
             applicationId "com.catglo.deliverydroid2nd"
             buildConfigField "boolean", "PAID_VERSION", "true"
-            it.buildConfigField 'String', 'DATABASE_NAME',"\"DeliveryData2ndJob.SQLite\""
+            it.buildConfigField 'String', 'DATABASE_NAME', "\"DeliveryData2ndJob.SQLite\""
         }
     }
 
@@ -62,7 +62,7 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'GoogleMapsApiKey', "\"$System.env.GoogleMapsApiKey\""
         it.resValue 'string', 'ga_trackingId', "$System.env.GoogleAnalyticsTrackingId"
-        it.resValue 'string', 'maps_API_KEY' , "$System.env.GoogleMapsApiKey"
+        it.resValue 'string', 'maps_API_KEY', "$System.env.GoogleMapsApiKey"
     }
     buildToolsVersion '28.0.3'
     compileOptions {
@@ -93,8 +93,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
 
-
-  /*
+    /*
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
 
     implementation "com.android.support:appcompat-v7:$supportLibVersion"

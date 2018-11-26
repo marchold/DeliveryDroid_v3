@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<catglo.com.deliverydroid.widgets.FlowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:layout_width="wrap_content"
                                              android:layout_height="match_parent"
@@ -8,46 +8,41 @@
 
     >
 
-    <Button
-        android:id="@+id/go_to_day_menu_button"
-        style="@style/slide_out_menu_button"
-        android:drawableTop="@drawable/go_to_day"
-        android:text="@string/goToDay" />
 
-    <Button
-        android:id="@+id/export_to_menu_button"
-        style="@style/slide_out_menu_button"
-        android:drawableTop="@drawable/export"
-        android:text="CSV Exoprt" />
+    <com.google.android.material.button.MaterialButton style="@style/slide_out_menu_button"
+            android:id="@+id/go_to_day_menu_button"
+            android:text="@string/goToDay"
+            app:icon="@drawable/go_to_day"/>
 
-    <Button
-        android:id="@+id/odometer_and_hours_menu_button"
-        style="@style/slide_out_menu_button"
-        android:drawableTop="@drawable/odometer"
-        android:text="@string/odo_and_hr" />
+    <com.google.android.material.button.MaterialButton style="@style/slide_out_menu_button"
+                                                       android:id="@+id/export_to_menu_button"
+                                                       android:text="@string/csv_exoprt"
+                                                       app:icon="@drawable/export"/>
 
-    <Button
-        android:id="@+id/add_order_menu_button"
-        style="@style/slide_out_menu_button"
-        android:drawableTop="@drawable/add_order_plus"
-        android:text="@string/AddOrder" />
+    <com.google.android.material.button.MaterialButton style="@style/slide_out_menu_button"
+                                                       android:id="@+id/odometer_and_hours_menu_button"
+                                                       android:text="@string/odo_and_hr"
+                                                       app:icon="@drawable/odometer"/>
 
-    <Button
-        android:id="@+id/delete_shift_menu_button"
-        style="@style/slide_out_menu_button"
-        android:drawableTop="@drawable/trash"
-        android:text="@string/deleteThisShift" />
+    <com.google.android.material.button.MaterialButton style="@style/slide_out_menu_button"
+                                                       android:id="@+id/add_order_menu_button"
+                                                       android:text="@string/AddOrder"
+                                                       app:icon="@drawable/add_order_plus"/>
 
-    <Button
-        android:id="@+id/customize_list_menu_button"
-        style="@style/slide_out_menu_button"
-        android:drawableTop="@drawable/customize_list"
-        android:text="@string/Customize_List_View" />
+    <com.google.android.material.button.MaterialButton style="@style/slide_out_menu_button"
+                                                       android:id="@+id/delete_shift_menu_button"
+                                                       android:text="@string/deleteThisShift"
+                                                       app:icon="@drawable/trash"/>
 
-    <Button
-        android:id="@+id/configure_cash_owed_to_store_menu_button"
-        style="@style/slide_out_menu_button"
-        android:text="Configure Cash Owed To Store" />
+    <com.google.android.material.button.MaterialButton style="@style/slide_out_menu_button"
+                                                       android:id="@+id/customize_list_menu_button"
+                                                       android:text="@string/Customize_List_View"
+                                                       app:icon="@drawable/customize_list"/>
+
+    <com.google.android.material.button.MaterialButton style="@style/slide_out_menu_button"
+                                                       android:id="@+id/configure_cash_owed_to_store_menu_button"
+                                                       android:text="@string/configure_cash_owed_to_store"
+                                                       app:icon="@drawable/ic_cash_owed"/>
 
 
-</catglo.com.deliverydroid.widgets.FlowLayout>
+</LinearLayout>

@@ -8,13 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import android.widget.EditText;
-import android.widget.TimePicker;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Shift;
 
 import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 import org.joda.time.DateTime;
 
 import java.text.DecimalFormat;
@@ -61,7 +60,7 @@ public class ShiftSetWageFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String wageString = input.getText().toString();
                         if (wageString.length()>0){
-                            float wage = Tools.parseCurrency(wageString);
+                            float wage = Utils.parseCurrency(wageString);
                             DecimalFormat df = new DecimalFormat("#.##");
 
                             Wage currentWage = dataBase.currentWage();
@@ -112,7 +111,7 @@ public class ShiftSetWageFragment extends DialogFragment {
         ShiftSetWageActivity activity = (ShiftSetWageActivity)getActivity();
         String wageString = edit.getEditableText().toString();
         if (wageString.length()>0){
-            float wage = Tools.parseCurrency(wageString);
+            float wage = Utils.parseCurrency(wageString);
             DecimalFormat df = new DecimalFormat("#.##");
 
             if (activity.dataBase.isTodaysShift(activity.shift)){

@@ -28,7 +28,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -43,20 +42,17 @@ import catglo.com.deliveryDatabase.Wage;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.ListAddressHistoryActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.bankDrop.BankTillDropActivity;
 import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.Route;
 import catglo.com.deliverydroid.settings.SettingsActivity;
-import catglo.com.deliverydroid.shift.ShiftStartEndDayActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
 import catglo.com.deliverydroid.widgets.DragSortController;
 import catglo.com.deliverydroid.widgets.DragSortListView;
 import catglo.com.deliverydroid.widgets.DragSortListView.DragListener;
 import catglo.com.deliverydroid.widgets.DragSortListView.DropListener;
-
-import org.joda.time.DateTime;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -254,13 +250,13 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 
 	   	 if (showOrderCost) {
 	   		 costView.setVisibility(View.VISIBLE);
-	   		 costView.setText(Tools.getFormattedCurrency(order.cost));
+	   		 costView.setText(Utils.getFormattedCurrency(order.cost));
 	   	 }else{
 	   		 costView.setVisibility(View.GONE);
 	   	 }
 	   	 if (showLastTipAmount && order.tipTotalsForThisAddress.deliveries>0){
 	   		 lastTipThisAddress.setVisibility(View.VISIBLE);
-	   		 lastTipThisAddress.setText(Tools.getFormattedCurrency(order.tipTotalsForThisAddress.lastTip));
+	   		 lastTipThisAddress.setText(Utils.getFormattedCurrency(order.tipTotalsForThisAddress.lastTip));
 	   	 } else {
 	   		 lastTipThisAddress.setVisibility(View.GONE);
 	   	 }
@@ -299,11 +295,11 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	   	 }
 	   	 
 	   	 addressView.setText(order.address);
-	   	 timeView.setText(Tools.getFormattedTime(order.time));
+	   	 timeView.setText(Utils.getFormattedTime(order.time));
 	   	 if (Float.isNaN(order.tipTotalsForThisAddress.averageTip)) {
 	   		 tipView.setText("");
 	         } else {
-	   		 tipView.setText(Tools.getFormattedCurrency(order.tipTotalsForThisAddress.averageTip));
+	   		 tipView.setText(Utils.getFormattedCurrency(order.tipTotalsForThisAddress.averageTip));
 	   	 }
 	   	 
 	   	 
@@ -571,18 +567,18 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		
 		//If dualWage is true and the pay rate is = to the on road pay rate the hourlyPayButton. Hijack the button as a switch to in store rate.
   		Wage currentWage = dataBase.currentWage();
-  		float hourlyRateOnRoad = Tools.parseCurrency(sharedPreferences.getString("hourly_rate_on_road", "0"));
+  		float hourlyRateOnRoad = Utils.parseCurrency(sharedPreferences.getString("hourly_rate_on_road", "0"));
   		DecimalFormat df =  new DecimalFormat("#.##");
   		String onRoadWage = df.format(hourlyRateOnRoad);
   		String curWage = df.format(currentWage.wage);
-  		final float inStoreRate = Tools.parseCurrency(sharedPreferences.getString("hourly_rate", "0"));
+  		final float inStoreRate = Utils.parseCurrency(sharedPreferences.getString("hourly_rate", "0"));
 
   		//TODO: Bring back when we have good hourly pay for now just alwayse set the visibility to gone
         hourlyPayButton.setVisibility(View.GONE);
   		/*if (sharedPreferences.getBoolean("dual_wage", false) && onRoadWage.equalsIgnoreCase(curWage)){
 			isSwitchWageButton=true;
 			hourlyPayButton.setVisibility(View.VISIBLE);
-		//TODO:	hourlyPayButton.setText(getString(R.string.Set_Pay_Rate_To)+" "+ Tools.getFormattedCurrency(inStoreRate));
+		//TODO:	hourlyPayButton.setText(getString(R.string.Set_Pay_Rate_To)+" "+ Utils.getFormattedCurrency(inStoreRate));
 		} else {
 			if (sharedPreferences.getBoolean("pay_rate_button", false)){
 				hourlyPayButton.setVisibility(View.VISIBLE);
@@ -629,7 +625,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		TipTotalData tip = dataBase.getTipTotal(getActivity(),DataBase.Shift+"="+dataBase.getCurShift()+" AND "+DataBase.Payed+" >= 0",
 				"WHERE shifts.ID="+DataBase.TodaysShiftCount);
 		final float totalTipsMade = tip.payed-tip.cost;
-		driverEarnings.setText(Tools.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
+		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		
 		float dropAmount=0;
 		try {
@@ -667,7 +663,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 			        new Notification.Builder(getActivity())
 			        .setSmallIcon(R.drawable.icon)
 			        .setContentTitle("Make a drop")
-			        .setContentText("Cash on hand "+ Tools.getFormattedCurrency(cashOnHand));
+			        .setContentText("Cash on hand "+ Utils.getFormattedCurrency(cashOnHand));
 				// Creates an explicit intent for an Activity in your app
 				Intent resultIntent = new Intent(getActivity(), HomeScreenActivity.class);
 	
@@ -836,7 +832,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
     		//final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q="+storeAddress));
 			//startActivity(i);	
         	DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-        	activity.tools.navigateTo(storeAddress, activity);
+        	activity.getTools().navigateTo(storeAddress, activity);
         }});
         
         settings.setOnClickListener(new View.OnClickListener(){public void onClick(View v) {

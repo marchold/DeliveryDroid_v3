@@ -428,7 +428,7 @@
                 android:id="@+id/notesLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"/>
 
 
     </LinearLayout>
@@ -461,33 +461,35 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/notesThisOrder">
 
-        <Button
-                android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1"
-                android:drawableTop="@drawable/ic_cancel"
-                android:id="@+id/markUndeliverable"
-                android:text="@string/mark_undeliverable"
-                android:background="@color/transparent"/>
+        <LinearLayout android:id="@+id/markUndeliverable" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/ic_cancel" style="@style/droid_tool_icon_image"/>
+            <TextView android:id="@+id/markUndeliverableText" android:text="@string/mark_undeliverable" style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
 
-        <Button android:layout_height="match_parent" android:layout_width="match_parent"
-                android:drawableTop="@drawable/ic_edit"
-                android:id="@+id/editOrder"
-                style="@style/bottom_buttons_out_the_door"
-                android:text="@string/edit_order"/>
+        <LinearLayout android:id="@+id/editOrder" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/ic_edit" style="@style/droid_tool_icon_image"/>
+            <TextView android:text="@string/edit_nl_order" style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
 
-        <Button
-                style="@style/bottom_buttons_out_the_door"
-                android:drawableTop="@drawable/skip_backwards"
-                android:id="@+id/previousOrder"
-                android:layout_height="match_parent" android:layout_width="match_parent"
-                android:text="@string/previous_order"/>
+        <LinearLayout android:id="@+id/previousOrder" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/skip_backwards" style="@style/droid_tool_icon_image"/>
+            <TextView android:text="@string/previous_nl_order" style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/callStore" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/ic_home_phone" style="@style/droid_tool_icon_image"/>
+            <TextView android:text="@string/Call_nl_store" style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
+       <!--
 
         <Button
                 style="@style/bottom_buttons_out_the_door"
                 android:drawableTop="@drawable/ic_home_phone"
                 android:id="@+id/callStore"
-
-                android:text="@string/Call_store" android:layout_height="match_parent" android:layout_width="match_parent"/>
-
+                android:text="@string/Call_store"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"/>
+          -->
 
     </LinearLayout>
 

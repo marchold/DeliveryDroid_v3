@@ -9,12 +9,11 @@ import catglo.com.deliveryDatabase.Shift
 import catglo.com.deliveryDatabase.TipTotalData
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity
 import catglo.com.deliverydroid.R
-import catglo.com.deliverydroid.Tools
+import catglo.com.deliverydroid.Utils
 import kotlinx.android.synthetic.main.start_end_shift_form.*
 import kotlinx.android.synthetic.main.shift_start_end_activity.*
 
 import android.app.TimePickerDialog
-import android.content.DialogInterface
 import android.text.format.DateFormat
 import android.widget.Toast
 import com.alexzaitsev.meternumberpicker.MeterView
@@ -233,7 +232,7 @@ class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
             startingOdometer.setText("${shift.odometerAtShiftStart.toString()}km")
             endingOdometer.setText("${shift.odometerAtShiftEnd.toString()}km")
         }
-        moneyCollected.text = Tools.getFormattedCurrency(tips?.payed)
+        moneyCollected.text = Utils.getFormattedCurrency(tips?.payed)
 
         totalMilesDriven.text = (shift.odometerAtShiftEnd - shift.odometerAtShiftStart).toString()
 

@@ -4,9 +4,9 @@ package catglo.com.api
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.location.Criteria
-import android.location.Geocoder
-import android.location.LocationManager
+import android.location.*
+import android.os.Bundle
+import android.os.Looper
 import android.preference.PreferenceManager
 import catglo.com.deliveryDatabase.AddressInfo
 import com.google.android.gms.location.places.*
@@ -45,13 +45,35 @@ open class GoogleAddressSuggester(protected val context: Context, var resultList
 
     private var lastQuery: String = ""
 
+    fun completeLookup(searchAddress: String, locationManager : LocationManager, location: Location) {
+        val range = 0.2f //sharedPreferences.getFloat("dileveryRadius", 1f) //TODO: Make configurable!!
+        val addressInfoList = ArrayList<AddressInfo>()
+
+        var bounds = LatLngBounds(LatLng((location.latitude - range),(location.longitude - range)),
+            LatLng((location.latitude + range),(location.longitude + range)))
+
+        lastQuery = searchAddress
+
+        // Submit the query to the autocomplete API and retrieve a PendingResult that will contain the results when the query completes.
+        val typeFilter = AutocompleteFilter.Builder().setTypeFilter( AutocompleteFilter.TYPE_FILTER_ADDRESS or AutocompleteFilter.TYPE_FILTER_GEOCODE).build()
+        val predictor = AutocompletePredictor(searchAddress)
+        val results = predictor.getPredictions(bounds, typeFilter)
+
+        results.addOnSuccessListener { autocompletePredictions ->
+            resultListener?.let {
+                autocompletePredictions.forEach {prediction ->
+                    val addressString = prediction.getFullText(null)
+                    addressInfoList.add(AddressInfo(addressString.toString()))
+                }
+                it.commit(addressInfoList, searchAddress)
+            }
+            autocompletePredictions.release()
+        }
+    }
+
     @SuppressLint("MissingPermission")
     open fun lookup(searchAddress: String) {
 
-        val range = 0.2f //sharedPreferences.getFloat("dileveryRadius", 1f) //TODO: Make configurable!!
-
-
-        val addressInfoList = ArrayList<AddressInfo>()
         (context.getSystemService(Context.LOCATION_SERVICE) as LocationManager).run {
             val criteria = Criteria()
             val bestProvider = getBestProvider(criteria, false)
@@ -59,26 +81,25 @@ open class GoogleAddressSuggester(protected val context: Context, var resultList
 
 
             if (location != null) {
-                var bounds = LatLngBounds(LatLng((location.latitude - range),(location.longitude - range)),
-                                          LatLng((location.latitude + range),(location.longitude + range)))
-
-                lastQuery = searchAddress
-
-                // Submit the query to the autocomplete API and retrieve a PendingResult that will contain the results when the query completes.
-                val typeFilter = AutocompleteFilter.Builder().setTypeFilter( AutocompleteFilter.TYPE_FILTER_ADDRESS or AutocompleteFilter.TYPE_FILTER_GEOCODE).build()
-                val predictor = AutocompletePredictor(searchAddress)
-                val results = predictor.getPredictions(bounds, typeFilter)
-
-                results.addOnSuccessListener { autocompletePredictions ->
-                    resultListener?.let {
-                        autocompletePredictions.forEach {prediction ->
-                            val addressString = prediction.getFullText(null)
-                            addressInfoList.add(AddressInfo(addressString.toString()))
+                completeLookup(searchAddress,this,location)
+            } else {
+                val lm = this
+                requestSingleUpdate(bestProvider, object:LocationListener{
+                    override fun onLocationChanged(location: Location?) {
+                        if (location!=null){
+                            completeLookup(searchAddress,lm,location)
                         }
-                        it.commit(addressInfoList, searchAddress)
                     }
-                    autocompletePredictions.release()
-                }
+
+                    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+                    }
+
+                    override fun onProviderEnabled(provider: String?) {
+                    }
+
+                    override fun onProviderDisabled(provider: String?) {
+                    }
+                }, Looper.getMainLooper())
             }
         }
     }

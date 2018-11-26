@@ -15,7 +15,7 @@ import android.widget.TextView;
 import catglo.com.deliveryDatabase.*;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 
 
 import java.util.Calendar;
@@ -86,7 +86,7 @@ abstract public class SummaryBaseFragment extends Fragment {
         
 		deliveryTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
 			DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-			activity.tools.showTimeSliderDialog(deliveryTime,order.payedTime,null, false);
+			activity.getTools().showTimeSliderDialog(deliveryTime,order.payedTime,null, false);
 		    return true;
 		}});
 	        
@@ -95,13 +95,13 @@ abstract public class SummaryBaseFragment extends Fragment {
 		orderTime.setText(String.format("%tl:%tM %tp", calendar, calendar, calendar, calendar, calendar, calendar, calendar));
 		orderTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
 			DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-			activity.tools.showTimeSliderDialog(orderTime,order.time,null, false);
+			activity.getTools().showTimeSliderDialog(orderTime,order.time,null, false);
 		    return true;
 		}});
         
         notes.setText(order.notes);
         
-		price.setText(Tools.getFormattedCurrency(order.cost));
+		price.setText(Utils.getFormattedCurrency(order.cost));
 			
 	
 			

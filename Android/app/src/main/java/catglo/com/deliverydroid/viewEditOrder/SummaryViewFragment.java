@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 
 public class SummaryViewFragment extends SummaryBaseFragment {
 	
@@ -68,7 +68,7 @@ public class SummaryViewFragment extends SummaryBaseFragment {
 				mileageLabel.setVisibility(View.VISIBLE);
 				mileagePay.setVisibility(View.VISIBLE);
 				mileageLabel.setText(label);
-				mileagePay.setText(Tools.getFormattedCurrency(amount));
+				mileagePay.setText(Utils.getFormattedCurrency(amount));
 			}
 			
 		} catch (NumberFormatException e){
@@ -105,7 +105,7 @@ public class SummaryViewFragment extends SummaryBaseFragment {
         
         //Payment
         if (order.payed>=0 && order.paymentType>=0 && order.paymentType <= 4){
-        	paymentAmount.setText(Tools.getFormattedCurrency(order.payed));
+        	paymentAmount.setText(Utils.getFormattedCurrency(order.payed));
         	paymentType.setText(items[order.paymentType+1]);
         	paymentType.setVisibility(View.VISIBLE);
         } else {
@@ -113,7 +113,7 @@ public class SummaryViewFragment extends SummaryBaseFragment {
         	paymentType.setVisibility(View.INVISIBLE);
         }
         if (order.payed2>0 && order.paymentType2>=0 && order.paymentType2 <= 4){
-        	paymentAmountSplit.setText(Tools.getFormattedCurrency(order.payed2));
+        	paymentAmountSplit.setText(Utils.getFormattedCurrency(order.payed2));
         	paymentTypeSplit.setText(items[order.paymentType2+1]);
         } else {
         	paymentAmountSplit.setVisibility(View.INVISIBLE);

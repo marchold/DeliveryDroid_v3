@@ -14,11 +14,11 @@ import catglo.com.deliveryDatabase.DataBase;
 public class DeliveryDroidBaseActionBarActivity extends AppCompatActivity implements Tooled {
 
     @Override
-    public Tools getTools() {
+    public Utils getUtils() {
         return tools;
     }
 
-    public Tools tools = new Tools();
+    public Utils tools = new Utils();
     public DataBase dataBase = null;
     public SharedPreferences sharedPreferences;
 
