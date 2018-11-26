@@ -15,7 +15,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import catglo.com.deliveryDatabase.Order;
-import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
+
+import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.tabs.TabLayout;
@@ -23,7 +24,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
+public class NewOrderActivity extends DeliveryDroidBaseActivity
                                  implements ButtonPadFragment.ButtonPadNextListener, TabLayout.BaseOnTabSelectedListener {
 
 
@@ -53,7 +54,7 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     ArrayList<Pages> viewPagerPages = new ArrayList<Pages>(6);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_new_order_acticity);
 

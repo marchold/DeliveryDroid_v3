@@ -147,19 +147,19 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
 
         orderAddress.startSuggestor(activity.dataBase);
 
-        activity.tools.initOptionalCheckBox(outOfTown1,
+        activity.getUtils().initOptionalCheckBox(outOfTown1,
                 "per_out_of_town_delivery",       //amount pref key
                 "per_out_of_town_delivery_label1",//label pref key
                 order.outOfTown1);
-        activity.tools.initOptionalCheckBox(outOfTown2,
+        activity.getUtils().initOptionalCheckBox(outOfTown2,
                 "per_out_of_town_delivery2",//amount
                 "per_out_of_town_delivery_label2",//label
                 order.outOfTown2);
-        activity.tools.initOptionalCheckBox(outOfTown3,
+        activity.getUtils().initOptionalCheckBox(outOfTown3,
                 "per_out_of_town_delivery3",
                 "per_out_of_town_delivery_label3",
                 order.outOfTown3);
-        activity.tools.initOptionalCheckBox(outOfTown4,
+        activity.getUtils().initOptionalCheckBox(outOfTown4,
                 "per_out_of_town_delivery4",
                 "per_out_of_town_delivery_label4",
                 order.outOfTown4);
@@ -253,7 +253,7 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
                 @Override
                 public void onClick(View v) {
                     NewOrderActivity activity = ((NewOrderActivity) getActivity());
-                    activity.tools.showTimeSliderDialog(orderTime, new MutableDateTime(order.time), new DialogInterface.OnDismissListener() {
+                    activity.getUtils().showTimeSliderDialog(orderTime, new MutableDateTime(order.time), new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
                             //TODO: CHECKCHECK do we need to set this

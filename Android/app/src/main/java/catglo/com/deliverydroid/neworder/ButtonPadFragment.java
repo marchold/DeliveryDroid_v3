@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.widgets.OnTextChangedListener;
@@ -138,7 +137,7 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
 
 
 
-        DeliveryDroidBaseActionBarActivity activity = (DeliveryDroidBaseActionBarActivity)getActivity();
+        DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
 
         if (getListAdapter()!=null){
             list.setAdapter(getListAdapter());
@@ -170,8 +169,8 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
                    edit.setFocusable(true);
                    edit.requestFocus();
                   // buttons.setVisibility(View.GONE);
-                   DeliveryDroidBaseActionBarActivity activity = (DeliveryDroidBaseActionBarActivity) getActivity();
-                   activity.tools.showOnScreenKeyboard(edit);
+                   DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity) getActivity();
+                   activity.getUtils().showOnScreenKeyboard(edit);
                }
            }
        });

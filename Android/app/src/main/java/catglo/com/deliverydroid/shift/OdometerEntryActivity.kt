@@ -5,11 +5,11 @@ import android.os.Bundle
 
 
 import catglo.com.deliveryDatabase.Shift
-import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity
+import catglo.com.deliverydroid.DeliveryDroidBaseActivity
 import catglo.com.deliverydroid.R
 import kotlinx.android.synthetic.main.odometer_entry_activity.*
 
-class OdometerEntryActivity : DeliveryDroidBaseActionBarActivity() {
+class OdometerEntryActivity : DeliveryDroidBaseActivity() {
     private var dataBasePrimaryKey: Int = 0
     private var isStartShift: Boolean = false
     private lateinit var shift: Shift

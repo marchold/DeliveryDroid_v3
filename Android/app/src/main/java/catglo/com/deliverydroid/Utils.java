@@ -365,27 +365,6 @@ public class Utils {
 		showTimeSliderDialog(field, time, null);
 	}
 
-    public final void setKeyboardListener(final DeliveryDroidBaseActivity.OnKeyboardVisibilityListener listener) {
-        final View activityRootView = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-		    private boolean wasOpened;
-   		    private final Rect r = new Rect();
-
-            @Override
-		    public void onGlobalLayout() {
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
-                //Log.i("MARC", "height dif " + heightDiff);
-                boolean isOpen = !(heightDiff < 200);
-                if (isOpen == wasOpened) {
-                    return;
-                }
-                wasOpened = isOpen;
-                listener.onVisibilityChanged(isOpen);
-            }
-	    });
-    }
 
     public DecimalFormat currency = new DecimalFormat("#0.00");
 

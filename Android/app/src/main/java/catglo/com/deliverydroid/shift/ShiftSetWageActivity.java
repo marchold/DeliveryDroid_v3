@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 
 import catglo.com.deliveryDatabase.Shift;
-import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
+import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.neworder.ButtonPadFragment;
 
-public class ShiftSetWageActivity extends DeliveryDroidBaseActionBarActivity implements ButtonPadFragment.ButtonPadNextListener {
+public class ShiftSetWageActivity extends DeliveryDroidBaseActivity implements ButtonPadFragment.ButtonPadNextListener {
     public int whichShift;
     public Shift shift;
 

@@ -2,24 +2,16 @@ package catglo.com
 
 import android.app.Service
 import android.content.Intent
-import android.net.Uri
 import android.os.Binder
 import android.os.Environment
 import android.os.IBinder
 import android.util.Log
 import com.frostwire.jlibtorrent.Priority
 import com.frostwire.jlibtorrent.TorrentHandle
-import com.frostwire.jlibtorrent.TorrentInfo
 import com.masterwok.simpletorrentandroid.TorrentSession
 import com.masterwok.simpletorrentandroid.TorrentSessionOptions
 import com.masterwok.simpletorrentandroid.contracts.TorrentSessionListener
 import com.masterwok.simpletorrentandroid.models.TorrentSessionStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
 
 class MapFileSharingService : Service(),TorrentSessionListener {
 
@@ -110,18 +102,18 @@ class MapFileSharingService : Service(),TorrentSessionListener {
     }
 
 
-    private val myBinder = MyLocalBinder()
+    private val myBinder = LocalBinder()
     override fun onBind(intent: Intent): IBinder? {
         return myBinder
     }
-    inner class MyLocalBinder : Binder() {
+    inner class LocalBinder : Binder() {
         fun getService() : MapFileSharingService {
             return this@MapFileSharingService
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
+        return Service.START_STICKY
     }
 
     override fun onCreate() {
