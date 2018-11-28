@@ -3,6 +3,7 @@ package catglo.com.deliverydroid
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import catglo.com.deliverydroid.homeScreen.DownloadableMap
 
 enum class MapDownloadOption {
     none,
@@ -12,6 +13,33 @@ enum class MapDownloadOption {
 }
 
 class Settings(context: Context) {
+
+    fun addMapDownload(map: DownloadableMap) {
+        HashSet<String>(prefs.getStringSet("MapDownloadFiles",HashSet<String>())).let {
+            it.add(map.path)
+            prefs.edit().run {
+                putStringSet("MapDownloadFiles",it)
+                apply()
+            }
+        }
+    }
+
+    fun removeMapDownload(map: DownloadableMap) {
+        HashSet<String>(prefs.getStringSet("MapDownloadFiles",HashSet<String>())).let {
+            it.remove(map.path)
+            prefs.edit().run {
+                putStringSet("MapDownloadFiles",it)
+                apply()
+            }
+        }
+    }
+
+
+    fun mapDownloads() : Set<String> {
+        return prefs.getStringSet("MapDownloadFiles",HashSet<String>())
+    }
+
+
     val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     var mapDownloadOption : MapDownloadOption

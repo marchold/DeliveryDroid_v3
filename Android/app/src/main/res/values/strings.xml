@@ -274,8 +274,8 @@
     <string name="odometerTotal">Odometer total</string>
     <string name="creditsTitle">Credits</string>
     <string name="creditsBody">Many thanks to the delivery drivers who have contributed to the design\n\nThis app was
-        inspired by:\nMatt Henry\n\n Since then many drivers have contributed:\nNeil Sizemore\nMichael Barron
-        Jr\nEssohlath Akadje\nSteven Poekert\nLes Prince\nCarlton Clay\nChris Garcia\nSarah Sutton\nFoum Recei\nAl
+        inspired by:\nMatt Henry\n\n Since then many drivers have contributed:Thomas Roach\nChris Garcia\nNeil Sizemore\nMichael Barron
+        Jr\nEssohlath Akadje\nSteven Poekert\nLes Prince\nCarlton Clay\nSarah Sutton\nFoum Recei\nAl
         Dolega\nJoshua McBride\nJason Soltan\nTyler Allen\nManuel Villa\nRobert Royce\nJoseph Ford\n
     </string>
     <string name="DeliveryZipCodes">Delivery Zip Codes</string>
@@ -770,15 +770,12 @@
     <string name="mark_undeliverable">Mark Undeliverable</string>
     <string name="Invalid_address">Invalid address</string>
     <string name="delivery_droid_keeps_all_of_its_order_and_shift_data_a_database_called_deliverydata_sqlite_you_can_upload_a_copy_your_data_to_google_drive_for_backup">
-        Delivery droid keeps all of its order and shift data a database called DeliveryData.SQLite. You can upload a
-        copy of your data to Google Drive for safe keeping
+        Backup the order and shift data by uploading a copy of the DeliveryData.SQLite database to Google Drive
     </string>
     <string name="copy_database_nto_google_drive">Copy Database To Google Drive</string>
     <string name="restore_database_nfrom_google_drive">Restore Database From Google Drive</string>
     <string name="be_careful_with_the_restore_option_as_it_will_replace_your_current_data_with_the_backup_on_google_drive_thereby_deleting_whats_currently_on_the_phone">
-        Be careful with the restore option as it will replace all the Delivery Droid data on your phone with a backup
-        from Google Drive thereby
-        deleting whats currently on the phone.
+        Be careful with the restore option as it will replace your current data with the backup on Google Drive thereby deleting what\'s currently on the phone
     </string>
 
     <string name="edit_order">Edit Order</string>
@@ -846,6 +843,8 @@
     <string name="choose_map">Choose Map</string>
     <string name="csv_exoprt">CSV Exoprt</string>
     <string name="configure_cash_owed_to_store">Configure Cash Owed To Store</string>
+    <string name="make_a_drop">Make a drop</string>
+    <string name="cash_on_hand">Cash on hand %s</string>
 
 </resources>
 

@@ -1,12 +1,6 @@
 package catglo.com.deliverydroid.outTheDoor;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
+import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,11 +29,13 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.DataBase.NoteEntry;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
+import catglo.com.deliverydroid.DeliveryDroidApplication;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Utils;
@@ -137,7 +133,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				c.append(String.valueOf(cost));
 				c.replace(0, soFar.length(), soFar);
 				try {
-					startValue = Float.parseFloat(c.toString());
+					startValue = Utils.parseCurrency(c.toString());
 				} catch (NumberFormatException e){
 					startValue = 0;
 				}
@@ -482,13 +478,14 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
             public void onClick(View v) {
                 if (orderCounter != 0) {
                     try {
-                        orders.get(orderCounter).payed = Float.parseFloat(paymentTotal.getText().toString());
+                        orders.get(orderCounter).payed = Utils.parseCurrency(paymentTotal.getText().toString());
                     } catch (final NumberFormatException e) {
                         orders.get(orderCounter).payed = 0;
                     }
                     orderCounter--;
                     messageHandler.post(updateOrderTimers);
                     paymentTotal.setText("" + orders.get(orderCounter).payed);
+                    tipTotal.setText(""+(orders.get(orderCounter).payed-orders.get(orderCounter).cost));
                     next.setText("Next");
                     next.setVisibility(View.VISIBLE);
                     if (orderCounter ==0) {
@@ -543,11 +540,11 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 					float payment = 0;
 					float payment2 = 0;
 					try {
-						payment = Float.valueOf(paymentTotal.getText().toString());
+						payment = Utils.parseCurrency(paymentTotal.getText().toString());
 					} catch (final NumberFormatException e) {
 					}
 					try {
-						payment2 = Float.valueOf(paymentTotal2.getText().toString());
+						payment2 = Utils.parseCurrency(paymentTotal2.getText().toString());
 					} catch (final NumberFormatException e) {
 					}
 
@@ -738,13 +735,25 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 	@Override
 	protected void onPause() {
+
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		if (orderCounter < orderCount) {
-			Notification.Builder mBuilder = new Notification.Builder(this).setSmallIcon(R.drawable.icon).setContentTitle("Pending Deliveries").setContentText(orders.get(orderCounter).address);
+			String chanelId = (((DeliveryDroidApplication)getApplication()).getNotificationChannelId());
+		    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.icon)
+                    .setContentTitle("Pending Deliveries")
+                    .setContentText(orders.get(orderCounter).address)
+                    .setChannelId(chanelId);
 			TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 			stackBuilder.addParentStack(OutTheDoorActivity.class);
 			stackBuilder.addNextIntent(new Intent(this, OutTheDoorActivity.class));
 			mBuilder.setContentIntent(stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                CharSequence name = getString(R.string.app_name);// The user-visible name of the channel.
+                NotificationChannel mChannel = new NotificationChannel(chanelId, name, NotificationManager.IMPORTANCE_HIGH);
+                mNotificationManager.createNotificationChannel(mChannel);
+            }
 			mNotificationManager.notify(HomeScreenActivity.DELIVERY_NOTIFICATION, mBuilder.build());
 		} else {
 			mNotificationManager.cancel(HomeScreenActivity.DELIVERY_NOTIFICATION);
@@ -958,7 +967,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		float thisOrderTip = 0;
 		float thisOrderPayed = 0;
 		try {
-			thisOrderPayed = Float.parseFloat(paymentTotal.getText().toString());
+			thisOrderPayed = Utils.parseCurrency(paymentTotal.getText().toString());
 			thisOrderTip = thisOrderPayed - orders.get(orderCounter).cost;
 			if (thisOrderTip < 0)
 				thisOrderTip = 0;
@@ -976,7 +985,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		final String MilagePayPerRun = getSharedPreferences().getString("per_run_pay", "0");
 
 		try {
-			float f = Float.parseFloat(MilagePayPerTrip);
+			float f = Utils.parseCurrency(MilagePayPerTrip);
 			if (f > 0) {
 				thisTripMileage += f;
 			}
@@ -995,7 +1004,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		if (orders.get(orderCounter).outOfTown1) {
 			try {
-				float f = Float.parseFloat(MilagePayPerOutOfTownDelivery);
+				float f = Utils.parseCurrency(MilagePayPerOutOfTownDelivery);
 				if (f > 0) {
 					thisTripMileage += f;
 				}
@@ -1005,7 +1014,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		if (startNewRun) {
 			try {
-				float f = Float.parseFloat(MilagePayPerRun);
+				float f = Utils.parseCurrency(MilagePayPerRun);
 				if (f > 0) {
 					thisTripMileage += f;
 				}
@@ -1049,7 +1058,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		String perRunPay = getSharedPreferences().getString("per_run_pay", "0");
 		float prp = 0;
 		try {
-			prp = Float.parseFloat(perRunPay);
+			prp = Utils.parseCurrency(perRunPay);
 		} catch (NumberFormatException e) {
 		}
 

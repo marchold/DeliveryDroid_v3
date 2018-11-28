@@ -38,12 +38,12 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.backup_to_google_drive_activity)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+      //  supportActionBar?.setDisplayHomeAsUpEnabled(true)
         signIn()
         backup?.setOnClickListener { saveFileToDrive() }
         restore?.setOnClickListener { restoreBackup() }
 
-    //    contentLoadingProgressBar.show()
+        contentLoadingProgressBar.show()
         backup.visibility = View.GONE
         restore.visibility = View.GONE
     }
@@ -111,7 +111,7 @@ class GoogleDriveBackupRestoreActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-  //      contentLoadingProgressBar.hide()
+        contentLoadingProgressBar.hide()
         backup.visibility = View.VISIBLE
         restore.visibility = View.VISIBLE
         when (requestCode) {

@@ -8,10 +8,13 @@ import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import catglo.com.deliverydroid.DeliveryDroidBaseActivity
 import catglo.com.deliverydroid.R
+import catglo.com.deliverydroid.Settings
 import com.frostwire.jlibtorrent.TorrentInfo
 import kotlinx.android.synthetic.main.choose_download_activity.*
 import kotlinx.coroutines.Dispatchers
@@ -25,9 +28,10 @@ data class DownloadableMap(val isFolder:Boolean,val title:String, val path: Stri
 
 class DownloadableMapCell(view: View, map: DownloadableMap) : RecyclerView.ViewHolder(view){
     val title = view.findViewById<TextView>(android.R.id.text1)!!
+    val icon = view.findViewById<ImageView>(R.id.icon)!!
 }
 
-class ChooseDownloadActivity : AppCompatActivity() {
+class ChooseDownloadActivity : DeliveryDroidBaseActivity() {
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,7 +125,7 @@ class DownloadableAdapter(val context: Context, val maps : ArrayList<Downloadabl
         level=0
     }
     override fun onCreateViewHolder(view: ViewGroup, position: Int): DownloadableMapCell {
-        return DownloadableMapCell(View.inflate(context,android.R.layout.simple_list_item_1,null),mapList[position])
+        return DownloadableMapCell(View.inflate(context,R.layout.map_download_list_option,null),mapList[position])
     }
 
     override fun getItemCount(): Int {
@@ -134,6 +138,7 @@ class DownloadableAdapter(val context: Context, val maps : ArrayList<Downloadabl
         cell.title.text = map.title
         if (map.isFolder)
         {
+            cell.icon.setImageDrawable(context.getDrawable(R.drawable.folder))
             cell.itemView.setOnClickListener {
                 mapList = map.list!!
                 notifyDataSetChanged()
@@ -142,8 +147,22 @@ class DownloadableAdapter(val context: Context, val maps : ArrayList<Downloadabl
         }
         else
         {
-            cell.itemView.setOnClickListener {
+            if (Settings(context).mapDownloads().contains(map.path)) {
+                cell.icon.setImageDrawable(context.getDrawable(R.drawable.map_minus))
+            } else {
+                cell.icon.setImageDrawable(context.getDrawable(R.drawable.map_add))
+            }
 
+
+            cell.itemView.setOnClickListener {
+                Settings(context).run {
+                    if (mapDownloads().contains(map.path)) {
+                        removeMapDownload(map)
+                    } else {
+                        addMapDownload(map)
+                    }
+                }
+                //TODO: Send a message to the service about the change
             }
         }
     }

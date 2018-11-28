@@ -15,5 +15,7 @@ class DeliveryDroidApplication : Application() {
         JodaTimeAndroid.init(this)
     }
 
+    val notificationChannelId = "my_channel_01"
+
 
 }

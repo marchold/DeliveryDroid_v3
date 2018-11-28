@@ -1,9 +1,5 @@
 package catglo.com.deliverydroid.homeScreen;
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
+import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -34,15 +30,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.ListFragment;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
 import catglo.com.deliveryDatabase.Wage;
-import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
-import catglo.com.deliverydroid.ListAddressHistoryActivity;
-import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Utils;
+import catglo.com.deliverydroid.*;
 import catglo.com.deliverydroid.bankDrop.BankTillDropActivity;
 import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.Route;
@@ -659,12 +653,23 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 				RingtoneManager.getRingtone(getActivity().getApplicationContext(),RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)).play();
 			}
 			if (sharedPreferences.getBoolean("dropAlarmSystemNotification", false)){
-				Notification.Builder mBuilder =
-			        new Notification.Builder(getActivity())
+                String chanelId = (((DeliveryDroidApplication)getActivity().getApplication()).getNotificationChannelId());
+
+                NotificationCompat.Builder mBuilder =
+			        new NotificationCompat.Builder(getActivity())
 			        .setSmallIcon(R.drawable.icon)
-			        .setContentTitle("Make a drop")
-			        .setContentText("Cash on hand "+ Utils.getFormattedCurrency(cashOnHand));
+			        .setContentTitle(getString(R.string.make_a_drop))
+			        .setContentText(String.format(getString(R.string.cash_on_hand), Utils.getFormattedCurrency(cashOnHand)))
+                    .setChannelId(chanelId);
 				// Creates an explicit intent for an Activity in your app
+
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    CharSequence name = getString(R.string.app_name);// The user-visible name of the channel.
+                    NotificationChannel mChannel = new NotificationChannel(chanelId, name, NotificationManager.IMPORTANCE_HIGH);
+                    mNotificationManager.createNotificationChannel(mChannel);
+                }
+
 				Intent resultIntent = new Intent(getActivity(), HomeScreenActivity.class);
 	
 				// The stack builder object will contain an artificial back stack for the
