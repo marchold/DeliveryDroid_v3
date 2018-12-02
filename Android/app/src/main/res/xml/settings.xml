@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto">
+                                      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.PreferenceCategory android:title="@string/Feedback">
         <catglo.com.deliverydroid.settings.SettingsEmailMe
@@ -186,23 +186,23 @@
                 </androidx.preference.PreferenceScreen>
             </androidx.preference.PreferenceScreen>
         </androidx.preference.PreferenceScreen>
-    <!--
-         <androidx.preference.PreferenceScreen
-                 android:icon="@drawable/hourly_pay"
-                 android:summary="@string/set_amount_per_hour"
-                 android:title="@string/Shifts_and_Hours">
+        <!--
+             <androidx.preference.PreferenceScreen
+                     android:icon="@drawable/hourly_pay"
+                     android:summary="@string/set_amount_per_hour"
+                     android:title="@string/Shifts_and_Hours">
 
-             <CheckBoxPreference
-                    android:defaultValue="true"
-                    android:key="track_odometer"
-                    android:summary="@string/track_odometer_summary"
-                    android:title="@string/track_odometer"/>
+                 <CheckBoxPreference
+                        android:defaultValue="true"
+                        android:key="track_odometer"
+                        android:summary="@string/track_odometer_summary"
+                        android:title="@string/track_odometer"/>
 
-             <CheckBoxPreference
-                    android:key="estimate_hours_from_orders"
-                    android:summary="@string/estimate_hours_from_orders_summary"
-                    android:title="@string/estimate_hours_from_orders" />
-                -->
+                 <CheckBoxPreference
+                        android:key="estimate_hours_from_orders"
+                        android:summary="@string/estimate_hours_from_orders_summary"
+                        android:title="@string/estimate_hours_from_orders" />
+                    -->
 
         <!--    <androidx.preference.PreferenceCategory android:title="@string/hourly_pay">
 
@@ -229,92 +229,90 @@
                          android:title="@string/hourly_pay_rate" />
                  -->
 
-                <androidx.preference.EditTextPreference
-                        android:icon="@drawable/hourly_pay"
-                        android:dialogTitle="@string/Pay_rate"
-                        android:inputType="numberDecimal"
-                        android:key="hourly_rate"
-                        android:numeric="decimal"
-                        android:summary="@string/hourly_pay_rate"
-                        android:title="@string/Pay_rate"/>
+        <androidx.preference.EditTextPreference
+                android:icon="@drawable/hourly_pay"
+                android:dialogTitle="@string/Pay_rate"
+                android:inputType="numberDecimal"
+                android:key="hourly_rate"
+                android:numeric="decimal"
+                android:summary="@string/hourly_pay_rate"
+                android:title="@string/Pay_rate"/>
 
 
+        <!--
+        We should bring back dual wage once we have a really good wage management system in place.
+        For now its just a buggy thing.
+
+                        <CheckBoxPreference
+                                android:key="dual_wage"
+                                android:summary="@string/dual_wage_summary"
+                                android:title="@string/Dual_Wage"/>
+
+                        <EditTextPreference
+                                android:dependency="dual_wage"
+                                android:dialogMessage="@string/on_road_rate_dailog_message"
+                                android:dialogTitle="@string/On_road_hourly_rate"
+                                android:key="hourly_rate_on_road"
+                                android:summary="@string/on_road_hourly_rate_summary"
+                                android:title="@string/On_road_hourly_rate"/>
+
+                        <CheckBoxPreference
+                                android:dependency="dual_wage"
+                                android:key="pay_rate_button"
+                                android:summary="@string/pay_rate_button_summary"
+                                android:title="@string/pay_rate_button"/>
+
+                        <CheckBoxPreference
+                                android:dependency="dual_wage"
+                                android:key="switch_on_out_the_door"
+                                android:summary="@string/switch_out_the_door_summary"
+                                android:title="@string/switch_on_out_the_door"/>
 
 
-                <!--
-                We should bring back dual wage once we have a really good wage management system in place.
-                For now its just a buggy thing.
-
-                                <CheckBoxPreference
-                                        android:key="dual_wage"
-                                        android:summary="@string/dual_wage_summary"
-                                        android:title="@string/Dual_Wage"/>
-
-                                <EditTextPreference
-                                        android:dependency="dual_wage"
-                                        android:dialogMessage="@string/on_road_rate_dailog_message"
-                                        android:dialogTitle="@string/On_road_hourly_rate"
-                                        android:key="hourly_rate_on_road"
-                                        android:summary="@string/on_road_hourly_rate_summary"
-                                        android:title="@string/On_road_hourly_rate"/>
-
-                                <CheckBoxPreference
-                                        android:dependency="dual_wage"
-                                        android:key="pay_rate_button"
-                                        android:summary="@string/pay_rate_button_summary"
-                                        android:title="@string/pay_rate_button"/>
-
-                                <CheckBoxPreference
-                                        android:dependency="dual_wage"
-                                        android:key="switch_on_out_the_door"
-                                        android:summary="@string/switch_out_the_door_summary"
-                                        android:title="@string/switch_on_out_the_door"/>
-
-
-                                <CheckBoxPreference
-                                        android:dependency="dual_wage"
-                                        android:key="pay_rate_location_aware"
-                                        android:summary="@string/location_aware_setting_summary"
-                                        android:title="@string/Location_Aware"/>
+                        <CheckBoxPreference
+                                android:dependency="dual_wage"
+                                android:key="pay_rate_location_aware"
+                                android:summary="@string/location_aware_setting_summary"
+                                android:title="@string/Location_Aware"/>
 
 
 
 
 
-                <EditTextPreference
-                        android:defaultValue="2"
-                        android:dependency="pay_rate_location_aware"
-                        android:dialogTitle="@string/Hours_GPS_on"
-                        android:inputType="phone"
-                        android:key="location_aware_stay_on_hours"
-                        android:summary="@string/Hours_GPS_on_summary"
-                        android:title="@string/Hours_GPS_on"/>
+        <EditTextPreference
+                android:defaultValue="2"
+                android:dependency="pay_rate_location_aware"
+                android:dialogTitle="@string/Hours_GPS_on"
+                android:inputType="phone"
+                android:key="location_aware_stay_on_hours"
+                android:summary="@string/Hours_GPS_on_summary"
+                android:title="@string/Hours_GPS_on"/>
 
-                <EditTextPreference
-                        android:defaultValue="50"
-                        android:dependency="pay_rate_location_aware"
-                        android:dialogMessage="@string/Radius_Arrive_Store_summary"
-                        android:dialogTitle="@string/Radius_Arrive_Store"
-                        android:inputType="phone"
-                        android:key="location_aware_leave_store_radius"
-                        android:summary="@string/Radius_Arrive_Store_summary"
-                        android:title="@string/Radius_Arrive_Store"/>
-
-
-                <EditTextPreference
-                        android:defaultValue="50"
-                        android:dependency="pay_rate_location_aware"
-                        android:dialogMessage="@string/Radius_Leave_Store_summary"
-                        android:dialogTitle="@string/Radius_Leave_Store"
-                        android:inputType="phone"
-                        android:key="location_aware_enter_store_radius"
-                        android:summary="@string/Radius_Leave_Store_summary"
-                        android:title="@string/Radius_Leave_Store"/>
+        <EditTextPreference
+                android:defaultValue="50"
+                android:dependency="pay_rate_location_aware"
+                android:dialogMessage="@string/Radius_Arrive_Store_summary"
+                android:dialogTitle="@string/Radius_Arrive_Store"
+                android:inputType="phone"
+                android:key="location_aware_leave_store_radius"
+                android:summary="@string/Radius_Arrive_Store_summary"
+                android:title="@string/Radius_Arrive_Store"/>
 
 
-            </androidx.preference.PreferenceCategory>
+        <EditTextPreference
+                android:defaultValue="50"
+                android:dependency="pay_rate_location_aware"
+                android:dialogMessage="@string/Radius_Leave_Store_summary"
+                android:dialogTitle="@string/Radius_Leave_Store"
+                android:inputType="phone"
+                android:key="location_aware_enter_store_radius"
+                android:summary="@string/Radius_Leave_Store_summary"
+                android:title="@string/Radius_Leave_Store"/>
 
-        </androidx.preference.PreferenceScreen> -->
+
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen> -->
 
         <androidx.preference.ListPreference
                 android:defaultValue="2"
@@ -338,13 +336,17 @@
         <androidx.preference.PreferenceScreen
                 android:icon="@drawable/home_screen_settings_icon"
                 android:summary=""
+                android:key="home_screen"
                 android:title="Home Screen">
+
+            <!-- We should bring back route optimization when we have a good offline routing engine back end
 
             <androidx.preference.CheckBoxPreference
                     android:icon="@drawable/calculate_rout_time"
                     android:key="calculateRouteTimes"
                     android:summary="@string/round_trip_settings_summary"
                     android:title="Route Optimization"/>
+-->
 
             <androidx.preference.PreferenceScreen
                     android:icon="@drawable/store_address"
@@ -552,7 +554,9 @@
     <androidx.preference.PreferenceCategory android:title="Other">
 
 
-        <androidx.preference.PreferenceScreen key="db_settings" android:title="Database Backup and Restore" android:icon="@drawable/settings_database" android:key="db_backup_and_restore">
+        <androidx.preference.PreferenceScreen key="db_settings" android:title="Database Backup and Restore"
+                                              android:icon="@drawable/settings_database"
+                                              android:key="db_backup_and_restore">
 
             <androidx.preference.Preference
                     android:icon="@drawable/ic_drive_file"
@@ -561,7 +565,8 @@
 
             </androidx.preference.Preference>
 
-            <androidx.preference.PreferenceScreen key="manual_backup" android:icon="@drawable/ic_save_settings" android:title="Manual File Backup">
+            <androidx.preference.PreferenceScreen key="manual_backup" android:icon="@drawable/ic_save_settings"
+                                                  android:title="Manual File Backup">
 
 
                 <androidx.preference.Preference
@@ -570,8 +575,9 @@
                         android:summary="Make a copy of your database file and share it"
                         android:title="Backup Data File"/>
 
-                <androidx.preference.PreferenceScreen id="where_db_stored" android:title="@string/where_db_is_stored" android:icon="@drawable/lock_question"
-                                  android:summary="Control privacy vs. easy backup access by storing the app data in private or external or sd-card for easy backup. "
+                <androidx.preference.PreferenceScreen id="where_db_stored" android:title="@string/where_db_is_stored"
+                                                      android:icon="@drawable/lock_question"
+                                                      android:summary="Control privacy vs. easy backup access by storing the app data in private or external or sd-card for easy backup. "
                 >
 
                     <catglo.com.deliverydroid.settings.SettingsHelpDialog

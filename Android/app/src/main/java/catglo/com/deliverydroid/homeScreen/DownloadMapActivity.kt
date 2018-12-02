@@ -1,46 +1,39 @@
 package catglo.com.deliverydroid.homeScreen
 
-import android.Manifest
+
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AlertDialog
 import android.content.Context
-import android.content.pm.PackageManager
+import android.content.Intent
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat.checkSelfPermission
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.recyclerview.widget.RecyclerView
+import catglo.com.deliverydroid.DeliveryDroidBaseActivity
+import catglo.com.deliverydroid.DownloadedMap
+import catglo.com.deliverydroid.MapDownloadOption.*
+import catglo.com.deliverydroid.R
+import catglo.com.deliverydroid.Settings
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.download_map_activity.*
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.map.reader.MapFile
-import java.io.*
-import android.content.Intent
-import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.net.Uri
-import android.view.*
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.checkSelfPermission
-import androidx.core.app.ActivityCompat.requestPermissions
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
-import catglo.com.deliverydroid.*
-import catglo.com.deliverydroid.MapDownloadOption.*
-import com.frostwire.jlibtorrent.Priority
-import com.frostwire.jlibtorrent.TorrentHandle
-import com.frostwire.jlibtorrent.TorrentInfo
-import com.masterwok.simpletorrentandroid.TorrentSession
-import com.masterwok.simpletorrentandroid.TorrentSessionOptions
-import com.masterwok.simpletorrentandroid.contracts.TorrentSessionListener
-import com.masterwok.simpletorrentandroid.models.TorrentSessionStatus
-
-
-import kotlinx.coroutines.*
-import java.net.URL
+import org.mapsforge.map.reader.header.MapFileException
+import java.io.File
 
 
 fun Location.latLong(): LatLong {
@@ -204,8 +197,10 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
             mapFilesList.forEach { downloadedMap ->
                 //Load the map files and verify the bounds
                 if (downloadedMap.mapFile != null) {
-                    val mapFile = MapFile(downloadedMap.mapFile)
-                    downloadedMap.bounds = mapFile.boundingBox()
+                    try {
+                        val mapFile = MapFile(downloadedMap.mapFile)
+                        downloadedMap.bounds = mapFile.boundingBox()
+                    } catch (e: MapFileException) {e.printStackTrace()}
                 }
             }
             DownloadedMap.saveMapsList(this, mapFilesList)
