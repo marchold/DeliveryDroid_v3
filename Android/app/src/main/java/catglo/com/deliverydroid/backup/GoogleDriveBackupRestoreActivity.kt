@@ -2,7 +2,6 @@ package catglo.com.deliverydroid.backup
 
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
@@ -10,6 +9,7 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import catglo.com.deliverydroid.BuildConfig
 import catglo.com.deliverydroid.R

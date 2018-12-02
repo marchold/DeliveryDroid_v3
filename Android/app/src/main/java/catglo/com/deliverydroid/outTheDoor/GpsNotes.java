@@ -1,6 +1,6 @@
 package catglo.com.deliverydroid.outTheDoor;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;

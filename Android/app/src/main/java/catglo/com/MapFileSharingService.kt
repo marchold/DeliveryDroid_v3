@@ -82,7 +82,7 @@ class MapFileSharingService : Service(),TorrentSessionListener {
             )
             val torrentSession = TorrentSession(torrentSessionOptions)
             torrentSession.listener = this
-            torrentSession.start(applicationContext, Uri.parse("http://zan.ooguy.com/Maps.torrent"))
+//            torrentSession.start(applicationContext, Uri.parse("http://zan.ooguy.com/Maps.torrent"))
         }
 
     }

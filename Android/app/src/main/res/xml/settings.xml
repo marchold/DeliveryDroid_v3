@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/Feedback">
+    <androidx.preference.PreferenceCategory android:title="@string/Feedback">
         <catglo.com.deliverydroid.settings.SettingsEmailMe
                 android:dialogTitle="@string/Feedback"
                 android:icon="@drawable/send_feedback"
@@ -16,36 +16,37 @@
                 android:key="ReviewFeedback"
                 android:summary="@string/youlike"
                 android:title="@string/reviewapp"/>
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/mileageand">
-        <PreferenceScreen
+    <androidx.preference.PreferenceCategory android:title="@string/mileageand">
+        <androidx.preference.PreferenceScreen
+                android:key="MileagePayScreen"
                 android:icon="@drawable/mileage_pay"
                 android:summary="@string/MileagePaySum"
                 android:title="@string/MileagePay">
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:dialogTitle="@string/theamounttitle"
                     android:inputType="phone"
                     android:key="per_delivery_pay"
                     android:numeric="decimal|signed"
                     android:summary="@string/theamount"
                     android:title="@string/Mileagepayperdelivery"/>
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:dialogTitle="@string/PayPercentageTitle"
                     android:inputType="phone"
                     android:key="percent_order_price"
                     android:numeric="decimal|signed"
                     android:summary="@string/PayPercentageSum"
                     android:title="@string/PayPercentageTotalTitle"/>
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:dialogTitle="@string/odoDiagTitle"
                     android:inputType="phone"
                     android:key="odometer_per_mile"
                     android:numeric="decimal|signed"
                     android:summary="@string/odoSum"
                     android:title="@string/odometerTitle"/>
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:dialogTitle="@string/mileageRunDiagTitle"
                     android:inputType="phone"
                     android:key="per_run_pay"
@@ -53,13 +54,13 @@
                     android:summary="@string/mileageRunSum"
                     android:title="@string/mileageRunTitle"/>
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:defaultValue="true"
                     android:key="mileagePayForUndeliverable"
                     android:summary="@string/undeliverable_mileagepay_summary"
                     android:title="@string/Undeliverable_mileage_pay"/>
 
-            <PreferenceScreen
+            <androidx.preference.PreferenceScreen
                     android:title="Custom Mileage Pay"
                     android:summary="Configure the custom mileage pay options. This can be useful if you sometimes have a different mileage pay.">
 
@@ -75,17 +76,18 @@
                         android:title="@string/help"/>
 
 
-                <PreferenceScreen
+                <androidx.preference.PreferenceScreen
+                        android:key="custom_rehimbursment"
                         android:summary="Special case mileage pay, for example out of town orders if you get different mileage pay for those"
                         android:title="@string/Custom_Reimbursement">
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altMilDiagTitle"
                             android:inputType="phone"
                             android:key="per_out_of_town_delivery"
                             android:numeric="decimal|signed"
                             android:summary="@string/altMilSum"
                             android:title="@string/altMilTitle"/>
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altPayLDT"
                             android:key="per_out_of_town_delivery_label1"
                             android:summary="@string/altPayLSum1"
@@ -96,22 +98,23 @@
                             android:dialogMessage="@string/altPaySettingsInstructions"
                             android:dialogTitle="@string/help"
                             android:icon="@drawable/help"
-                            android:key="helpOnAltPay"
+                            android:key="helpOnAltPay2"
                             android:negativeButtonText="@null"
                             android:positiveButtonText="@null"
                             android:title="@string/help"/>
-                </PreferenceScreen>
-                <PreferenceScreen
+                </androidx.preference.PreferenceScreen>
+                <androidx.preference.PreferenceScreen
+                        android:key="cr2"
                         android:summary="Special case mileage pay, for example a custom mileage pay for deliveries to a military base"
                         android:title="@string/Custom_Reimbursement">
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altPayDT"
                             android:inputType="phone"
                             android:key="per_out_of_town_delivery2"
                             android:numeric="decimal|signed"
                             android:summary="@string/altPay2Sum"
                             android:title="@string/altPay2"/>
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altPayLDT"
                             android:key="per_out_of_town_delivery_label2"
                             android:summary="@string/altPayLSum"
@@ -122,22 +125,23 @@
                             android:dialogMessage="@string/altPaySettingsInstructions"
                             android:dialogTitle="@string/help"
                             android:icon="@drawable/help"
-                            android:key="helpOnAltPay"
+                            android:key="helpOnAltPay3"
                             android:negativeButtonText="@null"
                             android:positiveButtonText="@null"
                             android:title="@string/help"/>
-                </PreferenceScreen>
-                <PreferenceScreen
+                </androidx.preference.PreferenceScreen>
+                <androidx.preference.PreferenceScreen
+                        android:key="cr3"
                         android:summary="Special case mileage pay, for example a negative value to zero out mileage pay for no mileage pay"
                         android:title="@string/Custom_Reimbursement">
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altPayLDT"
                             android:inputType="phone"
                             android:key="per_out_of_town_delivery3"
                             android:numeric="decimal|signed"
                             android:summary="@string/altPay2Sum"
                             android:title="@string/altPay3"/>
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altPayLDT"
                             android:key="per_out_of_town_delivery_label3"
                             android:summary="The label used for Alternate Mileage pay"
@@ -148,22 +152,23 @@
                             android:dialogMessage="@string/altPaySettingsInstructions"
                             android:dialogTitle="@string/help"
                             android:icon="@drawable/help"
-                            android:key="helpOnAltPay"
+                            android:key="helpOnAltPay4"
                             android:negativeButtonText="@null"
                             android:positiveButtonText="@null"
                             android:title="@string/help"/>
-                </PreferenceScreen>
-                <PreferenceScreen
+                </androidx.preference.PreferenceScreen>
+                <androidx.preference.PreferenceScreen
+                        android:key="cr4"
                         android:summary="Special case mileage pay, the forth custom mileage pay option"
                         android:title="@string/Custom_Reimbursement">
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altPayLDT"
                             android:inputType="phone"
                             android:key="per_out_of_town_delivery4"
                             android:numeric="decimal|signed"
                             android:summary="@string/altPay2Sum"
                             android:title="@string/altPay4"/>
-                    <EditTextPreference
+                    <androidx.preference.EditTextPreference
                             android:dialogTitle="@string/altPayLDT"
                             android:key="per_out_of_town_delivery_label4"
                             android:summary="The label used for Alternate Mileage pay"
@@ -174,15 +179,15 @@
                             android:dialogMessage="@string/altPaySettingsInstructions"
                             android:dialogTitle="@string/help"
                             android:icon="@drawable/help"
-                            android:key="helpOnAltPay"
+                            android:key="helpOnAltPay5"
                             android:negativeButtonText="@null"
                             android:positiveButtonText="@null"
                             android:title="@string/help"/>
-                </PreferenceScreen>
-            </PreferenceScreen>
-        </PreferenceScreen>
+                </androidx.preference.PreferenceScreen>
+            </androidx.preference.PreferenceScreen>
+        </androidx.preference.PreferenceScreen>
     <!--
-         <PreferenceScreen
+         <androidx.preference.PreferenceScreen
                  android:icon="@drawable/hourly_pay"
                  android:summary="@string/set_amount_per_hour"
                  android:title="@string/Shifts_and_Hours">
@@ -199,7 +204,7 @@
                     android:title="@string/estimate_hours_from_orders" />
                 -->
 
-        <!--    <PreferenceCategory android:title="@string/hourly_pay">
+        <!--    <androidx.preference.PreferenceCategory android:title="@string/hourly_pay">
 
              <catglo.com.deliverydroid.Settings_PayRateDialog
                      android:dialogIcon="@drawable/icon"
@@ -224,7 +229,7 @@
                          android:title="@string/hourly_pay_rate" />
                  -->
 
-                <EditTextPreference
+                <androidx.preference.EditTextPreference
                         android:icon="@drawable/hourly_pay"
                         android:dialogTitle="@string/Pay_rate"
                         android:inputType="numberDecimal"
@@ -307,11 +312,11 @@
                         android:title="@string/Radius_Leave_Store"/>
 
 
-            </PreferenceCategory>
+            </androidx.preference.PreferenceCategory>
 
-        </PreferenceScreen> -->
+        </androidx.preference.PreferenceScreen> -->
 
-        <ListPreference
+        <androidx.preference.ListPreference
                 android:defaultValue="2"
                 android:dialogIcon="@drawable/icon"
                 android:dialogTitle="@string/StartOfWorkWeek_diagTitle"
@@ -321,48 +326,49 @@
                 android:key="StartOfWorkWeek"
                 android:summary="@string/StartOfWorkWeek_diagSum"
                 android:title="@string/StartOfWorkWeek"/>
-    </PreferenceCategory>
-    <PreferenceCategory android:title="User Interface">
+    </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="User Interface">
 
-        <CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
                 android:defaultValue="true"
                 android:key="showHelpBubbles"
                 android:summary="Uncheck this setting if you do not find the help bubbles useful"
                 android:title="Show help bubbles"/>
 
-        <PreferenceScreen
+        <androidx.preference.PreferenceScreen
                 android:icon="@drawable/home_screen_settings_icon"
                 android:summary=""
                 android:title="Home Screen">
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:icon="@drawable/calculate_rout_time"
                     android:key="calculateRouteTimes"
                     android:summary="@string/round_trip_settings_summary"
                     android:title="Route Optimization"/>
 
-            <PreferenceScreen
+            <androidx.preference.PreferenceScreen
                     android:icon="@drawable/store_address"
                     android:summary="Store address is required for route optimization."
                     android:title="@string/Store_Address">
                 <intent
                         android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
                         android:targetPackage="catglo.com.deliverydroid"/>
-            </PreferenceScreen>
+            </androidx.preference.PreferenceScreen>
 
-            <PreferenceScreen
+            <androidx.preference.PreferenceScreen
                     android:icon="@drawable/home_screen_settings_icon"
                     android:summary="@string/Pending_Deliveries_sum"
                     android:title="@string/Home_Screen_List">
                 <intent
                         android:action="catglo.com.deliverydroid.Settings_ListOptions"
                         android:targetPackage="catglo.com.deliverydroid"/>
-            </PreferenceScreen>
+            </androidx.preference.PreferenceScreen>
 
-        </PreferenceScreen>
+        </androidx.preference.PreferenceScreen>
 
 
-        <PreferenceScreen
+        <androidx.preference.PreferenceScreen
+                android:key="add_delivery_sett"
                 android:icon="@drawable/add_delivery_setting"
                 android:summary="@string/OrderEntrySettingsSum"
                 android:title="@string/OrderEntrySettings">
@@ -371,59 +377,59 @@
                     android:dialogMessage="@string/orderEntrySettingsHelp"
                     android:dialogTitle="@string/help"
                     android:icon="@drawable/help"
-                    android:key="helpOnAltPay"
+                    android:key="helpOnAltPay6"
                     android:negativeButtonText="@null"
                     android:positiveButtonText="@null"
                     android:summary="@string/orderEntrySettingsHelp"
                     android:title="@string/help"/>
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:defaultValue="true"
                     android:icon="@drawable/order_number_quick_entry_simple"
                     android:key="useOrderNumberScreen"
                     android:summary="@string/no_order_numbers_desc"
                     android:title="@string/no_order_numbers"/>
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:defaultValue="true"
                     android:icon="@drawable/order_price_quick_entry_simple"
                     android:key="usePriceScreen"
                     android:summary="@string/use_price_setting_sum"
                     android:title="@string/use_price_setting"/>
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:defaultValue="false"
                     android:icon="@drawable/quick_phone_entry_screen_simple"
                     android:key="usePhoneScreen"
                     android:summary="@string/Phone_number_screen_summary"
                     android:title="@string/Phone_Number_Screen"/>
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:defaultValue="true"
                     android:icon="@drawable/quick_address_entry_screen_simple"
                     android:key="useAddressScreen"
                     android:summary="@string/No_addresses_desc"
                     android:title="@string/Address_quick_entry_screen"/>
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:key="useTimeScreen"
                     android:icon="@drawable/quick_time_entry_screen_simple"
                     android:summary="@string/Delivery_time_screen_summary"
                     android:title="@string/Delivery_Time_Screen"/>
 
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:key="number_keyboard_left"
                     android:icon="@drawable/left_list"
                     android:summary="@string/lift_list_summary"
                     android:title="@string/Left_list"/>
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:icon="@drawable/one_top"
                     android:key="number_keyboard_upsidedown"
                     android:summary="@string/Inverted_Keypad_Numbers_summary"
                     android:title="@string/Inverted_Keypad_Numbers"/>
 
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:dialogTitle="@string/Initial_Order_Number_daigTitle"
                     android:icon="@drawable/initial_order_number"
                     android:inputType="phone"
@@ -432,15 +438,16 @@
                     android:summary="@string/Initial_Order_Number_desc"
                     android:title="@string/Initial_Order_Number"/>
 
-        </PreferenceScreen>
+        </androidx.preference.PreferenceScreen>
 
 
-        <PreferenceScreen
+        <androidx.preference.PreferenceScreen
+                android:key="out_the_door"
                 android:icon="@drawable/out_the_door"
                 android:summary="@string/OutTheDoorSettingsSum"
                 android:title="@string/OutTheDoorSettings">
 
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:dialogIcon="@drawable/icon"
                     android:dialogMessage="@string/smsbody_summary"
                     android:dialogTitle="@string/smsbody_dialog_title"
@@ -450,19 +457,19 @@
                     android:title="@string/smsbody_title"/>
 
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
 
                     android:key="showTipField"
                     android:summary="@string/Show_Tip_Field_summary"
                     android:title="@string/Show_Tip_Field"/>
 
-            <CheckBoxPreference
+            <androidx.preference.CheckBoxPreference
                     android:icon="@drawable/call_phone_in_notes"
                     android:key="callPhoneInNotes"
                     android:summary="@string/Phone_in_Note_sum"
                     android:title="@string/Phone_in_Notes"/>
 
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:defaultValue="@string/customerDefaultSMS"
                     android:icon="@drawable/call_phone_in_notes"
                     android:key="customerDefaultSMS"
@@ -470,16 +477,17 @@
                     android:dialogMessage="Enter default text message ### will be replaced with order cost"
                     android:title="@string/customer_text_message_body"/>
 
-            <PreferenceScreen
+            <androidx.preference.PreferenceScreen
+                    android:key="payment_type"
                     android:icon="@drawable/payment_type"
                     android:summary="@string/PaymentOptionsSum"
                     android:title="@string/PaymentOptionsSettings">
-                <CheckBoxPreference
+                <androidx.preference.CheckBoxPreference
                         android:defaultValue="true"
                         android:icon="@drawable/icon_money"
                         android:key="usePaymentCash"
                         android:title="@string/Cash"/>
-                <CheckBoxPreference
+                <androidx.preference.CheckBoxPreference
                         android:defaultValue="true"
                         android:icon="@drawable/icon_check"
                         android:key="usePaymentCheck"
@@ -489,17 +497,18 @@
                         android:icon="@drawable/icon_credit"
                         android:key="usePaymentCredit"
                         android:title="@string/Credit"/>
-                <CheckBoxPreference
+                <androidx.preference.CheckBoxPreference
                         android:defaultValue="true"
                         android:icon="@drawable/icon_ebt"
                         android:key="usePaymentEbt"
                         android:title="@string/ebt"/>
-            </PreferenceScreen>
-            <PreferenceScreen
+            </androidx.preference.PreferenceScreen>
+            <androidx.preference.PreferenceScreen
+                    android:key="navigate_settings"
                     android:icon="@drawable/navigate_settings_icon"
                     android:summary="@string/Navigation_Settings_summary"
                     android:title="@string/Navigation_Settings">
-                <CheckBoxPreference
+                <androidx.preference.CheckBoxPreference
                         android:defaultValue="true"
                         android:icon="@drawable/settings_copy_paste"
                         android:key="autoCutForPaste"
@@ -515,19 +524,20 @@
                         android:summary="@string/Configure_which_navigation_app_is_launched"
                         android:title="@string/Navigation_App"/>
 
-            </PreferenceScreen>
+            </androidx.preference.PreferenceScreen>
 
-            <PreferenceScreen
+            <androidx.preference.PreferenceScreen
+                    android:key="store_address"
                     android:icon="@drawable/store_address"
                     android:summary="@string/Store_Address_desc"
                     android:title="@string/Store_Address">
                 <intent
                         android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
                         android:targetPackage="catglo.com.deliverydroid"/>
-            </PreferenceScreen>
+            </androidx.preference.PreferenceScreen>
 
 
-            <EditTextPreference
+            <androidx.preference.EditTextPreference
                     android:dialogIcon="@drawable/store_phone_number"
                     android:dialogMessage="@string/Store_phone_setting_summary"
                     android:dialogTitle="@string/Store_phone_number"
@@ -536,31 +546,31 @@
                     android:title="@string/Store_phone_number"/>
 
 
-        </PreferenceScreen>
-    </PreferenceCategory>
+        </androidx.preference.PreferenceScreen>
+    </androidx.preference.PreferenceCategory>
 
-    <PreferenceCategory android:title="Other">
+    <androidx.preference.PreferenceCategory android:title="Other">
 
 
-        <PreferenceScreen android:title="Database Backup and Restore" android:icon="@drawable/settings_database">
+        <androidx.preference.PreferenceScreen key="db_settings" android:title="Database Backup and Restore" android:icon="@drawable/settings_database" android:key="db_backup_and_restore">
 
-            <Preference
+            <androidx.preference.Preference
                     android:icon="@drawable/ic_drive_file"
                     android:key="backupToGoogleDrive"
                     android:title="@string/Google_Drive_Backup">
 
-            </Preference>
+            </androidx.preference.Preference>
 
-            <PreferenceScreen android:icon="@drawable/ic_save_settings" android:title="Manual File Backup">
+            <androidx.preference.PreferenceScreen key="manual_backup" android:icon="@drawable/ic_save_settings" android:title="Manual File Backup">
 
 
-                <Preference
+                <androidx.preference.Preference
                         android:key="DatabaseFileCopy"
                         android:icon="@drawable/database_export"
                         android:summary="Make a copy of your database file and share it"
                         android:title="Backup Data File"/>
 
-                <PreferenceScreen android:title="@string/where_db_is_stored" android:icon="@drawable/lock_question"
+                <androidx.preference.PreferenceScreen id="where_db_stored" android:title="@string/where_db_is_stored" android:icon="@drawable/lock_question"
                                   android:summary="Control privacy vs. easy backup access by storing the app data in private or external or sd-card for easy backup. "
                 >
 
@@ -581,34 +591,34 @@
                             android:summary="Select this if you would like to keep the database on your sdcard."
                             android:title="Keep data on external storage/sd-card"/>
 
-                </PreferenceScreen>
+                </androidx.preference.PreferenceScreen>
 
-                <Preference
+                <androidx.preference.Preference
                         android:icon="@drawable/database_plus"
                         android:key="DatabaseFileMerge"
                         android:summary="Import order data from a backup you made in the past"
                         android:title="Import database backup"/>
 
 
-                <Preference
+                <androidx.preference.Preference
                         android:icon="@drawable/database_import"
                         android:key="DatabaseFileUse"
                         android:summary="Discard all your current data and use a database backup"
                         android:title="Restore database from backup"/>
 
-            </PreferenceScreen>
+            </androidx.preference.PreferenceScreen>
 
-        </PreferenceScreen>
+        </androidx.preference.PreferenceScreen>
 
 
-        <Preference
+        <androidx.preference.Preference
                 android:icon="@drawable/settings_about"
                 android:key="aboutPref"
                 android:title="@string/About">
 
-        </Preference>
+        </androidx.preference.Preference>
 
-    </PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

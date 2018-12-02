@@ -228,6 +228,7 @@
             </catglo.com.deliverydroid.widgets.RowLayout>
 
             <com.google.android.material.button.MaterialButton
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     style="Widget.AppCompat.Button.Colored"
                     android:id="@+id/AddOrder"
                     android:layout_width="150dip"

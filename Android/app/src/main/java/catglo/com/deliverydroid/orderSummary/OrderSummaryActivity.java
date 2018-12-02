@@ -1,6 +1,6 @@
 package catglo.com.deliverydroid.orderSummary;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;

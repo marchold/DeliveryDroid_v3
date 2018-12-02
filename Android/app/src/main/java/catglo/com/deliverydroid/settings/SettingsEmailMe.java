@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
-import android.preference.EditTextPreference;
 import android.util.AttributeSet;
+import androidx.preference.EditTextPreference;
 
 public class SettingsEmailMe extends EditTextPreference {
 

@@ -1,8 +1,8 @@
 package catglo.com.deliverydroid.settings;
 
 import android.content.Context;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import androidx.preference.DialogPreference;
 
 public class SettingsHelpDialog extends DialogPreference {
 

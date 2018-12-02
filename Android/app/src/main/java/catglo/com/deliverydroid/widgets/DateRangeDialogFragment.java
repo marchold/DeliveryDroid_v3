@@ -1,6 +1,6 @@
 package catglo.com.deliverydroid.widgets;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;

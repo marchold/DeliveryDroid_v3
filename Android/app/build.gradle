@@ -21,13 +21,16 @@ android {
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
+
+        disable 'RestrictedApi'
+
     }
     compileSdkVersion 28
     defaultConfig {
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 28
-        versionCode 166
-        versionName "5.16"
+        versionCode 170
+        versionName "5.20"
     }
     productFlavors {
         free {
@@ -109,6 +112,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.legacy:legacy-preference-v14:1.0.0"
     implementation "androidx.fragment:fragment:1.0.0"
+    implementation "androidx.preference:preference:1.0.0"
+    implementation "androidx.leanback:leanback:1.0.0"
 
     implementation 'com.google.android.material:material:1.0.0'
 
@@ -146,8 +151,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.3'
 
     implementation 'com.nbsp:library:1.8'
-
-    implementation 'com.alex-zaitsev:meternumberpicker:1.0.4'
+    implementation 'net.mm2d:preference:0.1.0'
+    implementation 'com.github.adityagohad:HorizontalPicker:1.0.1'
 
 
 }

@@ -1,7 +1,6 @@
 package catglo.com.deliverydroid.neworder;
 
 import android.annotation.TargetApi;
-import android.app.*;
 
 import android.content.DialogInterface;
 import android.os.Build;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;

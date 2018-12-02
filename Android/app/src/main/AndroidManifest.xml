@@ -40,7 +40,7 @@
         <activity
                 android:name=".neworder.NewOrderActivity"
                 android:label="@string/New_Order"
-                android:theme="@style/ActionBarTheme"
+                android:theme="@style/AppTheme"
                 android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="Delivery Droid New Order"/>
@@ -51,7 +51,7 @@
         <activity
                 android:name=".AboutActivity"
                 android:label="@string/About"
-                android:theme="@style/ActionBarTheme"
+                android:theme="@style/AppTheme"
                 android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -62,21 +62,21 @@
         <activity
                 android:name=".backup.GoogleDriveBackupRestoreActivity"
                 android:label="@string/Google_Drive_Backup"
-                android:theme="@style/ActionBarTheme"
+                android:theme="@style/AppTheme"
                 android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
                 android:name=".bankDrop.BankTillDropActivity"
                 android:theme="@style/AppTheme"/>
-        <activity android:name=".settings.SettingsActivity"/>
+        <activity android:name=".settings.SettingsActivity"     android:theme="@style/AppTheme" />
         <activity android:name=".homeScreen.HomeListSettings"/>
         <activity android:name=".orderSummary.OrderSummaryActivity"/>
         <activity
                 android:name=".shift.OdometerEntryActivity"
-                android:theme="@style/ActionBarTheme"/>
+                android:theme="@style/AppTheme"/>
         <activity
                 android:name=".outTheDoor.OutTheDoorActivity"
-                android:theme="@style/ToolBarTheme"
+                android:theme="@style/AppTheme"
                 android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="Delivery_Droid_Out_The_Door"/>
@@ -168,7 +168,7 @@
                 android:exported="false">
         </service>
 
-        <activity android:name=".homeScreen.ChooseDownloadActivity"    android:theme="@style/ActionBarTheme" android:label="@string/choose_map">
+        <activity android:name=".homeScreen.ChooseDownloadActivity" android:theme="@style/AppTheme" android:label="@string/choose_map">
         </activity>
     </application>
 

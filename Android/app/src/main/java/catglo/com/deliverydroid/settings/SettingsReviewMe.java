@@ -3,8 +3,8 @@ package catglo.com.deliverydroid.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.preference.EditTextPreference;
 import android.util.AttributeSet;
+import androidx.preference.EditTextPreference;
 
 public class SettingsReviewMe extends EditTextPreference {
 

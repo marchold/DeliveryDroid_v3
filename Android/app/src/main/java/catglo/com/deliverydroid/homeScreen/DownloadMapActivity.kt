@@ -3,7 +3,7 @@ package catglo.com.deliverydroid.homeScreen
 import android.Manifest
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location

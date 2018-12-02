@@ -1,6 +1,10 @@
 package catglo.com.deliverydroid.outTheDoor;
 
-import android.app.*;
+
+import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +33,10 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.DataBase.NoteEntry;
@@ -739,9 +746,10 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		if (orderCounter < orderCount) {
 			String chanelId = (((DeliveryDroidApplication)getApplication()).getNotificationChannelId());
-		    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+		    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,chanelId)
                     .setSmallIcon(R.drawable.icon)
                     .setContentTitle("Pending Deliveries")
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
                     .setContentText(orders.get(orderCounter).address)
                     .setChannelId(chanelId);
 			TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -751,7 +759,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 CharSequence name = getString(R.string.app_name);// The user-visible name of the channel.
-                NotificationChannel mChannel = new NotificationChannel(chanelId, name, NotificationManager.IMPORTANCE_HIGH);
+                NotificationChannel mChannel = new NotificationChannel(chanelId, name, NotificationManager.IMPORTANCE_LOW );
                 mNotificationManager.createNotificationChannel(mChannel);
             }
 			mNotificationManager.notify(HomeScreenActivity.DELIVERY_NOTIFICATION, mBuilder.build());
@@ -901,7 +909,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                                             return builder.create();
                                         }
                                     };
-                                    dialog.show(getFragmentManager(), "set_pay_rate");
+                                    dialog.show(getSupportFragmentManager(), "set_pay_rate");
                                 } else {
                                     startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(0))));
                                 }
@@ -933,7 +941,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                                             return builder.create();
                                         }
                                     };
-                                    dialog.show(getFragmentManager(), "set_pay_rate");
+                                    dialog.show(getSupportFragmentManager(), "set_pay_rate");
                                 } else {
                                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumbersThisOrder.get(0), null));
 
