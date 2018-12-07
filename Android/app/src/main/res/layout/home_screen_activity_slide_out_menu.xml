@@ -50,7 +50,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/call_store_menu_button"
              style="@style/slide_out_menu_button"
-                app:icon="@drawable/text_call_small"
+                app:icon="@drawable/phone"
              android:text="@string/call_store" />
 
         <com.google.android.material.button.MaterialButton

@@ -6,29 +6,29 @@
     android:layout_height="match_parent">
 
     <catglo.com.deliverydroid.widgets.FlowLayout
-        android:layout_width="120dp"
+        android:layout_width="220dp"
         android:layout_height="match_parent"
         android:background="#A000"
         >
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/email_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/email_icon"
+            app:icon="@drawable/email_icon"
             android:text="@string/email" />
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/text_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/text_message_small"
+            app:icon="@drawable/text_message1"
             android:text="@string/textMessage" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/toggle_menu_button"
             style="@style/slide_out_menu_button"
-            android:drawableTop="@drawable/icon_filter"
+            app:icon="@drawable/icon_filter"
             android:text="@string/Hide_weekday_filters"
             android:enabled="true" />
 

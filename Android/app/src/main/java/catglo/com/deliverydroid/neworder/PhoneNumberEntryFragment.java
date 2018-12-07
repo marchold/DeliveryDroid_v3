@@ -226,7 +226,15 @@ public class PhoneNumberEntryFragment extends ButtonPadFragment {
                 } else {
                     String prefixString = (String)object;
                     edit.setText(prefixString);
-                    edit.setSelection(prefixString.length()+1);
+                    try {
+                        edit.setSelection(prefixString.length() + 1);
+                    } catch (IndexOutOfBoundsException e){
+                       try {
+                           edit.setSelection(prefixString.length());
+                       }catch (IndexOutOfBoundsException e2){
+                           edit.setSelection(prefixString.length()-1);
+                       }
+                    }
                 }
 
 

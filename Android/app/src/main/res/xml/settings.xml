@@ -61,6 +61,7 @@
                     android:title="@string/Undeliverable_mileage_pay"/>
 
             <androidx.preference.PreferenceScreen
+                    android:key="custom_mileage_pay"
                     android:title="Custom Mileage Pay"
                     android:summary="Configure the custom mileage pay options. This can be useful if you sometimes have a different mileage pay.">
 

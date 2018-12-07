@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".homeScreen.DownloadMapActivity" tools:layout_editor_absoluteY="81dp">
+        tools:context=".homeScreen.DownloadMapActivity">
 
 
 
@@ -15,10 +15,11 @@
                   android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                android:background="@drawable/underline_blue"
+                android:theme="@style/MyActionBar"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                                           android:layout_height="55dp">
+                android:layout_height="55dp">
 
         </androidx.appcompat.widget.Toolbar>
 

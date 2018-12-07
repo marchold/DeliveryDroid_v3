@@ -9,6 +9,7 @@
         tools:context="catglo.com.deliverydroid.homeScreen.ChooseDownloadActivity">
 
     <androidx.appcompat.widget.Toolbar
+            android:background="@drawable/underline_blue"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="55dp"
