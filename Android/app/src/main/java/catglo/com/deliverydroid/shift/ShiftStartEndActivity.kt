@@ -12,16 +12,17 @@ import catglo.com.deliverydroid.Utils
 import kotlinx.android.synthetic.main.start_end_shift_form.*
 import kotlinx.android.synthetic.main.shift_start_end_activity.*
 
-import android.app.TimePickerDialog
 import android.content.DialogInterface
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.format.DateFormat
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import catglo.com.deliverydroid.widgets.MeterView
-
+import kotlinx.android.synthetic.main.out_the_door_form_body.view.*
+import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
+
 import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager
 import java.lang.NumberFormatException
 import java.text.DateFormatSymbols
@@ -44,51 +45,44 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
 
     private var tips: TipTotalData? = null
 
-    open fun shiftStartTimeClickListener() : View.OnClickListener {
+    open fun shiftTimeClickListener(time : MutableDateTime) : View.OnClickListener {
         return View.OnClickListener {
             val customView = View.inflate(this@ShiftStartEndActivity,R.layout.time_date_picker_dialog,null)
             val timePicker = customView.findViewById<TimePicker>(R.id.timePicker)
             val datePicker = customView.findViewById<DatePicker>(R.id.weekdayPicker)
-            val layoutManager = PickerLayoutManager(this@ShiftStartEndActivity,PickerLayoutManager.HORIZONTAL,false)
-            val symbols = DateFormatSymbols().weekdays
-            val time = shift.startTime
-            timePicker.hour = time.hourOfDay
-            timePicker.minute = time.minuteOfHour
-            datePicker.updateDate(time.year,time.monthOfYear-1,time.dayOfMonth)
-            AlertDialog.Builder(this@ShiftStartEndActivity)
-                .setView(customView)
-                .setPositiveButton(android.R.string.ok){ _:DialogInterface, _: Int ->
-                    shift.startTime.year = datePicker.year
-                    shift.startTime.monthOfYear = datePicker.month+1
-                    shift.startTime.dayOfMonth = datePicker.dayOfMonth
-                    shift.startTime.hourOfDay = timePicker.hour
-                    shift.startTime.minuteOfHour = timePicker.minute
-                    dataBase.saveShift(shift)
-                    updateUI()
+            val nowButton = customView.findViewById<Button>(R.id.nowButton)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                timePicker.hour = time.hourOfDay
+                timePicker.minute = time.minuteOfHour
+            } else {
+                timePicker.currentHour = time.hourOfDay
+                timePicker.currentMinute = time.minuteOfHour
+            }
+            nowButton.setOnClickListener {
+                val now = DateTime.now()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    timePicker.hour = now.hourOfDay
+                    timePicker.minute = now.minuteOfHour
+                } else {
+                    timePicker.currentHour = now.hourOfDay
+                    timePicker.currentMinute = now.minuteOfHour
                 }
-                .show()
-        }
-    }
-
-    open fun shiftEndTimeClickListener() : View.OnClickListener {
-        return View.OnClickListener {
-            val customView = View.inflate(this@ShiftStartEndActivity,R.layout.time_date_picker_dialog,null)
-            val timePicker = customView.findViewById<TimePicker>(R.id.timePicker)
-            val datePicker = customView.findViewById<DatePicker>(R.id.weekdayPicker)
-            val layoutManager = PickerLayoutManager(this@ShiftStartEndActivity,PickerLayoutManager.HORIZONTAL,false)
-            val symbols = DateFormatSymbols().weekdays
-            val time = shift.endTime
-            timePicker.hour = time.hourOfDay
-            timePicker.minute = time.minuteOfHour
+                datePicker.updateDate(now.year,now.monthOfYear-1,now.dayOfMonth)
+            }
             datePicker.updateDate(time.year,time.monthOfYear-1,time.dayOfMonth)
             AlertDialog.Builder(this@ShiftStartEndActivity)
                 .setView(customView)
                 .setPositiveButton(android.R.string.ok){ _:DialogInterface, _: Int ->
-                    shift.endTime.year = datePicker.year
-                    shift.endTime.monthOfYear = datePicker.month+1
-                    shift.endTime.dayOfMonth = datePicker.dayOfMonth
-                    shift.endTime.hourOfDay = timePicker.hour
-                    shift.endTime.minuteOfHour = timePicker.minute
+                    time.year = datePicker.year
+                    time.monthOfYear = datePicker.month+1
+                    time.dayOfMonth = datePicker.dayOfMonth
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        time.hourOfDay = timePicker.hour
+                        time.minuteOfHour = timePicker.minute
+                    } else {
+                        time.hourOfDay = timePicker.currentHour
+                        time.minuteOfHour = timePicker.currentMinute
+                    }
                     dataBase.saveShift(shift)
                     updateUI()
                 }
@@ -137,110 +131,118 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
             whichShift = id
         }
 
+        shift = dataBase.getShift(whichShift)
 
         val currentShiftNumber = findViewById<View>(R.id.currentShiftNumber) as TextView
         currentShiftNumber.text = whichShift.toString()
 
-        shiftStartTime.setOnClickListener(shiftStartTimeClickListener())
-        shiftEndTime.setOnClickListener(shiftEndTimeClickListener())
+        shiftStartTime.setOnClickListener(shiftTimeClickListener(shift.startTime))
+        shiftEndTime.setOnClickListener(shiftTimeClickListener(shift.endTime))
 
-        startingOdometer.setOnClickListener {
-            val meterLayout = View.inflate(this@ShiftStartEndActivity,R.layout.meter_vew_wrapper,null)
-            val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
-            val milesDriven = meterLayout.findViewById<EditText>(R.id.milesDriven)
-            meterView.setOnValueChangedListener {
-                try {
-                    if (milesDriven.text.toString().toInt() != it) {
+        findViewById<EditText>(R.id.startingOdometer)?.let {
+            it.setOnClickListener {
+                val meterLayout = View.inflate(this@ShiftStartEndActivity, R.layout.meter_view_dialog, null)
+                val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
+                val milesDriven = meterLayout.findViewById<EditText>(R.id.milesDriven)
+                meterView.setOnValueChangedListener {
+                    try {
+                        if (milesDriven.text.toString().toInt() != it) {
+                            milesDriven.setText("$it")
+                        }
+                    } catch (e: NumberFormatException) {
                         milesDriven.setText("$it")
                     }
-                } catch (e:NumberFormatException) {
-                    milesDriven.setText("$it")
                 }
-            }
-            milesDriven.addTextChangedListener(object:TextWatcher{
-                override fun afterTextChanged(s: Editable?) { }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    try {
-                        if (s.toString().toInt() != meterView.value) {
-                            meterView.value = s.toString().toInt()
+                milesDriven.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {}
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        try {
+                            if (s.toString().toInt() != meterView.value) {
+                                meterView.value = s.toString().toInt()
+                            }
+                        } catch (e: NumberFormatException) {
                         }
-                    } catch (e:NumberFormatException){ }
-                }
-            })
-            milesDriven.setText(shift.odometerAtShiftStart.toString())
-            meterView.value = shift.odometerAtShiftStart
-            AlertDialog.Builder(this@ShiftStartEndActivity)
-                .setTitle(R.string.Starting_odometer)
-                .setView(meterLayout)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    if (meterView.value<shift.odometerAtShiftStart)
-                    {
-                        Toast.makeText(this@ShiftStartEndActivity,"Distance going backwards ",Toast.LENGTH_LONG).show()
                     }
-                    shift.odometerAtShiftStart = meterView.value
-                    dataBase.saveShift(shift)
-                    updateUI()
-                }
-                .setNegativeButton(android.R.string.cancel,null)
-                .show()
-        }
-
-        endingOdometer.setOnClickListener {
-            val meterLayout = View.inflate(this@ShiftStartEndActivity,R.layout.meter_vew_wrapper,null)
-            val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
-            val milesDriven = meterLayout.findViewById<EditText>(R.id.milesDriven)
-            meterView.setOnValueChangedListener {
-                try {
-                    if (milesDriven.text.toString().toInt() != it) {
-                        milesDriven.setText("$it")
-                    }
-                } catch (e:NumberFormatException) {
-                    milesDriven.setText("$it")
-                }
-            }
-            milesDriven.addTextChangedListener(object:TextWatcher{
-                override fun afterTextChanged(s: Editable?) { }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    try {
-                        if (s.toString().toInt() != meterView.value) {
-                            meterView.value = s.toString().toInt()
+                })
+                milesDriven.setText(shift.odometerAtShiftStart.toString())
+                meterView.value = shift.odometerAtShiftStart
+                AlertDialog.Builder(this@ShiftStartEndActivity)
+                    .setTitle(R.string.Starting_odometer)
+                    .setView(meterLayout)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        if (meterView.value < shift.odometerAtShiftStart) {
+                            Toast.makeText(this@ShiftStartEndActivity, "Distance going backwards ", Toast.LENGTH_LONG)
+                                .show()
                         }
-                    } catch (e:NumberFormatException){ }
-                }
-            })
-            meterView.value = shift.odometerAtShiftEnd
-            milesDriven.setText("${shift.odometerAtShiftEnd}")
-            if (meterView.value<shift.odometerAtShiftStart){
-                meterView.value = shift.odometerAtShiftStart+1
-            }
-            AlertDialog.Builder(this@ShiftStartEndActivity)
-                .setTitle(R.string.End_odometer)
-                .setView(meterLayout)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    if (meterView.value<shift.odometerAtShiftStart)
-                    {
-                        Toast.makeText(this@ShiftStartEndActivity,"Distance does not go backwards",Toast.LENGTH_LONG).show()
-                        endingOdometer.performClick()
-                    }
-                    else {
-                        shift.odometerAtShiftEnd = meterView.value
+                        shift.odometerAtShiftStart = meterView.value
                         dataBase.saveShift(shift)
                         updateUI()
                     }
-                }
-                .setNegativeButton(android.R.string.cancel,null)
-                .show()
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
         }
 
-
+        findViewById<EditText>(R.id.endingOdometer)?.let {
+            it.setOnClickListener {
+                val meterLayout = View.inflate(this@ShiftStartEndActivity, R.layout.meter_view_dialog, null)
+                val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
+                val milesDriven = meterLayout.findViewById<EditText>(R.id.milesDriven)
+                meterView.setOnValueChangedListener {
+                    try {
+                        if (milesDriven.text.toString().toInt() != it) {
+                            milesDriven.setText("$it")
+                        }
+                    } catch (e: NumberFormatException) {
+                        milesDriven.setText("$it")
+                    }
+                }
+                milesDriven.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {}
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        try {
+                            if (s.toString().toInt() != meterView.value) {
+                                meterView.value = s.toString().toInt()
+                            }
+                        } catch (e: NumberFormatException) {
+                        }
+                    }
+                })
+                meterView.value = shift.odometerAtShiftEnd
+                milesDriven.setText("${shift.odometerAtShiftEnd}")
+                if (meterView.value < shift.odometerAtShiftStart) {
+                    meterView.value = shift.odometerAtShiftStart + 1
+                }
+                AlertDialog.Builder(this@ShiftStartEndActivity)
+                    .setTitle(R.string.End_odometer)
+                    .setView(meterLayout)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        if (meterView.value < shift.odometerAtShiftStart) {
+                            Toast.makeText(
+                                this@ShiftStartEndActivity,
+                                "Distance does not go backwards",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            endingOdometer.performClick()
+                        } else {
+                            shift.odometerAtShiftEnd = meterView.value
+                            dataBase.saveShift(shift)
+                            updateUI()
+                        }
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
+        }
 
 
         //OK Button
         val doneClickListener = View.OnClickListener { finish() }
         doneButton.setOnClickListener(doneClickListener)
         backButton.setOnClickListener(doneClickListener)
+
     }
 
     public override fun onResume() {
@@ -257,7 +259,7 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
     }
 
     fun updateUI() {
-        shift = dataBase.getShift(whichShift)
+       // shift = dataBase.getShift(whichShift)
 
         if (shift.endTime.millis == 0L && shift.startTime.millis == 0L) {
             dataBase.estimateShiftTimes(shift)

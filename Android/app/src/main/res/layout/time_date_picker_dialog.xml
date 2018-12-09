@@ -12,21 +12,27 @@
 
 
         <DatePicker
-
-         android:datePickerMode="spinner"
-         android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
                 android:background="#555"
                 android:id="@+id/weekdayPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="90dp"
                 android:layout_gravity="center_horizontal"/>
+
+        <Button
+                android:id="@+id/nowButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:text="@string/Now"/>
     </FrameLayout>
 
     <TimePicker
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/timePicker"/>
-
 
 
 </LinearLayout>
