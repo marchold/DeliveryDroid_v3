@@ -104,31 +104,6 @@ public class DataBase extends Object  {
     void dataDidJustChange(){
         Intent i = new Intent("com.catglo.deliverydroid.DBCHANGED");
         context.sendBroadcast(i);
-     /*
-        Log.i("API","called dataDidJustChange");
-        new WebServiceGetBackupTimestamp(context,new BackupTimeListener(){public void onRecievedBackupTime(DateTime lastBackupTime) {
-        	synchronized(DataBase.class) {
-        		boolean needsClosing=false;
-	        	if (db == null || !db.isOpen()){
-	        		open();
-	        		
-	        	}
-	        	
-	        	Log.i("API","got backup time "+lastBackupTime);
-	        	
-	        	DateTime curentDataTime = new DateTime(lastModified().getTimeInMillis());
-	        	ArrayList<TableValues> tableFields = getBackupStrings(lastBackupTime.getMillis());
-	        	
-	        	Log.i("API","got "+tableFields.size()+" fields from the database ");
-	        	
-	        	new WebServicePostTableValues(context,tableFields).lookup();
-	        	
-	        	if (needsClosing){
-	        		close();
-	        	}
-	        	
-        	}
-		}}).lookup(); */
     }
 
     static boolean justCreated=false;
@@ -183,6 +158,8 @@ public class DataBase extends Object  {
 //	private static int					dataBaseInitLock	= 0;
 
     static File							path;
+
+
 
     public void init(File path){
 
@@ -2945,31 +2922,6 @@ public class DataBase extends Object  {
         return retArray;
     }}
 
-/*	public ArrayList<String> getPhoneNumbersFromNotes(String address,String aptNo) {synchronized (DataBase.class){
-		currentAptNo=aptNo;
-		ArrayList<String> retArray = new ArrayList<String>();
-		String retVal = "";
-		Pattern phoneNumber = Pattern.compile("([0-9]{0,4})\\){0,1}\\s{0,1}\\-{0,1}([0-9]{3,4})\\s{0,1}\\-\\s{0,1}([0-9]{4})");
-		//if (aptNo.length() < 1) return retVal;
-		try {
-			address = DatabaseUtils.sqlEscapeString(address);
-			String query = "SELECT "+Notes+",Time FROM " + DATABASE_TABLE + " WHERE "+Address+" LIKE "+address+" AND "+AptNumber+" LIKE '"+aptNo+"' ORDER BY Time DESC LIMIT 0,25";
-			final Cursor c = db.rawQuery(query, null);
-			if (c != null && c.moveToFirst()) {
-				do {
-					String note = c.getString(0);
-					if (note.length()>0){
-						//retVal += note +"\n";
-						
-					}
-				} while (c.moveToNext());
-			}
-			c.close();
-		} catch (NullPointerException e){
-			e.printStackTrace();
-		}
-		return retArray;
-	}}*/
 
     public void saveGpsNote(GpsNote note){synchronized (DataBase.class){
         BackupManager.dataChanged(context.getPackageName());
