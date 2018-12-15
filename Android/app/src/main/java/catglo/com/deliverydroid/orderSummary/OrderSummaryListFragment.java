@@ -233,23 +233,32 @@ public class OrderSummaryListFragment extends ListFragment  {
 				layout.setOnTouchListener(gestureListener);
 				layout.setOnClickListener(new OnClickListener(){public void onClick(View v) {
 					final int orderIdForDialog = Integer.parseInt(map.get("id"));
-					AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-					ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item);
-					adapter.add(getString(R.string.EDITORDER));
-					adapter.add(getString(R.string.Delete));
-					alert.setAdapter(adapter, new DialogInterface.OnClickListener(){@SuppressWarnings("deprecation")
-					public void onClick(DialogInterface dialog, int which) {
-						if (which==0){
-							final Intent myIntent = new Intent(getActivity().getApplicationContext(), SummaryActivity.class);
-							myIntent.putExtra("DB Key", orderIdForDialog);
-							startActivity(myIntent);
-						}else {
-							OrderSummaryActivity parent = (OrderSummaryActivity)getActivity();
-							parent.recordToDelete = orderIdForDialog;
-							parent.confirmDeleteRecordDialog();
-						}
-					}});
-					alert.create().show();
+					new AlertDialog.Builder(getActivity())
+                            .setItems(new CharSequence[]{getString(R.string.EDITORDER), getString(R.string.Delete)}, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton(R.string.EDITORDER, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    final Intent myIntent = new Intent(getActivity().getApplicationContext(), SummaryActivity.class);
+                                    myIntent.putExtra("DB Key", orderIdForDialog);
+                                    startActivity(myIntent);
+                                }
+                            })
+                            .setNegativeButton(R.string.Delete, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    OrderSummaryActivity parent = (OrderSummaryActivity)getActivity();
+                                    parent.recordToDelete = orderIdForDialog;
+                                    parent.confirmDeleteRecordDialog();
+                                }
+                            })
+                            .show();
+
+
 				}});
 				
 				Float paidSplit = Float.parseFloat(map.get("paidSplit"));

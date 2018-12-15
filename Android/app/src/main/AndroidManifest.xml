@@ -29,7 +29,7 @@
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="ocr"/>
 
-        <activity android:name=".homeScreen.HomeScreenActivity">
+        <activity android:name=".homeScreen.HomeScreenActivity" android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -39,8 +39,7 @@
         <activity
                 android:name=".neworder.NewOrderActivity"
                 android:label="@string/New_Order"
-                android:theme="@style/AppTheme"
-                android:windowSoftInputMode="stateHidden|adjustResize">
+                android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="Delivery Droid New Order"/>
 
@@ -67,7 +66,8 @@
         <activity
                 android:name=".bankDrop.BankTillDropActivity"
                 android:theme="@style/AppTheme"/>
-        <activity android:name=".settings.SettingsActivity"     android:theme="@style/AppTheme" />
+        <activity android:name=".settings.SettingsActivity"
+                  android:theme="@style/AppTheme" />
         <activity android:name=".homeScreen.HomeListSettings"/>
         <activity android:name=".orderSummary.OrderSummaryActivity"/>
         <activity
@@ -93,10 +93,12 @@
         <!-- <activity android:name=".Settings_DropPrefsActivity" /> -->
 
         <activity
+                android:windowSoftInputMode="stateHidden"
                 android:name=".shift.ShiftStartEndActivity"
                 android:theme="@style/AppTheme"/>
         <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
         <activity
+                android:windowSoftInputMode="stateHidden"
                 android:name=".settings.SettingsListOptions"
                 android:exported="false">
             <intent-filter>
@@ -167,7 +169,7 @@
                 android:exported="false">
         </service>
 
-        <activity android:name=".homeScreen.ChooseDownloadActivity" android:theme="@style/AppTheme" android:label="@string/choose_map">
+        <activity  android:windowSoftInputMode="stateHidden" android:name=".homeScreen.ChooseDownloadActivity" android:theme="@style/AppTheme" android:label="@string/choose_map">
         </activity>
     </application>
 

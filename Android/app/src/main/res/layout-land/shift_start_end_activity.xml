@@ -62,7 +62,7 @@
         
 
         <ImageButton
-            android:id="@+id/newShiftClickable"
+            android:id="@+id/newShiftButtonView"
             style="@style/action_bar_action_icon"
             android:src="@drawable/add_order_plus" 
             android:layout_toLeftOf="@+id/deleteShiftClickable" />
@@ -71,15 +71,15 @@
             android:id="@+id/deleteShiftClickable"
             style="@style/action_bar_action_icon"
             android:src="@drawable/trash" 
-           android:layout_toLeftOf="@+id/timeClockClickable" 
+           android:layout_toLeftOf="@+id/doneButton"
             />
 
-        <ImageButton
+     <!--   <ImageButton
             android:id="@+id/timeClockClickable"
             style="@style/action_bar_action_icon"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/doneButton"
-            android:src="@drawable/shift" />
+            android:src="@drawable/shift" /> -->
         
         <Button
             android:id="@+id/doneButton"

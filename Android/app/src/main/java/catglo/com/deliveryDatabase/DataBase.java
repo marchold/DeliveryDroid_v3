@@ -1382,7 +1382,7 @@ public class DataBase extends Object  {
 
         Cursor c;
         String queryString = "SELECT COUNT(*),strftime('%w',`"+ DataBase.Time + "`) AS `weekday` FROM " + DATABASE_TABLE + " WHERE " + where;
-        if (db==null || queryString==null) return ret;
+        if (db==null) return ret;
 
         c = db.rawQuery(queryString, null);
 

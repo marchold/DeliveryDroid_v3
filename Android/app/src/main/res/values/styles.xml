@@ -270,7 +270,7 @@
 
     <style name="slide_out_menu_button" parent="@style/Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">300dp</item>
         <item name="android:layout_height">55dp</item>
         <item name="android:background">#0000</item>
         <item name="android:textColor">#FFF</item>
@@ -406,6 +406,16 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">12sp</item>
+    </style>
+    <style name="weekday_checkbutton">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/recurrence_bubble_fill</item>
+        <item name="android:button">@drawable/nothing</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
     </style>
 
 </resources>

@@ -170,7 +170,7 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
                    edit.requestFocus();
                   // buttons.setVisibility(View.GONE);
                    DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity) getActivity();
-                   activity.getUtils().showOnScreenKeyboard(edit);
+                   activity.getUtils().showOnScreenKeyboard();
                }
            }
        });

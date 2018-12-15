@@ -25,12 +25,13 @@ android {
         disable 'RestrictedApi'
 
     }
+    buildToolsVersion '28.0.3'
     compileSdkVersion 28
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 173
-        versionName "5.23"
+        versionCode 176
+        versionName "5.26"
     }
     productFlavors {
         free {
@@ -58,7 +59,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+         //   proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -67,7 +68,7 @@ android {
         it.resValue 'string', 'ga_trackingId', "$System.env.GoogleAnalyticsTrackingId"
         it.resValue 'string', 'maps_API_KEY', "$System.env.GoogleMapsApiKey"
     }
-    buildToolsVersion '28.0.3'
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -117,8 +118,8 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:16.0.1"
     implementation "com.google.android.gms:play-services-places:$googlePlayServicesVersion"
 
-    implementation 'com.google.firebase:firebase-core:16.0.5'
-    implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-ml-vision:18.0.2'
 
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'net.danlew:android.joda:2.9.9.4'
@@ -137,11 +138,11 @@ dependencies {
 
     implementation 'com.github.masterwok:simple-torrent-android:0.5.0'
 
-    implementation 'com.google.firebase:firebase-core:16.0.5'
-    implementation 'com.google.firebase:firebase-ml-common:16.1.5'
-    implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-ml-common:16.1.6'
+    implementation 'com.google.firebase:firebase-ml-vision:18.0.2'
     implementation 'com.google.firebase:firebase-ml-vision-image-label-model:17.0.2'
-    implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.3'
+    implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.4'
 
     implementation 'com.nbsp:library:1.8'
     implementation 'net.mm2d:preference:0.1.0'

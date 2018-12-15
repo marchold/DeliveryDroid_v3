@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity
@@ -22,6 +23,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.net.URL
 
 data class DownloadableMap(val isFolder:Boolean,val title:String, val path: String = "", val list:ArrayList<DownloadableMap>? = null)
@@ -46,12 +48,17 @@ class ChooseDownloadActivity : DeliveryDroidBaseActivity() {
             //Download torrent file
             val torrentUri = Uri.parse("http://zan.ooguy.com/Maps.torrent")
             val localTorrentFile = File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"Maps.torrent")
-            URL("http://zan.ooguy.com/Maps.torrent").openStream()?.use { input ->
-                FileOutputStream(localTorrentFile)?.use { output ->
-                    input.copyTo(output)
+            try {
+                URL("http://zan.ooguy.com/Maps.torrent").openStream()?.use { input ->
+                    FileOutputStream(localTorrentFile).use { output ->
+                        input.copyTo(output)
+                    }
                 }
+            } catch ( e : IOException)
+            {
+                //Servers down use the local copy
+                assets.open("Maps.torrent").copyTo(FileOutputStream(localTorrentFile))
             }
-
             val filesList = ArrayList<DownloadableMap>()
             val torrentInfo = TorrentInfo(localTorrentFile)
             val totalFiles = torrentInfo.numFiles()

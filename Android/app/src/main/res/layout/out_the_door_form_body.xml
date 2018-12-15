@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
     <catglo.com.deliverydroid.widgets.RowLayout
@@ -138,31 +139,6 @@
             android:layout_below="@+id/paymentRow1"
             android:background="#333"/>
 
-    <ImageButton
-
-            android:id="@+id/SMSThem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hrule1"
-            android:layout_margin="1px"
-            android:src="@drawable/text_message1"
-            android:text=""
-            android:background="@color/transparent"
-            android:visibility="visible"/>
-
-    <ImageButton
-             android:id="@+id/CallThem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hrule1"
-            android:layout_margin="1px"
-             android:src="@drawable/phone"
-             android:background="@color/transparent"
-            android:text=""
-
-             android:layout_alignParentRight="true"
-            android:visibility="visible"/>
-
     <LinearLayout
             android:id="@+id/delivery_info"
             android:layout_width="match_parent"
@@ -178,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:gravity="center"
-                android:text="13032 178th DR SE HAHAHA"
+                tools:text="13032 178th DR SE HAHAHA"
                 android:textColor="#fffbed09"
                 android:textSize="24sp">
 
@@ -210,7 +186,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="$22.44"
+                        tools:text="$22.44"
                         android:textColor="#fffbed09"
                         android:textSize="20sp"/>
             </LinearLayout>
@@ -235,7 +211,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="6min"
+                        tools:text="6min"
                         android:textColor="#fffbed09"
                         android:textSize="32sp"/>
 
@@ -289,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:singleLine="true"
-                    android:text="$0.00"
+                    tools:text="$0.00"
                     android:textColor="#FFF"
                     android:textSize="20sp"/>
 
@@ -316,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:text="$0.00"
+                    tools:text="$0.00"
                     android:textColor="#FFF"
                     android:textSize="20sp"/>
 
@@ -346,7 +322,7 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="$0.00"
+                    tools:text="$0.00"
                     android:textColor="#FFF"
                     android:textSize="20sp"/>
 
@@ -375,10 +351,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/hrule10"
-            android:text="12  13117 james se"
+            tools:text="12  13117 james se"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:typeface="monospace"></TextView>
+            android:typeface="monospace"/>
 
     <View
             android:id="@+id/View01"
@@ -386,7 +362,7 @@
             android:layout_height="2dip"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:background="#FFAAAAAA"></View>
+            android:background="#FFAAAAAA"/>
 
     <LinearLayout
             android:id="@+id/LinearLayout1"
@@ -407,13 +383,13 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/notes_this_apt"></TextView>
+                android:text="@string/notes_this_apt"/>
 
         <LinearLayout
                 android:id="@+id/notesThisAddressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"/>
 
         <View
                 android:id="@+id/View02"
@@ -454,9 +430,9 @@
             android:visibility="gone"
             android:id="@+id/undeliverableOverlay"
             android:src="@drawable/ic_cancel"
-               android:alpha="0.5"
+            android:alpha="0.5"
             android:layout_width="match_parent"
-               android:layout_height="match_parent"/>
+            android:layout_height="match_parent"/>
 
     <LinearLayout
             android:orientation="horizontal"
@@ -467,7 +443,8 @@
 
         <LinearLayout android:id="@+id/markUndeliverable" style="@style/droid_tool_icon_container">
             <ImageView android:src="@drawable/ic_cancel" style="@style/droid_tool_icon_image"/>
-            <TextView android:id="@+id/markUndeliverableText" android:text="@string/mark_undeliverable" style="@style/droid_tool_icon_text"/>
+            <TextView android:id="@+id/markUndeliverableText" android:text="@string/mark_undeliverable"
+                      style="@style/droid_tool_icon_text"/>
         </LinearLayout>
 
         <LinearLayout android:id="@+id/editOrder" style="@style/droid_tool_icon_container">
@@ -484,16 +461,6 @@
             <ImageView android:src="@drawable/ic_home_phone" style="@style/droid_tool_icon_image"/>
             <TextView android:text="@string/Call_nl_store" style="@style/droid_tool_icon_text"/>
         </LinearLayout>
-       <!--
-
-        <Button
-                style="@style/bottom_buttons_out_the_door"
-                android:drawableTop="@drawable/ic_home_phone"
-                android:id="@+id/callStore"
-                android:text="@string/Call_store"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"/>
-          -->
 
     </LinearLayout>
 

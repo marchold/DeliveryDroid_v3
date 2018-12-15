@@ -267,15 +267,21 @@ public class Utils {
         return false;
 	}
 
-    public void showOnScreenKeyboard(View paymentTotal2){
+    public void showOnScreenKeyboard(){
 		InputMethodManager mgr = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 		mgr.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
 
 	}
 
-    public void hideOnScreenKeyboard(View paymentTotal){
-		InputMethodManager inputMethodManager=(InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-	    inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    public void hideOnScreenKeyboard(){
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 
     void showTimeSliderDialog(final EditText field, final Timestamp time, final Dialog.OnDismissListener listener){

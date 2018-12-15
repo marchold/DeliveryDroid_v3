@@ -75,7 +75,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 		super.onPause();
 		Editor editor = getSharedPreferences().edit();
 		editor.putInt("TipScrollPosition", scrollView.getScrollY());
-		editor.commit();
+		editor.apply();
 	}
 	
 	//TODO: Save and restore the filter settings like if its this week recalculate to whatever week it is
@@ -170,37 +170,37 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 		monday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
 			prefEditor.putBoolean("tipHistoryMonday", isChecked);
-			prefEditor.commit();
+			prefEditor.apply();
 		}});
 		tuesday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
 			prefEditor.putBoolean("tipHistoryTuesday", isChecked);
-			prefEditor.commit();
+			prefEditor.apply();
 		}});
 		wendsday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
 			prefEditor.putBoolean("tipHistoryWendsday", isChecked);
-			prefEditor.commit();
+			prefEditor.apply();
 		}});
 		thursday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
 			prefEditor.putBoolean("tipHistoryThursday", isChecked);
-			prefEditor.commit();
+			prefEditor.apply();
 		}});
 		friday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
 			prefEditor.putBoolean("tipHistoryFriday", isChecked);
-			prefEditor.commit();
+			prefEditor.apply();
 		}});
 		saturday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
 			prefEditor.putBoolean("tipHistorySaturday", isChecked);
-			prefEditor.commit();
+			prefEditor.apply();
 		}});
 		sunday.setOnCheckedChangeListener(new OnCheckedChangeListener(){public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			updateUI();
 			prefEditor.putBoolean("tipHistorySunday", isChecked);
-			prefEditor.commit();
+			prefEditor.apply();
 		}});
 		
 		
@@ -233,7 +233,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 		dateRangeSpinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				prefEditor.putInt("tipHistorySpinnerDefault", arg2);
-				prefEditor.commit();
+				prefEditor.apply();
 				startDate = Calendar.getInstance();
 				startDate.setTimeInMillis(System.currentTimeMillis());
 				endDate = Calendar.getInstance();
@@ -341,7 +341,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
     	//sharedPreferences.getLong("tipHistoryendDate", (((Calendar) now.clone()).getTimeInMillis()))
     	prefEditor.putLong("tipHistoryendDate", endDate.getTimeInMillis());
     	prefEditor.putLong("tipHistorystartDate", startDate.getTimeInMillis());
-    	prefEditor.commit();
+    	prefEditor.apply();
     	
     	String shiftSqlQuery = ""
     			+ "WHERE shifts.`TimeStart` >= '"+String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) 
@@ -440,19 +440,6 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
     		hoursWorkedTitle[2].setVisibility(View.GONE);	
     	}
     }
-    
-    final int EMAIL = 1;
-    final int SMS = 2;
-    final int TOGGLE_FILTER=3;
-    
-    /* Creates the menu items */
-	public boolean onCreateOptionsMenu(final Menu menu) {
-		menu.add(0, EMAIL, 0, getString(R.string.email)).setIcon(android.R.drawable.ic_dialog_email);
-		menu.add(0, SMS, 0, getString(R.string.textMessage)).setIcon(android.R.drawable.ic_menu_send);
-		return true;
-	} 
-	
-
 
     void emailResults(){
         TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(),

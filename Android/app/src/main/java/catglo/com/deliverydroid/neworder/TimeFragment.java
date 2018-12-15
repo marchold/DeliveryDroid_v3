@@ -51,6 +51,7 @@ public class TimeFragment extends DataAwareFragment implements TimePicker.OnTime
     public void onResume(){
         super.onResume();
 
+        ((NewOrderActivity)getActivity()).getTools().hideOnScreenKeyboard();
         time = new MutableDateTime(((NewOrderActivity)getActivity()).order.time.getTime());
 
         timeLabel.setText(Utils.getFormattedTimeDay(time.toGregorianCalendar()));

@@ -17,6 +17,7 @@ import com.masterwok.simpletorrentandroid.models.TorrentSessionStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.net.NoRouteToHostException
 import java.net.URI
 
@@ -92,7 +93,7 @@ class MapFileSharingService : Service(),TorrentSessionListener {
             GlobalScope.launch(Dispatchers.IO) {
                 try {
                     torrentSession.start(applicationContext, Uri.parse("http://zan.ooguy.com/Maps.torrent"))
-                } catch (e: NoRouteToHostException) {
+                } catch (e: IOException) {
                     //TODO: Deal with the server being down somehow
                 }
             }

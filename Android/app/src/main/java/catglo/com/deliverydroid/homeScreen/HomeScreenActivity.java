@@ -1,6 +1,7 @@
 package catglo.com.deliverydroid.homeScreen;
 
 import android.Manifest;
+import android.os.Handler;
 import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -162,6 +163,14 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			startService(serviceIntent);
 		}
 
+		new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getTools().hideOnScreenKeyboard();
+            }
+        },250);
+
+
 	}
 
 
@@ -288,7 +297,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
     	prefEditor.putFloat("dileveryRadius",0.1f);
 
     	
-		prefEditor.commit();	
+		prefEditor.apply();
 		try {
             streetList = StreetList.LoadState(getApplicationContext());
             if (StreetList.parentList.size()==0) {
@@ -537,48 +546,9 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		return null;
 	}
 	
-//	@Override
-//	public boolean onTouchEvent(MotionEvent ev){
-//		return gestureDetector.onTouchEvent(ev);
-//	}
-	
-	private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-   // private GestureDetector gestureDetector;
-   // View.OnTouchListener gestureListener;
+
 	public static boolean alreadyAskedStoreAddress=false;
-//	static class MyGestureDetector extends SimpleOnGestureListener {
-//        @Override
-//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//            try {
-//                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-//                    return false;
-//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences();
-//                int curFrag = sharedPreferences.getInt("currentFragment", SORT);
-//                // right to left swipe
-//                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                	switch (curFrag){
-//                //	case DETAILS: setSelectedFragment(SORT);
-//               // 	break;
-//                	case SORT: setSelectedFragment(MAP);
-//                	break;
-//                	}
-//                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                	switch (curFrag){
-//                //	case SORT: setSelectedFragment(DETAILS);
-//                //	break;
-//                	case MAP: setSelectedFragment(SORT);
-//                	break;
-//                	}
-//                }
-//            } catch (Exception e) {
-//                // nothing
-//            }
-//            return false;
-//        }
-//
-//    }
+
 	
 	
 	//TODO: This seems like a hack way of handling when we start a new run, come up with something clean
@@ -634,80 +604,4 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			
 		}
 	}
-	
-	/* Creates the menu items */
-	public boolean onCreateOptionsMenu(final Menu menu) {
-		menu.add(0, SETTINGS, 0, getString(R.string.settings)).setIcon(android.R.drawable.ic_menu_preferences);
-		menu.add(0, NEW_SHIFT, 0, getString(R.string.Shift)).setIcon(R.drawable.ic_menu_guy_clock);
-		menu.add(0, NAV_TO_STORE, 0, getString(R.string.Nav_To_Store)).setIcon(R.drawable.navigate_small);
-		menu.add(0, SEARCH_HISTORY, 0, getString(R.string.Search_Notes_Or_Addresses)).setIcon(R.drawable.ic_action_search);
-		menu.add(0, GPS_NOTES, 0, getString(R.string.GPS_notes)).setIcon(android.R.drawable.ic_menu_compass);
-	    menu.add(0, CUSTOMIZE_LIST, 0, "Customize List ");
-		
-		return true;
-	} 
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu){
-		if (getSharedPreferences().getString("storePhoneNumber", "").length()>0){
-			if (menu.findItem(CALL_STORE)==null){
-				menu.add(0, CALL_STORE, 0, getString(R.string.call_store) ).setIcon(android.R.drawable.ic_menu_call);
-			}
-		} else {
-			menu.removeItem(CALL_STORE);
-		}
-		return true;
-	}
-
-	
-	/* Handles item selections */
-	@SuppressWarnings("deprecation")
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-			case SETTINGS: {
-				startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), 0);
-				return true;
-			}
-			case NEW_SHIFT: {
-				startActivity(new Intent(getApplicationContext(), ShiftStartEndActivity.class));
-				return true;
-			}
-			case SEARCH_HISTORY: {
-				startActivity(new Intent(getApplicationContext(), ListAddressHistoryActivity.class));
-				return true;
-			}
-			case NAV_TO_STORE:
-				//TODO: Error dialog box with link to settings
-				String storeAddress = getSharedPreferences().getString("storeAddress", "");
-				if (storeAddress.length()>=0){
-		    		getTools().navigateTo(storeAddress, HomeScreenActivity.this);
-				} else {
-					if (alreadyAskedStoreAddress==false){
-						showDialog(STORE_ADDRESS_FIRST);
-						alreadyAskedStoreAddress=true;
-					}
-				}
-			break;
-			case CALL_STORE:
-				String phoneNumber = getSharedPreferences().getString("storePhoneNumber", "");
-				if (phoneNumber.length()<1){
-					Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
-				} else {
-					 String uri = "tel:" + phoneNumber;
-					 Intent intent = new Intent(Intent.ACTION_DIAL);
-					 intent.setData(Uri.parse(uri));
-					 startActivity(intent);
-				}
-				break;
-			case GPS_NOTES:
-				startActivity(new Intent(getApplicationContext(), GpsNotes.class));
-				return true;
-			case CUSTOMIZE_LIST:
-				Intent i = new Intent(getApplicationContext(), SettingsListOptions.class);
-				startActivity(i);
-				break;
-		}
-		return false;
-	}
- 
 }

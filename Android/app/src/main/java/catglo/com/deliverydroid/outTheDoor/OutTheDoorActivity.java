@@ -194,7 +194,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		generatePaymentSuggestionListFor("");
 
 	}
-	boolean undeliverable;
+	//boolean undeliverable;
 	/** Called when the activity is first created. */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -233,7 +233,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				showPaymentAmountList();
 			}
 			paymentTotal.setInputType(EditorInfo.TYPE_NUMBER_FLAG_DECIMAL|EditorInfo.TYPE_CLASS_NUMBER);			
-			getTools().showOnScreenKeyboard(paymentTotal);
+			getTools().showOnScreenKeyboard();
 		}});
 		paymentTotal.setOnFocusChangeListener(new OnFocusChangeListener(){public void onFocusChange(View arg0, boolean hasFocus) {
 			if (hasFocus==false){
@@ -245,7 +245,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				
 				if (paymentTotal.getText().toString().length() < 2) {
 					showPaymentAmountList();
-					getTools().showOnScreenKeyboard(paymentTotal);
+					getTools().showOnScreenKeyboard();
 				} else {
 					next.setVisibility(View.VISIBLE);
 				}
@@ -406,7 +406,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			return;
 		}
 
-        undeliverable = orders.get(orderCounter).undeliverable;
+        //undeliverable = orders.get(orderCounter).undeliverable;
 
         if (orders.get(0).payed2 != 0) {
 			next.setVisibility(View.INVISIBLE);
@@ -433,13 +433,11 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
             public void onClick(View v) {
                 next.setVisibility(View.VISIBLE);
                 Order order = orders.get(orderCounter);
-                if (undeliverable==true){
-                    undeliverable=false;
+                if (order.undeliverable){
                     order.undeliverable=false;
                     undeliverableOverlay.setVisibility(View.GONE);
                 } else {
                     order.undeliverable=true;
-                    undeliverable=true;
                     undeliverableOverlay.setVisibility(View.VISIBLE);
                 }
                 setPaymentEnabledState();
@@ -542,7 +540,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 					tipTotal.setFocusableInTouchMode(true);
 
 					//Hide soft keyboard 2 different ways
-					getTools().hideOnScreenKeyboard(paymentTotal);
+					getTools().hideOnScreenKeyboard();
 					
 					float payment = 0;
 					float payment2 = 0;
@@ -589,12 +587,12 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 					String notes = notesThisOrder.getText().toString();
 
-					getDataBase().setOrderPayment(orders.get(orderCounter).primaryKey, payment, paymentType, payment2, paymentType2, startNewRun, notes, undeliverable);
+					getDataBase().setOrderPayment(orders.get(orderCounter).primaryKey, payment, paymentType, payment2, paymentType2, startNewRun, notes, orders.get(orderCounter).undeliverable);
 					startNewRun = false;
 
 
 					orders.get(orderCounter).payed = payment;
-                    undeliverable = orders.get(orderCounter).undeliverable;
+                    //undeliverable = orders.get(orderCounter).undeliverable;
 					orderCounter++;
                     previousOrder.setVisibility(View.VISIBLE);
                     if (orderCounter < orders.size()) {
@@ -682,7 +680,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				    paymentTotal.setText(""+orders.get(orderCounter).cost);
 				}
 				
-				getTools().showOnScreenKeyboard(paymentTotal2);
+				getTools().showOnScreenKeyboard();
 			}
 		});
 

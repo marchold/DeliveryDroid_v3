@@ -45,7 +45,7 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
 
     private var tips: TipTotalData? = null
 
-    open fun shiftTimeClickListener(time : MutableDateTime) : View.OnClickListener {
+    open fun shiftTimeClickListener(time : MutableDateTime, setter: (datePicker:DatePicker,timePicker:TimePicker)->Unit ) : View.OnClickListener {
         return View.OnClickListener {
             val customView = View.inflate(this@ShiftStartEndActivity,R.layout.time_date_picker_dialog,null)
             val timePicker = customView.findViewById<TimePicker>(R.id.timePicker)
@@ -73,17 +73,7 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
             AlertDialog.Builder(this@ShiftStartEndActivity)
                 .setView(customView)
                 .setPositiveButton(android.R.string.ok){ _:DialogInterface, _: Int ->
-                    time.year = datePicker.year
-                    time.monthOfYear = datePicker.month+1
-                    time.dayOfMonth = datePicker.dayOfMonth
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        time.hourOfDay = timePicker.hour
-                        time.minuteOfHour = timePicker.minute
-                    } else {
-                        time.hourOfDay = timePicker.currentHour
-                        time.minuteOfHour = timePicker.currentMinute
-                    }
-                    dataBase.saveShift(shift)
+                    setter(datePicker,timePicker)
                     updateUI()
                 }
                 .show()
@@ -101,6 +91,7 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
                 setPositiveButton(android.R.string.ok) { dialog, _ ->
                     dataBase.deleteShift(whichShift)
                     dialog.dismiss()
+                    shift = dataBase.getShift(dataBase.curShift)
                     updateUI()
                 }
                 setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
@@ -111,6 +102,7 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
 
         newShiftButton?.setOnClickListener {
             dataBase.setNextShift()
+            shift = dataBase.getShift(dataBase.curShift)
             updateUI()
         }
 
@@ -136,10 +128,49 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
         val currentShiftNumber = findViewById<View>(R.id.currentShiftNumber) as TextView
         currentShiftNumber.text = whichShift.toString()
 
-        shiftStartTime.setOnClickListener(shiftTimeClickListener(shift.startTime))
-        shiftEndTime.setOnClickListener(shiftTimeClickListener(shift.endTime))
+        shiftStartTime.setOnClickListener(shiftTimeClickListener(shift.startTime){ datePicker, timePicker ->
+            shift.startTime.year = datePicker.year
+            shift.startTime.monthOfYear = datePicker.month+1
+            shift.startTime.dayOfMonth = datePicker.dayOfMonth
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                shift.startTime.hourOfDay = timePicker.hour
+                shift.startTime.minuteOfHour = timePicker.minute
+            } else {
+                shift.startTime.hourOfDay = timePicker.currentHour
+                shift.startTime.minuteOfHour = timePicker.currentMinute
+            }
+            dataBase.saveShift(shift)
 
-        findViewById<EditText>(R.id.startingOdometer)?.let {
+        })
+        shiftEndTime.setOnClickListener(shiftTimeClickListener(shift.endTime){ datePicker, timePicker ->
+            shift.endTime.year = datePicker.year
+            shift.endTime.monthOfYear = datePicker.month+1
+            shift.endTime.dayOfMonth = datePicker.dayOfMonth
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                shift.endTime.hourOfDay = timePicker.hour
+                shift.endTime.minuteOfHour = timePicker.minute
+            } else {
+                shift.endTime.hourOfDay = timePicker.currentHour
+                shift.endTime.minuteOfHour = timePicker.currentMinute
+            }
+            dataBase.saveShift(shift)
+
+        })
+
+
+
+        //OK Button
+        val doneClickListener = View.OnClickListener { finish() }
+        doneButton.setOnClickListener(doneClickListener)
+        backButton.setOnClickListener(doneClickListener)
+
+    }
+
+    public override fun onResume() {
+        super.onResume()
+
+
+        findViewById<View>(R.id.startingOdometer)?.let {
             it.setOnClickListener {
                 val meterLayout = View.inflate(this@ShiftStartEndActivity, R.layout.meter_view_dialog, null)
                 val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
@@ -184,7 +215,7 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
             }
         }
 
-        findViewById<EditText>(R.id.endingOdometer)?.let {
+        findViewById<View>(R.id.endingOdometer)?.let {
             it.setOnClickListener {
                 val meterLayout = View.inflate(this@ShiftStartEndActivity, R.layout.meter_view_dialog, null)
                 val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
@@ -238,15 +269,6 @@ open class ShiftStartEndActivity : DeliveryDroidBaseActivity() {
         }
 
 
-        //OK Button
-        val doneClickListener = View.OnClickListener { finish() }
-        doneButton.setOnClickListener(doneClickListener)
-        backButton.setOnClickListener(doneClickListener)
-
-    }
-
-    public override fun onResume() {
-        super.onResume()
         updateUI()
     }
 

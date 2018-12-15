@@ -198,92 +198,49 @@
                     android:visibility="visible">
 
 
-                    <catglo.com.deliverydroid.widgets.FlowLayout
+                    <LinearLayout
                         android:id="@+id/filterAreaContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:horizontalSpacing="15dip"
-                        app:verticalSpacing="15dip"
+                        android:orientation="horizontal"
                         android:layout_margin="15dp">
 
                         <CheckBox
-                            android:id="@+id/monday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/recurrence_bubble_fill"
-                            android:button="@drawable/nothing"
-                            android:gravity="center"
-                            android:singleLine="true"
+                                android:id="@+id/monday"
 
-                            android:text="@string/mon" />
+                                android:text="@string/mon" style="@style/weekday_checkbutton"/>
 
                         <CheckBox
                             android:id="@+id/tuesday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:background="@drawable/recurrence_bubble_fill"
-                            android:button="@drawable/nothing"
-                            android:gravity="center"
-                            android:singleLine="true"
+                            style="@style/weekday_checkbutton"
                             android:text="@string/tue" />
 
                         <CheckBox
                             android:id="@+id/wendsday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/recurrence_bubble_fill"
-                            android:button="@drawable/nothing"
-                            android:gravity="center"
-                            android:singleLine="true"
+                            style="@style/weekday_checkbutton"
                             android:text="@string/wed" />
 
                         <CheckBox
                             android:id="@+id/thursday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/recurrence_bubble_fill"
-                            android:button="@drawable/nothing"
-                            android:gravity="center"
-                            android:singleLine="true"
+                            style="@style/weekday_checkbutton"
                             android:text="@string/thu" />
 
                         <CheckBox
                             android:id="@+id/friday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/recurrence_bubble_fill"
-                            android:button="@drawable/nothing"
-                            android:gravity="center"
-                            android:singleLine="true"
+                            style="@style/weekday_checkbutton"
                             android:text="@string/fri" />
 
                         <CheckBox
                             android:id="@+id/saturday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/recurrence_bubble_fill"
-                            android:button="@drawable/nothing"
-                            android:gravity="center"
-                            android:singleLine="true"
+                            style="@style/weekday_checkbutton"
                             android:text="@string/sat" />
 
                         <CheckBox
                             android:id="@+id/sunday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/recurrence_bubble_fill"
-                            android:button="@drawable/nothing"
-                            android:gravity="center"
-                            android:singleLine="true"
+                            style="@style/weekday_checkbutton"
                             android:text="@string/sun" />
 
-                    </catglo.com.deliverydroid.widgets.FlowLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout

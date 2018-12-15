@@ -389,7 +389,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
         }
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         //menu.add(0, SETTINGS, 0, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences);
         menu.add(0, EXPORT_DATA, 0, R.string.ExportTo).setIcon(R.drawable.ic_menu_convert_csv);
@@ -399,7 +399,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
         menu.add(0, ADD_ORDER, 0, R.string.AddOrder).setIcon(android.R.drawable.ic_menu_add);
         return true;
     }
-
+*/
 
 
     //For CSV Export
@@ -464,204 +464,183 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 
     }
 
-    public void exportWhereDialog(){
-        DialogFragment dialogFragment = new DialogFragment(){
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {AlertDialog.Builder alert = new AlertDialog.Builder(OrderSummaryActivity.this);
-                AlertDialog.Builder builder;
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View layout = inflater.inflate(R.layout.export_csv_how_dialog, (ViewGroup) findViewById(R.id.linearLayout1));
+    public void exportWhereDialog()
+    {
+        AlertDialog.Builder builder;
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.export_csv_how_dialog, (ViewGroup) findViewById(R.id.linearLayout1));
 
-                //User reported bad export dialog, found this stack overflow fix.
-                LayoutParams params = getWindow().getAttributes();
-                params.height = LayoutParams.MATCH_PARENT;
-                getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        //User reported bad export dialog, found this stack overflow fix.
+        LayoutParams params = getWindow().getAttributes();
+        params.height = LayoutParams.MATCH_PARENT;
+        getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-                final Spinner exportTo = (Spinner) layout.findViewById(R.id.deliveryAreaSpinner);
-                final EditText fileNameEditor = (EditText) layout.findViewById(R.id.hourlyPayRate);
-                fileNameEditor.setText("deliveryData.csv");
-                exportTo.setOnItemSelectedListener(new OnItemSelectedListener(){
-                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        switch (arg2){
-                            case 0: fileNameEditor.setText("deliveryData.csv");
-                                fileNameEditor.setEnabled(false);
-                                break;
-                            case 1:  fileNameEditor.setEnabled(true);
-                                break;
-                        }
-                    }
-                    public void onNothingSelected(AdapterView<?> arg0) {}
-                });
-                String[] items = new String[] {
-                        getString(R.string.email),     //0
-                        getString(R.string.sdcard)};   //1
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(OrderSummaryActivity.this,android.R.layout.simple_spinner_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                exportTo.setAdapter(adapter);
-                Button exitButton   = (Button) layout.findViewById(R.id.button2);
-                Button exportButton = (Button) layout.findViewById(R.id.setShiftTimesToOrderTimes);
-                builder = new AlertDialog.Builder(OrderSummaryActivity.this);
-                builder.setView(layout);
-                final AlertDialog dialog = builder.create();
-                exitButton.setOnClickListener(new OnClickListener(){public void onClick(View v) {
-                    dialog.dismiss();
-                }});
-                exportButton.setOnClickListener(new OnClickListener(){
-
-                    public void onClick(View v) {
-
-                        pd = ProgressDialog.show(OrderSummaryActivity.this, "Exporting...", "This may take a minute", true, false);//cancelable)//.show(this, "Working..", "Calculating Pi", true, false);
-
-                        Thread csvThread = new Thread(new Runnable(){public void run(){
-                            String csvData = getDataBase().getCSVData(startDate,endDate,pd,OrderSummaryActivity.this);
-                            if (exportTo.getSelectedItemPosition()==1){
-                                fileName = fileNameEditor.getEditableText().toString()+".csv";
-                            } else {
-                                fileName = "deliveryData.csv";
-                            }
-                            File sdCard = Environment.getExternalStorageDirectory();
-                            File dir = new File (sdCard.getAbsolutePath());
-                            File file = new File(dir, fileName);
-                            try {
-                                FileWriter fstream = new FileWriter(file);
-                                BufferedWriter out = new BufferedWriter(fstream);
-                                out.write(csvData);
-                                out.flush();
-                                out.close();
-
-                            } catch (final IOException e) {
-
-                                e.printStackTrace();
-                            }
-                            if (exportTo.getSelectedItemPosition()==0){
-                                final Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                                emailIntent.setType("plain/text");
-                                String subject = OrderSummaryActivity.this.getString(R.string.cvs_email_subject);
-                                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
-                                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-                                emailIntent.setType("text/csv");
-                                emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/"+fileName));
-                                emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                runOnUiThread(new Runnable(){public void run(){
-                                    try {
-
-                                        getApplicationContext().startActivity(emailIntent);
-                                    } catch(Exception e){
-                                        e.printStackTrace();
-                                        //	Toast.makeText(getApplicationContext(), "ERROR - Could not lounch system e-mail app", Toast.LENGTH_LONG).show();
-
-                                    }
-                                }});
-                            }
-                            pd.dismiss();
-                        }});
-                        csvThread.start();
-
-
-
-                        dialog.dismiss();
-                    }});
-
-                return dialog;
+        final Spinner exportTo = (Spinner) layout.findViewById(R.id.deliveryAreaSpinner);
+        final EditText fileNameEditor = (EditText) layout.findViewById(R.id.hourlyPayRate);
+        fileNameEditor.setText("deliveryData.csv");
+        exportTo.setOnItemSelectedListener(new OnItemSelectedListener(){
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                switch (arg2){
+                    case 0: fileNameEditor.setText("deliveryData.csv");
+                        fileNameEditor.setEnabled(false);
+                        break;
+                    case 1:  fileNameEditor.setEnabled(true);
+                        break;
+                }
             }
-        };
-        dialogFragment.show(getFragmentManager(), "");
+            public void onNothingSelected(AdapterView<?> arg0) {}
+        });
+        String[] items = new String[] {
+                getString(R.string.email),     //0
+                getString(R.string.sdcard)};   //1
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(OrderSummaryActivity.this,android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        exportTo.setAdapter(adapter);
+        Button exitButton   = (Button) layout.findViewById(R.id.button2);
+        Button exportButton = (Button) layout.findViewById(R.id.setShiftTimesToOrderTimes);
+        builder = new AlertDialog.Builder(OrderSummaryActivity.this);
+        builder.setView(layout);
+        builder.setNegativeButton(android.R.string.cancel,null);
+        builder.setPositiveButton(R.string.export, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                pd = ProgressDialog.show(OrderSummaryActivity.this, "Exporting...", "This may take a minute", true, false);//cancelable)//.show(this, "Working..", "Calculating Pi", true, false);
+
+                Thread csvThread = new Thread(new Runnable(){public void run(){
+                    String csvData = getDataBase().getCSVData(startDate,endDate,pd,OrderSummaryActivity.this);
+                    if (exportTo.getSelectedItemPosition()==1){
+                        fileName = fileNameEditor.getEditableText().toString()+".csv";
+                    } else {
+                        fileName = "deliveryData.csv";
+                    }
+                    File sdCard = Environment.getExternalStorageDirectory();
+                    File dir = new File (sdCard.getAbsolutePath());
+                    File file = new File(dir, fileName);
+                    try {
+                        FileWriter fstream = new FileWriter(file);
+                        BufferedWriter out = new BufferedWriter(fstream);
+                        out.write(csvData);
+                        out.flush();
+                        out.close();
+
+                    } catch (final IOException e) {
+
+                        e.printStackTrace();
+                    }
+                    if (exportTo.getSelectedItemPosition()==0){
+                        final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        emailIntent.setType("plain/text");
+                        String subject = OrderSummaryActivity.this.getString(R.string.cvs_email_subject);
+                        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+                        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+                        emailIntent.setType("text/csv");
+                        emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/"+fileName));
+                        emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        runOnUiThread(new Runnable(){public void run(){
+                            try {
+
+                                getApplicationContext().startActivity(emailIntent);
+                            } catch(Exception e){
+                                e.printStackTrace();
+                                //	Toast.makeText(getApplicationContext(), "ERROR - Could not lounch system e-mail app", Toast.LENGTH_LONG).show();
+
+                            }
+                        }});
+                    }
+                    pd.dismiss();
+                }});
+                csvThread.start();
+
+            }});
+        builder.show();
+
+
     }
 
     public void confirmDeleteRecordDialog(){
         if (recordToDelete < 0) return;
-        DialogFragment dialogFragment = new DialogFragment(){
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                return new AlertDialog.Builder(OrderSummaryActivity.this).setIcon(R.drawable.icon).setTitle(
-                        "Delete this record?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int whichButton) {
-                        //Log.i("Delivery Driver", "User Y/N Delete Order");
-                        getDataBase().delete(recordToDelete);
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int whichButton) {
-	
-						/* User clicked Cancel so do some stuff */
-                    }
-                }).create();
+
+        new AlertDialog.Builder(OrderSummaryActivity.this).setIcon(R.drawable.icon).setTitle(
+                "Delete this record?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, final int whichButton) {
+                //Log.i("Delivery Driver", "User Y/N Delete Order");
+                getDataBase().delete(recordToDelete);
             }
-        };
-        dialogFragment.show(getFragmentManager(), "");
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, final int whichButton) {
+
+                /* User clicked Cancel so do some stuff */
+            }
+        }).show();
     }
 
+
+
     public void confirmDeleteShiftDialog(){
-        DialogFragment dialogFragment = new DialogFragment(){
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-                TipTotalData tip = getDataBase().getTipTotal(OrderSummaryActivity.this,DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0",
-                        "WHERE shifts.ID="+viewingShift);
 
-                return new AlertDialog.Builder(OrderSummaryActivity.this).setIcon(R.drawable.icon).setTitle(
-                        "Delete this shift and all "+tip.deliveries+" order records?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int whichButton) {
-                        getDataBase().deleteShift(viewingShift);
-                        viewingShift= getDataBase().getNextShiftNumber(viewingShift);
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int whichButton) {
-	
-						/* User clicked Cancel so do some stuff */
-                    }
-                }).create();
+        TipTotalData tip = getDataBase().getTipTotal(OrderSummaryActivity.this,DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0",
+                "WHERE shifts.ID="+viewingShift);
+
+        new AlertDialog.Builder(OrderSummaryActivity.this).setIcon(R.drawable.icon).setTitle(
+                "Delete this shift and all "+tip.deliveries+" order records?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, final int whichButton) {
+                getDataBase().deleteShift(viewingShift);
+                viewingShift= getDataBase().getNextShiftNumber(viewingShift);
             }
-        };
-        dialogFragment.show(getFragmentManager(), "");
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(final DialogInterface dialog, final int whichButton) {
+
+                /* User clicked Cancel so do some stuff */
+            }
+        }).show();
+
+
     }
 
     public void goToDateDialog(){
-        DialogFragment dialogFragment = new DialogFragment(){
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(OrderSummaryActivity.this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(OrderSummaryActivity.this);
 
-                alert.setTitle("Go To Day");
-                //alert.setMessage("Enter the date you want to show");
+        alert.setTitle("Go To Day");
+        //alert.setMessage("Enter the date you want to show");
 
-                View view = View.inflate(OrderSummaryActivity.this, R.layout.date_picker_dialog, null);
+        View view = View.inflate(OrderSummaryActivity.this, R.layout.date_picker_dialog, null);
 
-                // Set an EditText view to get user input
-                final DatePicker input =  (DatePicker)view.findViewById(R.id.datePicker);
-                alert.setView(view);
+        // Set an EditText view to get user input
+        final DatePicker input =  (DatePicker)view.findViewById(R.id.datePicker);
+        alert.setView(view);
 
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
 
-                        Calendar c = Calendar.getInstance();
-                        c.set(input.getYear(), input.getMonth(), input.getDayOfMonth());
+                Calendar c = Calendar.getInstance();
+                c.set(input.getYear(), input.getMonth(), input.getDayOfMonth());
 
-                        int shift = getDataBase().findShiftForTime(c);
-                        if (shift>=0){
-                            viewingShift=shift;
-                            if (orderListSummaryFragment!=null) {
-                                orderListSummaryFragment.viewingShift = viewingShift;
-                                orderListSummaryFragment.updateUI();
-                            }
-                            if (orderSummaryTotalsFragment!=null){
-                                orderSummaryTotalsFragment.viewingShift = viewingShift;
-                                orderSummaryTotalsFragment.updateUI();
-                            }
-                        }
+                int shift = getDataBase().findShiftForTime(c);
+                if (shift>=0){
+                    viewingShift=shift;
+                    if (orderListSummaryFragment!=null) {
+                        orderListSummaryFragment.viewingShift = viewingShift;
+                        orderListSummaryFragment.updateUI();
                     }
-                });
-
-                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
+                    if (orderSummaryTotalsFragment!=null){
+                        orderSummaryTotalsFragment.viewingShift = viewingShift;
+                        orderSummaryTotalsFragment.updateUI();
                     }
-                });
-
-                return alert.create();
+                }
             }
-        };
-        dialogFragment.show(getFragmentManager(), "");
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
     }
 
 }
