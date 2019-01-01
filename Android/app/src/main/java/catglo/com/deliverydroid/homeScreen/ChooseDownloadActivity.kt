@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -67,19 +68,19 @@ class ChooseDownloadActivity : DeliveryDroidBaseActivity() {
             if (totalFiles>0) {
                 for (i in 0..(totalFiles - 1)) {
                     val fileName = torrentInfo.files().fileName(i)
-                    Log.i("Torrent","File Name $fileName")
-                    val path = torrentInfo.files().filePath(i)
-                    val parts = path.split("/")
-                    if (parts.size>1)
-                    {
-                        val folder = parts[parts.lastIndex-1]
-                        val name = parts[parts.lastIndex]
-                        if (lastFolder!=folder)
-                        {
-                            hashMap[folder] = ArrayList()
+                    if (fileName.contains(".map")) {
+                        Log.i("Torrent", "File Name $fileName")
+                        val path = torrentInfo.files().filePath(i)
+                        val parts = path.split("/")
+                        if (parts.size > 1) {
+                            val folder = parts[parts.lastIndex - 1]
+                            val name = parts[parts.lastIndex]
+                            if (lastFolder != folder) {
+                                hashMap[folder] = ArrayList()
+                            }
+                            hashMap[folder]?.add(path)
+                            lastFolder = folder
                         }
-                        hashMap[folder]?.add(path)
-                        lastFolder = folder
                     }
                 }
             }
@@ -104,7 +105,11 @@ class ChooseDownloadActivity : DeliveryDroidBaseActivity() {
             }
 
             GlobalScope.launch(Dispatchers.Main) {
-                listView.adapter = DownloadableAdapter(this@ChooseDownloadActivity,filesList)
+                if (filesList.size==0) {
+
+                } else {
+                    listView.adapter = DownloadableAdapter(this@ChooseDownloadActivity, filesList)
+                }
             }
         }
     }
@@ -165,8 +170,11 @@ class DownloadableAdapter(val context: Context, val maps : ArrayList<Downloadabl
                 Settings(context).run {
                     if (mapDownloads().contains(map.path)) {
                         removeMapDownload(map)
+                        cell.icon.setImageDrawable(context.getDrawable(R.drawable.map_add))
                     } else {
                         addMapDownload(map)
+                        cell.icon.setImageDrawable(context.getDrawable(R.drawable.map_minus))
+                        Toast.makeText(context,"Downloading ${map.title}",Toast.LENGTH_LONG).show()
                     }
                 }
                 //TODO: Send a message to the service about the change

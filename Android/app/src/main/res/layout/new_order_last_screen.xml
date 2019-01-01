@@ -178,7 +178,6 @@
                                 android:minWidth="60dp"
                                 android:nextFocusDown="@+id/OrderNotes"
                                 android:singleLine="true"
-
                                 android:textSize="18sp"/>
 
                     </com.google.android.material.textfield.TextInputLayout>

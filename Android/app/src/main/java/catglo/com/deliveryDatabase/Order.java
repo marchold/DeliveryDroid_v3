@@ -312,12 +312,12 @@ public class Order extends NotedObject implements Comparable<Order>, Serializabl
 
 	@Override
 	public double getLat() {
-		return geoPoint.lat;
+		return geoPoint.getLat();
 	}
 
 	@Override
 	public double getLng() {
-		return geoPoint.lng;
+		return geoPoint.getLng();
 	}
 
 	@Override

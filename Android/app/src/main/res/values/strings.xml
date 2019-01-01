@@ -274,7 +274,8 @@
     <string name="odometerTotal">Odometer total</string>
     <string name="creditsTitle">Credits</string>
     <string name="creditsBody">Many thanks to the delivery drivers who have contributed to the design\n\nThis app was
-        inspired by:\nMatt Henry\n\n Since then many drivers have contributed:Thomas Roach\nChris Garcia\nNeil Sizemore\nMichael Barron
+        inspired by:\nMatt Henry\n\n Since then many drivers have contributed:Thomas Roach\nChris Garcia\nNeil
+        Sizemore\nMichael Barron
         Jr\nEssohlath Akadje\nSteven Poekert\nLes Prince\nCarlton Clay\nSarah Sutton\nFoum Recei\nAl
         Dolega\nJoshua McBride\nJason Soltan\nTyler Allen\nManuel Villa\nRobert Royce\nJoseph Ford\n
     </string>
@@ -354,7 +355,7 @@
     <string name="Total_Owed_to_Store_minus_Credit">Total minus Credit Cards</string>
     <string name="Credit_Cards_minus_Tip">Credit Cards minus Tip</string>
     <string name="Cash_Owed_including_milage_pay">Cash - Cash Tips + Bank - Drops - Mileage</string>
-    <string name="Search_Notes_Or_Addresses">Search Notes or Addresses</string>
+    <string name="Search_Notes_Or_Addresses">Search Orders</string>
     <string name="ORDER_SUMMARY">ORDER SUMMARY</string>
     <string name="ADD_ORDER">ADD ORDER</string>
     <string name="OUT_THE_DOOR">OUT THE DOOR</string>
@@ -619,7 +620,6 @@
     <string name="End_odometer">End odometer</string>
     <string name="Odometer_total">Odometer total</string>
     <string name="Time_clock">Time clock</string>
-    <string name="title_activity_shift_start_end_times">ShiftStartEndTimesActivity</string>
     <string name="Shifts_and_Hours">Shifts and Hours</string>
     <string name="set_amount_per_hour">Set how you start shifts and the amount you earn per hour.</string>
     <string name="hourly_pay">Hourly pay</string>
@@ -775,7 +775,8 @@
     <string name="copy_database_nto_google_drive">Copy Database To Google Drive</string>
     <string name="restore_database_nfrom_google_drive">Restore Database From Google Drive</string>
     <string name="be_careful_with_the_restore_option_as_it_will_replace_your_current_data_with_the_backup_on_google_drive_thereby_deleting_whats_currently_on_the_phone">
-        Be careful with the restore option as it will replace your current data with the backup on Google Drive thereby deleting what\'s currently on the phone
+        Be careful with the restore option as it will replace your current data with the backup on Google Drive thereby
+        deleting what\'s currently on the phone
     </string>
 
     <string name="edit_order">Edit Order</string>
@@ -845,6 +846,9 @@
     <string name="configure_cash_owed_to_store">Configure Cash Owed To Store</string>
     <string name="make_a_drop">Make a drop</string>
     <string name="cash_on_hand">Cash on hand %s</string>
+    <string name="title_activity_shift">ShiftActivity</string>
+    <string name="killometers_driven">Kilometers driven</string>
+    <string name="title_activity_odometer">OdometerActivity</string>
 
 </resources>
 

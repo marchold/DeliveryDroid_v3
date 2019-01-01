@@ -240,4 +240,8 @@
         android:src="@android:drawable/ic_btn_speak_now"
         android:visibility="visible" />
 
+    <FrameLayout android:id="@+id/curvedScreenOverlay1" android:layout_alignParentLeft="true"  android:layout_width="20dp" android:layout_height="match_parent"/>
+    <FrameLayout android:id="@+id/curvedScreenOverlay2" android:layout_alignParentRight="true" android:layout_width="20dp" android:layout_height="match_parent"/>
+
+
 </RelativeLayout>

@@ -19,13 +19,14 @@
 
     <RelativeLayout
         android:id="@+id/buttonPadButtonLayout"
-        android:layout_width="170dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignRight="@+id/buttonPadEdit"
         android:layout_alignTop="@+id/buttonPadEdit" >
 
         <LinearLayout
+                android:layout_marginRight="20dp"
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -242,5 +243,8 @@
             android:text="@string/address_input_newcommer_text"
             android:textColor="@color/white" />
     </RelativeLayout>
+
+    <FrameLayout android:id="@+id/curvedScreenOverlay1" android:layout_alignParentLeft="true"  android:layout_width="20dp" android:layout_height="match_parent"/>
+    <FrameLayout android:id="@+id/curvedScreenOverlay2" android:layout_alignParentRight="true" android:layout_width="20dp" android:layout_height="match_parent"/>
 
 </RelativeLayout>

@@ -122,6 +122,7 @@
         <LinearLayout style="@style/details_view_header_data_layout" >
 
             <Spinner
+
                 android:id="@+id/cashOwedToStoreHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

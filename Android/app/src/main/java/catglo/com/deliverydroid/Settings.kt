@@ -14,6 +14,14 @@ enum class MapDownloadOption {
 
 class Settings(context: Context) {
 
+    fun useCurvedScreenTouchOverlay() : Boolean {
+        return prefs.getBoolean("curved_screen_overlay",false);
+    }
+
+    fun omitTelFromPhoneNumbers() : Boolean {
+        return prefs.getBoolean("no_tel_hack",false);
+    }
+
     fun addMapDownload(map: DownloadableMap) {
         HashSet<String>(prefs.getStringSet("MapDownloadFiles",HashSet<String>())).let {
             it.add(map.path)

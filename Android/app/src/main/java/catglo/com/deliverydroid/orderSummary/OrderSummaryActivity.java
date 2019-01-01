@@ -45,7 +45,7 @@ import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.shift.ShiftStartEndActivity;
+import catglo.com.deliverydroid.shift.ShiftActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
 
@@ -271,7 +271,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
             drawerLayout.closeDrawers();
         }});
         findViewById(R.id.odometer_and_hours_menu_button).setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
-            Intent  i = new Intent(getApplicationContext(),ShiftStartEndActivity.class);
+            Intent  i = new Intent(getApplicationContext(),ShiftActivity.class);
             i.putExtra("ID", viewingShift);
             startActivity(i);
             drawerLayout.closeDrawers();

@@ -8,6 +8,7 @@ import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import catglo.com.MapFileSharingService
 import catglo.com.deliveryDatabase.DataBase
+import java.lang.IllegalStateException
 
 
 open class DeliveryDroidBaseActivity : AppCompatActivity(), Tooled , ServiceConnection {
@@ -44,10 +45,14 @@ open class DeliveryDroidBaseActivity : AppCompatActivity(), Tooled , ServiceConn
         val b = BackupManager(this)
         b.dataChanged()
         if (Settings(this).mapDownloadOption == MapDownloadOption.torrent) {
-            val serviceIntent = Intent(this, MapFileSharingService::class.java)
-            startService(serviceIntent)
-            bindService(serviceIntent,this, Context.BIND_AUTO_CREATE)
-            isBound = true
+            try {
+                val serviceIntent = Intent(this, MapFileSharingService::class.java)
+                startService(serviceIntent)
+                bindService(serviceIntent, this, Context.BIND_AUTO_CREATE)
+                isBound = true
+            } catch (e:IllegalStateException){
+
+            }
         }
     }
 

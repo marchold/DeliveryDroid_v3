@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
+import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,7 @@ import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.R;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by goblets on 2/21/14.
@@ -88,9 +85,7 @@ public class PhoneNumberEntryFragment extends ButtonPadFragment {
 
 
             currentPrefixStrings = new ArrayList<String>(prefixes.size());
-            for (String key : prefixes.keySet()){
-                currentPrefixStrings.add(key);
-            }
+            currentPrefixStrings.addAll(prefixes.keySet());
 
             Collections.sort(currentPrefixStrings, new Comparator<String>() {
                 @Override
@@ -101,7 +96,7 @@ public class PhoneNumberEntryFragment extends ButtonPadFragment {
                 }
             });
 
-            PhonePrefixListAdapter adapter = new PhonePrefixListAdapter(getActivity(),R.layout.simple_auto_resize_list_item, currentPrefixStrings);
+            PhonePrefixListAdapter adapter = new PhonePrefixListAdapter(getActivity(),R.layout.new_order_phone_list_item, currentPrefixStrings);
             list.setAdapter(adapter);
 
         } else {
@@ -133,7 +128,7 @@ public class PhoneNumberEntryFragment extends ButtonPadFragment {
 
         //Look up the phone number in the database to populate list
         currentOrderList = activity.dataBase.findOrdersForPhoneNumber(Order.phoneNumbersOnly(newText));
-        PhoneOrderListAdapter adapter = new PhoneOrderListAdapter(getActivity(), R.layout.simple_auto_resize_list_item, currentOrderList);
+        PhoneOrderListAdapter adapter = new PhoneOrderListAdapter(getActivity(), R.layout.new_order_phone_list_item, currentOrderList);
         list.setAdapter(adapter);
 
     }
@@ -149,12 +144,13 @@ public class PhoneNumberEntryFragment extends ButtonPadFragment {
 
     static private class PhoneOrderListAdapter extends ArrayAdapter<Order> {
         public PhoneOrderListAdapter(Context context, int resource, List<Order> objects) {
-            super(context, resource, R.layout.new_order_phone_list_item, objects);
+            super(context, resource, 0, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
-            View view = View.inflate(getContext(),R.layout.new_order_phone_list_item,null);
+            View view = convertView;
+            if (view==null) view = View.inflate(getContext(),R.layout.new_order_phone_list_item,null);
             TextView addressText = (TextView)view.findViewById(R.id.orderAddress);
             TextView phoneText = (TextView)view.findViewById(R.id.phoneNumber);
             Order order = getItem(position);
@@ -172,19 +168,23 @@ public class PhoneNumberEntryFragment extends ButtonPadFragment {
 
     static private class PhonePrefixListAdapter extends ArrayAdapter<String> {
         public PhonePrefixListAdapter(Context context, int resource, List<String> objects) {
-            super(context, resource, android.R.id.text1, objects);
+            super(context, resource, 0, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
-            TextView view;
+            View view;
             if (convertView!=null){
-                view = (TextView)convertView;
+                view = convertView;
             } else {
-                view = (TextView)View.inflate(getContext(),R.layout.simple_auto_resize_list_item,null);
+                view = View.inflate(getContext(),R.layout.new_order_phone_list_item,null);
             }
+            TextView addressText = (TextView)view.findViewById(R.id.orderAddress);
+            TextView phoneText = (TextView)view.findViewById(R.id.phoneNumber);
+
             String prefix = getItem(position);
-            view.setText(PhoneNumberUtils.formatNumber(prefix));
+            String ISO2 = ((TelephonyManager)getContext().getSystemService(getContext().TELEPHONY_SERVICE)).getSimCountryIso();
+            phoneText.setText(prefix);
             view.setTag(prefix);
             return view;
         }
@@ -219,6 +219,7 @@ public class PhoneNumberEntryFragment extends ButtonPadFragment {
                     activity.order.outOfTown4 = order.outOfTown4;
                     activity.order.geoPoint   = order.geoPoint; //TODO: Something smarter with geocode failed
                     activity.order.geocodeFailed = order.geocodeFailed;
+                    activity.order.isValidated = order.isValidated;
 
                     edit.setText(order.phoneNumber);
 

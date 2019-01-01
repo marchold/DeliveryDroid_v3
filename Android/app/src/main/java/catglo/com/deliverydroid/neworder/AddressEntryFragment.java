@@ -34,8 +34,6 @@ public class AddressEntryFragment extends ButtonPadFragment {
         super.onItemClick(parent,view,position,id);
         AddressInfo address = addressList.get(position);
 
-
-
         NewOrderActivity activity = (NewOrderActivity)getActivity();
         if (activity!=null) {
             if (!activity.order.isValidated)

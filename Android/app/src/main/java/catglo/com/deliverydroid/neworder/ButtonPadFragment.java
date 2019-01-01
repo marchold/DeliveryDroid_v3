@@ -12,10 +12,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -28,6 +25,7 @@ import android.widget.TextView;
 
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
+import catglo.com.deliverydroid.Settings;
 import catglo.com.deliverydroid.widgets.OnTextChangedListener;
 
 import java.util.ArrayList;
@@ -206,6 +204,9 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+
+        Settings settings = new Settings(getActivity().getApplicationContext());
 
 
 
@@ -409,6 +410,25 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
 
         abc.setVisibility(View.INVISIBLE);
         space.setVisibility(View.INVISIBLE);
+
+        View touchOverlay1 = numbers.findViewById(R.id.curvedScreenOverlay1);
+        View touchOverlay2 = numbers.findViewById(R.id.curvedScreenOverlay2);
+        if (settings.useCurvedScreenTouchOverlay())
+        {
+            touchOverlay1.setVisibility(View.VISIBLE);
+            touchOverlay2.setVisibility(View.VISIBLE);
+            View.OnTouchListener eatTouches = new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            };
+            touchOverlay1.setOnTouchListener(eatTouches);
+            touchOverlay2.setOnTouchListener(eatTouches);
+        } else {
+            touchOverlay1.setVisibility(View.GONE);
+            touchOverlay2.setVisibility(View.GONE);
+        }
 
         return numbers;
     }

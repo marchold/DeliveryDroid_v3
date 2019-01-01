@@ -198,7 +198,7 @@ public class ListAddressHistoryActivity extends DeliveryDroidBaseActivity {
 				tip.setText(Utils.getFormattedCurrency(order.payed + order.payed2 - order.cost));
 				
 				TextView extra_notes = (TextView)layout.findViewById(R.id.extra_notes);
-				if (extra_notes!=null && order.notes.length()>0){
+				if (order!=null && extra_notes!=null && order.notes.length()>0){
 					extra_notes.setVisibility(View.VISIBLE);
 					extra_notes.setText(order.notes);
 				}

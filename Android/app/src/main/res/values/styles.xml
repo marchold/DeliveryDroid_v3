@@ -47,9 +47,8 @@
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:background">@color/chea_action_bar_bkgd</item>
         <item name="android:backgroundStacked">@color/chea_action_bar_bkgd</item>
-
+        <item name="android:background">@drawable/underline_blue</item>
 
     </style>
 

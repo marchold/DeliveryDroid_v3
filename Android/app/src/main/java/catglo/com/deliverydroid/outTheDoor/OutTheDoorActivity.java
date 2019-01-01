@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,10 +43,7 @@ import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.DataBase.NoteEntry;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
-import catglo.com.deliverydroid.DeliveryDroidApplication;
-import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
-import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Utils;
+import catglo.com.deliverydroid.*;
 import catglo.com.deliverydroid.homeScreen.HomeScreenActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
@@ -369,7 +367,12 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		} else {
 			navigate.setOnClickListener(new OnClickListener() {
 				public void onClick(final View v) {
-					String addressToNavTo = orders.get(orderCounter).address;
+					String addressToNavTo;
+					if (orders.get(orderCounter).isValidated) {
+						addressToNavTo = orders.get(orderCounter).geoPoint.toString();
+					} else {
+						addressToNavTo = orders.get(orderCounter).address;
+					}
 					getTools().navigateTo(addressToNavTo, OutTheDoorActivity.this);
 				}
 			});
@@ -464,6 +467,9 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                     Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
                 } else {
                     String uri = "tel:" + phoneNumber;
+                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                        uri = phoneNumber;
+                    }
                     Intent intent = new Intent(Intent.ACTION_DIAL);
                     intent.setData(Uri.parse(uri));
                     startActivity(intent);
@@ -867,15 +873,27 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                     callThemButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                        	if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()){
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)));
+                                } catch (ActivityNotFoundException e){
+                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                                }
+                            }else {
+                                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                            }
                         }
                     });
                     smsThemButton.setVisibility(View.VISIBLE);
                     smsThemButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumber, null));
-
+                            Intent i;
+                            if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                                i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",  phoneNumber, null));
+                            } else {
+                                i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumber, null));
+                            }
                             String messageBody = getSharedPreferences().getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
                             String cost = "" + Utils.getFormattedCurrency(orders.get(orderCounter).cost);
                             messageBody = messageBody.replace("###", cost);
@@ -901,7 +919,11 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                             builder.setTitle(R.string.Call).setItems(list, new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(which))));
+                                                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()){
+                                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse( phoneNumbersThisOrder.get(which))));
+                                                    } else {
+                                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(which))));
+                                                    }
                                                 }
                                             });
                                             return builder.create();
@@ -909,7 +931,11 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                                     };
                                     dialog.show(getSupportFragmentManager(), "set_pay_rate");
                                 } else {
-                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(0))));
+                                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse( phoneNumbersThisOrder.get(0))));
+                                    } else {
+                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(0))));
+                                    }
                                 }
                             }
                         });
@@ -941,8 +967,12 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                                     };
                                     dialog.show(getSupportFragmentManager(), "set_pay_rate");
                                 } else {
-                                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumbersThisOrder.get(0), null));
-
+                                    Intent i;
+                                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                                        i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", phoneNumbersThisOrder.get(0), null));
+                                    } else {
+                                        i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumbersThisOrder.get(0), null));
+                                    }
                                     String messageBody = getSharedPreferences().getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
                                     String cost = "" + Utils.getFormattedCurrency(orders.get(orderCounter).cost);
                                     messageBody = messageBody.replace("###", cost);

@@ -29,7 +29,9 @@
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="ocr"/>
 
-        <activity android:name=".homeScreen.HomeScreenActivity" android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity
+                android:name=".homeScreen.HomeScreenActivity"
+                android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -66,8 +68,9 @@
         <activity
                 android:name=".bankDrop.BankTillDropActivity"
                 android:theme="@style/AppTheme"/>
-        <activity android:name=".settings.SettingsActivity"
-                  android:theme="@style/AppTheme" />
+        <activity
+                android:name=".settings.SettingsActivity"
+                android:theme="@style/AppTheme"/>
         <activity android:name=".homeScreen.HomeListSettings"/>
         <activity android:name=".orderSummary.OrderSummaryActivity"/>
         <activity
@@ -93,14 +96,9 @@
         <!-- <activity android:name=".Settings_DropPrefsActivity" /> -->
 
         <activity
-                android:windowSoftInputMode="stateHidden"
-                android:name=".shift.ShiftStartEndActivity"
-                android:theme="@style/AppTheme"/>
-        <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
-        <activity
-                android:windowSoftInputMode="stateHidden"
                 android:name=".settings.SettingsListOptions"
-                android:exported="false">
+                android:exported="false"
+                android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="catglo.com.deliverydroid.Settings_ListOptions"/>
 
@@ -128,22 +126,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".shift.ShiftStartEndTimesActivity"
-                android:label="@string/title_activity_shift_start_end_times">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".shift.ShiftStartEndActivity"/>
-        </activity>
-        <activity
-                android:name=".shift.ShiftSetWageActivity"
-                android:label="@string/wage"/>
-        <activity
-                android:name=".shift.ShiftStartEndDayActivity"
-                android:label="@string/title_activity_shift_start_end_day"/>
-        <activity
-                android:name=".shift.ShiftStartEndEditWage"
-                android:label="@string/title_activity_shift_start_end_edit_wage"/>
 
         <service
                 android:name=".GeofenceIntentService"
@@ -169,7 +151,20 @@
                 android:exported="false">
         </service>
 
-        <activity  android:windowSoftInputMode="stateHidden" android:name=".homeScreen.ChooseDownloadActivity" android:theme="@style/AppTheme" android:label="@string/choose_map">
+        <activity
+                android:name=".homeScreen.ChooseDownloadActivity"
+                android:label="@string/choose_map"
+                android:theme="@style/AppTheme"
+                android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+                android:name=".shift.ShiftActivity"
+                android:label="@string/title_activity_shift">
+        </activity>
+        <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
+        <activity
+                android:name=".OdometerActivity"
+                android:label="@string/title_activity_odometer">
         </activity>
     </application>
 

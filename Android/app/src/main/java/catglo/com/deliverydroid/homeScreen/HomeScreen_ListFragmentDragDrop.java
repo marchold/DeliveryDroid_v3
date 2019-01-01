@@ -856,7 +856,13 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 
         } else {
             callStore.setOnClickListener(new View.OnClickListener() {public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+phoneNumber)));
+            	Settings appSettings = new Settings(getContext());
+            	if (appSettings.omitTelFromPhoneNumbers()) {
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)));
+                }
+                else {
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                }
             }});
             smsStore.setOnClickListener(new View.OnClickListener() {public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:"+phoneNumber));

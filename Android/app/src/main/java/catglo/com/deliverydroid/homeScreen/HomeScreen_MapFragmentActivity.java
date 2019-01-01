@@ -448,7 +448,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                     float maxLng = -300;
 
                     for (Order order : orders) {
-                        if (order.geoPoint.lat == 0 && order.geoPoint.lng == 0) {
+                        if (order.geoPoint.getLat() == 0 && order.geoPoint.getLng() == 0) {
                             order.isValidated = false;
                         }
                         if (!order.isValidated) {
@@ -461,7 +461,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                                 int imageResource = getResources().getIdentifier("drawable/map" + counter, null, getPackageName());
                                 Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(getResources().getDrawable(imageResource));
                                 bitmap.incrementRefCount();
-                                Marker marker = new Marker(new LatLong(order.geoPoint.lat, order.geoPoint.lng), bitmap, 0, -bitmap.getHeight() / 2) {
+                                Marker marker = new Marker(new LatLong(order.geoPoint.getLat(), order.geoPoint.getLng()), bitmap, 0, -bitmap.getHeight() / 2) {
                                     @Override
                                     public boolean onTap(LatLong geoPoint, Point viewPosition, Point tapPoint) {
                                         if (contains(viewPosition, tapPoint)) {
@@ -477,10 +477,10 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                                 Toast.makeText(context, R.string.error_building_map_markers, Toast.LENGTH_SHORT).show();
                             }
 
-                            if (order.geoPoint.lat < minLat) minLat = (float) order.geoPoint.lat;
-                            if (order.geoPoint.lng < minLng) minLng = (float) order.geoPoint.lng;
-                            if (order.geoPoint.lat > maxLat) maxLat = (float) order.geoPoint.lat;
-                            if (order.geoPoint.lng > maxLng) maxLng = (float) order.geoPoint.lng;
+                            if (order.geoPoint.getLat() < minLat) minLat = (float) order.geoPoint.getLat();
+                            if (order.geoPoint.getLng() < minLng) minLng = (float) order.geoPoint.getLng();
+                            if (order.geoPoint.getLat() > maxLat) maxLat = (float) order.geoPoint.getLat();
+                            if (order.geoPoint.getLng() > maxLng) maxLng = (float) order.geoPoint.getLng();
 
                             counter++;
                         } else {

@@ -10,8 +10,11 @@
             android:src="@drawable/folder" android:layout_margin="5dp"
             android:layout_width="35dp" android:layout_height="35dp"/>
 
-    <TextView tools:text="New Zealand" android:gravity="center_vertical"
-            android:layout_width="match_parent" android:layout_height="55dp"
-    android:id="@android:id/text1"/>
+    <TextView
+            android:lines="1"
+            android:textSize="18sp"
+            tools:text="New Zealand" android:gravity="center_vertical"
+            android:layout_width="320dp" android:layout_height="55dp"
+            android:id="@android:id/text1"/>
 
 </LinearLayout>

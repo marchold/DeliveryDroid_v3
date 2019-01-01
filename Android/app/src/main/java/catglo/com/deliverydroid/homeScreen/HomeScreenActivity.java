@@ -43,7 +43,7 @@ import catglo.com.deliverydroid.outTheDoor.GpsNotes;
 import catglo.com.deliverydroid.outTheDoor.OutTheDoorActivity;
 import catglo.com.deliverydroid.settings.SettingsActivity;
 import catglo.com.deliverydroid.settings.SettingsListOptions;
-import catglo.com.deliverydroid.shift.ShiftStartEndActivity;
+import catglo.com.deliverydroid.shift.ShiftActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import org.joda.time.DateTime;
@@ -235,7 +235,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		menuGpsNotesButton.setOnClickListener(menuGpsNotesClickListener);
 		menuShiftClickListener = new OnClickListener() {
 			public void onClick(View arg0) {
-				startActivity(new Intent(getApplicationContext(), ShiftStartEndActivity.class));
+				startActivity(new Intent(getApplicationContext(), ShiftActivity.class));
 				drawerLayout.closeDrawers();
 			}
 		};
@@ -261,6 +261,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 					Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
 				} else {
 					String uri = "tel:" + phoneNumber;
+					if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) uri = phoneNumber;
 					Intent intent = new Intent(Intent.ACTION_DIAL);
 					intent.setData(Uri.parse(uri));
 					startActivity(intent);
@@ -460,7 +461,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			alertDialogBuilder.setMessage(getString(R.string.Its_been)+" "+lastOrderDelta+" "+getString(R.string.hours_since_you));
 			alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {
 				getDataBase().setNextShift();
-				startActivity(new Intent(getApplicationContext(),ShiftStartEndActivity.class));
+				startActivity(new Intent(getApplicationContext(),ShiftActivity.class));
 				dialog.dismiss();
 				Toast.makeText(getApplicationContext(), getString(R.string.check_ourder_summary), Toast.LENGTH_LONG).show();
 			}});

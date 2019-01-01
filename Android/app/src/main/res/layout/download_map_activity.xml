@@ -26,12 +26,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_margin="10dp"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:id="@+id/downloadedMapList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         
         <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/helpView"
                 android:layout_width="wrap_content" android:layout_height="match_parent">
 
@@ -46,6 +48,55 @@
                     android:layout_width="wrap_content" android:layout_marginRight="20dp" android:layout_height="wrap_content" android:layout_marginLeft="20dp"
                     tools:text="http:/bla.asdas/com/asd.hrml" android:textColor="@color/android_blue"/>
 
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/downloadHelpArea"
+                android:gravity="center"
+                android:layout_width="match_parent" android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/download_help_icon"
+                    android:layout_width="55dp"
+                       android:layout_height="55dp"
+                       android:src="@drawable/restore_cloud"
+            />
+
+            <TextView
+                    android:lines="3"
+                    android:textSize="22sp"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/download_help_icon"
+                    android:text="Click the download icon to select a region to download"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/downloadProgressArea"
+                android:gravity="center"
+                android:layout_width="match_parent" android:layout_height="match_parent">
+
+            <ProgressBar
+                    android:layout_centerInParent="true"
+                    android:id="@+id/mapDownloadProgressSpinner"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+
+
+            <TextView
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/mapDownloadProgressSpinner"
+                      android:text="Your map is downloading it may take a while"
+            />
         </RelativeLayout>
 
     </LinearLayout>

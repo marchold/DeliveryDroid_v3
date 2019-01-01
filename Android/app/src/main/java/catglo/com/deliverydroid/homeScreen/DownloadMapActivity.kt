@@ -114,8 +114,11 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
 
     }
 
+    private var downloadMapButton: MenuItem? = null
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.download_map_activity, menu)
+        downloadMapButton = menu?.findItem(R.id.download);
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -145,13 +148,24 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
             return
         }
         //Next make sure the user has chosen his preferred way of getting maps
-        if (Settings(this).mapDownloadOption == none) {
-            mapOptionsDialog()
-            return
-        }
+        when (Settings(this).mapDownloadOption) {
+            none -> {
+                downloadMapButton?.isVisible = false
+                mapOptionsDialog()
+                return
+            }
 
-        //If we have all the permissions we need the next thing is to scan for files on the file system
-        scanFileSystem()
+            torrent -> {
+                downloadMapButton?.isVisible = true
+                scanFileSystem()
+            }
+
+            //If we have all the permissions we need the next thing is to scan for files on the file system
+            else -> {
+                downloadMapButton?.isVisible = false
+                scanFileSystem()
+            }
+        }
 
     }
 
@@ -206,6 +220,37 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
             DownloadedMap.saveMapsList(this, mapFilesList)
             downloadedMapList.adapter = DownloadMapAdapter(this, mapFilesList)
             downloadedMapList.visibility = View.VISIBLE
+        }
+        else {
+            downloadedMapList.visibility = View.GONE
+        }
+        setHelpText()
+
+    }
+
+    private fun setHelpText() {
+        when (Settings(this).mapDownloadOption) {
+            none -> {
+            }
+            torrent -> {
+                downloadHelpArea.visibility = View.VISIBLE
+                helpView.visibility = View.GONE
+                downloadHelpArea.setOnClickListener {
+                    startActivity(Intent(this, ChooseDownloadActivity::class.java))
+                }
+            }
+            download -> {
+                downloadHelpArea.visibility = View.GONE
+                helpView.visibility = View.VISIBLE
+                helpText.setText(R.string.map_download_desc)
+                helpLink.setText("")
+            }
+            create -> {
+                downloadHelpArea.visibility = View.GONE
+                helpView.visibility = View.VISIBLE
+                helpText.setText(R.string.map_create_desc)
+                helpLink.setText("")
+            }
         }
     }
 

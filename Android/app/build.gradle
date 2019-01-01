@@ -21,18 +21,16 @@ android {
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
-
-        disable 'RestrictedApi'
-
     }
     buildToolsVersion '28.0.3'
     compileSdkVersion 28
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 176
-        versionName "5.26"
+        versionCode 185
+        versionName "5.35"
     }
+
     productFlavors {
         free {
             dimension "version"
@@ -59,7 +57,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-         //   proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //   proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

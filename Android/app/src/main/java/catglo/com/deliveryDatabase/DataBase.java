@@ -936,8 +936,8 @@ public class DataBase extends Object  {
         initialValues.put("validatedAddress", order.isValidated);
         if (order.geoPoint!=null){
             Log.i("geo","Writing gps coords for "+order.address);
-            initialValues.put("GPSLng", (float)order.geoPoint.lng);
-            initialValues.put("GPSLat", (float)order.geoPoint.lat);
+            initialValues.put("GPSLng", (float) order.geoPoint.getLng());
+            initialValues.put("GPSLat", (float) order.geoPoint.getLat());
         } else {
             Log.i("geo","Not saving any gps coords for "+order.address);
         }
@@ -2063,8 +2063,8 @@ public class DataBase extends Object  {
         if (order.geocodeFailed){
             args.put("validatedAddress", false);
         } else {
-            args.put("GPSLng", (float)order.geoPoint.lng);
-            args.put("GPSLat", (float)order.geoPoint.lat);
+            args.put("GPSLng", (float) order.geoPoint.getLng());
+            args.put("GPSLat", (float) order.geoPoint.getLat());
             args.put("validatedAddress", order.isValidated);
         }
 
@@ -2133,8 +2133,8 @@ public class DataBase extends Object  {
         args.put(PaymentType2, order.paymentType2);
         args.put(PayedSplit, order.payed2);
 
-        args.put("GPSLng", (float)order.geoPoint.lng);
-        args.put("GPSLat", (float)order.geoPoint.lat);
+        args.put("GPSLng", (float) order.geoPoint.getLng());
+        args.put("GPSLat", (float) order.geoPoint.getLat());
 
 
         args.put("validatedAddress", order.isValidated);
