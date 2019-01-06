@@ -271,6 +271,7 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
         super.onPause();
         writeFieldsToOrder();
         getActivity().unregisterReceiver(receiver);
+        ((NewOrderActivity)getActivity()).getUtils().hideOnScreenKeyboard();
     }
 
     @Override
