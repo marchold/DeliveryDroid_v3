@@ -849,6 +849,10 @@
     <string name="title_activity_shift">ShiftActivity</string>
     <string name="killometers_driven">Kilometers driven</string>
     <string name="title_activity_odometer">OdometerActivity</string>
+    <string name="your_map_is_downloading">Your map is downloading.</string>
+    <string name="click_the_download_icon_to_select_a_region_to_download">Click the download icon to select a region to
+        download
+    </string>
 
 </resources>
 

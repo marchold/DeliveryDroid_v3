@@ -1,11 +1,9 @@
 package catglo.com.deliverydroid.homeScreen;
 
 import android.annotation.SuppressLint;
+import android.content.*;
+import android.os.IBinder;
 import androidx.appcompat.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -313,6 +311,29 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		//}
 	}};
 
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service){
+        super.onServiceConnected(name,service);
+        try {
+            switch (getMapSharingServce().getStatus()) {
+                case None:
+                    downloadMapButton.setVisibility(View.VISIBLE);
+                    break;
+                case Initializing:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+                case Downloading:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+                case Uploading:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+                case Error:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+            }
+        } catch (NullPointerException e){ e.printStackTrace(); }
+    }
 
 
     @SuppressLint("MissingPermission")
@@ -385,6 +406,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			    startActivity(new Intent(getApplicationContext(),DownloadMapActivity.class));
 			}
 		});
+
 
         List<TileCache> tileCaches = new ArrayList<TileCache>();
 

@@ -152,7 +152,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			prefEditor.putBoolean("inActiveShift", true);
 		}
 
-
+	//TODO: Look in to what this geofence is actually doing and if its useful
 		if (getDataBase().getUndeliveredOrderCount() > 0
 				&& getSharedPreferences().getBoolean("pay_rate_location_aware", false)
 				&& getSharedPreferences().getBoolean("dual_wage", false)

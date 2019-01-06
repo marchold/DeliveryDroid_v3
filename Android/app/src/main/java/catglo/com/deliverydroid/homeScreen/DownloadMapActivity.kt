@@ -3,6 +3,7 @@ package catglo.com.deliverydroid.homeScreen
 
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
@@ -10,6 +11,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.IBinder
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -23,6 +25,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.recyclerview.widget.RecyclerView
+import catglo.com.MapFileSharingStatus
+import catglo.com.MapSharingServiceStatusListener
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity
 import catglo.com.deliverydroid.DownloadedMap
 import catglo.com.deliverydroid.MapDownloadOption.*
@@ -34,6 +38,7 @@ import org.mapsforge.core.model.LatLong
 import org.mapsforge.map.reader.MapFile
 import org.mapsforge.map.reader.header.MapFileException
 import java.io.File
+import java.io.Serializable
 
 
 fun Location.latLong(): LatLong {
@@ -105,13 +110,21 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
             .show()
     }
 
+    private var progress: Float = 0f
+    private var status: MapFileSharingStatus = MapFileSharingStatus.None
+    inner class MapDownloadStatusListener : MapSharingServiceStatusListener() {
+        override fun onMapStatus(progress: Float, status: MapFileSharingStatus) {
+            this@DownloadMapActivity.progress = progress
+            this@DownloadMapActivity.status = status
+            updateUi()
+        }
+    }
+    val broadcastReceiver = MapDownloadStatusListener()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.download_map_activity)
-
         setSupportActionBar(toolbar)
-
-
     }
 
     private var downloadMapButton: MenuItem? = null
@@ -131,10 +144,22 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
     }
 
 
-    var listOfDownloadableMaps = ArrayList<DownloadableMap>()
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(broadcastReceiver)
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        super.onServiceConnected(name, service)
+        mapSharingServce?.status?.let { status = it }
+        mapSharingServce?.progress?.let { progress = it }
+        updateUi()
+    }
 
     override fun onResume() {
         super.onResume()
+        MapSharingServiceStatusListener.registerReceiver(this,broadcastReceiver)
 
         //First we need to check for system permissions
         if (checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED
@@ -147,7 +172,11 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
             requestPermissions(this, arrayOf(WRITE_EXTERNAL_STORAGE), 0)
             return
         }
-        //Next make sure the user has chosen his preferred way of getting maps
+        updateUi()
+    }
+    private fun updateUi(){
+
+        //Make sure the user has chosen his preferred way of getting maps
         when (Settings(this).mapDownloadOption) {
             none -> {
                 downloadMapButton?.isVisible = false
@@ -156,8 +185,39 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
             }
 
             torrent -> {
+                val hasFiles = scanFileSystem()
                 downloadMapButton?.isVisible = true
-                scanFileSystem()
+
+                when (status){
+                    MapFileSharingStatus.None -> {
+                        downloadHelpArea.visibility = if (hasFiles) View.GONE else View.VISIBLE
+                    }
+                    MapFileSharingStatus.Initializing -> {
+                        downloadHelpArea.visibility = View.GONE
+                        downloadProgressArea.visibility = View.VISIBLE
+                        downloadProgressMessage.text = "Initializing"
+                    }
+                    MapFileSharingStatus.Downloading -> {
+                        downloadHelpArea.visibility = View.GONE
+                        downloadProgressArea.visibility = View.VISIBLE
+                        if (progress==0f)
+                        {
+                            downloadProgressMessage.text = "Downloading"
+                        } else {
+                            downloadProgressMessage.text = String.format("Downloading %d%%", (progress * 100f).toInt())
+                        }
+                    }
+                    MapFileSharingStatus.Uploading -> {
+                        downloadHelpArea.visibility = View.GONE
+                        downloadProgressArea.visibility = View.GONE
+                    }
+                    MapFileSharingStatus.Error -> {
+                        downloadHelpArea.visibility = View.GONE
+                        downloadProgressArea.visibility = View.VISIBLE
+                        downloadProgressMessage.text = "Network Error Retrying"
+                    }
+                }
+
             }
 
             //If we have all the permissions we need the next thing is to scan for files on the file system
@@ -169,7 +229,7 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
 
     }
 
-    private fun scanFileSystem() {
+    private fun scanFileSystem() : Boolean {
         //Scan the sd card folder for .map and .poi files
         var mapFilesList = ArrayList<DownloadedMap>()
         mapFilesList.run {
@@ -225,7 +285,7 @@ class DownloadMapActivity : DeliveryDroidBaseActivity() {
             downloadedMapList.visibility = View.GONE
         }
         setHelpText()
-
+        return mapFilesList.size>0
     }
 
     private fun setHelpText() {

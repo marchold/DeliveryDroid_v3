@@ -11,7 +11,7 @@ public class Shift {
 	public int primaryKey;
 	public boolean noEndTime=false;
 	public Shift(){
-		startTime=MutableDateTime.now();
-		endTime=MutableDateTime.now();
+		startTime = new MutableDateTime(MutableDateTime.now());
+		endTime   = new MutableDateTime(MutableDateTime.now());
 	}
 }

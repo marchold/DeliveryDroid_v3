@@ -1262,8 +1262,6 @@ public class DataBase extends Object  {
                 }
                 shift.odometerAtShiftStart  = c.getInt(c.getColumnIndex(ODO_START));
                 shift.odometerAtShiftEnd  = c.getInt(c.getColumnIndex(ODO_END));
-                //shift.payRate = c.getFloat(c.getColumnIndex(PAY_RATE));
-                //shift.payRateOnRun = c.getFloat(c.getColumnIndex(PAY_RATE_ON_RUN));
                 shift.primaryKey = c.getInt(c.getColumnIndex("ID"));
 
                 if (shift.endTime.getMillis() < shift.startTime.getMillis()){
@@ -1284,7 +1282,6 @@ public class DataBase extends Object  {
         args.put(TIME_END  , GetDateString(shift.endTime));
         args.put(ODO_START , shift.odometerAtShiftStart);
         args.put(ODO_END   , shift.odometerAtShiftEnd);
-        args.put(ODO_START  , shift.odometerAtShiftStart);
         //	args.put(PAY_RATE, shift.payRate);
 //		args.put(PAY_RATE_ON_RUN, shift.payRateOnRun);
         db.update("shifts", args, shift.primaryKey + "= ID", null);

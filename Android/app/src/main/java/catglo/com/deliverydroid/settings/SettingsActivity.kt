@@ -57,6 +57,7 @@ class SettingsActivity : DeliveryDroidBaseActivity() , PreferenceFragmentCompat.
         setContentView(R.layout.settings_activity)
         supportFragmentManager.beginTransaction().replace(R.id.container, SettingsFragment() as Fragment).commit()
         setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true)
     }
 }
 

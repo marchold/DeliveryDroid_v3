@@ -1,4 +1,4 @@
-package catglo.com.deliverydroid.widgets;
+package catglo.com.deliverydroid.shift;
 
 
 import android.annotation.TargetApi;

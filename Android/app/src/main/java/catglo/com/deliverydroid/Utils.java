@@ -2,12 +2,9 @@ package catglo.com.deliverydroid;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.*;
 import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationManager;
@@ -230,8 +227,13 @@ public class Utils {
         switch (navOption){
             case 1:
                 //Google navigation
-                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + addressEscaped));
-                activity.startActivity(intent);
+                try {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + addressEscaped));
+                    activity.startActivity(intent);
+                } catch (ActivityNotFoundException e){
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/?api=1&dir_action=navigate&destination=" + addressEscaped));
+                    activity.startActivity(intent);
+                }
                 return true;
             case 2:
                 //Maps Intent

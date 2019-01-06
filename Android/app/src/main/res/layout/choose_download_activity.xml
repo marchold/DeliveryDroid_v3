@@ -12,9 +12,11 @@
             android:background="@drawable/underline_blue"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/action_bar_height"
             android:theme="@style/MyActionBar"
-    />
+    ><RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/chea_action_bar_bkgd">
+
+    </RelativeLayout></androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView"

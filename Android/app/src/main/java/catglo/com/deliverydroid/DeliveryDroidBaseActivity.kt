@@ -2,9 +2,11 @@ package catglo.com.deliverydroid
 
 import android.app.backup.BackupManager
 import android.content.*
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import catglo.com.MapFileSharingService
 import catglo.com.deliveryDatabase.DataBase
@@ -13,7 +15,7 @@ import java.lang.IllegalStateException
 
 open class DeliveryDroidBaseActivity : AppCompatActivity(), Tooled , ServiceConnection {
 
-    var mapSharingServce : MapFileSharingService? = null
+    public var mapSharingServce : MapFileSharingService? = null
 
     override fun onServiceDisconnected(name: ComponentName?) {
         mapSharingServce = null
@@ -47,11 +49,15 @@ open class DeliveryDroidBaseActivity : AppCompatActivity(), Tooled , ServiceConn
         if (Settings(this).mapDownloadOption == MapDownloadOption.torrent) {
             try {
                 val serviceIntent = Intent(this, MapFileSharingService::class.java)
-                startService(serviceIntent)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent)
+                } else {
+                    startService(serviceIntent)
+                }
                 bindService(serviceIntent, this, Context.BIND_AUTO_CREATE)
                 isBound = true
             } catch (e:IllegalStateException){
-
+                Log.e("Torrent","Failed to start download service "+e.localizedMessage)
             }
         }
     }

@@ -4,22 +4,17 @@ import android.os.Bundle
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import catglo.com.deliveryDatabase.Shift
 import catglo.com.deliveryDatabase.TipTotalData
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity
-import catglo.com.deliverydroid.OdometerActivity
 import catglo.com.deliverydroid.R
-import catglo.com.deliverydroid.widgets.MeterView
 
 import kotlinx.android.synthetic.main.shift_activity.*
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
-import java.util.*
 
 
 class ShiftActivity : DeliveryDroidBaseActivity() {
@@ -138,7 +133,7 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
 
 
         setOdometerButton.setOnClickListener {
-            startActivity(Intent(this@ShiftActivity,OdometerActivity::class.java).run { putExtra("whichShift",whichShift) })
+            startActivity(Intent(this@ShiftActivity, OdometerActivity::class.java).run { putExtra("whichShift",whichShift) })
         }
 
     }
@@ -177,13 +172,7 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
         total /= 3600000f
         hoursWorkedValueLabel.text = String.format("%.2f", total)
 
-        val recentOdometerValue = dataBase.mostRecientOdomenterValue
-        if (shift.odometerAtShiftStart == 0) {
-            shift.odometerAtShiftStart = recentOdometerValue
-        }
-        if (shift.odometerAtShiftEnd < shift.odometerAtShiftStart) {
-            shift.odometerAtShiftEnd = shift.odometerAtShiftStart
-        }
+
 
       /*  */
         //  moneyCollected.text = Utils.getFormattedCurrency(tips?.payed)

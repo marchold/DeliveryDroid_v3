@@ -19,18 +19,20 @@
                 android:theme="@style/MyActionBar"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="55dp">
+                android:layout_height="@dimen/action_bar_height">
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
 
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
 
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_margin="10dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:id="@+id/downloadedMapList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
         
         <RelativeLayout
                 android:visibility="gone"
@@ -70,17 +72,18 @@
                     android:layout_margin="20dp"
                     android:gravity="center"
                     android:layout_below="@+id/download_help_icon"
-                    android:text="Click the download icon to select a region to download"
+                    android:text="@string/click_the_download_icon_to_select_a_region_to_download"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 
 
         <RelativeLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/downloadProgressArea"
                 android:gravity="center"
-                android:layout_width="match_parent" android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <ProgressBar
                     android:layout_centerInParent="true"
@@ -90,12 +93,13 @@
 
 
             <TextView
+                    android:id="@+id/downloadProgressMessage"
                     android:layout_margin="20dp"
                     android:gravity="center"
                     android:textSize="20sp"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_below="@+id/mapDownloadProgressSpinner"
-                      android:text="Your map is downloading it may take a while"
+                      android:text="@string/your_map_is_downloading"
             />
         </RelativeLayout>
 
