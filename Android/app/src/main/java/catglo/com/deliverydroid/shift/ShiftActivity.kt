@@ -74,6 +74,7 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
         } else {
             whichShift = id
         }
+
         shift = dataBase.getShift(whichShift)
 
         doneButton.setOnClickListener { finish() }
@@ -140,6 +141,7 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
 
     public override fun onResume() {
         super.onResume()
+        shift = dataBase.getShift(whichShift)
         updateUI()
     }
 

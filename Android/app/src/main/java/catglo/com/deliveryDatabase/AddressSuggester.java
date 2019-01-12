@@ -2,7 +2,7 @@ package catglo.com.deliveryDatabase;
 
 import android.content.Context;
 
-import catglo.com.api.GoogleAddressSuggester;
+import catglo.com.GoogleAddressSuggester;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

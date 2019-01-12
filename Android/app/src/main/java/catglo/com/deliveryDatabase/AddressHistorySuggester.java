@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
-import catglo.com.api.GoogleAddressSuggester;
+import catglo.com.GoogleAddressSuggester;
 
 
 public class AddressHistorySuggester extends GoogleAddressSuggester

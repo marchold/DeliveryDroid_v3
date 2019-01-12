@@ -251,7 +251,7 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
         tooltipText = (TextView) numbers.findViewById(R.id.tooltipText);
 
         list = (ListView) numbers.findViewById(R.id.buttonPadList);
-        list.setFastScrollEnabled(true);
+        list.setFastScrollEnabled(false);
 
         speakButton = (View) numbers.findViewById(R.id.ButtonSpeech);
         customButton = (View) numbers.findViewById(R.id.setShiftTimesToOrderTimes);

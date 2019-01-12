@@ -47,6 +47,15 @@ class Settings(context: Context) {
         return prefs.getStringSet("MapDownloadFiles",HashSet<String>())
     }
 
+    fun setMapDownloadComplete(complete: Boolean) {
+        prefs.edit().run {
+            putBoolean("MapDownloadComplete",complete)
+        }
+    }
+
+    fun mapDownloadComplete() : Boolean {
+        return prefs.getBoolean("MapDownloadComplete",false)
+    }
 
     val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 

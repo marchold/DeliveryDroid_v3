@@ -1,4 +1,4 @@
-package catglo.com.api
+package catglo.com
 
 
 import android.annotation.SuppressLint
@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.preference.PreferenceManager
 import catglo.com.deliveryDatabase.AddressInfo
+import catglo.com.deliveryDatabase.DataBase
 import com.google.android.gms.location.places.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -27,6 +28,7 @@ open class GoogleAddressSuggester(protected val context: Context, var resultList
         fun commit(addressList: ArrayList<AddressInfo>, searchString: String)
     }
 
+    val dataBase = DataBase(context)
     private var geocoder: Geocoder = Geocoder(context)
     private var geoDataClient: GeoDataClient = Places.getGeoDataClient(context)
     private var placesDetectionClient : PlaceDetectionClient = Places.getPlaceDetectionClient(context)
@@ -46,6 +48,10 @@ open class GoogleAddressSuggester(protected val context: Context, var resultList
     private var lastQuery: String = ""
 
     fun completeLookup(searchAddress: String, locationManager : LocationManager, location: Location) {
+
+        //Try this to see if we can get the address from local history and return that if we need
+//        dataBase.getAddressInfoForString()
+
         val range = 0.2f //sharedPreferences.getFloat("dileveryRadius", 1f) //TODO: Make configurable!!
         val addressInfoList = ArrayList<AddressInfo>()
 

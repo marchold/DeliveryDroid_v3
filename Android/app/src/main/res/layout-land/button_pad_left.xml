@@ -216,6 +216,9 @@
     </RelativeLayout>
 
     <ListView
+            android:scrollbars="none"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:fastScrollEnabled="false"
         android:id="@+id/buttonPadList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

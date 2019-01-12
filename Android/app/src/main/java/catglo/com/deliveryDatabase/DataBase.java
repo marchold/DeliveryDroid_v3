@@ -95,7 +95,7 @@ public class DataBase extends Object  {
 
     public static final String			DATABASE_NAME		= BuildConfig.DATABASE_NAME;
     private static final String			DATABASE_TABLE		= "orders";
-    private static final int			DATABASE_VERSION	= 11;
+    private static final int			DATABASE_VERSION	= 12;
 
 
     public static int					TodaysShiftCount	= -1;
@@ -257,6 +257,15 @@ public class DataBase extends Object  {
                 + "rate             FLOAT, "
                 +"lastModificationTime              TIMESTAMP, "
                 + "shiftId          INT);");
+
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS geocode (ID integer primary key autoincrement,"
+                + "lastModificationTime      TIMESTAMP, "
+                + "address		             VARCHAR, "
+                + "SEARCHKEY                 VARCHAR, "
+                + "GPSLat                    INT, "
+                + "GPSLng                    INT);");
+
 
         database.execSQL(createTimestampTriggerSql("orders","ID"));
         database.execSQL(createTimestampTriggerSql("shifts","ID"));
@@ -476,7 +485,14 @@ public class DataBase extends Object  {
 
         }
         //TODO: these are for oldVersion < 11
-
+        if (oldVersion<12){
+            database.execSQL("CREATE TABLE IF NOT EXISTS geocode (ID integer primary key autoincrement,"
+                    + "lastModificationTime      TIMESTAMP, "
+                    + "address		             VARCHAR, "
+                    + "SEARCHKEY                 VARCHAR, "
+                    + "GPSLat                    INT, "
+                    + "GPSLng                    INT);");
+        }
 
         database.setVersion(newVersion);
     }}
@@ -1315,6 +1331,48 @@ public class DataBase extends Object  {
         c.close();
         return retVal;
     }}
+
+    public ArrayList<AddressInfo> getAddressInfoForString(String seatchKey) {
+        ArrayList<AddressInfo> result = new ArrayList<AddressInfo>();
+        //SQL to return a list of AddressInfo objects from geocode table for search key
+        try {
+            String query = "SELECT * FROM geocode WHERE SEARCHKEY = \""+seatchKey+"\" LIMIT 0,100";
+            final Cursor c = db.rawQuery(query, null);
+            if (c != null && c.moveToFirst()) {
+
+                do {
+                   // String address = c.getColumnName()
+                   // AddressInfo addressInfo = new AddressInfo();
+
+                } while (c.moveToNext());
+            }
+            c.close();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public void saveAddressInfoForString(ArrayList<AddressInfo> list, String searchString) {
+
+        for (AddressInfo address : list){
+             //Write/Update to the geocode table
+            //  SEARCHKEY = searchString
+            //  address   = address.address
+            //  GPSLat    = address latitude  truncated to 5 decimal points
+            //  GPSLng    = address longitude truncated to 5 decimal points
+            final ContentValues initialValues = new ContentValues();
+            initialValues.put("SEARCHKEY", searchString);
+            initialValues.put("address",   address.getAddress());
+            if (address.getLocation()!=null && address.getLocation().getLat()!=0 && address.getLocation().getLng()!=0) {
+                initialValues.put("GPSLat", (int) (address.getLocation().getLat() * 1e5));
+                initialValues.put("GPSLng", (int) (address.getLocation().getLng() * 1e5));
+                db.insertWithOnConflict("geocode", null, initialValues, SQLiteDatabase.CONFLICT_REPLACE);
+            }else {
+                db.insertWithOnConflict("geocode", null, initialValues, SQLiteDatabase.CONFLICT_FAIL);
+            }
+        }
+    }
 
     public class ShiftCounts{
         public int prev;

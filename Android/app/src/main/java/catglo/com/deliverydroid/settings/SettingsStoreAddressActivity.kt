@@ -21,7 +21,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import catglo.com.api.GoogleAddressSuggester
+import catglo.com.GoogleAddressSuggester
 import catglo.com.deliveryDatabase.AddressInfo
 import catglo.com.deliverydroid.DeliveryDroidMapRenderTheme
 import catglo.com.deliverydroid.DownloadedMap

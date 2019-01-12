@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 
 
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import catglo.com.api.GoogleAddressSuggester;
+import catglo.com.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliveryDatabase.DataBase;

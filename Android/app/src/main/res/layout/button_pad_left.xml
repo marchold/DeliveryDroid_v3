@@ -192,6 +192,9 @@
     </RelativeLayout>
 
     <ListView
+            android:scrollbars="none"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:fastScrollEnabled="false"
         android:id="@+id/buttonPadList"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -240,8 +243,8 @@
         android:src="@android:drawable/ic_btn_speak_now"
         android:visibility="visible" />
 
-    <FrameLayout android:id="@+id/curvedScreenOverlay1" android:layout_alignParentLeft="true"  android:layout_width="20dp" android:layout_height="match_parent"/>
-    <FrameLayout android:id="@+id/curvedScreenOverlay2" android:layout_alignParentRight="true" android:layout_width="20dp" android:layout_height="match_parent"/>
+    <FrameLayout android:id="@+id/curvedScreenOverlay1" android:layout_alignParentLeft="true"  android:layout_width="20dp" android:layout_height="match_parent" android:visibility="gone"/>
+    <FrameLayout android:id="@+id/curvedScreenOverlay2" android:layout_alignParentRight="true" android:layout_width="20dp" android:layout_height="match_parent" android:visibility="gone"/>
 
 
 </RelativeLayout>

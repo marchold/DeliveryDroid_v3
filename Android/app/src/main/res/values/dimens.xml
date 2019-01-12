@@ -20,6 +20,6 @@
       <dimen name="action_bar_underline_height">6dp</dimen>
       
       <dimen name="slide_out_menu_width">240dp</dimen>
-    <dimen name="curved_screen_block">30dp</dimen>
+    <dimen name="curved_screen_block">15dp</dimen>
 
 </resources>

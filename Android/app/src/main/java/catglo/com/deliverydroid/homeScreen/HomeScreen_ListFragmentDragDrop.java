@@ -375,7 +375,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	            metrics = new DisplayMetrics();
 	            ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
 	            int height = (int)(metrics.heightPixels/metrics.density)-150;
-	            int rowsHeight = (int)(items.size()*80*metrics.density);
+	            int rowsHeight = (int)(items.size()*60);
 	            
 	            Log.i("rows","rowsheight="+rowsHeight+"   screenHeight="+height);
 	            
@@ -442,7 +442,27 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 
 		View view = inflater.inflate(R.layout.home_screen_drag_drop_list_fragment, null);
 		view.setOnTouchListener(gestureListener);
-        
+
+		View touchOverlay1 = view.findViewById(R.id.curvedScreenOverlay1);
+		View touchOverlay2 = view.findViewById(R.id.curvedScreenOverlay2);
+		if (new Settings(inflater.getContext()).useCurvedScreenTouchOverlay())
+		{
+			touchOverlay1.setVisibility(View.VISIBLE);
+			touchOverlay2.setVisibility(View.VISIBLE);
+			View.OnTouchListener eatTouches = new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					return true;
+				}
+			};
+			touchOverlay1.setOnTouchListener(eatTouches);
+			touchOverlay2.setOnTouchListener(eatTouches);
+		} else {
+			touchOverlay1.setVisibility(View.GONE);
+			touchOverlay2.setVisibility(View.GONE);
+		}
+
+
 		noListAltView = (ViewGroup)view.findViewById(R.id.noListAltView);
         //optimizeCheckbox = (CheckBox)view.findViewById(R.id.autoOptimizeCheckbox);
         //optimizeCheckbox.setOnTouchListener(gestureListener);

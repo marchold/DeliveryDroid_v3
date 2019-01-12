@@ -179,7 +179,6 @@ class OdometerActivity : DeliveryDroidBaseActivity() {
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
         }
-        updateUI()
     }
 
     public override fun onResume() {
@@ -189,7 +188,6 @@ class OdometerActivity : DeliveryDroidBaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        dataBase.saveShift(shift);
     }
 
 }

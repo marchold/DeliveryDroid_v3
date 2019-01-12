@@ -85,7 +85,11 @@ class MapFileSharingService : Service(),TorrentSessionListener {
     }
     override fun onTorrentFinished(torrentHandle: TorrentHandle, torrentSessionStatus: TorrentSessionStatus) {
         Log.i("Torrent","On Torrent Finished")
-
+        settings.setMapDownloadComplete(true)
+        status = Uploading
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            stopForeground(Service.STOP_FOREGROUND_REMOVE)
+        }
     }
     override fun onTorrentPaused(torrentHandle: TorrentHandle, torrentSessionStatus: TorrentSessionStatus) {
         Log.e("Torrent","onTorrentPaused")
@@ -102,7 +106,7 @@ class MapFileSharingService : Service(),TorrentSessionListener {
     }
     override fun onPieceFinished(torrentHandle: TorrentHandle, torrentSessionStatus: TorrentSessionStatus) {
         //TODO: Rescan files
-        progress = torrentSessionStatus.progress
+        progress = torrentSessionStatus.bytesDownloaded.toFloat() / torrentSessionStatus.bytesWanted.toFloat()
         if (progress>=1) status = Uploading
         Log.i("Torrent","On Piece Finished progress=${torrentSessionStatus.progress} downloaded = ${torrentSessionStatus.bytesDownloaded} wanted = ${torrentSessionStatus.bytesWanted}")
     }
@@ -192,13 +196,17 @@ class MapFileSharingService : Service(),TorrentSessionListener {
         return Service.START_STICKY
     }
 
+    lateinit var settings : Settings
     override fun onCreate() {
         Log.i("Torrent","Service created")
         super.onCreate()
+
+        settings = Settings(this)
+
         val intent = Intent(this, DownloadMapActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !settings.mapDownloadComplete()) {
             val channel = NotificationChannel(CHANNEL_ID,
                 CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT)
@@ -217,7 +225,6 @@ class MapFileSharingService : Service(),TorrentSessionListener {
             val notification = builder.build()
             startForeground(1,notification)
         }
-
 
     }
 
