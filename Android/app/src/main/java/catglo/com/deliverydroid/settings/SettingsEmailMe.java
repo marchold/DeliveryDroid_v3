@@ -28,10 +28,10 @@ public class SettingsEmailMe extends EditTextPreference {
 		
 		//Environment.getExternalStorageDirectory()+"/dr_log"+".txt"
 		//if (getSharedPreferences().getBoolean("generateDevLog", false)==true)
-        {
-			Uri uri = Uri.fromFile(new File("sdcard/dd-log.txt"));
-			emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
-		}
+       // {
+	//		Uri uri = Uri.fromFile(new File("sdcard/dd-log.txt"));
+	//		emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+	//	}
 		
 		
 		context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));

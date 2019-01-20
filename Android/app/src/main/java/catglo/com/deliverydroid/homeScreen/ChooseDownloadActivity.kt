@@ -61,56 +61,61 @@ class ChooseDownloadActivity : DeliveryDroidBaseActivity() {
                 assets.open("Maps.torrent").copyTo(FileOutputStream(localTorrentFile))
             }
             val filesList = ArrayList<DownloadableMap>()
-            val torrentInfo = TorrentInfo(localTorrentFile)
-            val totalFiles = torrentInfo.numFiles()
-            var lastFolder = ""
-            val hashMap = HashMap<String,ArrayList<String>>()
-            if (totalFiles>0) {
-                for (i in 0..(totalFiles - 1)) {
-                    val fileName = torrentInfo.files().fileName(i)
-                    if (fileName.contains(".map")) {
-                        Log.i("Torrent", "File Name $fileName")
-                        val path = torrentInfo.files().filePath(i)
-                        val parts = path.split("/")
-                        if (parts.size > 1) {
-                            val folder = parts[parts.lastIndex - 1]
-                            val name = parts[parts.lastIndex]
-                            if (lastFolder != folder) {
-                                hashMap[folder] = ArrayList()
+            try {
+                val torrentInfo = TorrentInfo(localTorrentFile)
+                val totalFiles = torrentInfo.numFiles()
+                var lastFolder = ""
+                val hashMap = HashMap<String, ArrayList<String>>()
+                if (totalFiles > 0) {
+                    for (i in 0..(totalFiles - 1)) {
+                        val fileName = torrentInfo.files().fileName(i)
+                        if (fileName.contains(".map")) {
+                            Log.i("Torrent", "File Name $fileName")
+                            val path = torrentInfo.files().filePath(i)
+                            val parts = path.split("/")
+                            if (parts.size > 1) {
+                                val folder = parts[parts.lastIndex - 1]
+                                val name = parts[parts.lastIndex]
+                                if (lastFolder != folder) {
+                                    hashMap[folder] = ArrayList()
+                                }
+                                hashMap[folder]?.add(path)
+                                lastFolder = folder
                             }
-                            hashMap[folder]?.add(path)
-                            lastFolder = folder
                         }
                     }
                 }
-            }
-            hashMap.keys.forEach { key ->
-                if (key=="MapsforgeMaps")
-                {
-                    hashMap[key]?.forEach { path ->
-                        val parts = path.split("/")
-                        val title = parts[parts.lastIndex].split(".")[0]
-                        filesList.add(DownloadableMap(false,title.capitalize(),path))
+                hashMap.keys.forEach { key ->
+                    if (key == "MapsforgeMaps") {
+                        hashMap[key]?.forEach { path ->
+                            val parts = path.split("/")
+                            val title = parts[parts.lastIndex].split(".")[0]
+                            filesList.add(DownloadableMap(false, title.capitalize(), path))
+                        }
+                    } else {
+                        val subfolder = ArrayList<DownloadableMap>()
+                        hashMap[key]?.forEach { path ->
+                            val parts = path.split("/")
+                            val title = parts[parts.lastIndex].split(".")[0]
+                            subfolder.add(DownloadableMap(false, title.capitalize(), path))
+                        }
+                        filesList.add(DownloadableMap(true, key.capitalize(), "", subfolder))
                     }
                 }
-                else {
-                    val subfolder = ArrayList<DownloadableMap>()
-                    hashMap[key]?.forEach { path ->
-                        val parts = path.split("/")
-                        val title = parts[parts.lastIndex].split(".")[0]
-                        subfolder.add(DownloadableMap(false,title.capitalize(),path))
-                    }
-                    filesList.add(DownloadableMap(true, key.capitalize(), "", subfolder))
-                }
+            } catch (e:IllegalArgumentException){
+                //patch for https://play.google.com/apps/publish/?account=5415545862965625496#AndroidMetricsErrorsPlace:p=com.catglo.deliverydroid&appid=4974298585574800656&appVersion=BETA&clusterName=apps/com.catglo.deliverydroid/clusters/c6be8258&detailsAppVersion=BETA&detailsSpan=7
+                e.printStackTrace();
             }
 
+
             GlobalScope.launch(Dispatchers.Main) {
-                if (filesList.size==0) {
+                if (filesList.size == 0) {
 
                 } else {
                     listView.adapter = DownloadableAdapter(this@ChooseDownloadActivity, filesList)
                 }
             }
+
         }
     }
 

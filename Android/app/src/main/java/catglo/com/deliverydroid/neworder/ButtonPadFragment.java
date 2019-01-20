@@ -1,6 +1,7 @@
 package catglo.com.deliverydroid.neworder;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,13 +16,7 @@ import android.text.method.KeyListener;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
@@ -260,12 +255,15 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
         speakButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                 //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getActivity().getString(R.string.Speak_address));
-                startActivityForResult(intent, code);
-
+                try {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getActivity().getString(R.string.Speak_address));
+                    startActivityForResult(intent, code);
+                } catch (ActivityNotFoundException e){
+                    Toast.makeText(getContext(),"Not supported",Toast.LENGTH_LONG).show();
+                }
             }
         });
 

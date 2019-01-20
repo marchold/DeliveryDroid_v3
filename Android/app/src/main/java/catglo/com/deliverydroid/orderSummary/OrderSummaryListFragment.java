@@ -121,12 +121,17 @@ public class OrderSummaryListFragment extends ListFragment  {
 					case 3: return inflater.inflate(R.layout.order_summary_list_item4, null);
 					case 4: {
 						View v = inflater.inflate(R.layout.order_summary_list_item5, null);
-						View v2 = inflater.inflate(R.layout.order_summary_list_item5, null);
-						LinearLayout ll = new LinearLayout(getActivity().getApplicationContext());
-						ll.setOrientation(LinearLayout.VERTICAL);
-						ll.addView(v);
-						ll.addView(v2);
-						return ll;
+						try {
+							View v2 = inflater.inflate(R.layout.order_summary_list_item5, null);
+							LinearLayout ll = new LinearLayout(getActivity().getApplicationContext());
+							ll.setOrientation(LinearLayout.VERTICAL);
+							ll.addView(v);
+							ll.addView(v2);
+							return ll;
+						} catch (NullPointerException e){
+							//patch for https://play.google.com/apps/publish/?account=5415545862965625496#AndroidMetricsErrorsPlace:p=com.catglo.deliverydroid&appid=4974298585574800656&appVersion=BETA&clusterName=apps/com.catglo.deliverydroid/clusters/15228fdd&detailsAppVersion=BETA&detailsSpan=7
+							return v;
+						}
 					}
 				}
 			}});
