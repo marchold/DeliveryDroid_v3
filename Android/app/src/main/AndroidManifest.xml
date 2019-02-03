@@ -43,6 +43,7 @@
         <activity
                 android:name=".neworder.NewOrderActivity"
                 android:label="@string/New_Order"
+                android:windowSoftInputMode="adjustResize"
                 android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="Delivery Droid New Order"/>
