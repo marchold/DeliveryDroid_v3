@@ -7,6 +7,7 @@ import android.os.Build
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import catglo.com.deliveryDatabase.DataBase
 import catglo.com.deliveryDatabase.Shift
 import catglo.com.deliveryDatabase.TipTotalData
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity
@@ -70,12 +71,14 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
         val intent = intent
         val id = intent.getIntExtra("ID", -1)
         if (id == -1) {
-            whichShift = dataBase.curShift
+            shift = dataBase.getShift(DataBase.TodaysShiftCount)
+            whichShift = DataBase.TodaysShiftCount
         } else {
             whichShift = id
+            shift = dataBase.getShift(whichShift)
         }
 
-        shift = dataBase.getShift(whichShift)
+
 
         doneButton.setOnClickListener { finish() }
 
@@ -141,6 +144,7 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
 
     public override fun onResume() {
         super.onResume()
+
         shift = dataBase.getShift(whichShift)
         updateUI()
     }

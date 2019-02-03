@@ -203,14 +203,14 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 
     private void setupHeaderViews() {
         ShiftCounts counts = getDataBase().getShiftCounts(viewingShift);
-        if (counts.prev<=0){
+        if (counts.prev<0){
             previousShift.setText("");
             thisShift.setText(getString(R.string.Shift)+" 1");
         }else{
             previousShift.setText(getString(R.string.Shift)+" "+counts.prev);
             thisShift.setText(getString(R.string.Shift)+" "+counts.cur);
         }
-        if (counts.next<=0){
+        if (counts.next<0){
             nextShift.setText("");
         } else {
             nextShift.setText(getString(R.string.Shift)+" "+counts.next);
@@ -236,7 +236,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
     void flingLeft(){
         viewFlipper.setInAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_right_in));
         viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_right_out));
-        if (viewingShift > 0) {
+        if (viewingShift > 1) {
             flipViews(getDataBase().getPrevoiusShiftNumber(viewingShift));
             viewFlipper.showNext();
         }

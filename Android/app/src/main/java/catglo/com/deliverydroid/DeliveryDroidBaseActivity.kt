@@ -22,7 +22,7 @@ open class DeliveryDroidBaseActivity : AppCompatActivity(), Tooled , ServiceConn
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        (service as MapFileSharingService.LocalBinder)?.let {
+        (service as MapFileSharingService.LocalBinder).let {
             mapSharingServce = it.getService()
         }
     }
@@ -49,11 +49,7 @@ open class DeliveryDroidBaseActivity : AppCompatActivity(), Tooled , ServiceConn
         if (Settings(this).mapDownloadOption == MapDownloadOption.torrent) {
             try {
                 val serviceIntent = Intent(this, MapFileSharingService::class.java)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(serviceIntent)
-                } else {
-                    startService(serviceIntent)
-                }
+                startService(serviceIntent)
                 bindService(serviceIntent, this, Context.BIND_AUTO_CREATE)
                 isBound = true
             } catch (e:IllegalStateException){

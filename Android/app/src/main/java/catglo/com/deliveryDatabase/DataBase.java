@@ -1283,9 +1283,13 @@ public class DataBase extends Object  {
                 if (shift.getEndTime().getMillis() < shift.getStartTime().getMillis()){
                     shift.setEndTime(shift.getStartTime());
                 }
+            } else {
+                setNextShift();
+                shift = getShift(TodaysShiftCount);
+                saveShift(shift);
             }
-            c.close();
 
+            c.close();
         }
         return shift;
     }}
