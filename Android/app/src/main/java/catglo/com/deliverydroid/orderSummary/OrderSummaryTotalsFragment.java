@@ -98,7 +98,7 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 		c.close();
 
 		TipTotalData tip = dataBase.getTipTotal(getActivity(),DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0",
-				"WHERE shifts.ID ="+viewingShift);
+				"WHERE shifts.ID ="+viewingShift,null);
 		
 		
 		

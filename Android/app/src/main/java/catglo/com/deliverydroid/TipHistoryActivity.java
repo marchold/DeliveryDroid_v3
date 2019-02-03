@@ -388,7 +388,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
         prefEditor.putLong("tipHistorystartDate", startDate.getTimeInMillis());
         prefEditor.apply();
 
-        String shiftSqlQuery = ""
+        String hoursWorkedTableWhere = ""
                 + "WHERE shifts.`TimeStart` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate)
                 + "' AND shifts.`TimeStart` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "' ";
         ;
@@ -397,37 +397,42 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
                         + DataBase.Time + "` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate)
                         + "' AND `" + DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "' ";
 
+        String shiftTableWhere = ""
+                + "WHERE shifts.`TimeStart` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate)
+                + "' AND shifts.`TimeStart` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "' ";
+
+
         if (sunday.isChecked() == false) {
             sqlQuery = sqlQuery + " AND `weekday` IS NOT '0'";
-            shiftSqlQuery = shiftSqlQuery + " AND `weekday` IS NOT '0'";
+            hoursWorkedTableWhere = hoursWorkedTableWhere + " AND `weekday` IS NOT '0'";
         }
         if (monday.isChecked() == false) {
             sqlQuery = sqlQuery + " AND `weekday` IS NOT '1'";
-            shiftSqlQuery = shiftSqlQuery + " AND `weekday` IS NOT '1'";
+            hoursWorkedTableWhere = hoursWorkedTableWhere + " AND `weekday` IS NOT '1'";
         }
         if (tuesday.isChecked() == false) {
             sqlQuery = sqlQuery + " AND `weekday` IS NOT '2'";
-            shiftSqlQuery = shiftSqlQuery + " AND `weekday` IS NOT '2'";
+            hoursWorkedTableWhere = hoursWorkedTableWhere + " AND `weekday` IS NOT '2'";
         }
         if (wendsday.isChecked() == false) {
             sqlQuery = sqlQuery + " AND `weekday` IS NOT '3'";
-            shiftSqlQuery = shiftSqlQuery + " AND `weekday` IS NOT '3'";
+            hoursWorkedTableWhere = hoursWorkedTableWhere + " AND `weekday` IS NOT '3'";
         }
         if (thursday.isChecked() == false) {
             sqlQuery = sqlQuery + " AND `weekday` IS NOT '4'";
-            shiftSqlQuery = shiftSqlQuery + " AND `weekday` IS NOT '4'";
+            hoursWorkedTableWhere = hoursWorkedTableWhere + " AND `weekday` IS NOT '4'";
         }
         if (friday.isChecked() == false) {
             sqlQuery = sqlQuery + " AND `weekday` IS NOT '5'";
-            shiftSqlQuery = shiftSqlQuery + " AND `weekday` IS NOT '5'";
+            hoursWorkedTableWhere = hoursWorkedTableWhere + " AND `weekday` IS NOT '5'";
         }
         if (saturday.isChecked() == false) {
             sqlQuery = sqlQuery + " AND `weekday` IS NOT '6'";
-            shiftSqlQuery = shiftSqlQuery + " AND `weekday` IS NOT '6'";
+            hoursWorkedTableWhere = hoursWorkedTableWhere + " AND `weekday` IS NOT '6'";
         }
 
 
-        TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(), sqlQuery, shiftSqlQuery);
+        TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(), sqlQuery, hoursWorkedTableWhere, shiftTableWhere );
 
 
         tipsMade.setText(Utils.getFormattedCurrency(tips.payed - tips.cost));
@@ -493,7 +498,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
                 " Payed >= 0 AND `" + DataBase.Time + "` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND `" + DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'",
                 "WHERE shifts.TimeStart >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
-                        "' AND shifts.`TimeEnd` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'");
+                        "' AND shifts.`TimeEnd` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'",null);
 
         final Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
@@ -512,7 +517,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
                         "' AND `" + DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'",
                 "WHERE shifts.TimeStart >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND shifts.`TimeEnd` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'"
-        );
+        ,null);
 
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.setData(Uri.parse("sms:"));

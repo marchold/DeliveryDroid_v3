@@ -989,7 +989,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		// Get tip totals from database
 		TipTotalData t = getDataBase().getTipTotal(this, DataBase.Shift + " = " + getDataBase().getCurShift() + " AND " + DataBase.Payed + ">0",
-				"WHERE shifts.ID="+DataBase.TodaysShiftCount);
+				"WHERE shifts.ID="+DataBase.TodaysShiftCount,null);
 
 		// Calculate tips from this run which have not yet been updated in the
 		// database

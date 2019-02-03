@@ -212,8 +212,8 @@ public class DataBase extends Object  {
                 + PAY_RATE + "   FLOAT,"
                 + PAY_RATE_ON_RUN+" FLOAT,"
                 +"lastModificationTime              TIMESTAMP, "
-                + TIME_START + " INTEGER, "
-                + TIME_END + "   INTEGER);");
+                + TIME_START + " VARCHAR, "    //A quirk is that although these are defined as integer they are stored as strings
+                + TIME_END + "   VARCHAR);");  //A quirk is that although these are defined as integer they are stored as strings
 
         database.execSQL("CREATE TABLE IF NOT EXISTS dropOffs (ID integer primary key autoincrement,"
                 + "dropOffAddress	VARCHAR, "
@@ -293,8 +293,8 @@ public class DataBase extends Object  {
 
                 init.put(ODO_START,c.getInt(c.getColumnIndex(ODO_START)));
                 init.put(ODO_END  ,c.getInt(c.getColumnIndex(ODO_END)));
-                init.put(TIME_END ,c.getInt(c.getColumnIndex(TIME_END)));
-                init.put(TIME_START,c.getInt(c.getColumnIndex(TIME_START)));
+                init.put(TIME_END ,c.getString(c.getColumnIndex(TIME_END)));
+                init.put(TIME_START,c.getString(c.getColumnIndex(TIME_START)));
                 if (c.getColumnIndex(PAY_RATE)!=-1) init.put(PAY_RATE ,c.getFloat(c.getColumnIndex(PAY_RATE)));
                 if (c.getColumnIndex(PAY_RATE_ON_RUN)!=-1) init.put(PAY_RATE_ON_RUN, c.getFloat(c.getColumnIndex(PAY_RATE_ON_RUN)));
 
@@ -1262,8 +1262,12 @@ public class DataBase extends Object  {
         Shift shift = new Shift();
         if (c!=null){
             if (c.moveToFirst()) {
+
                 String t1 = c.getString(c.getColumnIndex(TIME_START));
                 String t2 = c.getString(c.getColumnIndex(TIME_END));
+
+                if (t1.startsWith("1969")) t1 = GetDateString(MutableDateTime.now());
+                if (t2.startsWith("1969")) t2 = GetDateString(MutableDateTime.now());
 
                 Log.i("CURSOR","times ="+t1+",  "+t2);
                 try {
@@ -1423,8 +1427,10 @@ public class DataBase extends Object  {
         return ret;
     }}
 
-    public TipTotalData getTipTotal(final Context context, String where,String shiftWhere){synchronized (DataBase.class){
+    public TipTotalData getTipTotal(final Context context, String where,String hoursWorkedTableWhere, String shiftTableWhere){synchronized (DataBase.class){
         TipTotalData ret=new TipTotalData();
+
+        if (shiftTableWhere==null) shiftTableWhere = hoursWorkedTableWhere;
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean mileagePayForUndeliverable = prefs.getBoolean("mileagePayForUndeliverable",false);
@@ -1720,16 +1726,32 @@ public class DataBase extends Object  {
             }
             c.close();
 
+            if (shiftTableWhere!=null) {
+                //TODO: We should also include shifts with no orders. This is possible.
+                c = db.rawQuery("SELECT ID FROM shifts " + shiftTableWhere, null);
+                if (c != null) {
+                    if (c.moveToFirst()) {
+                        do {
+                            Integer s = c.getInt(0);
+                            if (!list.contains(s)) {
+                                list.add(s);
+                            }
+                        } while (c.moveToNext());
+                    }
+                }
+                c.close();
+            }
+
+
             long hoursInMills = 0;
             for (int i = 0; i < list.size(); i++){
                 c = db.rawQuery("SELECT "+TIME_START+","+TIME_END+" FROM shifts WHERE id = "+list.get(i), null);
                 if (c.moveToFirst()) {
                     do {
-
-                        long timeStart = c.getLong(c.getColumnIndex(TIME_START));
+                        long timeStart = Order.GetTimeFromString(c.getString(c.getColumnIndex(TIME_START)));
                         long timeEnd;
                         try {
-                            timeEnd = c.getLong(c.getColumnIndex(TIME_END));
+                            timeEnd = Order.GetTimeFromString(c.getString(c.getColumnIndex(TIME_END)));
                         } catch (IllegalStateException e){
                             timeEnd = timeStart;
                         }
@@ -1778,7 +1800,7 @@ public class DataBase extends Object  {
         }
 
         Log.i("CURSOR","QUERYING HOURS CALCULATION");
-        if (shiftWhere==null){
+        if (hoursWorkedTableWhere==null){
             c = db.rawQuery(""
                     +"SELECT *,strftime('%w',`shifts`.`TimeStart`) AS `weekday` "
                     +"FROM hours_worked  "
@@ -1791,14 +1813,14 @@ public class DataBase extends Object  {
                     +"SELECT *,strftime('%w',`shifts`.`TimeStart`) AS `weekday` "
                     +"FROM hours_worked "
                     +"INNER JOIN shifts ON hours_worked.shiftId=shifts.ID "
-                    +shiftWhere+" "
+                    +hoursWorkedTableWhere+" "
                     +"ORDER BY hours_worked.start DESC "
                     , null);
         }
         //DateTime start = null;
         //float rate=0;
         ret.hourlyPay = 0;
-        ret.hours = 0;
+       // ret.hours = 0;
         DateTime wageTransitionStart;
         DateTime shiftStart;
         DateTime shiftEnd;
@@ -1855,7 +1877,7 @@ public class DataBase extends Object  {
             }
 
             ret.hourlyPay =0;
-            ret.hours=0;
+           // ret.hours=0;
             for (WageZone wz : filteredZones){
                 if (wz.wageTransitionStart.isBefore(shiftStart)){
                     wz.wageTransitionStart = wz.shiftStart;
@@ -1870,7 +1892,7 @@ public class DataBase extends Object  {
                 float earnings = (float)wz.rate*min;
                 ret.hourlyPay += Math.abs(earnings);
                 float hours = Math.abs(min/60.0f);
-                ret.hours += hours;
+              //  ret.hours += hours;
 
                 String payRateStringKey = ""+(int)(wz.rate*10000);
                 PayRatePieriod payRatePeriod = ret.payRatePieriods.get(payRateStringKey);
@@ -1919,7 +1941,7 @@ public class DataBase extends Object  {
                 Minutes m = Minutes.minutesBetween(theShift.getStartTime(), theShift.getEndTime());
                 float earnings = wage.wage*((float)m.getMinutes());
                 ret.hourlyPay += Math.abs(earnings);
-                ret.hours += Math.abs(((float)m.getMinutes())/60.0f);
+           //     ret.hours += Math.abs(((float)m.getMinutes())/60.0f);
                 Log.i("CURSOR"," earnings ="+earnings+"    minutes="+m.getMinutes()+"    start="+ theShift.getStartTime() +"    end="+ theShift.getEndTime());
 
             }
@@ -2353,8 +2375,8 @@ public class DataBase extends Object  {
 
         while (maxShiftFromShifts<maxShiftFromOrders){
             final ContentValues init = new ContentValues();
-            init.put(TIME_START, 0);
-            init.put(TIME_END,0);
+            init.put(TIME_START,  GetDateString(MutableDateTime.now()));
+            init.put(TIME_END, GetDateString(MutableDateTime.now()));
             TodaysShiftCount = (int) db.insertOrThrow("shifts", null, init);
             dataDidJustChange();
             maxShiftFromShifts=TodaysShiftCount;
@@ -2372,7 +2394,7 @@ public class DataBase extends Object  {
         // Set 0 time stamps for a new new shift record and create it to update our shift count
         ContentValues init = new ContentValues();
         init.put(TIME_START, GetDateString(DateTime.now()));
-        init.put(TIME_END,GetDateString(DateTime.now()));
+        init.put(TIME_END, GetDateString(DateTime.now()));
         TodaysShiftCount = (int) db.insertOrThrow("shifts", null, init);
 
         //Move all the open orders to the new shift

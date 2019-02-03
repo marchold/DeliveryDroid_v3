@@ -264,7 +264,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
         super.onResume();
         
         TipTotalData tip = dataBase.getTipTotal(this,DataBase.Shift+"="+dataBase.getCurShift()+" AND "+DataBase.Payed+" >= 0",
-        		"WHERE shifts.ID="+DataBase.TodaysShiftCount);
+        		"WHERE shifts.ID="+DataBase.TodaysShiftCount,null);
 		final float totalTipsMade = tip.payed-tip.cost;
 		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		
@@ -363,7 +363,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 					order.tipTotalsForThisAddress = dataBase.getTipTotal(getApplicationContext(), 
 							" `"+DataBase.Address +"` LIKE "+DatabaseUtils.sqlEscapeString(order.address)
 							+" AND `"+DataBase.AptNumber+"` LIKE "+DatabaseUtils.sqlEscapeString(order.apartmentNumber)
-							+" AND Payed != -1",null);
+							+" AND Payed != -1",null,null);
 
 					orders.add(order);
 

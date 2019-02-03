@@ -624,7 +624,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 				order.tipTotalsForThisAddress = dataBase.getTipTotal(getActivity().getApplicationContext(), 
 						" `"+DataBase.Address +"` LIKE "+DatabaseUtils.sqlEscapeString(order.address)
 						+" AND `"+DataBase.AptNumber+"` LIKE "+DatabaseUtils.sqlEscapeString(order.apartmentNumber)
-						+" AND Payed != -1",null);
+						+" AND Payed != -1",null,null);
 			}
 			noListAltView.setVisibility(View.GONE);
 			getListView().setVisibility(View.VISIBLE);
@@ -642,7 +642,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		Log.i("CURSOR","HomeScreen_ListFragmentDragDrop - updateUI");
 		
 		TipTotalData tip = dataBase.getTipTotal(getActivity(),DataBase.Shift+"="+dataBase.getCurShift()+" AND "+DataBase.Payed+" >= 0",
-				"WHERE shifts.ID="+DataBase.TodaysShiftCount);
+				"WHERE shifts.ID="+DataBase.TodaysShiftCount,null);
 		final float totalTipsMade = tip.payed-tip.cost;
 		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		

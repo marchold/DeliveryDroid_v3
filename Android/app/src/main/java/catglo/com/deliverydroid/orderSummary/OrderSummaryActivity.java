@@ -581,7 +581,7 @@ public class OrderSummaryActivity extends DeliveryDroidBaseActivity
 
 
         TipTotalData tip = getDataBase().getTipTotal(OrderSummaryActivity.this,DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0",
-                "WHERE shifts.ID="+viewingShift);
+                "WHERE shifts.ID="+viewingShift,null);
 
         new AlertDialog.Builder(OrderSummaryActivity.this).setIcon(R.drawable.icon).setTitle(
                 "Delete this shift and all "+tip.deliveries+" order records?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {

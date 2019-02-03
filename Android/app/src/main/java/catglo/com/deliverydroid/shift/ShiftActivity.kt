@@ -48,7 +48,7 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
                 datePicker.updateDate(now.year, now.monthOfYear - 1, now.dayOfMonth)
             }
             datePicker.updateDate(time.year, time.monthOfYear - 1, time.dayOfMonth)
-            val show: Any = AlertDialog.Builder(this@ShiftActivity)
+            AlertDialog.Builder(this@ShiftActivity)
                 .setView(customView)
                 .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
                     setter(datePicker, timePicker)
@@ -162,7 +162,7 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
 
         tips = dataBase.getTipTotal(
             applicationContext, "Payed != -1 AND Shift=$whichShift",
-            "WHERE shifts.ID=$whichShift"
+            "WHERE shifts.ID=$whichShift",null
         )
 
         shift.startTime.toGregorianCalendar()
