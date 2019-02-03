@@ -222,7 +222,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		paymentTotal = (EditText) findViewById(R.id.paymentTotal);
 		paymentTotal2 = (EditText) findViewById(R.id.paymentTotal_2);
 		tipTotal = (EditText) findViewById(R.id.tipAmount);
-		paymentTotal.setInputType(EditorInfo.TYPE_NULL);
 		if (getSharedPreferences().getBoolean("showTipField", false)==false){
 			tipTotal.setVisibility(View.GONE);
 		}
@@ -230,8 +229,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			if (paymentTotal.getText().toString().length() < 2) {
 				showPaymentAmountList();
 			}
-			paymentTotal.setInputType(EditorInfo.TYPE_NUMBER_FLAG_DECIMAL|EditorInfo.TYPE_CLASS_NUMBER);			
-			getTools().showOnScreenKeyboard();
 		}});
 		paymentTotal.setOnFocusChangeListener(new OnFocusChangeListener(){public void onFocusChange(View arg0, boolean hasFocus) {
 			if (hasFocus==false){
@@ -243,7 +240,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				
 				if (paymentTotal.getText().toString().length() < 2) {
 					showPaymentAmountList();
-					getTools().showOnScreenKeyboard();
 				} else {
 					next.setVisibility(View.VISIBLE);
 				}
@@ -311,7 +307,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		tipTotal.setOnEditorActionListener(new OnEditorActionListener() {
 	        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 	            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-	            	//hideOnScreenKeyboard(tipTotal);
 	            	next.performClick();
 	                return true;
 	            }
@@ -685,8 +680,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				if (paymentTotal.getText().toString().length() == 0) {			
 				    paymentTotal.setText(""+orders.get(orderCounter).cost);
 				}
-				
-				getTools().showOnScreenKeyboard();
 			}
 		});
 
