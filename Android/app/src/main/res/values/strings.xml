@@ -411,6 +411,11 @@
         <item>Address History</item>
     </string-array>
 
+    <string-array name="ordersummary_order_list_options">
+        <item>View/Edit Order</item>
+        <item>Delete Order</item>
+    </string-array>
+
     <string name="Round_Trip_Time">Round Trip Time</string>
     <string name="enter_store_address">enter store address</string>
     <string name="set_store_address_help_bubble">To get route time displayed. Set store address in settings.</string>

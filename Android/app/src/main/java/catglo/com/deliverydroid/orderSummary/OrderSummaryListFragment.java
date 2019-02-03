@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import catglo.com.deliveryDatabase.*;
+import catglo.com.deliverydroid.ListAddressHistoryActivity;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
@@ -238,6 +239,30 @@ public class OrderSummaryListFragment extends ListFragment  {
 				layout.setOnTouchListener(gestureListener);
 				layout.setOnClickListener(new OnClickListener(){public void onClick(View v) {
 					final int orderIdForDialog = Integer.parseInt(map.get("id"));
+					AlertDialog.Builder popupBuilder = new AlertDialog.Builder(getActivity());
+					popupBuilder.setIcon(R.drawable.icon);
+					int listId;
+					listId = R.array.ordersummary_order_list_options;
+					popupBuilder.setItems(listId, new DialogInterface.OnClickListener(){public void onClick(DialogInterface dialog, int which) {
+						switch (which){
+							case 0: //View/Edit
+							{
+								final Intent myIntent = new Intent(getActivity().getApplicationContext(), SummaryActivity.class);
+								myIntent.putExtra("DB Key", orderIdForDialog);
+								startActivity(myIntent);
+							}
+							break;
+							case 1: //Delete
+								OrderSummaryActivity parent = (OrderSummaryActivity)getActivity();
+								parent.recordToDelete = orderIdForDialog;
+								parent.confirmDeleteRecordDialog();
+								break;
+						}
+					}});
+					popupBuilder.create().show();
+
+		/*
+
 					new AlertDialog.Builder(getActivity())
                             .setItems(new CharSequence[]{getString(R.string.EDITORDER), getString(R.string.Delete)}, new DialogInterface.OnClickListener() {
                                 @Override
@@ -245,6 +270,7 @@ public class OrderSummaryListFragment extends ListFragment  {
 
                                 }
                             })
+
                             .setPositiveButton(R.string.EDITORDER, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -261,7 +287,7 @@ public class OrderSummaryListFragment extends ListFragment  {
                                     parent.confirmDeleteRecordDialog();
                                 }
                             })
-                            .show();
+                            .show();*/
 
 
 				}});

@@ -1122,7 +1122,7 @@ public class DataBase extends Object  {
             c = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE (address LIKE "+searchFor+" OR Notes LIKE "+searchFor+") AND `AptNumber` LIKE "+aptEscaped+" ORDER BY Time DESC LIMIT 80", null);
         }
         else {
-            c = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE address LIKE "+searchFor+" OR Notes LIKE"+searchFor+" ORDER BY Time DESC LIMIT 80", null);
+            c = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE address LIKE "+searchFor+" OR Notes LIKE "+searchFor+" OR PhoneNumber LIKE "+searchFor+" ORDER BY Time DESC LIMIT 80", null);
         }
 
         ArrayList<Order> orders = new ArrayList<Order>();
