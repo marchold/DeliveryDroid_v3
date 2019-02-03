@@ -222,9 +222,9 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		paymentTotal = (EditText) findViewById(R.id.paymentTotal);
 		paymentTotal2 = (EditText) findViewById(R.id.paymentTotal_2);
 		tipTotal = (EditText) findViewById(R.id.tipAmount);
-		if (getSharedPreferences().getBoolean("showTipField", false)==false){
-			tipTotal.setVisibility(View.GONE);
-		}
+		//if (getSharedPreferences().getBoolean("showTipField", false)==false){
+		//	tipTotal.setVisibility(View.GONE);
+		//}
 		paymentTotal.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
 			if (paymentTotal.getText().toString().length() < 2) {
 				showPaymentAmountList();
@@ -266,7 +266,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			public void afterTextChanged(Editable arg0) {
 				if (inNext) return;
 				next.setVisibility(View.VISIBLE);
-				if (arg0.toString().length()>2) {
+				if (arg0.toString().length()>1) {
 					paymentAmountList.setVisibility(View.GONE);
 					todaysTips();
 					

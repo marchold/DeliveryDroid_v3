@@ -460,11 +460,11 @@
                     android:title="@string/smsbody_title"/>
 
 
-            <androidx.preference.CheckBoxPreference
+        <!--    <androidx.preference.CheckBoxPreference
 
                     android:key="showTipField"
                     android:summary="@string/Show_Tip_Field_summary"
-                    android:title="@string/Show_Tip_Field"/>
+                    android:title="@string/Show_Tip_Field"/> -->
 
             <androidx.preference.CheckBoxPreference
                     android:icon="@drawable/call_phone_in_notes"

@@ -27,8 +27,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 191
-        versionName "5.41"
+        versionCode 192
+        versionName "5.42"
     }
 
     productFlavors {
