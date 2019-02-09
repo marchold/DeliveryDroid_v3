@@ -41,7 +41,7 @@ public class NewOrderActivity extends DeliveryDroidBaseActivity
         int i = tabLayout.getSelectedTabPosition();
         try {
             tabLayout.getTabAt(i+1).select();
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException | NullPointerException e){
             //TODO: maybe focus whatever seems like the next logical thing in the last screen frag on tablet
         }
     }

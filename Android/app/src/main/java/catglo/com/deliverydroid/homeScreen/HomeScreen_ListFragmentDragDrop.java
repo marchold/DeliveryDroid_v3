@@ -549,8 +549,12 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		}
 		
 		
-	
-		dataBase.changeOrder(fromOrder.primaryKey, newDeliveryOrder);
+		try {
+			dataBase.changeOrder(fromOrder.primaryKey, newDeliveryOrder); //Null pointer here once
+		} catch (NullPointerException e){
+			//Patch for https://play.google.com/apps/publish/?account=5415545862965625496#AndroidMetricsErrorsPlace:p=com.catglo.deliverydroid&appid=4974298585574800656&appVersion=BETA&clusterName=apps/com.catglo.deliverydroid/clusters/8d4811ba&detailsAppVersion=BETA&detailsSpan=7
+			e.printStackTrace();
+		}
 		updateUI();
 	};
 
