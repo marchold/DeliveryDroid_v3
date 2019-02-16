@@ -460,11 +460,11 @@
                     android:title="@string/smsbody_title"/>
 
 
-        <!--    <androidx.preference.CheckBoxPreference
+            <!--    <androidx.preference.CheckBoxPreference
 
-                    android:key="showTipField"
-                    android:summary="@string/Show_Tip_Field_summary"
-                    android:title="@string/Show_Tip_Field"/> -->
+                        android:key="showTipField"
+                        android:summary="@string/Show_Tip_Field_summary"
+                        android:title="@string/Show_Tip_Field"/> -->
 
             <androidx.preference.CheckBoxPreference
                     android:icon="@drawable/call_phone_in_notes"
@@ -566,7 +566,8 @@
 
             </androidx.preference.Preference>
 
-            <androidx.preference.PreferenceScreen key="manual_backup" android:icon="@drawable/ic_save_settings"
+            <androidx.preference.PreferenceScreen key="manual_backup" android:key="manual_backup"
+                                                  android:icon="@drawable/ic_save_settings"
                                                   android:title="Manual File Backup">
 
 
@@ -578,6 +579,7 @@
 
                 <androidx.preference.PreferenceScreen id="where_db_stored" android:title="@string/where_db_is_stored"
                                                       android:icon="@drawable/lock_question"
+                                                      android:key="where_db_stored" key="where_db_stored"
                                                       android:summary="Control privacy vs. easy backup access by storing the app data in private or external or sd-card for easy backup. "
                 >
 
