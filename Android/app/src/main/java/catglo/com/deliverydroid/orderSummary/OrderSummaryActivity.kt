@@ -51,7 +51,7 @@ import catglo.com.deliveryDatabase.TipTotalData
 import catglo.com.deliverydroid.BuildConfig
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity
 import catglo.com.deliverydroid.R
-import catglo.com.deliverydroid.shift.ShiftActivity
+import catglo.com.deliverydroid.shift.PastShiftActivity
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -282,7 +282,7 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
             drawerLayout.closeDrawers()
         }
         findViewById<View>(R.id.odometer_and_hours_menu_button).setOnClickListener {
-            val i = Intent(applicationContext, ShiftActivity::class.java)
+            val i = Intent(applicationContext, PastShiftActivity::class.java)
             i.putExtra("ID", viewingShift)
             startActivity(i)
             drawerLayout.closeDrawers()
@@ -438,54 +438,58 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
     }
 
     fun exportWhereDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.Warning))
+            .setMessage(getString(R.string.csv_warning_no_backup))
+            .setPositiveButton(android.R.string.ok){ dialog, which ->
+                pd = ProgressDialog.show(
+                    this@OrderSummaryActivity,
+                    "Exporting...",
+                    "This may take a minute",
+                    true,
+                    false
+                )
 
-        pd = ProgressDialog.show(
-            this@OrderSummaryActivity,
-            "Exporting...",
-            "This may take a minute",
-            true,
-            false
-        )
+                GlobalScope.launch(Dispatchers.Default){
+                    val csvData = dataBase.getCSVData(startDate, endDate, pd, this@OrderSummaryActivity)
 
-        GlobalScope.launch(Dispatchers.Default){
-            val csvData = dataBase.getCSVData(startDate, endDate, pd, this@OrderSummaryActivity)
+                    fileName ="deliveryData.csv"
+                    val file = File( Environment.getExternalStorageDirectory(), fileName)
+                    try {
+                        BufferedWriter(FileWriter(file)).run {
+                            write(csvData)
+                            flush()
+                            close()
+                        }
 
-            fileName ="deliveryData.csv"
-            val file = File( Environment.getExternalStorageDirectory(), fileName)
-            try {
-                BufferedWriter(FileWriter(file)).run {
-                    write(csvData)
-                    flush()
-                    close()
+                        val emailIntent = Intent(Intent.ACTION_SEND)
+                        emailIntent.type = "plain/text"
+                        val subject = this@OrderSummaryActivity.getString(R.string.cvs_email_subject)
+                        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
+                        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "")
+                        emailIntent.type = "text/csv"
+
+                        emailIntent.putExtra(Intent.EXTRA_STREAM,
+                                FileProvider.getUriForFile(this@OrderSummaryActivity,
+                                BuildConfig.APPLICATION_ID + ".provider",
+                                    file ))
+
+                        emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        GlobalScope.launch(Dispatchers.Main) {
+                            applicationContext.startActivity(emailIntent)
+                        }
+
+                    } catch (e: IOException) {
+                        GlobalScope.launch(Dispatchers.Main) {
+                            Toast.makeText(applicationContext,"Error Saving File",Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    GlobalScope.launch(Dispatchers.Main) { pd?.dismiss() }
                 }
-
-                val emailIntent = Intent(Intent.ACTION_SEND)
-                emailIntent.type = "plain/text"
-                val subject = this@OrderSummaryActivity.getString(R.string.cvs_email_subject)
-                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
-                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "")
-                emailIntent.type = "text/csv"
-
-                emailIntent.putExtra(Intent.EXTRA_STREAM,
-                        FileProvider.getUriForFile(this@OrderSummaryActivity,
-                        BuildConfig.APPLICATION_ID + ".provider",
-                            file ))
-
-                emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                GlobalScope.launch(Dispatchers.Main) {
-                    applicationContext.startActivity(emailIntent)
-                }
-
-            } catch (e: IOException) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    Toast.makeText(applicationContext,"Error Saving File",Toast.LENGTH_LONG).show()
-                }
-            }
-
-            GlobalScope.launch(Dispatchers.Main) { pd?.dismiss() }
-
         }
-
+        .setNegativeButton(android.R.string.cancel){ dialog, which ->  }
+        .show()
 
     }
 

@@ -858,6 +858,10 @@
         download
     </string>
     <string name="export_destination">Export CSV Folder</string>
+    <string name="Warning">Warning</string>
+    <string name="csv_warning_no_backup">This export can not be imported. The purpose of this export is so you can
+        import in to a spreadsheet. Please use the backup option under settings to make a backup
+    </string>
 
 </resources>
 

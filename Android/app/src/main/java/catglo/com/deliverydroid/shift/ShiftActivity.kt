@@ -18,7 +18,7 @@ import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 
 
-class ShiftActivity : DeliveryDroidBaseActivity() {
+open class ShiftActivity : DeliveryDroidBaseActivity() {
 
     fun shiftTimeClickListener(
         time: MutableDateTime,
