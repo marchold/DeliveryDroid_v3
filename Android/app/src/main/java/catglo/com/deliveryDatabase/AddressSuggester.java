@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class AddressSuggester extends GoogleAddressSuggester {
 
     //Listener for results sent back to caller
-    private GoogleAddressSuggester.AddressListListener commitLookup;
+    private GoogleAddressSuggester.AddressResultListener commitLookup;
 
 	private DataBase dataBase;
 	float range;
@@ -21,9 +21,9 @@ public class AddressSuggester extends GoogleAddressSuggester {
 
     public static final Pattern initialNumbers = Pattern.compile("^([0-9]+)");
 
-    // public GoogleAddressSuggester(Tooled tooled, AddressListListener addressListListener) {
-    public AddressSuggester(final Context context, final DataBase dataBase, final AddressListListener addressListListener){
-		super(context,new AddressListListener(){
+    // public GoogleAddressSuggester(Tooled tooled, AddressResultListener addressListListener) {
+    public AddressSuggester(final Context context, final DataBase dataBase, final AddressResultListener addressListListener){
+		super(context,new AddressResultListener(){
             @Override
             public void commit(ArrayList<AddressInfo> addresses, String originalSearchString) {
 

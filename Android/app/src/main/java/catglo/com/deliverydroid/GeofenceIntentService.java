@@ -347,7 +347,7 @@ public class GeofenceIntentService extends IntentService implements LocationList
 
         }};
                 if (latitude == -1 || longitude == -1) {
-            new WebServiceGoogleGeocode(getApplicationContext(),storeAddress,new WebServiceGoogleGeocode.AddressListListener(){
+            new WebServiceGoogleGeocode(getApplicationContext(),storeAddress,new WebServiceGoogleGeocode.AddressResultListener(){
                 public void commit(ArrayList<AddressInfo> addressList,String searchString) {
                     if (addressList.size()>0){
                         AddressInfo addressInfo = addressList.get(0);

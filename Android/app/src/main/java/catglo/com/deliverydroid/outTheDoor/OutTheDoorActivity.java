@@ -37,7 +37,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.DataBase.NoteEntry;
@@ -181,6 +180,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		paymentAmountListView.setOnItemClickListener(new OnItemClickListener(){public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			paymentTotal.setText(costGuess[arg2]);
 			paymentTotal.setSelection(costGuess[arg2].length());
+			//TODO set tip total
 			paymentAmountList.setVisibility(View.GONE);
 			next.setVisibility(View.VISIBLE);
 		}});
@@ -249,7 +249,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			public void afterTextChanged(Editable arg0) {	
 				if (inNext) return;
 				try {
-					if (paymentTotal2.isFocused()){
+					if (!tipTotal.isFocused()){
 						float f = Utils.parseCurrency(paymentTotal2.getText().toString());
 						f += Utils.parseCurrency(paymentTotal.getText().toString());
 						f -=  orders.get(orderCounter).cost;
@@ -266,11 +266,11 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			public void afterTextChanged(Editable arg0) {
 				if (inNext) return;
 				next.setVisibility(View.VISIBLE);
-				if (arg0.toString().length()>1) {
+				if (arg0.toString().length()>0) {
 					paymentAmountList.setVisibility(View.GONE);
 					todaysTips();
 					
-					if (paymentTotal.isFocused()){
+					if (!tipTotal.isFocused()){
 						float f = Utils.parseCurrency(arg0.toString());
 						f -=  orders.get(orderCounter).cost;
 						tipTotal.setText(Utils.getFormattedCurrency(f));
@@ -417,6 +417,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		if (orders.get(orderCounter).payed2 != 0) {
 			float total = orders.get(orderCounter).payed2 + orders.get(orderCounter).cost;
 			paymentTotal.setText(new DecimalFormat("#.##").format(total));
+			//set tip here too?
 			next.setVisibility(View.VISIBLE);
 		} else {
 			paymentTotal.setText("");
@@ -903,26 +904,20 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                         callThemButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 if (phoneNumbersThisOrder.size() > 1) {
-                                    DialogFragment dialog = new DialogFragment() {
-                                        @Override
-                                        public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-                                            CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
+                                    CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                            builder.setTitle(R.string.Call).setItems(list, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()){
-                                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse( phoneNumbersThisOrder.get(which))));
-                                                    } else {
-                                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(which))));
-                                                    }
-                                                }
-                                            });
-                                            return builder.create();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(OutTheDoorActivity.this);
+                                    builder.setTitle(R.string.Call).setItems(list, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()){
+                                                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse( phoneNumbersThisOrder.get(which))));
+                                            } else {
+                                                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(which))));
+                                            }
                                         }
-                                    };
-                                    dialog.show(getSupportFragmentManager(), "set_pay_rate");
+                                    });
+                                    builder.show();
                                 } else {
                                     if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
                                         startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse( phoneNumbersThisOrder.get(0))));
@@ -936,29 +931,23 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                         smsThemButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 if (phoneNumbersThisOrder.size() > 1) {
-                                    DialogFragment dialog = new DialogFragment() {
-                                        @Override
-                                        public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-                                            final CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
+                                    final CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(OutTheDoorActivity.this);
+                                    builder.setTitle(R.string.textMessage).setItems(list, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + list[which], null));
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                            builder.setTitle(R.string.textMessage).setItems(list, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + list[which], null));
+                                            String messageBody = getSharedPreferences().getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
+                                            String cost = "" + Utils.getFormattedCurrency(orders.get(orderCounter).cost);
+                                            messageBody = messageBody.replace("###", cost);
 
-                                                    String messageBody = getSharedPreferences().getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
-                                                    String cost = "" + Utils.getFormattedCurrency(orders.get(orderCounter).cost);
-                                                    messageBody = messageBody.replace("###", cost);
-
-                                                    i.putExtra("sms_body", messageBody);
-                                                    startActivity(i);
-                                                }
-                                            });
-                                            return builder.create();
+                                            i.putExtra("sms_body", messageBody);
+                                            startActivity(i);
                                         }
-                                    };
-                                    dialog.show(getSupportFragmentManager(), "set_pay_rate");
+                                    });
+                                    builder.show();
+
                                 } else {
                                     Intent i;
                                     if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {

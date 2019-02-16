@@ -13,9 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.ListAdapter;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import catglo.com.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressHistorySuggester;
-import catglo.com.deliveryDatabase.AddressHistorySuggester.AddressResultListener;
 import catglo.com.deliveryDatabase.AddressInfo;
+import org.jetbrains.annotations.NotNull;
 
 
 public class AddressHistoryAutocomplete extends AppCompatAutoCompleteTextView {
@@ -84,8 +85,9 @@ public class AddressHistoryAutocomplete extends AppCompatAutoCompleteTextView {
 		
 		//TODO: Address history suggester needs to return GPS coordinates as well as the address so we can save them in the settings and use them for geol
 		if (context!=null) {
-			suggestor = new AddressHistorySuggester(context, prefKey, new AddressResultListener() {
-				public void onResultAddress(final ArrayList<AddressInfo> results) {
+			suggestor = new AddressHistorySuggester(context, prefKey, new GoogleAddressSuggester.AddressResultListener() {
+				@Override
+				public void commit(@NotNull ArrayList<AddressInfo> results, @NotNull String searchString) {
 					post(new Runnable() {
 						public void run() {
 							ArrayAdapter<AddressInfo> streets = new ArrayAdapter<AddressInfo>(context, android.R.layout.simple_dropdown_item_1line, results);

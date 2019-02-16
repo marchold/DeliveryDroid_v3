@@ -189,7 +189,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 
         roundTripTime = findViewById(R.id.roundTripTime);
     	driverEarnings = findViewById(R.id.driverEarnings);
-        //prefEditor = sharedPreferences.edit();
+        prefEditor = sharedPreferences.edit();
         optimizeClickable = (ViewGroup)findViewById(R.id.optimizeClickable);
         optimizeIcon = findViewById(R.id.optimizeIcon);
         optimizeText = (TextView)findViewById(R.id.optimizeRouteText);

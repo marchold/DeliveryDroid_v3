@@ -33,6 +33,7 @@ import java.io.File;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -1726,6 +1727,7 @@ public class DataBase extends Object  {
             }
             c.close();
 
+            //this hapend at fist startup
             if (shiftTableWhere!=null) {
                 //TODO: We should also include shifts with no orders. This is possible.
                 c = db.rawQuery("SELECT ID FROM shifts " + shiftTableWhere, null);
@@ -2611,8 +2613,8 @@ public class DataBase extends Object  {
             int undeliverableCol = c.getColumnIndex("undeliverable");
 
 
-            DateFormat dateFormater = DateFormat.getDateInstance();
-            DateFormat timeFormatter = DateFormat.getTimeInstance();
+            DateFormat dateFormater = new SimpleDateFormat("yyyy-mm-dd");
+            DateFormat timeFormatter = new SimpleDateFormat("hh:mm");
 
             //String[] altPayAmount = new String[4];
             String[] altPayLabel  = new String[4];

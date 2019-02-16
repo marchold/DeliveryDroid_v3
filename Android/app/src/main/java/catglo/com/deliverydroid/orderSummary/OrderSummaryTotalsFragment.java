@@ -281,8 +281,8 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 
 
         OrderSummaryActivity activity = (OrderSummaryActivity) getActivity();
-        activity.configCashOwedToStore.setVisibility(View.VISIBLE);
-        activity.configCashOwedToStore.setOnClickListener(new View.OnClickListener() {
+        activity.getConfigCashOwedToStore().setVisibility(View.VISIBLE);
+        activity.getConfigCashOwedToStore().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cashOwedHeader.performClick();
@@ -297,7 +297,7 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		gestureListener = ((OrderSummaryActivity)getActivity()).gestureTouchListener;
+		gestureListener = ((OrderSummaryActivity) getActivity()).getGestureTouchListener();
 		
         moneyCollected.setOnTouchListener(gestureListener);
         cashCollected.setOnTouchListener(gestureListener);

@@ -424,7 +424,6 @@
         <item>Past orders can be viewed in the order summary screen</item>
         <item>Phone Number in Notes Field allows Text Messaging customer</item>
         <item>Find Addresses with Phone Numbers in the notes</item>
-        <item>Route Optimization can be Enabled in the settings</item>
     </string-array>
 
     <string name="you_need_store">Store address missing. Enter it in settings now?</string>
@@ -858,6 +857,7 @@
     <string name="click_the_download_icon_to_select_a_region_to_download">Click the download icon to select a region to
         download
     </string>
+    <string name="export_destination">Export CSV Folder</string>
 
 </resources>
 

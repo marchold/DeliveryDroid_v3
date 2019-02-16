@@ -57,7 +57,7 @@ public class OrderSummaryListFragment extends ListFragment  {
     	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         prefEditor = sharedPreferences.edit();
         
-        gestureListener = ((OrderSummaryActivity)getActivity()).gestureTouchListener;
+        gestureListener = ((OrderSummaryActivity) getActivity()).getGestureTouchListener();
 		
        
 	}
@@ -254,7 +254,7 @@ public class OrderSummaryListFragment extends ListFragment  {
 							break;
 							case 1: //Delete
 								OrderSummaryActivity parent = (OrderSummaryActivity)getActivity();
-								parent.recordToDelete = orderIdForDialog;
+								parent.setRecordToDelete(orderIdForDialog);
 								parent.confirmDeleteRecordDialog();
 								break;
 						}
@@ -420,10 +420,10 @@ public class OrderSummaryListFragment extends ListFragment  {
 			}
 		});
 		final OrderSummaryActivity activity = (OrderSummaryActivity)getActivity();
-        activity.customizeListView.setVisibility(View.VISIBLE);
-		activity.customizeListView.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
+        activity.getCustomizeListView().setVisibility(View.VISIBLE);
+		activity.getCustomizeListView().setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
 			listTypePicker.performClick();
-			activity.drawerLayout.closeDrawers();
+			activity.getDrawerLayout().closeDrawers();
 		}});
 		//TipTotalData tip = dataBase.getTipTotal(getActivity().getApplicationContext(),DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0");
 	}

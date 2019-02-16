@@ -40,7 +40,7 @@ public class AddressAutocomplete extends AppCompatAutoCompleteTextView {
 				}
 			}
 		};
-        suggestor = new AddressSuggester(context,dataBase,new GoogleAddressSuggester.AddressListListener() {
+        suggestor = new AddressSuggester(context,dataBase,new GoogleAddressSuggester.AddressResultListener() {
             @Override
             public void commit(ArrayList<AddressInfo> addressList, String searchString) {
                 try {

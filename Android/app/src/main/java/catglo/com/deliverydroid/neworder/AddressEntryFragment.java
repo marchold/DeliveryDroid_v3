@@ -61,7 +61,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
 
         NewOrderActivity activity = (NewOrderActivity)getActivity();
 
-        addressSuggestior = new AddressSuggester(getContext(), activity.dataBase, new GoogleAddressSuggester.AddressListListener() {
+        addressSuggestior = new AddressSuggester(getContext(), activity.dataBase, new GoogleAddressSuggester.AddressResultListener() {
             @Override
             public void commit(ArrayList<AddressInfo> addressList, String searchString) {
                 if (   addressList  ==null

@@ -392,8 +392,8 @@ class DownloadMapAdapter(val context: Context, val maps: ArrayList<DownloadedMap
         cell.checkmark.visibility = View.INVISIBLE
         val locationProvider = LocationServices.getFusedLocationProviderClient(context)
         locationProvider.lastLocation.addOnSuccessListener { location ->
-            if (map.bounds != null) {
-                if (map.bounds!!.contains(location.latLong())) {
+            map.bounds?.let {
+                if (it.contains(location.latLong())) {
                     cell.checkmark.visibility = View.VISIBLE
                 }
             }

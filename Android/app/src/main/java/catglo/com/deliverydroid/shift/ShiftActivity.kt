@@ -33,7 +33,9 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
                 timePicker.hour = time.hourOfDay
                 timePicker.minute = time.minuteOfHour
             } else {
+                @Suppress("DEPRECATION")
                 timePicker.currentHour = time.hourOfDay
+                @Suppress("DEPRECATION")
                 timePicker.currentMinute = time.minuteOfHour
             }
             nowButton.setOnClickListener {
@@ -90,7 +92,9 @@ class ShiftActivity : DeliveryDroidBaseActivity() {
                 shift.startTime.hourOfDay = timePicker.hour
                 shift.startTime.minuteOfHour = timePicker.minute
             } else {
+                @Suppress("DEPRECATION")
                 shift.startTime.hourOfDay = timePicker.currentHour
+                @Suppress("DEPRECATION")
                 shift.startTime.minuteOfHour = timePicker.currentMinute
             }
             dataBase.saveShift(shift)

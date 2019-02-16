@@ -20,11 +20,11 @@ import java.util.*
 /**
  * Created by goblets on 2/27/14.
  */
-open class GoogleAddressSuggester(protected val context: Context, var resultListener: AddressListListener?) {
+open class GoogleAddressSuggester(protected val context: Context, var resultListener: AddressResultListener?) {
 
     private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    interface AddressListListener {
+    interface AddressResultListener {
         fun commit(addressList: ArrayList<AddressInfo>, searchString: String)
     }
 

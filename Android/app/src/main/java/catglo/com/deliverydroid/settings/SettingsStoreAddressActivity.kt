@@ -46,7 +46,7 @@ import java.util.regex.Pattern
 import catglo.com.deliverydroid.Utils;
 
 class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
-    GoogleAddressSuggester.AddressListListener {
+    GoogleAddressSuggester.AddressResultListener {
 
     internal var LOOKUPABLE_ADDRESS_STRING = Pattern.compile("\\w+\\s+\\w{3,100}")
     internal var GPS_COORDINATES_STRING = Pattern.compile("[0-9]+\\.[0-9]+\\,[0-9]+\\.[0-9]+")
