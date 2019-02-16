@@ -1,32 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".homeScreen.DownloadMapActivity" tools:layout_editor_absoluteY="81dp">
+        tools:context=".homeScreen.DownloadMapActivity">
 
-    <android.support.v7.widget.RecyclerView
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            android:visibility="gone"
-            android:id="@+id/downloadedMapList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
 
     <LinearLayout android:orientation="vertical"
                   android:id="@+id/noDownloadsHelpView"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
-        <TextView
-                android:layout_margin="20dp"
-                android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Please download a mapsforge map for visual maps in the app"/>
+        <androidx.appcompat.widget.Toolbar
+                android:background="@drawable/underline_blue"
+                android:theme="@style/MyActionBar"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/action_bar_height">
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
 
-        <WebView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/mapsForgeDownloadWebView"></WebView>
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="10dp"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/downloadedMapList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        
+        <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/helpView"
+                android:layout_width="wrap_content" android:layout_height="match_parent">
+
+
+            <TextView
+                    android:id="@+id/helpText"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20dp"
+                    tools:text="this is help text explaining"/>
+
+            <TextView
+                    android:id="@+id/helpLink"
+                    android:layout_width="wrap_content" android:layout_marginRight="20dp" android:layout_height="wrap_content" android:layout_marginLeft="20dp"
+                    tools:text="http:/bla.asdas/com/asd.hrml" android:textColor="@color/android_blue"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/downloadHelpArea"
+                android:gravity="center"
+                android:layout_width="match_parent" android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/download_help_icon"
+                    android:layout_width="55dp"
+                       android:layout_height="55dp"
+                       android:src="@drawable/restore_cloud"
+            />
+
+            <TextView
+                    android:lines="3"
+                    android:textSize="22sp"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/download_help_icon"
+                    android:text="@string/click_the_download_icon_to_select_a_region_to_download"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/downloadProgressArea"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ProgressBar
+                    android:layout_centerInParent="true"
+                    android:id="@+id/mapDownloadProgressSpinner"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+
+
+            <TextView
+                    android:id="@+id/downloadProgressMessage"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/mapDownloadProgressSpinner"
+                      android:text="@string/your_map_is_downloading"
+            />
+        </RelativeLayout>
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

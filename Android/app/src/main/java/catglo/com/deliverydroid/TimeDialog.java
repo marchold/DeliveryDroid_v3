@@ -1,6 +1,6 @@
 package catglo.com.deliverydroid;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -13,7 +13,6 @@ import android.widget.TimePicker;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Hours;
-import org.joda.time.Minutes;
 import org.joda.time.MutableDateTime;
 
 public class TimeDialog extends DialogFragment {
@@ -46,7 +45,7 @@ public class TimeDialog extends DialogFragment {
             timePicker.setCurrentMinute(initialTime.minuteOfHour().get());
         }
         final TextView timeLabel = (TextView)dialogView.findViewById(R.id.timeLabel);
-        timeLabel.setText(Tools.getFormattedTimeDay(initialTime.toGregorianCalendar()));
+        timeLabel.setText(Utils.getFormattedTimeDay(initialTime.toGregorianCalendar()));
 
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
@@ -73,7 +72,7 @@ public class TimeDialog extends DialogFragment {
 
                 newTime.add(Hours.hours(24*dayOffset));
 
-                timeLabel.setText(Tools.getFormattedTimeDay(newTime.toGregorianCalendar()));
+                timeLabel.setText(Utils.getFormattedTimeDay(newTime.toGregorianCalendar()));
             }
         });
 

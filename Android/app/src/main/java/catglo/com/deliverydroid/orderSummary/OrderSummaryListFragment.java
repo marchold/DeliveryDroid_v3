@@ -1,5 +1,5 @@
 package catglo.com.deliverydroid.orderSummary;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,9 +27,9 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import catglo.com.deliveryDatabase.*;
+import catglo.com.deliverydroid.ListAddressHistoryActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
-import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
 
@@ -57,7 +57,7 @@ public class OrderSummaryListFragment extends ListFragment  {
     	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         prefEditor = sharedPreferences.edit();
         
-        gestureListener = ((OrderSummaryActivity)getActivity()).gestureTouchListener;
+        gestureListener = ((OrderSummaryActivity) getActivity()).getGestureTouchListener();
 		
        
 	}
@@ -122,12 +122,17 @@ public class OrderSummaryListFragment extends ListFragment  {
 					case 3: return inflater.inflate(R.layout.order_summary_list_item4, null);
 					case 4: {
 						View v = inflater.inflate(R.layout.order_summary_list_item5, null);
-						View v2 = inflater.inflate(R.layout.order_summary_list_item5, null);
-						LinearLayout ll = new LinearLayout(getActivity().getApplicationContext());
-						ll.setOrientation(LinearLayout.VERTICAL);
-						ll.addView(v);
-						ll.addView(v2);
-						return ll;
+						try {
+							View v2 = inflater.inflate(R.layout.order_summary_list_item5, null);
+							LinearLayout ll = new LinearLayout(getActivity().getApplicationContext());
+							ll.setOrientation(LinearLayout.VERTICAL);
+							ll.addView(v);
+							ll.addView(v2);
+							return ll;
+						} catch (NullPointerException e){
+							//patch for https://play.google.com/apps/publish/?account=5415545862965625496#AndroidMetricsErrorsPlace:p=com.catglo.deliverydroid&appid=4974298585574800656&appVersion=BETA&clusterName=apps/com.catglo.deliverydroid/clusters/15228fdd&detailsAppVersion=BETA&detailsSpan=7
+							return v;
+						}
 					}
 				}
 			}});
@@ -154,7 +159,7 @@ public class OrderSummaryListFragment extends ListFragment  {
 			
 			final HashMap<String, String> map = new HashMap<String, String>();
 			map.put("number", order.number);
-			map.put("cost", "" + Tools.getFormattedCurrency(order.cost));
+			map.put("cost", "" + Utils.getFormattedCurrency(order.cost));
 			
 			Float payed=0f;
 			Float paid1=0f;
@@ -171,9 +176,9 @@ public class OrderSummaryListFragment extends ListFragment  {
 				map.put("tip",   "");
 				
 			} else {
-				map.put("payed", "" + Tools.getFormattedCurrency(payed));
-				map.put("payed1", "" + Tools.getFormattedCurrency(paid1));
-				map.put("tip", Tools.getFormattedCurrency(payed - order.cost));
+				map.put("payed", "" + Utils.getFormattedCurrency(payed));
+				map.put("payed1", "" + Utils.getFormattedCurrency(paid1));
+				map.put("tip", Utils.getFormattedCurrency(payed - order.cost));
 			}
 			
 			map.put("notes", order.notes);
@@ -234,23 +239,57 @@ public class OrderSummaryListFragment extends ListFragment  {
 				layout.setOnTouchListener(gestureListener);
 				layout.setOnClickListener(new OnClickListener(){public void onClick(View v) {
 					final int orderIdForDialog = Integer.parseInt(map.get("id"));
-					AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-					ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item);
-					adapter.add(getString(R.string.EDITORDER));
-					adapter.add(getString(R.string.Delete));
-					alert.setAdapter(adapter, new DialogInterface.OnClickListener(){@SuppressWarnings("deprecation")
-					public void onClick(DialogInterface dialog, int which) {
-						if (which==0){
-							final Intent myIntent = new Intent(getActivity().getApplicationContext(), SummaryActivity.class);
-							myIntent.putExtra("DB Key", orderIdForDialog);
-							startActivity(myIntent);
-						}else {
-							OrderSummaryActivity parent = (OrderSummaryActivity)getActivity();
-							parent.recordToDelete = orderIdForDialog;
-							parent.confirmDeleteRecordDialog();
+					AlertDialog.Builder popupBuilder = new AlertDialog.Builder(getActivity());
+					popupBuilder.setIcon(R.drawable.icon);
+					int listId;
+					listId = R.array.ordersummary_order_list_options;
+					popupBuilder.setItems(listId, new DialogInterface.OnClickListener(){public void onClick(DialogInterface dialog, int which) {
+						switch (which){
+							case 0: //View/Edit
+							{
+								final Intent myIntent = new Intent(getActivity().getApplicationContext(), SummaryActivity.class);
+								myIntent.putExtra("DB Key", orderIdForDialog);
+								startActivity(myIntent);
+							}
+							break;
+							case 1: //Delete
+								OrderSummaryActivity parent = (OrderSummaryActivity)getActivity();
+								parent.setRecordToDelete(orderIdForDialog);
+								parent.confirmDeleteRecordDialog();
+								break;
 						}
 					}});
-					alert.create().show();
+					popupBuilder.create().show();
+
+		/*
+
+					new AlertDialog.Builder(getActivity())
+                            .setItems(new CharSequence[]{getString(R.string.EDITORDER), getString(R.string.Delete)}, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+
+                            .setPositiveButton(R.string.EDITORDER, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    final Intent myIntent = new Intent(getActivity().getApplicationContext(), SummaryActivity.class);
+                                    myIntent.putExtra("DB Key", orderIdForDialog);
+                                    startActivity(myIntent);
+                                }
+                            })
+                            .setNegativeButton(R.string.Delete, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    OrderSummaryActivity parent = (OrderSummaryActivity)getActivity();
+                                    parent.recordToDelete = orderIdForDialog;
+                                    parent.confirmDeleteRecordDialog();
+                                }
+                            })
+                            .show();*/
+
+
 				}});
 				
 				Float paidSplit = Float.parseFloat(map.get("paidSplit"));
@@ -326,7 +365,7 @@ public class OrderSummaryListFragment extends ListFragment  {
                         if (paidSplit > 0) {
                             switch (currentListView) {
                                 case 0:
-                                    payed.setText(map.get("payed1") + "+" + Tools.getFormattedCurrency(paidSplit));
+                                    payed.setText(map.get("payed1") + "+" + Utils.getFormattedCurrency(paidSplit));
                                     break;
                                 default:
                                 case 1:
@@ -381,10 +420,10 @@ public class OrderSummaryListFragment extends ListFragment  {
 			}
 		});
 		final OrderSummaryActivity activity = (OrderSummaryActivity)getActivity();
-        activity.customizeListView.setVisibility(View.VISIBLE);
-		activity.customizeListView.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
+        activity.getCustomizeListView().setVisibility(View.VISIBLE);
+		activity.getCustomizeListView().setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
 			listTypePicker.performClick();
-			activity.drawerLayout.closeDrawers();
+			activity.getDrawerLayout().closeDrawers();
 		}});
 		//TipTotalData tip = dataBase.getTipTotal(getActivity().getApplicationContext(),DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0");
 	}

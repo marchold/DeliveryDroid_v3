@@ -15,7 +15,7 @@ import android.widget.TextView;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.widgets.AddressAutocomplete;
 
 
@@ -74,13 +74,13 @@ public class SummaryEditFragment extends SummaryBaseFragment {
 		if (order.paymentType == Order.NOT_PAID) {
 			order.payed = -1;
 		} else {
-			order.payed   = Tools.parseCurrency(payment.getEditableText().toString());
+			order.payed   = Utils.parseCurrency(payment.getEditableText().toString());
 		}
 	
 		order.phoneNumber = phoneNumber.getText().toString();
         ((EditText)phoneNumber).addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
-		order.payed2  = Tools.parseCurrency(paymentB.getEditableText().toString());
+		order.payed2  = Utils.parseCurrency(paymentB.getEditableText().toString());
 		// Database stores a -1 in to values for un-payed orders, but this form does not.
 		if (order.payed2 == 0) {
 			if (order.paymentType == Order.NOT_PAID){
@@ -89,7 +89,7 @@ public class SummaryEditFragment extends SummaryBaseFragment {
 		}
 		
 		try {
-			order.cost = Tools.parseCurrency(price.getEditableText().toString());
+			order.cost = Utils.parseCurrency(price.getEditableText().toString());
 		} catch (NumberFormatException e){};
 		
 		order.outOfTown1 = outOfTown1.isChecked();
@@ -127,14 +127,14 @@ public class SummaryEditFragment extends SummaryBaseFragment {
 		//Delivery Time
         deliveryTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
         	DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-        	activity.tools.showTimeSliderDialog(deliveryTime,order.payedTime,null, false);
+        	activity.getTools().showTimeSliderDialog(deliveryTime,order.payedTime,null, false);
 		    return true;
 		}});
         
         //Order Time
 		orderTime.setOnTouchListener(new OnTouchListener(){ public boolean onTouch(View arg0, MotionEvent arg1) {
 			DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-			activity.tools.showTimeSliderDialog(orderTime,order.time,null, false);
+			activity.getTools().showTimeSliderDialog(orderTime,order.time,null, false);
 		    return true;
 		}});
 	
@@ -145,23 +145,23 @@ public class SummaryEditFragment extends SummaryBaseFragment {
 		
 		//Alternate Mileage Pay
 		DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-		activity.tools.initOptionalCheckBox(outOfTown1,
+		activity.getTools().initOptionalCheckBox(outOfTown1,
                 "per_out_of_town_delivery",//amount
                 "per_out_of_town_delivery_label1",//label
                 order.outOfTown1); //default if label is empty
 		
-		activity.tools.initOptionalCheckBox(outOfTown2,
+		activity.getTools().initOptionalCheckBox(outOfTown2,
 				"per_out_of_town_delivery2",//amount
 				"per_out_of_town_delivery_label2",//label
 				order.outOfTown2); //default if label is empty	
 					
-		activity.tools.initOptionalCheckBox(outOfTown3,
+		activity.getTools().initOptionalCheckBox(outOfTown3,
 				"per_out_of_town_delivery3",//amount
 				"per_out_of_town_delivery_label3",//label
 				order.outOfTown3); //default if label is empty	
 					
 					
-		activity.tools.initOptionalCheckBox(outOfTown4,
+		activity.getTools().initOptionalCheckBox(outOfTown4,
 				"per_out_of_town_delivery4",//amount
 				"per_out_of_town_delivery_label4",//label
 				order.outOfTown4); //default if label is empty

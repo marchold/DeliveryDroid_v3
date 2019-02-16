@@ -17,13 +17,11 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import catglo.com.deliveryDatabase.*;
 import catglo.com.deliveryDatabase.TipTotalData.PayRatePieriod;
 import catglo.com.deliverydroid.BuildConfig;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.backup.TableValues;
 
 
@@ -35,6 +33,7 @@ import java.io.File;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -97,7 +96,7 @@ public class DataBase extends Object  {
 
     public static final String			DATABASE_NAME		= BuildConfig.DATABASE_NAME;
     private static final String			DATABASE_TABLE		= "orders";
-    private static final int			DATABASE_VERSION	= 11;
+    private static final int			DATABASE_VERSION	= 12;
 
 
     public static int					TodaysShiftCount	= -1;
@@ -106,31 +105,6 @@ public class DataBase extends Object  {
     void dataDidJustChange(){
         Intent i = new Intent("com.catglo.deliverydroid.DBCHANGED");
         context.sendBroadcast(i);
-     /*
-        Log.i("API","called dataDidJustChange");
-        new WebServiceGetBackupTimestamp(context,new BackupTimeListener(){public void onRecievedBackupTime(DateTime lastBackupTime) {
-        	synchronized(DataBase.class) {
-        		boolean needsClosing=false;
-	        	if (db == null || !db.isOpen()){
-	        		open();
-	        		
-	        	}
-	        	
-	        	Log.i("API","got backup time "+lastBackupTime);
-	        	
-	        	DateTime curentDataTime = new DateTime(lastModified().getTimeInMillis());
-	        	ArrayList<TableValues> tableFields = getBackupStrings(lastBackupTime.getMillis());
-	        	
-	        	Log.i("API","got "+tableFields.size()+" fields from the database ");
-	        	
-	        	new WebServicePostTableValues(context,tableFields).lookup();
-	        	
-	        	if (needsClosing){
-	        		close();
-	        	}
-	        	
-        	}
-		}}).lookup(); */
     }
 
     static boolean justCreated=false;
@@ -186,6 +160,8 @@ public class DataBase extends Object  {
 
     static File							path;
 
+
+
     public void init(File path){
 
         synchronized (DataBase.class)
@@ -237,8 +213,8 @@ public class DataBase extends Object  {
                 + PAY_RATE + "   FLOAT,"
                 + PAY_RATE_ON_RUN+" FLOAT,"
                 +"lastModificationTime              TIMESTAMP, "
-                + TIME_START + " INTEGER, "
-                + TIME_END + "   INTEGER);");
+                + TIME_START + " VARCHAR, "    //A quirk is that although these are defined as integer they are stored as strings
+                + TIME_END + "   VARCHAR);");  //A quirk is that although these are defined as integer they are stored as strings
 
         database.execSQL("CREATE TABLE IF NOT EXISTS dropOffs (ID integer primary key autoincrement,"
                 + "dropOffAddress	VARCHAR, "
@@ -283,6 +259,15 @@ public class DataBase extends Object  {
                 +"lastModificationTime              TIMESTAMP, "
                 + "shiftId          INT);");
 
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS geocode (ID integer primary key autoincrement,"
+                + "lastModificationTime      TIMESTAMP, "
+                + "address		             VARCHAR, "
+                + "SEARCHKEY                 VARCHAR, "
+                + "GPSLat                    INT, "
+                + "GPSLng                    INT);");
+
+
         database.execSQL(createTimestampTriggerSql("orders","ID"));
         database.execSQL(createTimestampTriggerSql("shifts","ID"));
         database.execSQL(createTimestampTriggerSql("dropOffs","ID"));
@@ -309,8 +294,8 @@ public class DataBase extends Object  {
 
                 init.put(ODO_START,c.getInt(c.getColumnIndex(ODO_START)));
                 init.put(ODO_END  ,c.getInt(c.getColumnIndex(ODO_END)));
-                init.put(TIME_END ,c.getInt(c.getColumnIndex(TIME_END)));
-                init.put(TIME_START,c.getInt(c.getColumnIndex(TIME_START)));
+                init.put(TIME_END ,c.getString(c.getColumnIndex(TIME_END)));
+                init.put(TIME_START,c.getString(c.getColumnIndex(TIME_START)));
                 if (c.getColumnIndex(PAY_RATE)!=-1) init.put(PAY_RATE ,c.getFloat(c.getColumnIndex(PAY_RATE)));
                 if (c.getColumnIndex(PAY_RATE_ON_RUN)!=-1) init.put(PAY_RATE_ON_RUN, c.getFloat(c.getColumnIndex(PAY_RATE_ON_RUN)));
 
@@ -501,7 +486,14 @@ public class DataBase extends Object  {
 
         }
         //TODO: these are for oldVersion < 11
-
+        if (oldVersion<12){
+            database.execSQL("CREATE TABLE IF NOT EXISTS geocode (ID integer primary key autoincrement,"
+                    + "lastModificationTime      TIMESTAMP, "
+                    + "address		             VARCHAR, "
+                    + "SEARCHKEY                 VARCHAR, "
+                    + "GPSLat                    INT, "
+                    + "GPSLng                    INT);");
+        }
 
         database.setVersion(newVersion);
     }}
@@ -961,8 +953,8 @@ public class DataBase extends Object  {
         initialValues.put("validatedAddress", order.isValidated);
         if (order.geoPoint!=null){
             Log.i("geo","Writing gps coords for "+order.address);
-            initialValues.put("GPSLng", (float)order.geoPoint.lng);
-            initialValues.put("GPSLat", (float)order.geoPoint.lat);
+            initialValues.put("GPSLng", (float) order.geoPoint.getLng());
+            initialValues.put("GPSLat", (float) order.geoPoint.getLat());
         } else {
             Log.i("geo","Not saving any gps coords for "+order.address);
         }
@@ -1131,7 +1123,7 @@ public class DataBase extends Object  {
             c = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE (address LIKE "+searchFor+" OR Notes LIKE "+searchFor+") AND `AptNumber` LIKE "+aptEscaped+" ORDER BY Time DESC LIMIT 80", null);
         }
         else {
-            c = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE address LIKE "+searchFor+" OR Notes LIKE"+searchFor+" ORDER BY Time DESC LIMIT 80", null);
+            c = db.rawQuery("SELECT * FROM "+DATABASE_TABLE+" WHERE address LIKE "+searchFor+" OR Notes LIKE "+searchFor+" OR PhoneNumber LIKE "+searchFor+" ORDER BY Time DESC LIMIT 80", null);
         }
 
         ArrayList<Order> orders = new ArrayList<Order>();
@@ -1271,32 +1263,38 @@ public class DataBase extends Object  {
         Shift shift = new Shift();
         if (c!=null){
             if (c.moveToFirst()) {
+
                 String t1 = c.getString(c.getColumnIndex(TIME_START));
                 String t2 = c.getString(c.getColumnIndex(TIME_END));
 
+                if (t1.startsWith("1969")) t1 = GetDateString(MutableDateTime.now());
+                if (t2.startsWith("1969")) t2 = GetDateString(MutableDateTime.now());
+
                 Log.i("CURSOR","times ="+t1+",  "+t2);
                 try {
-                    shift.startTime.setMillis(Order.GetTimeFromString(t1));
+                    shift.getStartTime().setMillis(Order.GetTimeFromString(t1));
                 } catch (IllegalStateException e){
                     e.printStackTrace();
                 }
                 try {
-                    shift.endTime.setMillis(Order.GetTimeFromString(t2));
+                    shift.getEndTime().setMillis(Order.GetTimeFromString(t2));
                 } catch (IllegalStateException e){
                     e.printStackTrace();
                 }
-                shift.odometerAtShiftStart  = c.getInt(c.getColumnIndex(ODO_START));
-                shift.odometerAtShiftEnd  = c.getInt(c.getColumnIndex(ODO_END));
-                //shift.payRate = c.getFloat(c.getColumnIndex(PAY_RATE));
-                //shift.payRateOnRun = c.getFloat(c.getColumnIndex(PAY_RATE_ON_RUN));
-                shift.primaryKey = c.getInt(c.getColumnIndex("ID"));
+                shift.setOdometerAtShiftStart(c.getInt(c.getColumnIndex(ODO_START)));
+                shift.setOdometerAtShiftEnd(c.getInt(c.getColumnIndex(ODO_END)));
+                shift.setPrimaryKey(c.getInt(c.getColumnIndex("ID")));
 
-                if (shift.endTime.getMillis() < shift.startTime.getMillis()){
-                    shift.endTime=shift.startTime;
+                if (shift.getEndTime().getMillis() < shift.getStartTime().getMillis()){
+                    shift.setEndTime(shift.getStartTime());
                 }
+            } else {
+                setNextShift();
+                shift = getShift(TodaysShiftCount);
+                saveShift(shift);
             }
-            c.close();
 
+            c.close();
         }
         return shift;
     }}
@@ -1305,14 +1303,13 @@ public class DataBase extends Object  {
         BackupManager.dataChanged(context.getPackageName());
 
         final ContentValues args = new ContentValues();
-        args.put(TIME_START, GetDateString(shift.startTime));
-        args.put(TIME_END  , GetDateString(shift.endTime));
-        args.put(ODO_START , shift.odometerAtShiftStart);
-        args.put(ODO_END   , shift.odometerAtShiftEnd);
-        args.put(ODO_START  , shift.odometerAtShiftStart);
+        args.put(TIME_START, GetDateString(shift.getStartTime()));
+        args.put(TIME_END  , GetDateString(shift.getEndTime()));
+        args.put(ODO_START , shift.getOdometerAtShiftStart());
+        args.put(ODO_END   , shift.getOdometerAtShiftEnd());
         //	args.put(PAY_RATE, shift.payRate);
 //		args.put(PAY_RATE_ON_RUN, shift.payRateOnRun);
-        db.update("shifts", args, shift.primaryKey + "= ID", null);
+        db.update("shifts", args, shift.getPrimaryKey() + "= ID", null);
 
         //When we save a shift, if there is no pay rate, create a pay rate record with the current shift and the pay rate from the settings.
 
@@ -1343,6 +1340,48 @@ public class DataBase extends Object  {
         c.close();
         return retVal;
     }}
+
+    public ArrayList<AddressInfo> getAddressInfoForString(String seatchKey) {
+        ArrayList<AddressInfo> result = new ArrayList<AddressInfo>();
+        //SQL to return a list of AddressInfo objects from geocode table for search key
+        try {
+            String query = "SELECT * FROM geocode WHERE SEARCHKEY = \""+seatchKey+"\" LIMIT 0,100";
+            final Cursor c = db.rawQuery(query, null);
+            if (c != null && c.moveToFirst()) {
+
+                do {
+                   // String address = c.getColumnName()
+                   // AddressInfo addressInfo = new AddressInfo();
+
+                } while (c.moveToNext());
+            }
+            c.close();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public void saveAddressInfoForString(ArrayList<AddressInfo> list, String searchString) {
+
+        for (AddressInfo address : list){
+             //Write/Update to the geocode table
+            //  SEARCHKEY = searchString
+            //  address   = address.address
+            //  GPSLat    = address latitude  truncated to 5 decimal points
+            //  GPSLng    = address longitude truncated to 5 decimal points
+            final ContentValues initialValues = new ContentValues();
+            initialValues.put("SEARCHKEY", searchString);
+            initialValues.put("address",   address.getAddress());
+            if (address.getLocation()!=null && address.getLocation().getLat()!=0 && address.getLocation().getLng()!=0) {
+                initialValues.put("GPSLat", (int) (address.getLocation().getLat() * 1e5));
+                initialValues.put("GPSLng", (int) (address.getLocation().getLng() * 1e5));
+                db.insertWithOnConflict("geocode", null, initialValues, SQLiteDatabase.CONFLICT_REPLACE);
+            }else {
+                db.insertWithOnConflict("geocode", null, initialValues, SQLiteDatabase.CONFLICT_FAIL);
+            }
+        }
+    }
 
     public class ShiftCounts{
         public int prev;
@@ -1389,8 +1428,10 @@ public class DataBase extends Object  {
         return ret;
     }}
 
-    public TipTotalData getTipTotal(final Context context, String where,String shiftWhere){synchronized (DataBase.class){
+    public TipTotalData getTipTotal(final Context context, String where,String hoursWorkedTableWhere, String shiftTableWhere){synchronized (DataBase.class){
         TipTotalData ret=new TipTotalData();
+
+        if (shiftTableWhere==null) shiftTableWhere = hoursWorkedTableWhere;
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean mileagePayForUndeliverable = prefs.getBoolean("mileagePayForUndeliverable",false);
@@ -1407,7 +1448,7 @@ public class DataBase extends Object  {
 
         Cursor c;
         String queryString = "SELECT COUNT(*),strftime('%w',`"+ DataBase.Time + "`) AS `weekday` FROM " + DATABASE_TABLE + " WHERE " + where;
-        if (db==null || queryString==null) return ret;
+        if (db==null) return ret;
 
         c = db.rawQuery(queryString, null);
 
@@ -1686,16 +1727,33 @@ public class DataBase extends Object  {
             }
             c.close();
 
+            //this hapend at fist startup
+            if (shiftTableWhere!=null) {
+                //TODO: We should also include shifts with no orders. This is possible.
+                c = db.rawQuery("SELECT ID FROM shifts " + shiftTableWhere, null);
+                if (c != null) {
+                    if (c.moveToFirst()) {
+                        do {
+                            Integer s = c.getInt(0);
+                            if (!list.contains(s)) {
+                                list.add(s);
+                            }
+                        } while (c.moveToNext());
+                    }
+                }
+                c.close();
+            }
+
+
             long hoursInMills = 0;
             for (int i = 0; i < list.size(); i++){
                 c = db.rawQuery("SELECT "+TIME_START+","+TIME_END+" FROM shifts WHERE id = "+list.get(i), null);
                 if (c.moveToFirst()) {
                     do {
-
-                        long timeStart = c.getLong(c.getColumnIndex(TIME_START));
+                        long timeStart = Order.GetTimeFromString(c.getString(c.getColumnIndex(TIME_START)));
                         long timeEnd;
                         try {
-                            timeEnd = c.getLong(c.getColumnIndex(TIME_END));
+                            timeEnd = Order.GetTimeFromString(c.getString(c.getColumnIndex(TIME_END)));
                         } catch (IllegalStateException e){
                             timeEnd = timeStart;
                         }
@@ -1744,7 +1802,7 @@ public class DataBase extends Object  {
         }
 
         Log.i("CURSOR","QUERYING HOURS CALCULATION");
-        if (shiftWhere==null){
+        if (hoursWorkedTableWhere==null){
             c = db.rawQuery(""
                     +"SELECT *,strftime('%w',`shifts`.`TimeStart`) AS `weekday` "
                     +"FROM hours_worked  "
@@ -1757,14 +1815,14 @@ public class DataBase extends Object  {
                     +"SELECT *,strftime('%w',`shifts`.`TimeStart`) AS `weekday` "
                     +"FROM hours_worked "
                     +"INNER JOIN shifts ON hours_worked.shiftId=shifts.ID "
-                    +shiftWhere+" "
+                    +hoursWorkedTableWhere+" "
                     +"ORDER BY hours_worked.start DESC "
                     , null);
         }
         //DateTime start = null;
         //float rate=0;
         ret.hourlyPay = 0;
-        ret.hours = 0;
+       // ret.hours = 0;
         DateTime wageTransitionStart;
         DateTime shiftStart;
         DateTime shiftEnd;
@@ -1821,7 +1879,7 @@ public class DataBase extends Object  {
             }
 
             ret.hourlyPay =0;
-            ret.hours=0;
+           // ret.hours=0;
             for (WageZone wz : filteredZones){
                 if (wz.wageTransitionStart.isBefore(shiftStart)){
                     wz.wageTransitionStart = wz.shiftStart;
@@ -1836,7 +1894,7 @@ public class DataBase extends Object  {
                 float earnings = (float)wz.rate*min;
                 ret.hourlyPay += Math.abs(earnings);
                 float hours = Math.abs(min/60.0f);
-                ret.hours += hours;
+              //  ret.hours += hours;
 
                 String payRateStringKey = ""+(int)(wz.rate*10000);
                 PayRatePieriod payRatePeriod = ret.payRatePieriods.get(payRateStringKey);
@@ -1856,14 +1914,14 @@ public class DataBase extends Object  {
                 MutableDateTime firstOrder = firstOrderTimeForShift(shiftId);
                 MutableDateTime lastOrder = lastOrderTimeForShift(shiftId);
                 Shift theShift = getShift(shiftId.intValue());
-                Minutes shiftMinutesLong = Minutes.minutesBetween(theShift.startTime, theShift.endTime);
+                Minutes shiftMinutesLong = Minutes.minutesBetween(theShift.getStartTime(), theShift.getEndTime());
                 if (shiftMinutesLong.getMinutes()==0){
-                    theShift.startTime = firstOrder;
-                    theShift.endTime = lastOrder;
+                    theShift.setStartTime(firstOrder);
+                    theShift.setEndTime(lastOrder);
                     Log.i("CURSOR","Updating shift times "+firstOrder);
                     saveShift(theShift);
                 }
-                String query = "SELECT COUNT(*) FROM `hours_worked` WHERE `shiftID`="+theShift.primaryKey;
+                String query = "SELECT COUNT(*) FROM `hours_worked` WHERE `shiftID`="+ theShift.getPrimaryKey();
                 c = db.rawQuery(query, null);
                 int count=-1;
                 if (c != null){
@@ -1874,7 +1932,7 @@ public class DataBase extends Object  {
                 }
                 if (count==0){
                     Log.i("CURSOR","Creating summy wage");
-                    wage.startTime = theShift.startTime;
+                    wage.startTime = theShift.getStartTime();
                     try {
                         wage.wage=Float.parseFloat(prefs.getString("hourly_rate", "0"));
                     } catch (NumberFormatException e){
@@ -1882,11 +1940,11 @@ public class DataBase extends Object  {
                     }
                     saveWage(wage, theShift);
                 }
-                Minutes m = Minutes.minutesBetween(theShift.startTime, theShift.endTime);
+                Minutes m = Minutes.minutesBetween(theShift.getStartTime(), theShift.getEndTime());
                 float earnings = wage.wage*((float)m.getMinutes());
                 ret.hourlyPay += Math.abs(earnings);
-                ret.hours += Math.abs(((float)m.getMinutes())/60.0f);
-                Log.i("CURSOR"," earnings ="+earnings+"    minutes="+m.getMinutes()+"    start="+theShift.startTime+"    end="+theShift.endTime);
+           //     ret.hours += Math.abs(((float)m.getMinutes())/60.0f);
+                Log.i("CURSOR"," earnings ="+earnings+"    minutes="+m.getMinutes()+"    start="+ theShift.getStartTime() +"    end="+ theShift.getEndTime());
 
             }
         }
@@ -2088,8 +2146,8 @@ public class DataBase extends Object  {
         if (order.geocodeFailed){
             args.put("validatedAddress", false);
         } else {
-            args.put("GPSLng", (float)order.geoPoint.lng);
-            args.put("GPSLat", (float)order.geoPoint.lat);
+            args.put("GPSLng", (float) order.geoPoint.getLng());
+            args.put("GPSLat", (float) order.geoPoint.getLat());
             args.put("validatedAddress", order.isValidated);
         }
 
@@ -2158,8 +2216,8 @@ public class DataBase extends Object  {
         args.put(PaymentType2, order.paymentType2);
         args.put(PayedSplit, order.payed2);
 
-        args.put("GPSLng", (float)order.geoPoint.lng);
-        args.put("GPSLat", (float)order.geoPoint.lat);
+        args.put("GPSLng", (float) order.geoPoint.getLng());
+        args.put("GPSLat", (float) order.geoPoint.getLat());
 
 
         args.put("validatedAddress", order.isValidated);
@@ -2319,8 +2377,8 @@ public class DataBase extends Object  {
 
         while (maxShiftFromShifts<maxShiftFromOrders){
             final ContentValues init = new ContentValues();
-            init.put(TIME_START, 0);
-            init.put(TIME_END,0);
+            init.put(TIME_START,  GetDateString(MutableDateTime.now()));
+            init.put(TIME_END, GetDateString(MutableDateTime.now()));
             TodaysShiftCount = (int) db.insertOrThrow("shifts", null, init);
             dataDidJustChange();
             maxShiftFromShifts=TodaysShiftCount;
@@ -2338,7 +2396,7 @@ public class DataBase extends Object  {
         // Set 0 time stamps for a new new shift record and create it to update our shift count
         ContentValues init = new ContentValues();
         init.put(TIME_START, GetDateString(DateTime.now()));
-        init.put(TIME_END,GetDateString(DateTime.now()));
+        init.put(TIME_END, GetDateString(DateTime.now()));
         TodaysShiftCount = (int) db.insertOrThrow("shifts", null, init);
 
         //Move all the open orders to the new shift
@@ -2368,7 +2426,6 @@ public class DataBase extends Object  {
             e.printStackTrace();
         }
         init.put("rate", rate);
-        db.insertOrThrow("hours_worked", null, init);
 
         dataDidJustChange();
     }}
@@ -2556,8 +2613,8 @@ public class DataBase extends Object  {
             int undeliverableCol = c.getColumnIndex("undeliverable");
 
 
-            DateFormat dateFormater = DateFormat.getDateInstance();
-            DateFormat timeFormatter = DateFormat.getTimeInstance();
+            DateFormat dateFormater = new SimpleDateFormat("yyyy-mm-dd");
+            DateFormat timeFormatter = new SimpleDateFormat("hh:mm");
 
             //String[] altPayAmount = new String[4];
             String[] altPayLabel  = new String[4];
@@ -2606,7 +2663,7 @@ public class DataBase extends Object  {
                 }
 
                 float  cost = c.getFloat(costCol);
-                String costString = Tools.getFormattedCurrency(cost);
+                String costString = Utils.getFormattedCurrency(cost);
 
                 float paymentSplit = c.getFloat(payment2Col);
                 float payed = c.getFloat(paymentCol);
@@ -2620,15 +2677,15 @@ public class DataBase extends Object  {
                 String tipString;
                 if (paymentSplit>0){
                     paymentAmountString =
-                            Tools.getFormattedCurrency(payed)
-                                    +" + "+ Tools.getFormattedCurrency(paymentSplit)
-                                    +" = "+ Tools.getFormattedCurrency(paymentSplit + payed);
+                            Utils.getFormattedCurrency(payed)
+                                    +" + "+ Utils.getFormattedCurrency(paymentSplit)
+                                    +" = "+ Utils.getFormattedCurrency(paymentSplit + payed);
 
                     Log.i("MARC","payment type = "+paymentType);
                     paymentTypeString = paymentTypeString(paymentType)
                             +" & "+   paymentTypeString(paymentTypeSplit);
 
-                    tipString = Tools.getFormattedCurrency(payed + paymentSplit - cost);
+                    tipString = Utils.getFormattedCurrency(payed + paymentSplit - cost);
 
                 } else {
                     if (isUndeliverable){
@@ -2641,8 +2698,8 @@ public class DataBase extends Object  {
                         tipString = "";
                         paymentTypeString   = context.getString(R.string.undelivered);
                     } else {
-                        tipString = Tools.getFormattedCurrency(payed - cost);
-                        paymentAmountString =  Tools.getFormattedCurrency(payed);
+                        tipString = Utils.getFormattedCurrency(payed - cost);
+                        paymentAmountString =  Utils.getFormattedCurrency(payed);
                         if (paymentType>=0) {
                             paymentTypeString = paymentTypeString(paymentType);
                         } else {
@@ -2661,7 +2718,7 @@ public class DataBase extends Object  {
                 }
                 if (extraPay>0){
                     sb.append(context.getResources().getString(R.string.Extra_Pay));
-                    sb.append(":"+ Tools.getFormattedCurrency(extraPay));
+                    sb.append(":"+ Utils.getFormattedCurrency(extraPay));
                     sb.append("  ");
                 }
 
@@ -2672,7 +2729,7 @@ public class DataBase extends Object  {
                 }
 
                 if (extraPay>0){
-                    sb.append("Extra Pay:"+ Tools.getFormattedCurrency(extraPay));
+                    sb.append("Extra Pay:"+ Utils.getFormattedCurrency(extraPay));
                 }
 
                 String otherString = sb.toString();
@@ -2771,34 +2828,34 @@ public class DataBase extends Object  {
         int successes=0;
         Cursor c;
         try {
-            c = db.rawQuery("SELECT MAX(Time) FROM "+DATABASE_TABLE +" WHERE Shift="+shift.primaryKey, null);
+            c = db.rawQuery("SELECT MAX(Time) FROM "+DATABASE_TABLE +" WHERE Shift="+ shift.getPrimaryKey(), null);
             if (c != null && c.moveToFirst()) {
                 lastTime = Order.GetTimeFromString(c.getString(0));
                 successes++;
             }
             c.close();
-            c = db.rawQuery("SELECT MIN(Time) FROM "+DATABASE_TABLE +" WHERE Shift="+shift.primaryKey, null);
+            c = db.rawQuery("SELECT MIN(Time) FROM "+DATABASE_TABLE +" WHERE Shift="+ shift.getPrimaryKey(), null);
             if (c != null && c.moveToFirst()) {
                 firstTime = Order.GetTimeFromString(c.getString(0));
                 successes++;
             }
             c.close();
             if (successes<2) { //Then its a new empty shift set the start time to now
-                shift.startTime.setMillis(System.currentTimeMillis());
-                shift.endTime.setMillis(System.currentTimeMillis());
-                shift.noEndTime=true;
+                shift.getStartTime().setMillis(System.currentTimeMillis());
+                shift.getEndTime().setMillis(System.currentTimeMillis());
+                shift.setNoEndTime(true);
             } else {
-                if (shift.startTime.getMillis() > firstTime || shift.startTime.getMillis()==0) {
-                    shift.startTime.setMillis(firstTime);
+                if (shift.getStartTime().getMillis() > firstTime || shift.getStartTime().getMillis()==0) {
+                    shift.getStartTime().setMillis(firstTime);
                 }
-                if (shift.endTime.getMillis() < lastTime){
-                    shift.endTime.setMillis(lastTime);
+                if (shift.getEndTime().getMillis() < lastTime){
+                    shift.getEndTime().setMillis(lastTime);
                 }
             }
         } catch (NullPointerException e){
             e.printStackTrace();
-            shift.endTime.setMillis(lastTime);
-            shift.startTime.setMillis(firstTime);
+            shift.getEndTime().setMillis(lastTime);
+            shift.getStartTime().setMillis(firstTime);
         }
     }}
 
@@ -2948,31 +3005,6 @@ public class DataBase extends Object  {
         return retArray;
     }}
 
-/*	public ArrayList<String> getPhoneNumbersFromNotes(String address,String aptNo) {synchronized (DataBase.class){
-		currentAptNo=aptNo;
-		ArrayList<String> retArray = new ArrayList<String>();
-		String retVal = "";
-		Pattern phoneNumber = Pattern.compile("([0-9]{0,4})\\){0,1}\\s{0,1}\\-{0,1}([0-9]{3,4})\\s{0,1}\\-\\s{0,1}([0-9]{4})");
-		//if (aptNo.length() < 1) return retVal;
-		try {
-			address = DatabaseUtils.sqlEscapeString(address);
-			String query = "SELECT "+Notes+",Time FROM " + DATABASE_TABLE + " WHERE "+Address+" LIKE "+address+" AND "+AptNumber+" LIKE '"+aptNo+"' ORDER BY Time DESC LIMIT 0,25";
-			final Cursor c = db.rawQuery(query, null);
-			if (c != null && c.moveToFirst()) {
-				do {
-					String note = c.getString(0);
-					if (note.length()>0){
-						//retVal += note +"\n";
-						
-					}
-				} while (c.moveToNext());
-			}
-			c.close();
-		} catch (NullPointerException e){
-			e.printStackTrace();
-		}
-		return retArray;
-	}}*/
 
     public void saveGpsNote(GpsNote note){synchronized (DataBase.class){
         BackupManager.dataChanged(context.getPackageName());
@@ -3072,7 +3104,7 @@ public class DataBase extends Object  {
                 do {
                     String wage = c.getString(0);
                     try {
-                        wage = catglo.com.deliverydroid.Tools.getFormattedCurrency(Tools.parseCurrency(wage));
+                        wage = Utils.getFormattedCurrency(Utils.parseCurrency(wage));
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -3090,7 +3122,7 @@ public class DataBase extends Object  {
         DecimalFormat df = new DecimalFormat("#.##");
         c.put("rate", df.format(wage));
         c.put("start", GetDateString(when));
-        c.put("shiftID",shift.primaryKey);
+        c.put("shiftID", shift.getPrimaryKey());
 
         return db.insert("hours_worked", null, c);
     }}
@@ -3101,7 +3133,7 @@ public class DataBase extends Object  {
         DecimalFormat df = new DecimalFormat("#.##");
         c.put("rate", df.format(wage.wage));
         c.put("start", GetDateString(wage.startTime));
-        c.put("shiftID",shift.primaryKey);
+        c.put("shiftID", shift.getPrimaryKey());
         c.put("ID",wage.id);
 
         db.insertWithOnConflict("hours_worked", null, c, SQLiteDatabase.CONFLICT_REPLACE);
@@ -3145,64 +3177,11 @@ public class DataBase extends Object  {
         return wage;
     }}
 
-    /*
-        public ArrayList<Wage> wageTransitionsForShift(Shift shift) {synchronized (DataBase.class){
-            ArrayList<Wage> wages = new ArrayList<Wage>();
-            Cursor c;
-
-            Shift lastShift = getShift(shift.primaryKey-1);
-            MutableDateTime timeOfFirstOrderThisShift = new MutableDateTime(firstOrderTimeForShift(shift.primaryKey));
-            MutableDateTime timeOfLastOrderLastShift = new MutableDateTime(lastOrderTimeForShift(shift.primaryKey-1));
-
-            MutableDateTime start;
-            if (lastShift.endTime.isAfter(timeOfLastOrderLastShift) && lastShift.endTime.isBefore(timeOfFirstOrderThisShift)){
-                start = lastShift.endTime;
-            } else {
-                start = timeOfLastOrderLastShift;
-            }
-
-
-            String query;
-            Log.i("CURSOR","TodaysShiftCount"+TodaysShiftCount+"<shift.primaryKey "+shift.primaryKey);
-
-            if (TodaysShiftCount>shift.primaryKey){
-
-                MutableDateTime firstOrderNextShift = new MutableDateTime(firstOrderTimeForShift(shift.primaryKey+1));
-                MutableDateTime lastOtderThisShift =  new MutableDateTime(lastOrderTimeForShift(shift.primaryKey));
-                MutableDateTime end;
-                if (shift.endTime.isAfter(lastOtderThisShift) && shift.endTime.isBefore(firstOrderNextShift)){
-                    end = shift.endTime;
-                } else {
-                    end = firstOrderNextShift;
-                }
-
-                query = "SELECT * FROM `hours_worked` WHERE `start` > '"+GetDateString(start)+"'  AND  `start` < '"+GetDateString(end)+"' ORDER BY `start` DESC ";
-            } else {
-                query = "SELECT * FROM `hours_worked` WHERE `start` > '"+GetDateString(start)+"'  ORDER BY `start` DESC ";
-            }
-            Log.i("CURSOR",query);
-            c = db.rawQuery(query, null);
-            if (c != null){
-                if (c.moveToFirst()){
-                    do {
-                        Wage wage = new Wage();
-                        wage.wage = Float.parseFloat(c.getString(c.getColumnIndex("rate")));
-                        wage.id = c.getLong(c.getColumnIndex("ID"));
-                        wage.startTime = new DateTime(Order.GetTimeFromString(c.getString(c.getColumnIndex("start"))));
-                        wages.add(wage);
-                    } while (c.moveToNext());
-                }
-                c.close();
-            }
-
-            return wages;
-        }}
-        */
     public ArrayList<Wage> wageTransitionsForShift(Shift shift) {synchronized (DataBase.class){
         ArrayList<Wage> wages = new ArrayList<Wage>();
         Cursor c;
 
-        String query = "SELECT * FROM `hours_worked` WHERE `shiftID`="+shift.primaryKey+" ORDER BY `start` DESC ";
+        String query = "SELECT * FROM `hours_worked` WHERE `shiftID`="+ shift.getPrimaryKey() +" ORDER BY `start` DESC ";
 
         c = db.rawQuery(query, null);
         if (c != null){
@@ -3224,14 +3203,14 @@ public class DataBase extends Object  {
 
 
     public boolean isTodaysShift(Shift shift) {synchronized (DataBase.class){
-        if (shift.primaryKey==TodaysShiftCount) return true;
+        if (shift.getPrimaryKey() ==TodaysShiftCount) return true;
         return false;
     }}
 
 
     public boolean isWageFirstInShift(Wage wage, Shift shift) {synchronized (DataBase.class){
         boolean retVal = false;
-        String query = "SELECT * FROM `hours_worked` WHERE `shiftID`="+shift.primaryKey+" ORDER BY `start` ASC LIMIT 1";
+        String query = "SELECT * FROM `hours_worked` WHERE `shiftID`="+ shift.getPrimaryKey() +" ORDER BY `start` ASC LIMIT 1";
         Cursor c = db.rawQuery(query, null);
         if (c != null){
             if (c.moveToFirst()){

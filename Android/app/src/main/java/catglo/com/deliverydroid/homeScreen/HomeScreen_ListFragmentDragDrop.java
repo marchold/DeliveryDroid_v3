@@ -1,9 +1,8 @@
 package catglo.com.deliverydroid.homeScreen;
-import android.app.AlertDialog;
-import android.app.Notification;
+
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -16,7 +15,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,34 +27,31 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.fragment.app.ListFragment;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
 import catglo.com.deliveryDatabase.Wage;
-import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
-import catglo.com.deliverydroid.ListAddressHistoryActivity;
-import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.*;
 import catglo.com.deliverydroid.bankDrop.BankTillDropActivity;
 import catglo.com.deliverydroid.data.Leg;
 import catglo.com.deliverydroid.data.Route;
 import catglo.com.deliverydroid.settings.SettingsActivity;
-import catglo.com.deliverydroid.shift.ShiftStartEndDayActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
 import catglo.com.deliverydroid.widgets.DragSortController;
 import catglo.com.deliverydroid.widgets.DragSortListView;
 import catglo.com.deliverydroid.widgets.DragSortListView.DragListener;
 import catglo.com.deliverydroid.widgets.DragSortListView.DropListener;
-
-import org.joda.time.DateTime;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -74,26 +69,26 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	protected TextView driverEarnings;
 	protected ProgressBar pleaseWaitForDriverEarnings;
 	protected ImageView errorIcon;
-	protected Button navToStore;
-	protected Button settings;
-	protected Button hourlyPayButton;
+	protected View navToStore;
+	protected View settings;
+	protected View hourlyPayButton;
 	protected TextView helpBubble;
 	protected ViewGroup optimizeClickable;
 	protected ImageView optimizeIcon;
 	protected boolean isSwitchWageButton=false;
 	protected TextView optimizeText;
 	protected ViewGroup roundTripTimeArea;
-	protected Button makeADropButton;
+	protected View makeADropButton;
 	
 	HomeScreen_Utils util = new HomeScreen_Util();
 	protected HomeScreen_Util.HomeScreenRoutingListener routeTimeEstimateListener;
 	protected HomeScreen_Util.HomeScreenRoutingListener routeOptimizationListener;
-    private Button menuGpsNotesButton;
-    private Button menuShiftButton;
-    private Button menuSearchButton;
-    private Button orderSummaryButton;
+    private View menuGpsNotesButton;
+    private View menuShiftButton;
+    private View menuSearchButton;
+    private View orderSummaryButton;
     private View helpIcon;
-	private Button downloadMapsButton;
+	private View downloadMapsButton;
 
 	public HomeScreen_ListFragmentDragDrop() {
 		super();
@@ -254,13 +249,13 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 
 	   	 if (showOrderCost) {
 	   		 costView.setVisibility(View.VISIBLE);
-	   		 costView.setText(Tools.getFormattedCurrency(order.cost));
+	   		 costView.setText(Utils.getFormattedCurrency(order.cost));
 	   	 }else{
 	   		 costView.setVisibility(View.GONE);
 	   	 }
 	   	 if (showLastTipAmount && order.tipTotalsForThisAddress.deliveries>0){
 	   		 lastTipThisAddress.setVisibility(View.VISIBLE);
-	   		 lastTipThisAddress.setText(Tools.getFormattedCurrency(order.tipTotalsForThisAddress.lastTip));
+	   		 lastTipThisAddress.setText(Utils.getFormattedCurrency(order.tipTotalsForThisAddress.lastTip));
 	   	 } else {
 	   		 lastTipThisAddress.setVisibility(View.GONE);
 	   	 }
@@ -299,11 +294,11 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	   	 }
 	   	 
 	   	 addressView.setText(order.address);
-	   	 timeView.setText(Tools.getFormattedTime(order.time));
+	   	 timeView.setText(Utils.getFormattedTime(order.time));
 	   	 if (Float.isNaN(order.tipTotalsForThisAddress.averageTip)) {
 	   		 tipView.setText("");
 	         } else {
-	   		 tipView.setText(Tools.getFormattedCurrency(order.tipTotalsForThisAddress.averageTip));
+	   		 tipView.setText(Utils.getFormattedCurrency(order.tipTotalsForThisAddress.averageTip));
 	   	 }
 	   	 
 	   	 
@@ -380,7 +375,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	            metrics = new DisplayMetrics();
 	            ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
 	            int height = (int)(metrics.heightPixels/metrics.density)-150;
-	            int rowsHeight = (int)(items.size()*80*metrics.density);
+	            int rowsHeight = (int)(items.size()*60);
 	            
 	            Log.i("rows","rowsheight="+rowsHeight+"   screenHeight="+height);
 	            
@@ -447,7 +442,27 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 
 		View view = inflater.inflate(R.layout.home_screen_drag_drop_list_fragment, null);
 		view.setOnTouchListener(gestureListener);
-        
+
+		View touchOverlay1 = view.findViewById(R.id.curvedScreenOverlay1);
+		View touchOverlay2 = view.findViewById(R.id.curvedScreenOverlay2);
+		if (new Settings(inflater.getContext()).useCurvedScreenTouchOverlay())
+		{
+			touchOverlay1.setVisibility(View.VISIBLE);
+			touchOverlay2.setVisibility(View.VISIBLE);
+			View.OnTouchListener eatTouches = new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					return true;
+				}
+			};
+			touchOverlay1.setOnTouchListener(eatTouches);
+			touchOverlay2.setOnTouchListener(eatTouches);
+		} else {
+			touchOverlay1.setVisibility(View.GONE);
+			touchOverlay2.setVisibility(View.GONE);
+		}
+
+
 		noListAltView = (ViewGroup)view.findViewById(R.id.noListAltView);
         //optimizeCheckbox = (CheckBox)view.findViewById(R.id.autoOptimizeCheckbox);
         //optimizeCheckbox.setOnTouchListener(gestureListener);
@@ -455,17 +470,17 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
         driverEarnings = (TextView)view.findViewById(R.id.driverEarnings);
         pleaseWaitForDriverEarnings = (ProgressBar)view.findViewById(R.id.progressBarRoundTrip);
         errorIcon = (ImageView)view.findViewById(R.id.errorIcon);
-        navToStore = (Button)view.findViewById(R.id.navToStore);
-        settings = (Button)view.findViewById(R.id.settings);
-        hourlyPayButton = (Button)view.findViewById(R.id.clockOutAndBackup);
-        callStore = (Button)view.findViewById(R.id.callstoreButton);
-        smsStore = (Button)view.findViewById(R.id.smsStoreButton);
+        navToStore = view.findViewById(R.id.navToStore);
+        settings = view.findViewById(R.id.settings);
+        hourlyPayButton = view.findViewById(R.id.clockOutAndBackup);
+        callStore = view.findViewById(R.id.callstoreButton);
+        smsStore = view.findViewById(R.id.smsStoreButton);
 
-        downloadMapsButton      = (Button)noListAltView.findViewById(R.id.downloadMapClickListener);
-        menuGpsNotesButton      = (Button)noListAltView.findViewById(R.id.menuGpsNotesClickListener);
-        menuShiftButton         = (Button)noListAltView.findViewById(R.id.menuShiftClickListener);
-        menuSearchButton        = (Button)noListAltView.findViewById(R.id.menuSearchClickListener);
-        orderSummaryButton      = (Button)noListAltView.findViewById(R.id.orderSummaryClickable);//Not sure what this one dies
+        downloadMapsButton      =  noListAltView.findViewById(R.id.downloadMapClickListener);
+        menuGpsNotesButton      =  noListAltView.findViewById(R.id.menuGpsNotesClickListener);
+        menuShiftButton         =  noListAltView.findViewById(R.id.menuShiftClickListener);
+        menuSearchButton        =  noListAltView.findViewById(R.id.menuSearchClickListener);
+        orderSummaryButton      =  noListAltView.findViewById(R.id.orderSummaryClickable);//Not sure what this one dies
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
@@ -478,7 +493,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
         optimizeText = (TextView)view.findViewById(R.id.optimizeRouteText);
         roundTripTimeArea = (ViewGroup)view.findViewById(R.id.roundTripTimeArea);
         
-        makeADropButton = (Button)view.findViewById(R.id.makeADropButton);
+        makeADropButton = view.findViewById(R.id.makeADropButton);
 
 		orderListView = (DragSortListView)view.findViewById(android.R.id.list);
 	    
@@ -534,8 +549,12 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		}
 		
 		
-	
-		dataBase.changeOrder(fromOrder.primaryKey, newDeliveryOrder);
+		try {
+			dataBase.changeOrder(fromOrder.primaryKey, newDeliveryOrder); //Null pointer here once
+		} catch (NullPointerException e){
+			//Patch for https://play.google.com/apps/publish/?account=5415545862965625496#AndroidMetricsErrorsPlace:p=com.catglo.deliverydroid&appid=4974298585574800656&appVersion=BETA&clusterName=apps/com.catglo.deliverydroid/clusters/8d4811ba&detailsAppVersion=BETA&detailsSpan=7
+			e.printStackTrace();
+		}
 		updateUI();
 	};
 
@@ -571,23 +590,24 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		
 		//If dualWage is true and the pay rate is = to the on road pay rate the hourlyPayButton. Hijack the button as a switch to in store rate.
   		Wage currentWage = dataBase.currentWage();
-  		float hourlyRateOnRoad = Tools.parseCurrency(sharedPreferences.getString("hourly_rate_on_road", "0"));
+  		float hourlyRateOnRoad = Utils.parseCurrency(sharedPreferences.getString("hourly_rate_on_road", "0"));
   		DecimalFormat df =  new DecimalFormat("#.##");
   		String onRoadWage = df.format(hourlyRateOnRoad);
   		String curWage = df.format(currentWage.wage);
-  		final float inStoreRate = Tools.parseCurrency(sharedPreferences.getString("hourly_rate", "0"));
+  		final float inStoreRate = Utils.parseCurrency(sharedPreferences.getString("hourly_rate", "0"));
 
-        if (sharedPreferences.getBoolean("dual_wage", false) && onRoadWage.equalsIgnoreCase(curWage)){
+  		//TODO: Bring back when we have good hourly pay for now just alwayse set the visibility to gone
+        hourlyPayButton.setVisibility(View.GONE);
+  		/*if (sharedPreferences.getBoolean("dual_wage", false) && onRoadWage.equalsIgnoreCase(curWage)){
 			isSwitchWageButton=true;
 			hourlyPayButton.setVisibility(View.VISIBLE);
-			hourlyPayButton.setText(getString(R.string.Set_Pay_Rate_To)+" "+ Tools.getFormattedCurrency(inStoreRate));
+		//TODO:	hourlyPayButton.setText(getString(R.string.Set_Pay_Rate_To)+" "+ Utils.getFormattedCurrency(inStoreRate));
 		} else {
 			if (sharedPreferences.getBoolean("pay_rate_button", false)){
 				hourlyPayButton.setVisibility(View.VISIBLE);
 			} else {
 				hourlyPayButton.setVisibility(View.GONE);
 			}
-			hourlyPayButton.setText(getString(R.string.Time_clock));
 		}
         hourlyPayButton.setOnClickListener(new View.OnClickListener(){public void onClick(View v) {
         	if (isSwitchWageButton){
@@ -599,7 +619,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 				startActivity(intent);
         	}
 		}});
-		
+		*/
 		
 		
 		if (orders!=null && orders.size()>0){
@@ -608,7 +628,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 				order.tipTotalsForThisAddress = dataBase.getTipTotal(getActivity().getApplicationContext(), 
 						" `"+DataBase.Address +"` LIKE "+DatabaseUtils.sqlEscapeString(order.address)
 						+" AND `"+DataBase.AptNumber+"` LIKE "+DatabaseUtils.sqlEscapeString(order.apartmentNumber)
-						+" AND Payed != -1",null);
+						+" AND Payed != -1",null,null);
 			}
 			noListAltView.setVisibility(View.GONE);
 			getListView().setVisibility(View.VISIBLE);
@@ -626,9 +646,9 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		Log.i("CURSOR","HomeScreen_ListFragmentDragDrop - updateUI");
 		
 		TipTotalData tip = dataBase.getTipTotal(getActivity(),DataBase.Shift+"="+dataBase.getCurShift()+" AND "+DataBase.Payed+" >= 0",
-				"WHERE shifts.ID="+DataBase.TodaysShiftCount);
+				"WHERE shifts.ID="+DataBase.TodaysShiftCount,null);
 		final float totalTipsMade = tip.payed-tip.cost;
-		driverEarnings.setText(Tools.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
+		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		
 		float dropAmount=0;
 		try {
@@ -662,12 +682,23 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 				RingtoneManager.getRingtone(getActivity().getApplicationContext(),RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)).play();
 			}
 			if (sharedPreferences.getBoolean("dropAlarmSystemNotification", false)){
-				Notification.Builder mBuilder =
-			        new Notification.Builder(getActivity())
+                String chanelId = (((DeliveryDroidApplication)getActivity().getApplication()).getNotificationChannelId());
+
+                NotificationCompat.Builder mBuilder =
+			        new NotificationCompat.Builder(getActivity())
 			        .setSmallIcon(R.drawable.icon)
-			        .setContentTitle("Make a drop")
-			        .setContentText("Cash on hand "+ Tools.getFormattedCurrency(cashOnHand));
+			        .setContentTitle(getString(R.string.make_a_drop))
+			        .setContentText(String.format(getString(R.string.cash_on_hand), Utils.getFormattedCurrency(cashOnHand)))
+                    .setChannelId(chanelId);
 				// Creates an explicit intent for an Activity in your app
+
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    CharSequence name = getString(R.string.app_name);// The user-visible name of the channel.
+                    NotificationChannel mChannel = new NotificationChannel(chanelId, name, NotificationManager.IMPORTANCE_HIGH);
+                    mNotificationManager.createNotificationChannel(mChannel);
+                }
+
 				Intent resultIntent = new Intent(getActivity(), HomeScreenActivity.class);
 	
 				// The stack builder object will contain an artificial back stack for the
@@ -764,8 +795,8 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 	}
 
 	boolean[] listChoices = new boolean[7];
-	private Button callStore;
-	private Button smsStore;
+	private View callStore;
+	private View smsStore;
 	protected void showListConfigOptions() {
 		
 		
@@ -835,7 +866,7 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
     		//final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q="+storeAddress));
 			//startActivity(i);	
         	DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
-        	activity.tools.navigateTo(storeAddress, activity);
+        	activity.getTools().navigateTo(storeAddress, activity);
         }});
         
         settings.setOnClickListener(new View.OnClickListener(){public void onClick(View v) {
@@ -849,7 +880,13 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 
         } else {
             callStore.setOnClickListener(new View.OnClickListener() {public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+phoneNumber)));
+            	Settings appSettings = new Settings(getContext());
+            	if (appSettings.omitTelFromPhoneNumbers()) {
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)));
+                }
+                else {
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                }
             }});
             smsStore.setOnClickListener(new View.OnClickListener() {public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("smsto:"+phoneNumber));

@@ -1,5 +1,27 @@
 <resources>
 
+    <declare-styleable name="MeterNumberPicker">
+        <attr name="mnp_min" format="integer" />
+        <attr name="mnp_max" format="integer" />
+        <attr name="mnp_value" format="integer" />
+        <attr name="mnp_textColor" format="color" />
+        <attr name="mnp_textSize" format="dimension" />
+        <attr name="mnp_typeface" format="string" />
+        <attr name="mnp_minWidth" format="dimension" />
+        <attr name="mnp_minHeight" format="dimension" />
+        <attr name="mnp_paddingHorizontal" format="dimension" />
+        <attr name="mnp_paddingVertical" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="MeterView">
+        <attr name="mv_numberOfFirst" format="integer" />
+        <attr name="mv_numberOfSecond" format="integer" />
+        <attr name="mv_firstColor" format="color" />
+        <attr name="mv_secondColor" format="color" />
+        <attr name="mv_pickerStyle" format="reference" />
+        <attr name="mv_enabled" format="boolean" />
+    </declare-styleable>
+
     <!-- The TimePicker style. -->
     <attr name="timePickerStyle" format="reference" />
     

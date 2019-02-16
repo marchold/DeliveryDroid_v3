@@ -2,7 +2,6 @@ package catglo.com.deliverydroid.widgets;
 
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -10,7 +9,8 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
 
-import catglo.com.api.GoogleAddressSuggester;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import catglo.com.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliveryDatabase.DataBase;
@@ -40,7 +40,7 @@ public class AddressAutocomplete extends AppCompatAutoCompleteTextView {
 				}
 			}
 		};
-        suggestor = new AddressSuggester(context,dataBase,new GoogleAddressSuggester.AddressListListener() {
+        suggestor = new AddressSuggester(context,dataBase,new GoogleAddressSuggester.AddressResultListener() {
             @Override
             public void commit(ArrayList<AddressInfo> addressList, String searchString) {
                 try {

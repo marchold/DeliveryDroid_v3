@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools">
+
+    <catglo.com.deliverydroid.shift.MeterView
+            android:id="@+id/meterView"
+            style="@style/MeterViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:id="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/meterView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/milesDriven"/>
+
+    <EditText
+            android:selectAllOnFocus="true"
+            android:inputType="number"
+            tools:text="643"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/meterView"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:id="@+id/milesDriven"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,7 +107,7 @@
 
     </RelativeLayout>
 
-    <ProgressBar
+    <View
             android:indeterminate="false"
             android:id="@+id/underline"
             android:layout_width="match_parent"
@@ -116,19 +116,18 @@
             android:background="@color/android_blue" />
 
 
-
     <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_below="@+id/underline"
-            android:layout_above="@+id/FooterBarLayout" >
+            android:layout_above="@+id/FooterBarLayout"
+            android:layout_alignParentStart="true">
 
         <include
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/out_the_door_form_body" />
-
+                layout="@layout/out_the_door_form_body"/>
 
 
     </ScrollView>
@@ -310,31 +309,6 @@
                     android:textSize="8sp" />
         </LinearLayout>
 
-        <LinearLayout
-                android:id="@+id/iconMoreClickable"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:visibility="gone" >
-
-            <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="38dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/icon_more" />
-
-            <TextView
-                    android:id="@+id/TextView05"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/MORE"
-                    android:textColor="#000"
-                    android:textSize="8sp" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

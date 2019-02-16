@@ -1,6 +1,7 @@
 package catglo.com.deliverydroid.neworder;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,23 +13,14 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 
-import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
 import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
+import catglo.com.deliverydroid.Settings;
 import catglo.com.deliverydroid.widgets.OnTextChangedListener;
 
 import java.util.ArrayList;
@@ -138,7 +130,7 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
 
 
 
-        DeliveryDroidBaseActionBarActivity activity = (DeliveryDroidBaseActionBarActivity)getActivity();
+        DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity)getActivity();
 
         if (getListAdapter()!=null){
             list.setAdapter(getListAdapter());
@@ -170,8 +162,8 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
                    edit.setFocusable(true);
                    edit.requestFocus();
                   // buttons.setVisibility(View.GONE);
-                   DeliveryDroidBaseActionBarActivity activity = (DeliveryDroidBaseActionBarActivity) getActivity();
-                   activity.tools.showOnScreenKeyboard(edit);
+                   DeliveryDroidBaseActivity activity = (DeliveryDroidBaseActivity) getActivity();
+                   activity.getUtils().showOnScreenKeyboard();
                }
            }
        });
@@ -207,6 +199,9 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+
+        Settings settings = new Settings(getActivity().getApplicationContext());
 
 
 
@@ -251,7 +246,7 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
         tooltipText = (TextView) numbers.findViewById(R.id.tooltipText);
 
         list = (ListView) numbers.findViewById(R.id.buttonPadList);
-        list.setFastScrollEnabled(true);
+        list.setFastScrollEnabled(false);
 
         speakButton = (View) numbers.findViewById(R.id.ButtonSpeech);
         customButton = (View) numbers.findViewById(R.id.setShiftTimesToOrderTimes);
@@ -260,12 +255,15 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
         speakButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                 //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getActivity().getString(R.string.Speak_address));
-                startActivityForResult(intent, code);
-
+                try {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getActivity().getString(R.string.Speak_address));
+                    startActivityForResult(intent, code);
+                } catch (ActivityNotFoundException e){
+                    Toast.makeText(getContext(),"Not supported",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -410,6 +408,25 @@ public abstract class ButtonPadFragment extends DataAwareFragment implements OnT
 
         abc.setVisibility(View.INVISIBLE);
         space.setVisibility(View.INVISIBLE);
+
+        View touchOverlay1 = numbers.findViewById(R.id.curvedScreenOverlay1);
+        View touchOverlay2 = numbers.findViewById(R.id.curvedScreenOverlay2);
+        if (settings.useCurvedScreenTouchOverlay())
+        {
+            touchOverlay1.setVisibility(View.VISIBLE);
+            touchOverlay2.setVisibility(View.VISIBLE);
+            View.OnTouchListener eatTouches = new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            };
+            touchOverlay1.setOnTouchListener(eatTouches);
+            touchOverlay2.setOnTouchListener(eatTouches);
+        } else {
+            touchOverlay1.setVisibility(View.GONE);
+            touchOverlay2.setVisibility(View.GONE);
+        }
 
         return numbers;
     }

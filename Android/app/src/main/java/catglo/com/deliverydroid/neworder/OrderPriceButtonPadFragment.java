@@ -12,7 +12,7 @@ public class OrderPriceButtonPadFragment extends ButtonPadFragment {
     @Override
     protected void onDataChangedHandler() {
         NewOrderActivity activity = (NewOrderActivity)getActivity();
-        if ( activity.order.cost!=0) edit.setText( activity.tools.getFormattedCurrency( activity.order.cost));
+        if ( activity.order.cost!=0) edit.setText( activity.getUtils().getFormattedCurrency( activity.order.cost));
         else edit.setText("");
     }
 
@@ -28,7 +28,7 @@ public class OrderPriceButtonPadFragment extends ButtonPadFragment {
     @Override
     public void onTextChanged(String newText) {
         NewOrderActivity activity = (NewOrderActivity)getActivity();
-        activity.order.cost =  activity.tools.parseCurrency(edit.getText().toString());
+        activity.order.cost =  activity.getUtils().parseCurrency(edit.getText().toString());
         adapter.getFilter().filter(newText);
 
         DataAwareFragment lastScreenFragment = (DataAwareFragment) activity.getFragment(NewOrderActivity.Pages.order);

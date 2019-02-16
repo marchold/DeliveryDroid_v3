@@ -1,30 +1,31 @@
 package catglo.com.deliverydroid.neworder;
 
 import android.annotation.TargetApi;
-import android.app.*;
 
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+
 import android.view.View;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 import catglo.com.deliveryDatabase.Order;
-import catglo.com.deliverydroid.DeliveryDroidBaseActionBarActivity;
+
+import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
 import catglo.com.deliverydroid.R;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
-                                 implements ActionBar.TabListener,
-                                            ButtonPadFragment.ButtonPadNextListener {
+public class NewOrderActivity extends DeliveryDroidBaseActivity
+                                 implements ButtonPadFragment.ButtonPadNextListener, TabLayout.BaseOnTabSelectedListener {
 
 
 
@@ -32,17 +33,20 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     ViewPager viewPager;
     public Order order = new Order();
     private View tabletPane;
+    private TabLayout tabLayout;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onNextButtonPressed() {
-        int i = getSupportActionBar().getSelectedNavigationIndex();
+        int i = tabLayout.getSelectedTabPosition();
         try {
-            getSupportActionBar().selectTab(getSupportActionBar().getTabAt(i+1));
-        } catch (IndexOutOfBoundsException e){
+            tabLayout.getTabAt(i+1).select();
+        } catch (IndexOutOfBoundsException | NullPointerException e){
             //TODO: maybe focus whatever seems like the next logical thing in the last screen frag on tablet
         }
     }
+
+
 
     public enum Pages {
         number,price,phone,address,time,order;
@@ -50,7 +54,7 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
     ArrayList<Pages> viewPagerPages = new ArrayList<Pages>(6);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_new_order_acticity);
 
@@ -80,49 +84,45 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
         }
 
 
+  //      setSupportActionBar(findViewById(R.id.toolbar));
+
         // Set up the action bar.
-        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        actionBar.setBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));
-        actionBar.setStackedBackgroundDrawable(getDrawable(R.color.chea_action_bar_bkgd));
 
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),viewPagerPages);
 
+        tabLayout = findViewById(R.id.tabLayout);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                tabLayout.getTabAt(position).select();
             }
         });
         for (int i = 0; i < sectionsPagerAdapter.getCount(); i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(sectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(sectionsPagerAdapter.getPageTitle(i));
+            tabLayout.addTab(tab);
         }
+        tabLayout.addOnTabSelectedListener(NewOrderActivity.this);
     }
 
 
-
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
         viewPager.setCurrentItem(position);
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabUnselected(TabLayout.Tab tab) {
+
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 
     public int getFragmentIndex(Pages fragmentPage){
@@ -147,14 +147,11 @@ public class NewOrderActivity extends DeliveryDroidBaseActionBarActivity
         return (DataAwareFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + viewPager.getId() + ":" + index);
     }
 
-    /**
-     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/viewPagerPages.
-     */
+
     static public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         ArrayList<Pages> viewPagerPages;
-        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Pages> viewPagerPages) {
+        public SectionsPagerAdapter(androidx.fragment.app.FragmentManager fm, ArrayList<Pages> viewPagerPages) {
             super(fm);
             this.viewPagerPages = viewPagerPages;
 

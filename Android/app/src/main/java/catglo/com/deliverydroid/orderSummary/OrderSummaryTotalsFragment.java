@@ -17,8 +17,7 @@ import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
 import catglo.com.deliverydroid.BaseDeliveryDroidFragment;
 import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
-import catglo.com.deliverydroid.orderSummary.OrderSummaryActivity;
+import catglo.com.deliverydroid.Utils;
 
 
 import java.text.DecimalFormat;
@@ -99,7 +98,7 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 		c.close();
 
 		TipTotalData tip = dataBase.getTipTotal(getActivity(),DataBase.Shift+"="+viewingShift+" AND "+DataBase.Payed+" >= 0",
-				"WHERE shifts.ID ="+viewingShift);
+				"WHERE shifts.ID ="+viewingShift,null);
 		
 		
 		
@@ -109,32 +108,32 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 		
 		
 		hoursWorked.setText(""+wholeHours+"h "+df.format(minutes)+"m ");
-		hourlyPay.setText(Tools.getFormattedCurrency(tip.hourlyPay));
+		hourlyPay.setText(Utils.getFormattedCurrency(tip.hourlyPay));
 		
 		
-		moneyCollected.setText(Tools.getFormattedCurrency(tip.payed));
-		cashCollected.setText(Tools.getFormattedCurrency(tip.payedCash));
-		otherCollected.setText(Tools.getFormattedCurrency(tip.payed - tip.payedCash));
+		moneyCollected.setText(Utils.getFormattedCurrency(tip.payed));
+		cashCollected.setText(Utils.getFormattedCurrency(tip.payedCash));
+		otherCollected.setText(Utils.getFormattedCurrency(tip.payed - tip.payedCash));
 		
 		final float totalTipsMade = tip.payed-tip.cost;
-		tipsMade.setText(Tools.getFormattedCurrency(totalTipsMade));
+		tipsMade.setText(Utils.getFormattedCurrency(totalTipsMade));
 		
 		
 		if (tip.mileageEarned!=0){
-			mileageEarned.setText(Tools.getFormattedCurrency(tip.mileageEarned));// Mileage Earned:
+			mileageEarned.setText(Utils.getFormattedCurrency(tip.mileageEarned));// Mileage Earned:
 			mileageEarnedLayout.setVisibility(View.VISIBLE);
 		} else {
 			mileageEarnedLayout.setVisibility(View.GONE);
 		}
 		//cashOwedIncludingMilage.setText(DeliveryDroidBaseActivity.getFormattedCurrency(tip.payedCash-tip.cashTips+bankAmount-totalDrops-tip.mileageEarned));
 		
-		cashTips.setText(Tools.getFormattedCurrency(tip.cashTips));
-		cardCheckTips.setText(Tools.getFormattedCurrency(tip.reportableTips));
+		cashTips.setText(Utils.getFormattedCurrency(tip.cashTips));
+		cardCheckTips.setText(Utils.getFormattedCurrency(tip.reportableTips));
 		
-		driverEarnings.setText(Tools.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
+		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		
 		
-		allOrders.setText(Tools.getFormattedCurrency(tip.cost));
+		allOrders.setText(Utils.getFormattedCurrency(tip.cost));
 		
 		//Setup member variables for cash owed to store configurable field
 		cashCollectedAmount = tip.payedCash;
@@ -159,7 +158,7 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 		creditTipsAmount = tip.reportableTips;
 		
 		float cashOwedToStoreAmount = getCashOwedToStoreForKind(sharedPreferences.getInt("cashOwedKind", 0));
-		cashOwedToStore.setText(Tools.getFormattedCurrency(cashOwedToStoreAmount));
+		cashOwedToStore.setText(Utils.getFormattedCurrency(cashOwedToStoreAmount));
 	}
 	
 	float getCashOwedToStoreForKind(int kind){
@@ -269,7 +268,7 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 					break;
 				
 				}
-				title.setText(Tools.getFormattedCurrency(getCashOwedToStoreForKind(position)));
+				title.setText(Utils.getFormattedCurrency(getCashOwedToStoreForKind(position)));
 				return view;
 			}
 		});
@@ -282,8 +281,8 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 
 
         OrderSummaryActivity activity = (OrderSummaryActivity) getActivity();
-        activity.configCashOwedToStore.setVisibility(View.VISIBLE);
-        activity.configCashOwedToStore.setOnClickListener(new View.OnClickListener() {
+        activity.getConfigCashOwedToStore().setVisibility(View.VISIBLE);
+        activity.getConfigCashOwedToStore().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cashOwedHeader.performClick();
@@ -298,7 +297,7 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		gestureListener = ((OrderSummaryActivity)getActivity()).gestureTouchListener;
+		gestureListener = ((OrderSummaryActivity) getActivity()).getGestureTouchListener();
 		
         moneyCollected.setOnTouchListener(gestureListener);
         cashCollected.setOnTouchListener(gestureListener);

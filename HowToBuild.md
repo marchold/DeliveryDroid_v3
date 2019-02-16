@@ -1,4 +1,4 @@
-###Building Delivery Droid Steps
+## Building Delivery Droid Steps
 
 1. Get a google maps API key and add it to your environment variables
 2. Download Android Studio

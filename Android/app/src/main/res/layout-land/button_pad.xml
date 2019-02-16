@@ -213,6 +213,9 @@
     </RelativeLayout>
 
     <ListView
+            android:scrollbars="none"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:fastScrollEnabled="false"
         android:id="@+id/buttonPadList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -239,5 +242,7 @@
             android:text="@string/address_input_newcommer_text"
             android:textColor="@color/white" />
     </RelativeLayout>
+    <FrameLayout android:id="@+id/curvedScreenOverlay1" android:layout_alignParentLeft="true"  android:layout_width="@dimen/curved_screen_block" android:layout_height="match_parent"/>
+    <FrameLayout android:id="@+id/curvedScreenOverlay2" android:layout_alignParentRight="true" android:layout_width="@dimen/curved_screen_block" android:layout_height="match_parent"/>
 
 </RelativeLayout>

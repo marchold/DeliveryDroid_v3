@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="catglo.com.deliverydroid">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -8,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
@@ -16,23 +18,35 @@
             android:backupAgent=".backup.MyBackupAgent"
             android:icon="@drawable/icon"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:networkSecurityConfig="@xml/network_security_config"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".shift.PastShiftActivity">
+        </activity>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths"/>
+        </provider>
 
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="@string/maps_API_KEY"/>
-
         <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version"/>
-
         <meta-data
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="ocr"/>
 
-        <activity android:name=".homeScreen.HomeScreenActivity">
+        <activity
+                android:name=".homeScreen.HomeScreenActivity"
+                android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -42,8 +56,8 @@
         <activity
                 android:name=".neworder.NewOrderActivity"
                 android:label="@string/New_Order"
-                android:theme="@style/ActionBarTheme"
-                android:windowSoftInputMode="stateHidden|adjustResize">
+                android:theme="@style/AppTheme"
+                android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="Delivery Droid New Order"/>
 
@@ -53,7 +67,7 @@
         <activity
                 android:name=".AboutActivity"
                 android:label="@string/About"
-                android:theme="@style/ActionBarTheme"
+                android:theme="@style/AppTheme"
                 android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -64,21 +78,20 @@
         <activity
                 android:name=".backup.GoogleDriveBackupRestoreActivity"
                 android:label="@string/Google_Drive_Backup"
-                android:theme="@style/ActionBarTheme"
+                android:theme="@style/AppTheme"
                 android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
                 android:name=".bankDrop.BankTillDropActivity"
                 android:theme="@style/AppTheme"/>
-        <activity android:name=".settings.SettingsActivity"/>
+        <activity
+                android:name=".settings.SettingsActivity"
+                android:theme="@style/AppTheme"/>
         <activity android:name=".homeScreen.HomeListSettings"/>
         <activity android:name=".orderSummary.OrderSummaryActivity"/>
         <activity
-                android:name=".shift.OdometerEntryActivity"
-                android:theme="@style/ActionBarTheme"/>
-        <activity
                 android:name=".outTheDoor.OutTheDoorActivity"
-                android:theme="@style/ToolBarTheme"
+                android:theme="@style/AppTheme"
                 android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="Delivery_Droid_Out_The_Door"/>
@@ -92,14 +105,11 @@
                 android:windowSoftInputMode="stateHidden"/>
         <activity
                 android:name=".ListAddressHistoryActivity"
-                android:theme="@style/AppTheme"/>
-        <!-- <activity android:name=".Settings_DropPrefsActivity" /> -->
-
-        <activity android:name=".shift.ShiftStartEndActivity"/>
-        <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
+                android:theme="@style/AppTheme"/> <!-- <activity android:name=".Settings_DropPrefsActivity" /> -->
         <activity
                 android:name=".settings.SettingsListOptions"
-                android:exported="false">
+                android:exported="false"
+                android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="catglo.com.deliverydroid.Settings_ListOptions"/>
 
@@ -127,30 +137,11 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".shift.ShiftStartEndTimesActivity"
-                android:label="@string/title_activity_shift_start_end_times">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".shift.ShiftStartEndActivity"/>
-        </activity>
-        <activity
-                android:name=".shift.ShiftSetWageActivity"
-                android:label="@string/wage"/>
-        <activity
-                android:name=".shift.ShiftStartEndDayActivity"
-                android:label="@string/title_activity_shift_start_end_day"/>
-        <activity
-                android:name=".shift.ShiftStartEndEditWage"
-                android:label="@string/title_activity_shift_start_end_edit_wage"/>
 
         <service
                 android:name=".GeofenceIntentService"
                 android:exported="false"
                 android:label="@string/app_name"/>
-
-
-
 
         <activity
                 android:name=".settings.SettingsStoreAddressActivity"
@@ -163,6 +154,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".homeScreen.DownloadMapActivity">
+        </activity>
+
+        <service
+                android:name="catglo.com.MapFileSharingService"
+                android:enabled="true"
+                android:exported="false">
+        </service>
+
+        <activity
+                android:name=".homeScreen.ChooseDownloadActivity"
+                android:label="@string/choose_map"
+                android:theme="@style/AppTheme"
+                android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+                android:name=".shift.ShiftActivity"
+                android:label="@string/title_activity_shift">
+        </activity>
+        <activity android:name=".homeScreen.HomeScreen_MapFragmentActivity"/>
+        <activity
+                android:name=".shift.OdometerActivity"
+                android:label="@string/title_activity_odometer">
         </activity>
     </application>
 

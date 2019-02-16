@@ -26,4 +26,10 @@
         android:layout_toLeftOf="@+id/include1"
         layout="@layout/home_screen_no_list" />
 
+    <FrameLayout android:id="@+id/curvedScreenOverlay1" android:layout_alignParentLeft="true"
+                 android:layout_width="20dp" android:layout_height="match_parent" android:visibility="gone"/>
+    <FrameLayout android:id="@+id/curvedScreenOverlay2" android:layout_alignParentRight="true"
+                 android:layout_width="20dp" android:layout_height="match_parent" android:visibility="gone"/>
+
+
 </RelativeLayout>

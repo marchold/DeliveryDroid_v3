@@ -108,7 +108,7 @@ public class SettingsAddressFilterCriteria extends Activity implements TextWatch
 		if (matcher.find()){
 			Log.i("MAP","Looking up info for "+enteredAddress);
 			//look up the address and center the map
-            new WebServiceGoogleGeocode(getApplicationContext(),enteredAddress,new WebServiceGoogleGeocode.AddressListListener(){
+            new WebServiceGoogleGeocode(getApplicationContext(),enteredAddress,new WebServiceGoogleGeocode.AddressResultListener(){
 				public void commit(ArrayList<AddressInfo> addressList,String searchString) {
 					if (addressList.size()>0){
 						Log.i("MAP","Got geocoded "+searchString);

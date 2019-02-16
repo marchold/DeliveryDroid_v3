@@ -1,65 +1,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout1"
-    android:layout_width="320dp"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+              android:id="@+id/linearLayout1"
+              android:layout_width="320dp"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/ExportTo" >
-    </TextView>
+    <LinearLayout android:layout_marginTop="10dp"
+            android:layout_width="wrap_content" android:layout_gravity="center" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/ExportTo">
+        </TextView>
 
-    <Spinner
-        android:id="@+id/deliveryAreaSpinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </Spinner>
+        <Spinner android:layout_marginBottom="10dp"
+                 android:id="@+id/deliveryAreaSpinner"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/enterFileName" >
-    </TextView>
+        </Spinner>
+    </LinearLayout>
+
 
     <EditText
-        android:id="@+id/hourlyPayRate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+            android:hint="@string/enterFileName"
+            android:id="@+id/hourlyPayRate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
         <requestFocus>
         </requestFocus>
     </EditText>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/setShiftTimesToOrderTimes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dip"
-            android:text="@string/export"
-            android:width="100dip" >
-        </Button>
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dip"
-            android:text="@string/Cancel" >
-        </Button>
-    </LinearLayout>
 
 </LinearLayout>

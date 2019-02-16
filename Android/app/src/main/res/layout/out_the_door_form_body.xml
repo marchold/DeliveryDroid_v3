@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
@@ -13,7 +14,7 @@
 
         <EditText
                 android:id="@+id/paymentTotal"
-                android:layout_width="100dip"
+                android:layout_width="120dip"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:hint="@string/Payment"
@@ -23,7 +24,7 @@
 
         <EditText
                 android:id="@+id/paymentTotal_2"
-                android:layout_width="100dip"
+                android:layout_width="120dip"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/hrule_2"
                 android:hint="@string/Split_Payment"
@@ -34,20 +35,21 @@
 
         <EditText
                 android:id="@+id/tipAmount"
-                android:layout_width="100dip"
+                android:layout_width="120dip"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:hint="@string/Tip_Amount"
                 android:imeOptions="flagNoExtractUi"
                 android:inputType="numberDecimal"
-                android:textSize="18sp"/>
+                android:textSize="20sp"/>
 
         <Button
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:id="@+id/split_order"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
+                android:layout_width="120dip"
+                android:layout_height="48dp"
                 android:text="@string/SplitOrder"
-                android:textSize="18sp"/>
+                android:textSize="20sp"/>
 
         <RadioGroup
                 android:id="@+id/cash_check_card"
@@ -56,24 +58,32 @@
                 android:orientation="horizontal">
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/cash_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Cash"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/check_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Check"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/credit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Credit"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/ebt_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,24 +99,32 @@
                 android:visibility="gone">
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/cash_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cash"></RadioButton>
+                    android:text="Cash"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/check_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Check"></RadioButton>
+                    android:text="Check"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/credit_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Credit"/>
 
             <RadioButton
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/ebt_button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,27 +138,6 @@
             android:layout_height="2dip"
             android:layout_below="@+id/paymentRow1"
             android:background="#333"/>
-
-    <Button
-            android:id="@+id/SMSThem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hrule1"
-            android:layout_margin="1px"
-            android:layout_toLeftOf="@+id/CallThem"
-            android:drawableTop="@drawable/text_messaging1"
-            android:text=""
-            android:visibility="gone"/>
-
-    <Button
-            android:id="@+id/CallThem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hrule1"
-            android:layout_margin="1px"
-            android:drawableTop="@android:drawable/sym_action_call"
-            android:text=""
-            android:visibility="gone"/>
 
     <LinearLayout
             android:id="@+id/delivery_info"
@@ -157,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:gravity="center"
-                android:text="13032 178th DR SE HAHAHA"
+                tools:text="13032 178th DR SE HAHAHA"
                 android:textColor="#fffbed09"
                 android:textSize="24sp">
 
@@ -189,7 +186,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="$22.44"
+                        tools:text="$22.44"
                         android:textColor="#fffbed09"
                         android:textSize="20sp"/>
             </LinearLayout>
@@ -214,7 +211,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="6min"
+                        tools:text="6min"
                         android:textColor="#fffbed09"
                         android:textSize="32sp"/>
 
@@ -268,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:singleLine="true"
-                    android:text="$0.00"
+                    tools:text="$0.00"
                     android:textColor="#FFF"
                     android:textSize="20sp"/>
 
@@ -295,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:text="$0.00"
+                    tools:text="$0.00"
                     android:textColor="#FFF"
                     android:textSize="20sp"/>
 
@@ -325,7 +322,7 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="$0.00"
+                    tools:text="$0.00"
                     android:textColor="#FFF"
                     android:textSize="20sp"/>
 
@@ -354,10 +351,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/hrule10"
-            android:text="12  13117 james se"
+            tools:text="12  13117 james se"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:typeface="monospace"></TextView>
+            android:typeface="monospace"/>
 
     <View
             android:id="@+id/View01"
@@ -365,7 +362,7 @@
             android:layout_height="2dip"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:background="#FFAAAAAA"></View>
+            android:background="#FFAAAAAA"/>
 
     <LinearLayout
             android:id="@+id/LinearLayout1"
@@ -386,13 +383,13 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/notes_this_apt"></TextView>
+                android:text="@string/notes_this_apt"/>
 
         <LinearLayout
                 android:id="@+id/notesThisAddressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"/>
 
         <View
                 android:id="@+id/View02"
@@ -411,7 +408,7 @@
                 android:id="@+id/notesLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"/>
 
 
     </LinearLayout>
@@ -433,9 +430,9 @@
             android:visibility="gone"
             android:id="@+id/undeliverableOverlay"
             android:src="@drawable/ic_cancel"
-               android:alpha="0.5"
+            android:alpha="0.5"
             android:layout_width="match_parent"
-               android:layout_height="match_parent"/>
+            android:layout_height="match_parent"/>
 
     <LinearLayout
             android:orientation="horizontal"
@@ -444,31 +441,26 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/notesThisOrder">
 
-        <Button
-                android:drawableTop="@drawable/ic_cancel"
-                android:id="@+id/markUndeliverable"
-                android:text="@string/mark_undeliverable" style="@style/bottom_buttons_out_the_door"/>
+        <LinearLayout android:id="@+id/markUndeliverable" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/ic_cancel" style="@style/droid_tool_icon_image"/>
+            <TextView android:id="@+id/markUndeliverableText" android:text="@string/mark_undeliverable"
+                      style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
 
-        <Button android:layout_height="match_parent" android:layout_width="match_parent"
-                android:drawableTop="@drawable/ic_edit"
-                android:id="@+id/editOrder"
-                style="@style/bottom_buttons_out_the_door"
-                android:text="@string/edit_order"/>
+        <LinearLayout android:id="@+id/editOrder" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/ic_edit" style="@style/droid_tool_icon_image"/>
+            <TextView android:text="@string/edit_nl_order" style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
 
-        <Button
-                style="@style/bottom_buttons_out_the_door"
-                android:drawableTop="@drawable/skip_backwards"
-                android:id="@+id/previousOrder"
-                android:layout_height="match_parent" android:layout_width="match_parent"
-                android:text="@string/previous_order"/>
+        <LinearLayout android:id="@+id/previousOrder" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/skip_backwards" style="@style/droid_tool_icon_image"/>
+            <TextView android:text="@string/previous_nl_order" style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
 
-        <Button
-                style="@style/bottom_buttons_out_the_door"
-                android:drawableTop="@drawable/ic_home_phone"
-                android:id="@+id/callStore"
-
-                android:text="@string/Call_store" android:layout_height="match_parent" android:layout_width="match_parent"/>
-
+        <LinearLayout android:id="@+id/callStore" style="@style/droid_tool_icon_container">
+            <ImageView android:src="@drawable/ic_home_phone" style="@style/droid_tool_icon_image"/>
+            <TextView android:text="@string/Call_nl_store" style="@style/droid_tool_icon_text"/>
+        </LinearLayout>
 
     </LinearLayout>
 

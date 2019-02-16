@@ -1,17 +1,14 @@
 package catglo.com.deliverydroid.homeScreen;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
+import android.os.IBinder;
+import androidx.appcompat.app.AlertDialog;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -42,28 +39,21 @@ import org.mapsforge.core.graphics.Paint;
 import org.mapsforge.core.graphics.Style;
 import org.mapsforge.core.model.*;
 
-import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.core.util.Utils;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidPreferences;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.layer.cache.TileCache;
 import org.mapsforge.map.layer.overlay.Marker;
-import org.mapsforge.map.layer.overlay.Polyline;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.model.IMapViewPosition;
 import org.mapsforge.map.reader.MapFile;
 import org.mapsforge.map.reader.header.MapFileException;
-import org.mapsforge.map.util.MapPositionUtil;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.floor;
-import static java.lang.Math.log;
 import static java.lang.Math.min;
 import static java.lang.StrictMath.abs;
 import static org.mapsforge.core.util.MercatorProjection.latitudeToPixelY;
@@ -186,24 +176,24 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
-        setContentView(R.layout.my_map_activity);
+      //  getSupportActionBar().hide();
+        setContentView(R.layout.home_screen_map_fragment);
         if (dataBase == null) {
         	dataBase = new DataBase(getApplicationContext());
         	dataBase.open();
         }
     	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	mapView = (MapView) findViewById(R.id.mapview);
+    	mapView = findViewById(R.id.mapview);
     	noMapView = findViewById(R.id.noMapView);
     	downloadMapButton = findViewById(R.id.downloadMapClickListener);
 
-        roundTripTime = (TextView)findViewById(R.id.roundTripTime);
-    	driverEarnings = (TextView)findViewById(R.id.driverEarnings);
-        //prefEditor = sharedPreferences.edit();
+        roundTripTime = findViewById(R.id.roundTripTime);
+    	driverEarnings = findViewById(R.id.driverEarnings);
+        prefEditor = sharedPreferences.edit();
         optimizeClickable = (ViewGroup)findViewById(R.id.optimizeClickable);
-        optimizeIcon = (ImageView)findViewById(R.id.optimizeIcon);
+        optimizeIcon = findViewById(R.id.optimizeIcon);
         optimizeText = (TextView)findViewById(R.id.optimizeRouteText);
-       
+
         pleaseWaitForDriverEarnings = (ProgressBar)findViewById(R.id.progressBarRoundTrip);
         errorIcon = (ImageView)findViewById(R.id.errorIcon);
         
@@ -274,9 +264,9 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
         super.onResume();
         
         TipTotalData tip = dataBase.getTipTotal(this,DataBase.Shift+"="+dataBase.getCurShift()+" AND "+DataBase.Payed+" >= 0",
-        		"WHERE shifts.ID="+DataBase.TodaysShiftCount);
+        		"WHERE shifts.ID="+DataBase.TodaysShiftCount,null);
 		final float totalTipsMade = tip.payed-tip.cost;
-		driverEarnings.setText(Tools.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
+		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		
         updateUI();
         
@@ -321,6 +311,29 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		//}
 	}};
 
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service){
+        super.onServiceConnected(name,service);
+        try {
+            switch (getMapSharingServce().getStatus()) {
+                case None:
+                    downloadMapButton.setVisibility(View.VISIBLE);
+                    break;
+                case Initializing:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+                case Downloading:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+                case Uploading:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+                case Error:
+                    downloadMapButton.setVisibility(View.GONE);
+                    break;
+            }
+        } catch (NullPointerException e){ e.printStackTrace(); }
+    }
 
 
     @SuppressLint("MissingPermission")
@@ -350,7 +363,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 					order.tipTotalsForThisAddress = dataBase.getTipTotal(getApplicationContext(), 
 							" `"+DataBase.Address +"` LIKE "+DatabaseUtils.sqlEscapeString(order.address)
 							+" AND `"+DataBase.AptNumber+"` LIKE "+DatabaseUtils.sqlEscapeString(order.apartmentNumber)
-							+" AND Payed != -1",null);
+							+" AND Payed != -1",null,null);
 
 					orders.add(order);
 
@@ -393,6 +406,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			    startActivity(new Intent(getApplicationContext(),DownloadMapActivity.class));
 			}
 		});
+
 
         List<TileCache> tileCaches = new ArrayList<TileCache>();
 
@@ -456,7 +470,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                     float maxLng = -300;
 
                     for (Order order : orders) {
-                        if (order.geoPoint.lat == 0 && order.geoPoint.lng == 0) {
+                        if (order.geoPoint.getLat() == 0 && order.geoPoint.getLng() == 0) {
                             order.isValidated = false;
                         }
                         if (!order.isValidated) {
@@ -469,7 +483,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                                 int imageResource = getResources().getIdentifier("drawable/map" + counter, null, getPackageName());
                                 Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(getResources().getDrawable(imageResource));
                                 bitmap.incrementRefCount();
-                                Marker marker = new Marker(new LatLong(order.geoPoint.lat, order.geoPoint.lng), bitmap, 0, -bitmap.getHeight() / 2) {
+                                Marker marker = new Marker(new LatLong(order.geoPoint.getLat(), order.geoPoint.getLng()), bitmap, 0, -bitmap.getHeight() / 2) {
                                     @Override
                                     public boolean onTap(LatLong geoPoint, Point viewPosition, Point tapPoint) {
                                         if (contains(viewPosition, tapPoint)) {
@@ -485,10 +499,10 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
                                 Toast.makeText(context, R.string.error_building_map_markers, Toast.LENGTH_SHORT).show();
                             }
 
-                            if (order.geoPoint.lat < minLat) minLat = (float) order.geoPoint.lat;
-                            if (order.geoPoint.lng < minLng) minLng = (float) order.geoPoint.lng;
-                            if (order.geoPoint.lat > maxLat) maxLat = (float) order.geoPoint.lat;
-                            if (order.geoPoint.lng > maxLng) maxLng = (float) order.geoPoint.lng;
+                            if (order.geoPoint.getLat() < minLat) minLat = (float) order.geoPoint.getLat();
+                            if (order.geoPoint.getLng() < minLng) minLng = (float) order.geoPoint.getLng();
+                            if (order.geoPoint.getLat() > maxLat) maxLat = (float) order.geoPoint.getLat();
+                            if (order.geoPoint.getLng() > maxLng) maxLng = (float) order.geoPoint.getLng();
 
                             counter++;
                         } else {
@@ -596,7 +610,7 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 		int maxLng=Integer.MIN_VALUE;
 
 
-        Tools.appendLog("\nBuilding Map Overlays");
+        Utils.appendLog("\nBuilding Map Overlays");
 
 		try {
 			String storeAddress = sharedPreferences.getString("storeAddress", "");
@@ -609,22 +623,22 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 			int storeAddressLat = 0;
             int storeAddressLng = 0;
             if (lastKnownLocation!=null) {
-                Tools.appendLog("    lastKnownLocation was != null");
+                Utils.appendLog("    lastKnownLocation was != null");
                 storeAddressLat = sharedPreferences.getInt("storeAddressLat", (int) (lastKnownLocation.getLatitude() / 1e6));
                 storeAddressLng = sharedPreferences.getInt("storeAddressLng", (int) (lastKnownLocation.getLongitude() / 1e6));
             } else {
-                Tools.appendLog("    lastKnownLocation was == null");
+                Utils.appendLog("    lastKnownLocation was == null");
             }
             if (storeAddressLat==0 || storeAddressLng==0){
-                Tools.appendLog("    storeAddressLat==0 || storeAddressLng==0");
+                Utils.appendLog("    storeAddressLat==0 || storeAddressLng==0");
                 if (lastKnownLocation != null) {
-                    Tools.appendLog("    setting store address to last known location");
+                    Utils.appendLog("    setting store address to last known location");
                     storeAddressLat = (int) (lastKnownLocation.getLatitude()*1E6);
                     storeAddressLng = (int) (lastKnownLocation.getLongitude()*1E6);
                 }
             }
 
-            Tools.appendLog("    Using gps coordinates "+storeAddressLat+","+storeAddressLng);
+            Utils.appendLog("    Using gps coordinates "+storeAddressLat+","+storeAddressLng);
 
 			GeoPoint geoPoint = new GeoPoint(storeAddressLat,storeAddressLng);
 			

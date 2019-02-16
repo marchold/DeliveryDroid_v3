@@ -1,12 +1,11 @@
 package catglo.com.deliverydroid.outTheDoor;
 
-import android.app.AlertDialog;
+
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,9 +14,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -37,15 +33,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.fragment.app.FragmentTransaction;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.DataBase.NoteEntry;
 import catglo.com.deliveryDatabase.Order;
 import catglo.com.deliveryDatabase.TipTotalData;
-import catglo.com.deliverydroid.DeliveryDroidBaseActivity;
-import catglo.com.deliverydroid.R;
-import catglo.com.deliverydroid.Tools;
+import catglo.com.deliverydroid.*;
 import catglo.com.deliverydroid.homeScreen.HomeScreenActivity;
-import catglo.com.deliverydroid.neworder.NewOrderActivity;
 import catglo.com.deliverydroid.viewEditOrder.SummaryActivity;
 
 import java.text.DecimalFormat;
@@ -114,7 +112,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 	private AdapterView<ArrayAdapter<String>> paymentAmountListView;
 	private ViewGroup rootLayout;
 	private EditText tipTotal;
-    private Button markUndeliverableButton;
+    private View markUndeliverableButton;
     private View undeliverableOverlay;
 
     protected void generatePaymentSuggestionListFor(String soFar) {
@@ -139,7 +137,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				c.append(String.valueOf(cost));
 				c.replace(0, soFar.length(), soFar);
 				try {
-					startValue = Float.parseFloat(c.toString());
+					startValue = Utils.parseCurrency(c.toString());
 				} catch (NumberFormatException e){
 					startValue = 0;
 				}
@@ -182,6 +180,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		paymentAmountListView.setOnItemClickListener(new OnItemClickListener(){public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			paymentTotal.setText(costGuess[arg2]);
 			paymentTotal.setSelection(costGuess[arg2].length());
+			//TODO set tip total
 			paymentAmountList.setVisibility(View.GONE);
 			next.setVisibility(View.VISIBLE);
 		}});
@@ -193,7 +192,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		generatePaymentSuggestionListFor("");
 
 	}
-	boolean undeliverable;
+	//boolean undeliverable;
 	/** Called when the activity is first created. */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -216,23 +215,20 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			paymentAmountListView.setVisibility(View.GONE);
 		}});
 		
-		next = (Button) findViewById(R.id.arrivedAt);
+		next = findViewById(R.id.arrivedAt);
 		paymentAmountListView  = (AdapterView<ArrayAdapter<String>>) findViewById(R.id.paymentAmountListView);
 		paymentAmountList = (ViewGroup) findViewById(R.id.paymentAmountList);
 		paymentAmountList.setVisibility(View.GONE);
 		paymentTotal = (EditText) findViewById(R.id.paymentTotal);
 		paymentTotal2 = (EditText) findViewById(R.id.paymentTotal_2);
 		tipTotal = (EditText) findViewById(R.id.tipAmount);
-		paymentTotal.setInputType(EditorInfo.TYPE_NULL);
-		if (sharedPreferences.getBoolean("showTipField", false)==false){
-			tipTotal.setVisibility(View.GONE);
-		}
+		//if (getSharedPreferences().getBoolean("showTipField", false)==false){
+		//	tipTotal.setVisibility(View.GONE);
+		//}
 		paymentTotal.setOnClickListener(new OnClickListener(){public void onClick(View arg0) {
 			if (paymentTotal.getText().toString().length() < 2) {
 				showPaymentAmountList();
 			}
-			paymentTotal.setInputType(EditorInfo.TYPE_NUMBER_FLAG_DECIMAL|EditorInfo.TYPE_CLASS_NUMBER);			
-			tools.showOnScreenKeyboard(paymentTotal);
 		}});
 		paymentTotal.setOnFocusChangeListener(new OnFocusChangeListener(){public void onFocusChange(View arg0, boolean hasFocus) {
 			if (hasFocus==false){
@@ -244,7 +240,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				
 				if (paymentTotal.getText().toString().length() < 2) {
 					showPaymentAmountList();
-					tools.showOnScreenKeyboard(paymentTotal);
 				} else {
 					next.setVisibility(View.VISIBLE);
 				}
@@ -254,11 +249,11 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			public void afterTextChanged(Editable arg0) {	
 				if (inNext) return;
 				try {
-					if (paymentTotal2.isFocused()){
-						float f = Tools.parseCurrency(paymentTotal2.getText().toString());
-						f += Tools.parseCurrency(paymentTotal.getText().toString());
+					if (!tipTotal.isFocused()){
+						float f = Utils.parseCurrency(paymentTotal2.getText().toString());
+						f += Utils.parseCurrency(paymentTotal.getText().toString());
 						f -=  orders.get(orderCounter).cost;
-						tipTotal.setText(Tools.getFormattedCurrency(f));
+						tipTotal.setText(Utils.getFormattedCurrency(f));
 					}
 				} catch (IndexOutOfBoundsException e){
 					e.printStackTrace();
@@ -271,14 +266,14 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			public void afterTextChanged(Editable arg0) {
 				if (inNext) return;
 				next.setVisibility(View.VISIBLE);
-				if (arg0.toString().length()>2) {
+				if (arg0.toString().length()>0) {
 					paymentAmountList.setVisibility(View.GONE);
 					todaysTips();
 					
-					if (paymentTotal.isFocused()){
-						float f = Tools.parseCurrency(arg0.toString());
+					if (!tipTotal.isFocused()){
+						float f = Utils.parseCurrency(arg0.toString());
 						f -=  orders.get(orderCounter).cost;
-						tipTotal.setText(Tools.getFormattedCurrency(f));
+						tipTotal.setText(Utils.getFormattedCurrency(f));
 					}
 					
 				} else {
@@ -297,9 +292,9 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				if (inNext) return;
 				try {
 					if (tipTotal.isFocused()){
-						float f = Tools.parseCurrency(arg0.toString());
+						float f = Utils.parseCurrency(arg0.toString());
 						f += orders.get(orderCounter).cost;
-						paymentTotal.setText(Tools.getFormattedCurrency(f));
+						paymentTotal.setText(Utils.getFormattedCurrency(f));
 					}
 				} catch (IndexOutOfBoundsException e){
 					e.printStackTrace();
@@ -312,7 +307,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		tipTotal.setOnEditorActionListener(new OnEditorActionListener() {
 	        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 	            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-	            	//hideOnScreenKeyboard(tipTotal);
 	            	next.performClick();
 	                return true;
 	            }
@@ -358,25 +352,30 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			}
 		});
 
-		Editor prefeditor = sharedPreferences.edit();
+		Editor prefeditor = getSharedPreferences().edit();
 		prefeditor.putBoolean("justClearedBank", false);
 		prefeditor.commit();
 
-		if (sharedPreferences.getBoolean("disableGPS", false)) {
+		if (getSharedPreferences().getBoolean("disableGPS", false)) {
 			navigate.setVisibility(View.GONE);
 			mapIt.setVisibility(View.GONE);
 		} else {
 			navigate.setOnClickListener(new OnClickListener() {
 				public void onClick(final View v) {
-					String addressToNavTo = orders.get(orderCounter).address;
-					tools.navigateTo(addressToNavTo, OutTheDoorActivity.this);
+					String addressToNavTo;
+					if (orders.get(orderCounter).isValidated) {
+						addressToNavTo = orders.get(orderCounter).geoPoint.toString();
+					} else {
+						addressToNavTo = orders.get(orderCounter).address;
+					}
+					getTools().navigateTo(addressToNavTo, OutTheDoorActivity.this);
 				}
 			});
 			if (mapIt != null) {
 				mapIt.setOnClickListener(new OnClickListener() {
 					public void onClick(final View v) {
 						String addressToNavTo = orders.get(orderCounter).address;
-						tools.mapTo(addressToNavTo, OutTheDoorActivity.this);
+						getTools().mapTo(addressToNavTo, OutTheDoorActivity.this);
 					}
 				});
 			}
@@ -386,7 +385,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		
 
-		data = dataBase.getUndeliveredOrders();
+		data = getDataBase().getUndeliveredOrders();
 		if (data != null) {
 			if (data.moveToFirst()) {
 				orderCount = 1;
@@ -405,7 +404,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 			return;
 		}
 
-        undeliverable = orders.get(orderCounter).undeliverable;
+        //undeliverable = orders.get(orderCounter).undeliverable;
 
         if (orders.get(0).payed2 != 0) {
 			next.setVisibility(View.INVISIBLE);
@@ -418,6 +417,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		if (orders.get(orderCounter).payed2 != 0) {
 			float total = orders.get(orderCounter).payed2 + orders.get(orderCounter).cost;
 			paymentTotal.setText(new DecimalFormat("#.##").format(total));
+			//set tip here too?
 			next.setVisibility(View.VISIBLE);
 		} else {
 			paymentTotal.setText("");
@@ -426,25 +426,23 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		notesThisOrder.setText(orders.get(0).notes);
 
-        markUndeliverableButton = (Button)findViewById(R.id.markUndeliverable);
+        markUndeliverableButton = findViewById(R.id.markUndeliverable);
         markUndeliverableButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 next.setVisibility(View.VISIBLE);
                 Order order = orders.get(orderCounter);
-                if (undeliverable==true){
-                    undeliverable=false;
+                if (order.undeliverable){
                     order.undeliverable=false;
                     undeliverableOverlay.setVisibility(View.GONE);
                 } else {
                     order.undeliverable=true;
-                    undeliverable=true;
                     undeliverableOverlay.setVisibility(View.VISIBLE);
                 }
                 setPaymentEnabledState();
             }
         });
-        Button editOrder = (Button) findViewById(R.id.editOrder);
+        View editOrder = findViewById(R.id.editOrder);
         editOrder.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -456,15 +454,18 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
             }
         });
 
-        Button callStore = (Button) findViewById(R.id.callStore);
+        View callStore =  findViewById(R.id.callStore);
         callStore.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = sharedPreferences.getString("storePhoneNumber", "");
+                String phoneNumber = getSharedPreferences().getString("storePhoneNumber", "");
                 if (phoneNumber.length() < 1) {
                     Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
                 } else {
                     String uri = "tel:" + phoneNumber;
+                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                        uri = phoneNumber;
+                    }
                     Intent intent = new Intent(Intent.ACTION_DIAL);
                     intent.setData(Uri.parse(uri));
                     startActivity(intent);
@@ -474,7 +475,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 
 
-        Button previousOrder = (Button) findViewById(R.id.previousOrder);
+        View previousOrder = findViewById(R.id.previousOrder);
 		if (orderCounter ==0) {
 			previousOrder.setVisibility(View.GONE);
 		}
@@ -484,13 +485,14 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
             public void onClick(View v) {
                 if (orderCounter != 0) {
                     try {
-                        orders.get(orderCounter).payed = Float.parseFloat(paymentTotal.getText().toString());
+                        orders.get(orderCounter).payed = Utils.parseCurrency(paymentTotal.getText().toString());
                     } catch (final NumberFormatException e) {
                         orders.get(orderCounter).payed = 0;
                     }
                     orderCounter--;
                     messageHandler.post(updateOrderTimers);
                     paymentTotal.setText("" + orders.get(orderCounter).payed);
+                    tipTotal.setText(""+(orders.get(orderCounter).payed-orders.get(orderCounter).cost));
                     next.setText("Next");
                     next.setVisibility(View.VISIBLE);
                     if (orderCounter ==0) {
@@ -507,19 +509,19 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		ebt2 = (RadioButton) findViewById(R.id.ebt_button2);
 		group2 = (RadioGroup) findViewById(R.id.cash_check_card2);
 
-		if (sharedPreferences.getBoolean("usePaymentCash", true) == false) {
+		if (getSharedPreferences().getBoolean("usePaymentCash", true) == false) {
 			cash.setVisibility(View.GONE);
 			cash2.setVisibility(View.GONE);
 		}
-		if (sharedPreferences.getBoolean("usePaymentCheck", true) == false) {
+		if (getSharedPreferences().getBoolean("usePaymentCheck", true) == false) {
 			check.setVisibility(View.GONE);
 			check2.setVisibility(View.GONE);
 		}
-		if (sharedPreferences.getBoolean("usePaymentCredit", true) == false) {
+		if (getSharedPreferences().getBoolean("usePaymentCredit", true) == false) {
 			credit.setVisibility(View.GONE);
 			credit2.setVisibility(View.GONE);
 		}
-		if (sharedPreferences.getBoolean("usePaymentEbt", true) == false) {
+		if (getSharedPreferences().getBoolean("usePaymentEbt", true) == false) {
 			ebt.setVisibility(View.GONE);
 			ebt2.setVisibility(View.GONE);
 		}
@@ -540,16 +542,16 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 					tipTotal.setFocusableInTouchMode(true);
 
 					//Hide soft keyboard 2 different ways
-					tools.hideOnScreenKeyboard(paymentTotal);
+					getTools().hideOnScreenKeyboard();
 					
 					float payment = 0;
 					float payment2 = 0;
 					try {
-						payment = Float.valueOf(paymentTotal.getText().toString());
+						payment = Utils.parseCurrency(paymentTotal.getText().toString());
 					} catch (final NumberFormatException e) {
 					}
 					try {
-						payment2 = Float.valueOf(paymentTotal2.getText().toString());
+						payment2 = Utils.parseCurrency(paymentTotal2.getText().toString());
 					} catch (final NumberFormatException e) {
 					}
 
@@ -587,12 +589,12 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 					String notes = notesThisOrder.getText().toString();
 
-					dataBase.setOrderPayment(orders.get(orderCounter).primaryKey, payment, paymentType, payment2, paymentType2, startNewRun, notes, undeliverable);
+					getDataBase().setOrderPayment(orders.get(orderCounter).primaryKey, payment, paymentType, payment2, paymentType2, startNewRun, notes, orders.get(orderCounter).undeliverable);
 					startNewRun = false;
 
 
 					orders.get(orderCounter).payed = payment;
-                    undeliverable = orders.get(orderCounter).undeliverable;
+                    //undeliverable = orders.get(orderCounter).undeliverable;
 					orderCounter++;
                     previousOrder.setVisibility(View.VISIBLE);
                     if (orderCounter < orders.size()) {
@@ -679,8 +681,6 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				if (paymentTotal.getText().toString().length() == 0) {			
 				    paymentTotal.setText(""+orders.get(orderCounter).cost);
 				}
-				
-				tools.showOnScreenKeyboard(paymentTotal2);
 			}
 		});
 
@@ -701,7 +701,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
         try {
             Order order = orders.get(orderCounter);
             if (order.undeliverable == false) {
-                markUndeliverableButton.setText("Mark Undeliverable");
+				((TextView)findViewById(R.id.markUndeliverableText)).setText(R.string.mark_nl_undeliverable);
                 undeliverableOverlay.setVisibility(View.GONE);
                 paymentTotal.setEnabled(true);
                 cash.setEnabled(true);
@@ -713,7 +713,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
             } else {
                 undeliverableOverlay.setVisibility(View.VISIBLE);
-                markUndeliverableButton.setText("Mark Deliverable");
+				((TextView)findViewById(R.id.markUndeliverableText)).setText(R.string.mark_nl_deliverable);
                 ebt.setEnabled(false);
                 split.setEnabled(false);
                 paymentTotal.setEnabled(false);
@@ -740,13 +740,26 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 	@Override
 	protected void onPause() {
+
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		if (orderCounter < orderCount) {
-			Notification.Builder mBuilder = new Notification.Builder(this).setSmallIcon(R.drawable.icon).setContentTitle("Pending Deliveries").setContentText(orders.get(orderCounter).address);
+			String chanelId = (((DeliveryDroidApplication)getApplication()).getNotificationChannelId());
+		    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,chanelId)
+                    .setSmallIcon(R.drawable.icon)
+                    .setContentTitle("Pending Deliveries")
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setContentText(orders.get(orderCounter).address)
+                    .setChannelId(chanelId);
 			TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 			stackBuilder.addParentStack(OutTheDoorActivity.class);
 			stackBuilder.addNextIntent(new Intent(this, OutTheDoorActivity.class));
 			mBuilder.setContentIntent(stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT));
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                CharSequence name = getString(R.string.app_name);// The user-visible name of the channel.
+                NotificationChannel mChannel = new NotificationChannel(chanelId, name, NotificationManager.IMPORTANCE_LOW );
+                mNotificationManager.createNotificationChannel(mChannel);
+            }
 			mNotificationManager.notify(HomeScreenActivity.DELIVERY_NOTIFICATION, mBuilder.build());
 		} else {
 			mNotificationManager.cancel(HomeScreenActivity.DELIVERY_NOTIFICATION);
@@ -809,7 +822,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 				currentAddress.setText(orders.get(orderCounter).address + " " + orders.get(orderCounter).apartmentNumber);
 				currentWait.setText("" + minutesAgo);
-				currentCost.setText(Tools.currencySymbol() + orders.get(orderCounter).cost);
+				currentCost.setText(Utils.currencySymbol() + orders.get(orderCounter).cost);
 
 				String pending = "";// new
 									// String(getString(R.string.MinutesAddress));
@@ -831,7 +844,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				// ViewGroup NotesListItems = (ViewGroup)inflator.inflate(
 				// R.layout.note_list_item, null);
 
-				ArrayList<NoteEntry> s = dataBase.getPastNotesForAddressAndAptNo(orders.get(orderCounter).address, orders.get(orderCounter).apartmentNumber);
+				ArrayList<NoteEntry> s = getDataBase().getPastNotesForAddressAndAptNo(orders.get(orderCounter).address, orders.get(orderCounter).apartmentNumber);
 				notesThisAddressLayout.removeAllViews();
 				for (NoteEntry ne : s) {
 					ViewGroup view = makeViewFromNoteEntry(ne);
@@ -839,7 +852,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 				}
 
 				// notesBody2.setText(s);
-				s = dataBase.getPastNotesForAddress(orders.get(orderCounter).address);
+				s = getDataBase().getPastNotesForAddress(orders.get(orderCounter).address);
 				// notesBody.setText(s);
 				notesLayout.removeAllViews();
 				phoneNumbersThisOrder.clear();
@@ -854,17 +867,29 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                     callThemButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                        	if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()){
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(phoneNumber)));
+                                } catch (ActivityNotFoundException e){
+                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                                }
+                            }else {
+                                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));
+                            }
                         }
                     });
                     smsThemButton.setVisibility(View.VISIBLE);
                     smsThemButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumber, null));
-
-                            String messageBody = sharedPreferences.getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
-                            String cost = "" + Tools.getFormattedCurrency(orders.get(orderCounter).cost);
+                            Intent i;
+                            if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                                i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms",  phoneNumber, null));
+                            } else {
+                                i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumber, null));
+                            }
+                            String messageBody = getSharedPreferences().getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
+                            String cost = "" + Utils.getFormattedCurrency(orders.get(orderCounter).cost);
                             messageBody = messageBody.replace("###", cost);
 
                             i.putExtra("sms_body", messageBody);
@@ -873,30 +898,32 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                     });
                 } else {
                     //Legacy stuff from phone in notes thing
-                    if (sharedPreferences.getBoolean("callPhoneInNotes", false) && phoneNumbersThisOrder.size() > 0) {
+                    if (getSharedPreferences().getBoolean("callPhoneInNotes", false) && phoneNumbersThisOrder.size() > 0) {
 
                         callThemButton.setVisibility(View.VISIBLE);
                         callThemButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 if (phoneNumbersThisOrder.size() > 1) {
-                                    DialogFragment dialog = new DialogFragment() {
-                                        @Override
-                                        public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-                                            CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
+                                    CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                            builder.setTitle(R.string.Call).setItems(list, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(which))));
-                                                }
-                                            });
-                                            return builder.create();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(OutTheDoorActivity.this);
+                                    builder.setTitle(R.string.Call).setItems(list, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()){
+                                                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse( phoneNumbersThisOrder.get(which))));
+                                            } else {
+                                                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(which))));
+                                            }
                                         }
-                                    };
-                                    dialog.show(getFragmentManager(), "set_pay_rate");
+                                    });
+                                    builder.show();
                                 } else {
-                                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(0))));
+                                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse( phoneNumbersThisOrder.get(0))));
+                                    } else {
+                                        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumbersThisOrder.get(0))));
+                                    }
                                 }
                             }
                         });
@@ -904,34 +931,32 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                         smsThemButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 if (phoneNumbersThisOrder.size() > 1) {
-                                    DialogFragment dialog = new DialogFragment() {
-                                        @Override
-                                        public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-                                            final CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
+                                    final CharSequence[] list = phoneNumbersThisOrder.toArray(new CharSequence[phoneNumbersThisOrder.size()]);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(OutTheDoorActivity.this);
+                                    builder.setTitle(R.string.textMessage).setItems(list, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + list[which], null));
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                            builder.setTitle(R.string.textMessage).setItems(list, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + list[which], null));
+                                            String messageBody = getSharedPreferences().getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
+                                            String cost = "" + Utils.getFormattedCurrency(orders.get(orderCounter).cost);
+                                            messageBody = messageBody.replace("###", cost);
 
-                                                    String messageBody = sharedPreferences.getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
-                                                    String cost = "" + Tools.getFormattedCurrency(orders.get(orderCounter).cost);
-                                                    messageBody = messageBody.replace("###", cost);
-
-                                                    i.putExtra("sms_body", messageBody);
-                                                    startActivity(i);
-                                                }
-                                            });
-                                            return builder.create();
+                                            i.putExtra("sms_body", messageBody);
+                                            startActivity(i);
                                         }
-                                    };
-                                    dialog.show(getFragmentManager(), "set_pay_rate");
-                                } else {
-                                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumbersThisOrder.get(0), null));
+                                    });
+                                    builder.show();
 
-                                    String messageBody = sharedPreferences.getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
-                                    String cost = "" + Tools.getFormattedCurrency(orders.get(orderCounter).cost);
+                                } else {
+                                    Intent i;
+                                    if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) {
+                                        i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", phoneNumbersThisOrder.get(0), null));
+                                    } else {
+                                        i = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "tel:" + phoneNumbersThisOrder.get(0), null));
+                                    }
+                                    String messageBody = getSharedPreferences().getString("customerDefaultSMS", getApplicationContext().getString(R.string.customerDefaultSMS));
+                                    String cost = "" + Utils.getFormattedCurrency(orders.get(orderCounter).cost);
                                     messageBody = messageBody.replace("###", cost);
 
                                     i.putExtra("sms_body", messageBody);
@@ -949,18 +974,18 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 	};
 
 	void todaysTips() {
-		final DecimalFormat currency = new DecimalFormat(Tools.currencySymbol()+"#0.00");
+		final DecimalFormat currency = new DecimalFormat(Utils.currencySymbol()+"#0.00");
 
 		// Get tip totals from database
-		TipTotalData t = dataBase.getTipTotal(this, DataBase.Shift + " = " + dataBase.getCurShift() + " AND " + DataBase.Payed + ">0",
-				"WHERE shifts.ID="+DataBase.TodaysShiftCount);
+		TipTotalData t = getDataBase().getTipTotal(this, DataBase.Shift + " = " + getDataBase().getCurShift() + " AND " + DataBase.Payed + ">0",
+				"WHERE shifts.ID="+DataBase.TodaysShiftCount,null);
 
 		// Calculate tips from this run which have not yet been updated in the
 		// database
 		float thisOrderTip = 0;
 		float thisOrderPayed = 0;
 		try {
-			thisOrderPayed = Float.parseFloat(paymentTotal.getText().toString());
+			thisOrderPayed = Utils.parseCurrency(paymentTotal.getText().toString());
 			thisOrderTip = thisOrderPayed - orders.get(orderCounter).cost;
 			if (thisOrderTip < 0)
 				thisOrderTip = 0;
@@ -971,14 +996,14 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		// Calculate Mileage pay for the order just entered
 
-		final String MilagePayPerTrip = sharedPreferences.getString("per_delivery_pay", "-1");
-		final String MilagePayPercent = sharedPreferences.getString("percent_order_price", "-1");
+		final String MilagePayPerTrip = getSharedPreferences().getString("per_delivery_pay", "-1");
+		final String MilagePayPercent = getSharedPreferences().getString("percent_order_price", "-1");
 		//final String MilagePayPerMile = sharedPreferences.getString("odometer_per_mile", "-1");
-		final String MilagePayPerOutOfTownDelivery = sharedPreferences.getString("per_out_of_town_delivery", "0");
-		final String MilagePayPerRun = sharedPreferences.getString("per_run_pay", "0");
+		final String MilagePayPerOutOfTownDelivery = getSharedPreferences().getString("per_out_of_town_delivery", "0");
+		final String MilagePayPerRun = getSharedPreferences().getString("per_run_pay", "0");
 
 		try {
-			float f = Float.parseFloat(MilagePayPerTrip);
+			float f = Utils.parseCurrency(MilagePayPerTrip);
 			if (f > 0) {
 				thisTripMileage += f;
 			}
@@ -997,7 +1022,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		if (orders.get(orderCounter).outOfTown1) {
 			try {
-				float f = Float.parseFloat(MilagePayPerOutOfTownDelivery);
+				float f = Utils.parseCurrency(MilagePayPerOutOfTownDelivery);
 				if (f > 0) {
 					thisTripMileage += f;
 				}
@@ -1007,7 +1032,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 
 		if (startNewRun) {
 			try {
-				float f = Float.parseFloat(MilagePayPerRun);
+				float f = Utils.parseCurrency(MilagePayPerRun);
 				if (f > 0) {
 					thisTripMileage += f;
 				}
@@ -1027,7 +1052,7 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 		((TextView) notesListItems.findViewById(R.id.note)).setText(ne.note);
 		((TextView) notesListItems.findViewById(R.id.date)).setText(ne.date);
 		
-		if (sharedPreferences.getBoolean("callPhoneInNotes", false)) {
+		if (getSharedPreferences().getBoolean("callPhoneInNotes", false)) {
 			Matcher matcher = phoneNumberPattern.matcher(ne.note);
 			if (matcher.find()) {
 				String phoneNumberAreaCode = matcher.group(1);
@@ -1048,10 +1073,10 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		String perRunPay = sharedPreferences.getString("per_run_pay", "0");
+		String perRunPay = getSharedPreferences().getString("per_run_pay", "0");
 		float prp = 0;
 		try {
-			prp = Float.parseFloat(perRunPay);
+			prp = Utils.parseCurrency(perRunPay);
 		} catch (NumberFormatException e) {
 		}
 

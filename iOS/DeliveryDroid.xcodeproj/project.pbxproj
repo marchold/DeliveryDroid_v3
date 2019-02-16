@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		495CCC9421BB616F008EB0C7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 495CCC9321BB616F008EB0C7 /* libsqlite3.tbd */; };
+		495CCC9921BB622A008EB0C7 /* DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495CCC9821BB622A008EB0C7 /* DataBase.swift */; };
+		495CCC9B21BC7AB4008EB0C7 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495CCC9A21BC7AB4008EB0C7 /* Order.swift */; };
 		499093D92166FDCC000CAB63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499093D82166FDCC000CAB63 /* AppDelegate.swift */; };
 		499093DB2166FDCC000CAB63 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499093DA2166FDCC000CAB63 /* ViewController.swift */; };
 		499093DE2166FDCC000CAB63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 499093DC2166FDCC000CAB63 /* Main.storyboard */; };
@@ -16,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		495CCC9321BB616F008EB0C7 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		495CCC9821BB622A008EB0C7 /* DataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBase.swift; sourceTree = "<group>"; };
+		495CCC9A21BC7AB4008EB0C7 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		499093D52166FDCC000CAB63 /* DeliveryDroid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeliveryDroid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		499093D82166FDCC000CAB63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		499093DA2166FDCC000CAB63 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -31,17 +37,50 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				495CCC9421BB616F008EB0C7 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		495CCC9221BB616F008EB0C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				495CCC9321BB616F008EB0C7 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		495CCC9521BB618B008EB0C7 /* api */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = api;
+			sourceTree = "<group>";
+		};
+		495CCC9621BB61C9008EB0C7 /* deliveryDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				495CCC9821BB622A008EB0C7 /* DataBase.swift */,
+				495CCC9A21BC7AB4008EB0C7 /* Order.swift */,
+			);
+			path = deliveryDatabase;
+			sourceTree = "<group>";
+		};
+		495CCC9721BB61F0008EB0C7 /* deliverydroid */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = deliverydroid;
+			sourceTree = "<group>";
+		};
 		499093CC2166FDCC000CAB63 = {
 			isa = PBXGroup;
 			children = (
 				499093D72166FDCC000CAB63 /* DeliveryDroid */,
 				499093D62166FDCC000CAB63 /* Products */,
+				495CCC9221BB616F008EB0C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +95,9 @@
 		499093D72166FDCC000CAB63 /* DeliveryDroid */ = {
 			isa = PBXGroup;
 			children = (
+				495CCC9521BB618B008EB0C7 /* api */,
+				495CCC9621BB61C9008EB0C7 /* deliveryDatabase */,
+				495CCC9721BB61F0008EB0C7 /* deliverydroid */,
 				499093D82166FDCC000CAB63 /* AppDelegate.swift */,
 				499093DA2166FDCC000CAB63 /* ViewController.swift */,
 				499093DC2166FDCC000CAB63 /* Main.storyboard */,
@@ -140,6 +182,8 @@
 			files = (
 				499093DB2166FDCC000CAB63 /* ViewController.swift in Sources */,
 				499093D92166FDCC000CAB63 /* AppDelegate.swift in Sources */,
+				495CCC9B21BC7AB4008EB0C7 /* Order.swift in Sources */,
+				495CCC9921BB622A008EB0C7 /* DataBase.swift in Sources */,
 				499093E12166FDCC000CAB63 /* DeliveryDroid.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

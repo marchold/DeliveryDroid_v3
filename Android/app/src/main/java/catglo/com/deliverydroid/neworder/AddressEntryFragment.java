@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-import catglo.com.api.GoogleAddressSuggester;
+import catglo.com.GoogleAddressSuggester;
 import catglo.com.deliveryDatabase.AddressInfo;
 import catglo.com.deliveryDatabase.AddressSuggester;
 import catglo.com.deliverydroid.R;
@@ -33,8 +33,6 @@ public class AddressEntryFragment extends ButtonPadFragment {
         //Super is going to set the text view but we need to also pull the GPS location
         super.onItemClick(parent,view,position,id);
         AddressInfo address = addressList.get(position);
-
-
 
         NewOrderActivity activity = (NewOrderActivity)getActivity();
         if (activity!=null) {
@@ -63,7 +61,7 @@ public class AddressEntryFragment extends ButtonPadFragment {
 
         NewOrderActivity activity = (NewOrderActivity)getActivity();
 
-        addressSuggestior = new AddressSuggester(getContext(), activity.dataBase, new GoogleAddressSuggester.AddressListListener() {
+        addressSuggestior = new AddressSuggester(getContext(), activity.dataBase, new GoogleAddressSuggester.AddressResultListener() {
             @Override
             public void commit(ArrayList<AddressInfo> addressList, String searchString) {
                 if (   addressList  ==null

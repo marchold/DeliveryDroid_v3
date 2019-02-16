@@ -1,6 +1,6 @@
 package catglo.com.deliverydroid.outTheDoor;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -49,9 +49,9 @@ public class GpsNotes extends DeliveryDroidBaseActivity implements LocationListe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gps_notes_activity);
-		getSupportActionBar().hide();
+		//getSupportActionBar().hide();
 
-		loadOrders = sharedPreferences.getBoolean("loadOrders_gps_notes", false);
+		loadOrders = getSharedPreferences().getBoolean("loadOrders_gps_notes", false);
 		
 	    addButton = (ImageButton)findViewById(R.id.addButton);
 		addButton.setOnClickListener(new OnClickListener(){public void onClick(View v) {
@@ -153,7 +153,7 @@ public class GpsNotes extends DeliveryDroidBaseActivity implements LocationListe
 	}
 	
 	void updateList(){
-		Editor editor = sharedPreferences.edit();
+		Editor editor = getSharedPreferences().edit();
 		editor.putBoolean("loadOrders_gps_notes", loadOrders);
 		editor.commit();
 		if (loadOrders) {
@@ -200,34 +200,29 @@ public class GpsNotes extends DeliveryDroidBaseActivity implements LocationListe
 			popupBuilder.setItems(R.array.gps_notes_list_options, new DialogInterface.OnClickListener(){public void onClick(DialogInterface dialog, int which) {
 			switch (which){
 			case 0: //Edit Note
-				DialogFragment dialogFragment = new DialogFragment(){
-					@Override   
-					public Dialog onCreateDialog(Bundle savedInstanceState) {
-						AlertDialog.Builder alert = new AlertDialog.Builder(GpsNotes.this);  
-						View view = View.inflate(GpsNotes.this, R.layout.gps_notes_add_dialog, null);
-						alert.setView(view);	        
-						final EditText inputName = (EditText)view.findViewById(R.id.editText1);  
-						final CheckBox notify = (CheckBox)view.findViewById(R.id.notification);
-						final CheckBox alarm = (CheckBox)view.findViewById(R.id.alarm);
-				        inputName.setText(gpsNote.notes);
-				        notify.setChecked(gpsNote.notification);
-				        alarm.setChecked(gpsNote.alarm);
-				        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {  
-				        public void onClick(DialogInterface dialog, int whichButton) {  
-				        	gpsNote.notes = inputName.getText().toString();		
-				        	gpsNote.notification = notify.isChecked();
-				        	gpsNote.alarm = alarm.isChecked();
-				        	dataBase.saveGpsNote(gpsNote);
-				        	updateList();
-				        }}); 
-				        alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() { public void onClick(DialogInterface dialog, int whichButton) {
-				        	
-				        }}); 
-				        return alert.create();	   
-					}
-				};
-				dialogFragment.show(getFragmentManager(), "edit_gps_note");
-		        
+
+				AlertDialog.Builder alert = new AlertDialog.Builder(GpsNotes.this);
+				View view = View.inflate(GpsNotes.this, R.layout.gps_notes_add_dialog, null);
+				alert.setView(view);
+				final EditText inputName = (EditText)view.findViewById(R.id.editText1);
+				final CheckBox notify = (CheckBox)view.findViewById(R.id.notification);
+				final CheckBox alarm = (CheckBox)view.findViewById(R.id.alarm);
+				inputName.setText(gpsNote.notes);
+				notify.setChecked(gpsNote.notification);
+				alarm.setChecked(gpsNote.alarm);
+				alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					gpsNote.notes = inputName.getText().toString();
+					gpsNote.notification = notify.isChecked();
+					gpsNote.alarm = alarm.isChecked();
+					dataBase.saveGpsNote(gpsNote);
+					updateList();
+				}});
+				alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() { public void onClick(DialogInterface dialog, int whichButton) {
+
+				}});
+				alert.show();
+
 				break;
 			case 1: //Delete Note
 				AlertDialog.Builder delBuilder = new AlertDialog.Builder(GpsNotes.this);

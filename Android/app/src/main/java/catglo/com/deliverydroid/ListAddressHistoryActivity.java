@@ -1,6 +1,6 @@
 package catglo.com.deliverydroid;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -77,7 +77,7 @@ public class ListAddressHistoryActivity extends DeliveryDroidBaseActivity {
         Intent intent = getIntent();
         int dbKey = intent.getIntExtra("DB Key",-1);
         if (dbKey>0){
-        	Order order = dataBase.getOrder(dbKey);
+        	Order order = getDataBase().getOrder(dbKey);
         	searchString = order.address;
         	apartmentSearchString = order.apartmentNumber;
         	apartmentNumber.setText(apartmentSearchString);
@@ -97,7 +97,7 @@ public class ListAddressHistoryActivity extends DeliveryDroidBaseActivity {
 	
 	void updateList(){
 		
-    	orders = dataBase.searchForOrders(searchString,apartmentSearchString);
+    	orders = getDataBase().searchForOrders(searchString,apartmentSearchString);
     	
 		final LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		list.setAdapter(new ListAdapter(){
@@ -189,16 +189,16 @@ public class ListAddressHistoryActivity extends DeliveryDroidBaseActivity {
 				}
 				TextView cost = (TextView)layout.findViewById(R.id.check_out_cost);
 				if (cost!=null){
-					cost.setText(Tools.getFormattedCurrency(order.cost));
+					cost.setText(Utils.getFormattedCurrency(order.cost));
 				}
 				TextView payed = (TextView)layout.findViewById(R.id.check_out_payed);
-				payed.setText(Tools.getFormattedCurrency(order.payed + order.payed2));
+				payed.setText(Utils.getFormattedCurrency(order.payed + order.payed2));
 				
 				TextView tip = (TextView)layout.findViewById(R.id.check_out_tip);
-				tip.setText(Tools.getFormattedCurrency(order.payed + order.payed2 - order.cost));
+				tip.setText(Utils.getFormattedCurrency(order.payed + order.payed2 - order.cost));
 				
 				TextView extra_notes = (TextView)layout.findViewById(R.id.extra_notes);
-				if (extra_notes!=null && order.notes.length()>0){
+				if (order!=null && extra_notes!=null && order.notes.length()>0){
 					extra_notes.setVisibility(View.VISIBLE);
 					extra_notes.setText(order.notes);
 				}
@@ -216,7 +216,7 @@ public class ListAddressHistoryActivity extends DeliveryDroidBaseActivity {
 				                	   startActivity(new Intent(getApplicationContext(), SummaryActivity.class).putExtra("DB Key", order.primaryKey));
 				                	   break;
 				                   case 1:
-				                	   dataBase.delete(order.primaryKey);
+				                	   getDataBase().delete(order.primaryKey);
 				   				       updateList();
 				                	   break;
 				                   }

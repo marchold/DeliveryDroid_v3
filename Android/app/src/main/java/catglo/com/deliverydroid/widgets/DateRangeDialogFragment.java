@@ -1,6 +1,6 @@
 package catglo.com.deliverydroid.widgets;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -82,7 +82,7 @@ public class DateRangeDialogFragment extends DialogFragment {
 	        		
 	        		dialog.dismiss();
 	        		
-	        		activity.tools.onDateRangeDialogClosed(start, stop);
+	        		activity.getTools().onDateRangeDialogClosed(start, stop);
 	        	}else {
 	        		showEnd();
 	        	}

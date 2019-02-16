@@ -11,9 +11,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import androidx.annotation.NonNull;
 import catglo.com.deliveryDatabase.DataBase;
 import catglo.com.deliveryDatabase.Wage;
 import com.google.android.gms.location.*;
@@ -348,7 +347,7 @@ public class GeofenceIntentService extends IntentService implements LocationList
 
         }};
                 if (latitude == -1 || longitude == -1) {
-            new WebServiceGoogleGeocode(getApplicationContext(),storeAddress,new WebServiceGoogleGeocode.AddressListListener(){
+            new WebServiceGoogleGeocode(getApplicationContext(),storeAddress,new WebServiceGoogleGeocode.AddressResultListener(){
                 public void commit(ArrayList<AddressInfo> addressList,String searchString) {
                     if (addressList.size()>0){
                         AddressInfo addressInfo = addressList.get(0);

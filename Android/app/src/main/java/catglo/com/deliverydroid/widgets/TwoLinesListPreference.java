@@ -1,12 +1,15 @@
 package catglo.com.deliverydroid.widgets;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import catglo.com.deliverydroid.R;
 
-import android.app.AlertDialog.Builder;
+import androidx.appcompat.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import android.preference.ListPreference;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +27,10 @@ public class TwoLinesListPreference extends ListPreference {
     private CharSequence[] mEntriesSubtitles;
     private String mValue;
     private int mClickedDialogEntryIndex;
-	
+
+
+
+
 	public TwoLinesListPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
@@ -42,9 +48,11 @@ public class TwoLinesListPreference extends ListPreference {
 
 	}
 
-	@Override
-    protected void onPrepareDialogBuilder(Builder builder) {
-        super.onPrepareDialogBuilder(builder);
+
+
+//	@Override
+    protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
+  //      super.onPrepareDialogBuilder(builder);
         
 		mEntries = getEntries();
 		mEntryValues = getEntryValues();
@@ -103,19 +111,16 @@ public class TwoLinesListPreference extends ListPreference {
 	        }
 	    };
         
-		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+		/*builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mClickedDialogEntryIndex = which;
-				/*
-				 * Clicking on an item simulates the positive button click, and
-				 * dismisses the dialog.
-				 */
-				TwoLinesListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+
+			//	TwoLinesListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
 				dialog.dismiss();
 			}
 		});
-        
+        */
         /*
          * The typical interaction for list-based dialogs is to have
          * click-on-an-item dismiss the dialog instead of the user having to
@@ -123,10 +128,12 @@ public class TwoLinesListPreference extends ListPreference {
          */
         builder.setPositiveButton(null, null);
     }
-	
-    @Override
+
+
+
+   // @Override
     protected void onDialogClosed(boolean positiveResult) {
-        super.onDialogClosed(positiveResult);
+     //   super.onDialogClosed(positiveResult);
         
         if (positiveResult && mClickedDialogEntryIndex >= 0 && mEntryValues != null) {
             String value = mEntryValues[mClickedDialogEntryIndex].toString();

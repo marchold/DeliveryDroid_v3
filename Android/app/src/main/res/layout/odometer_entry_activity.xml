@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
 
-    <com.alexzaitsev.meternumberpicker.MeterView
+    <catglo.com.deliverydroid.shift.MeterView
             android:id="@+id/meterView"
             style="@style/MeterViewStyle"
             android:layout_width="match_parent"

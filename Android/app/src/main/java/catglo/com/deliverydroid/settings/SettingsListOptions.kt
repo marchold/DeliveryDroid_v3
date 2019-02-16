@@ -7,10 +7,11 @@ import android.os.Bundle
 import android.preference.PreferenceFragment
 import android.preference.PreferenceManager
 
-import android.support.v7.app.AppCompatActivity
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import catglo.com.deliveryDatabase.Order
 import catglo.com.deliverydroid.R
 import catglo.com.deliverydroid.homeScreen.HomeScreen_ListFragmentDragDrop

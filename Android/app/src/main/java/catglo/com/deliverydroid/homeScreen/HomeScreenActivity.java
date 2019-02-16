@@ -1,7 +1,8 @@
 package catglo.com.deliverydroid.homeScreen;
 
 import android.Manifest;
-import android.app.AlertDialog;
+import android.os.Handler;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,10 +15,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +27,10 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
+import androidx.core.app.ActivityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import catglo.com.deliveryDatabase.StreetList;
 import catglo.com.deliveryDatabase.ZipCode;
 import catglo.com.deliverydroid.*;
@@ -42,7 +43,7 @@ import catglo.com.deliverydroid.outTheDoor.GpsNotes;
 import catglo.com.deliverydroid.outTheDoor.OutTheDoorActivity;
 import catglo.com.deliverydroid.settings.SettingsActivity;
 import catglo.com.deliverydroid.settings.SettingsListOptions;
-import catglo.com.deliverydroid.shift.ShiftStartEndActivity;
+import catglo.com.deliverydroid.shift.ShiftActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import org.joda.time.DateTime;
@@ -119,13 +120,13 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		super.onResume();
 
 
-		if (sharedPreferences.getString("storePhoneNumber", "").length() > 0) {
+		if (getSharedPreferences().getString("storePhoneNumber", "").length() > 0) {
 			menuCallStoreListButton.setVisibility(View.VISIBLE);
 		} else {
 			menuCallStoreListButton.setVisibility(View.GONE);
 		}
 
-		String storeAddress = sharedPreferences.getString("storeAddress", "");
+		String storeAddress = getSharedPreferences().getString("storeAddress", "");
 		if (storeAddress.length() > 0) {
 			menuNavigateButton.setVisibility(View.VISIBLE);
 		} else {
@@ -139,28 +140,36 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			prefEditor.putBoolean("HasGooglePlay", true);
 		}
 
-		int count = dataBase.getUndeliveredOrderCount();
+		int count = getDataBase().getUndeliveredOrderCount();
 		if (count == 0) {
 			outTheDoorButton.setVisibility(View.GONE);
 
 		} else {
 			outTheDoorButton.setVisibility(View.VISIBLE);
 		}
-		final int ordersThisShift = dataBase.getNumberOfOrdersThisShift();
+		final int ordersThisShift = getDataBase().getNumberOfOrdersThisShift();
 		if (ordersThisShift > 0) {
 			prefEditor.putBoolean("inActiveShift", true);
 		}
 
-
-		if (dataBase.getUndeliveredOrderCount() > 0
-				&& sharedPreferences.getBoolean("pay_rate_location_aware", false)
-				&& sharedPreferences.getBoolean("dual_wage", false)
+	//TODO: Look in to what this geofence is actually doing and if its useful
+		if (getDataBase().getUndeliveredOrderCount() > 0
+				&& getSharedPreferences().getBoolean("pay_rate_location_aware", false)
+				&& getSharedPreferences().getBoolean("dual_wage", false)
 				&& isGeofenceServiceRunning() == false
 				&& GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) == ConnectionResult.SUCCESS) {
 			Intent serviceIntent = new Intent(getApplicationContext(), GeofenceIntentService.class);
 			serviceIntent.putExtra("init_store_geofence", true);
 			startService(serviceIntent);
 		}
+
+		new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getTools().hideOnScreenKeyboard();
+            }
+        },250);
+
 
 	}
 
@@ -169,7 +178,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_screen_activity);
-		prefEditor = sharedPreferences.edit();
+		prefEditor = getSharedPreferences().edit();
 
 		if (getSupportActionBar()!=null) getSupportActionBar().hide();
 
@@ -198,9 +207,9 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		});
 		menuNavigateButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				String storeAddress = sharedPreferences.getString("storeAddress", "");
+				String storeAddress = getSharedPreferences().getString("storeAddress", "");
 				if (storeAddress.length() >= 0) {
-					tools.navigateTo(storeAddress, HomeScreenActivity.this);
+					getTools().navigateTo(storeAddress, HomeScreenActivity.this);
 				} else {
 					if (alreadyAskedStoreAddress == false) {
 						showDialog(STORE_ADDRESS_FIRST);
@@ -226,7 +235,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		menuGpsNotesButton.setOnClickListener(menuGpsNotesClickListener);
 		menuShiftClickListener = new OnClickListener() {
 			public void onClick(View arg0) {
-				startActivity(new Intent(getApplicationContext(), ShiftStartEndActivity.class));
+				startActivity(new Intent(getApplicationContext(), ShiftActivity.class));
 				drawerLayout.closeDrawers();
 			}
 		};
@@ -247,11 +256,12 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		menuCallStoreListButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				drawerLayout.closeDrawers();
-				String phoneNumber = sharedPreferences.getString("storePhoneNumber", "");
+				String phoneNumber = getSharedPreferences().getString("storePhoneNumber", "");
 				if (phoneNumber.length() < 1) {
 					Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
 				} else {
 					String uri = "tel:" + phoneNumber;
+					if (new Settings(getApplicationContext()).omitTelFromPhoneNumbers()) uri = phoneNumber;
 					Intent intent = new Intent(Intent.ACTION_DIAL);
 					intent.setData(Uri.parse(uri));
 					startActivity(intent);
@@ -261,7 +271,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 
 		startShift();
 
-		if (sharedPreferences.getString("addressFilterComponents", "").length() < 2) {
+		if (getSharedPreferences().getString("addressFilterComponents", "").length() < 2) {
 			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			Criteria criteria = new Criteria();
 			String bestProvider = locationManager.getBestProvider(criteria, false);
@@ -288,7 +298,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
     	prefEditor.putFloat("dileveryRadius",0.1f);
 
     	
-		prefEditor.commit();	
+		prefEditor.apply();
 		try {
             streetList = StreetList.LoadState(getApplicationContext());
             if (StreetList.parentList.size()==0) {
@@ -362,18 +372,20 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
         }};
         orderSummaryButton.setOnClickListener(orderSummaryClickListener);
 		outTheDoorButton.setOnClickListener(new OnClickListener(){public void onClick(View v) {
-            if (sharedPreferences.getBoolean("TRIAL_OVER",false)==true){
+            if (getSharedPreferences().getBoolean("TRIAL_OVER",false)==true){
                 showDialog(TRIAL_OVER);
             } else {
-                String onRoadRateString = sharedPreferences.getString("hourly_rate_on_road", "");
+                String onRoadRateString = getSharedPreferences().getString("hourly_rate_on_road", "");
 
-                if (sharedPreferences.getBoolean("switch_on_out_the_door", false)){
-                    float onRoadRate = Tools.parseCurrency(onRoadRateString);
-                    dataBase.setWage(onRoadRate, dataBase.getShift(dataBase.getCurShift()), DateTime.now());
+                //This switch wage on out the door feature is currently defunct
+				//The dual wage and wage tracking in general should be re-visited
+                if (getSharedPreferences().getBoolean("switch_on_out_the_door", false)){
+                    float onRoadRate = Utils.parseCurrency(onRoadRateString);
+                    getDataBase().setWage(onRoadRate, getDataBase().getShift(getDataBase().getCurShift()), DateTime.now());
                 }
 
                 final Intent myIntent = new Intent(getApplicationContext(), OutTheDoorActivity.class);
-                myIntent.putExtra("startNewRun", DeliveryDroidBaseActivity.startNewRun);
+                myIntent.putExtra("startNewRun", DeliveryDroidBaseActivity.Companion.getStartNewRun());
                 startActivityForResult(myIntent, 0);
             }
 		}});
@@ -384,7 +396,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			startActivityForResult(new Intent(getApplicationContext(), TipHistoryActivity.class), 0);
 		}});
 		addOrderButton.setOnClickListener(new OnClickListener(){public void onClick(View v) {
-			if (sharedPreferences.getBoolean("TRIAL_OVER",false)==true){
+			if (getSharedPreferences().getBoolean("TRIAL_OVER",false)==true){
                 showDialog(TRIAL_OVER);
             } else {
                 startActivityForResult(new Intent(getApplicationContext(), NewOrderActivity.class), 0);
@@ -416,7 +428,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		orderSummaryButton.setOnTouchListener(bluingToucher);
 		
 		fragmentContainer = (FrameLayout)findViewById(R.id.fragmentContainerFrame);
-		setSelectedFragment(sharedPreferences.getInt("currentFragment", SORT));	
+		setSelectedFragment(getSharedPreferences().getInt("currentFragment", SORT));
 		
 
         sortClickable.setOnTouchListener(bluingToucher);
@@ -433,12 +445,12 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	private int lastLastOrderDelta=-100;
 	@SuppressWarnings("deprecation")
 	private void startShift() {
-    	final String odometerPay = sharedPreferences.getString("odometer_per_mile", "");
+    	final String odometerPay = getSharedPreferences().getString("odometer_per_mile", "");
 		Float odoPay = 0f;
 		
-		final int lastOrderDelta  = dataBase.getHoursSinceLastOrder();
-		final int openOrders      = dataBase.getUndeliveredOrderCount();
-		final int ordersThisShift = dataBase.getNumberOfOrdersThisShift();
+		final int lastOrderDelta  = getDataBase().getHoursSinceLastOrder();
+		final int openOrders      = getDataBase().getUndeliveredOrderCount();
+		final int ordersThisShift = getDataBase().getNumberOfOrdersThisShift();
 		
 		
 		if (lastOrderDelta > 12 && ordersThisShift > 0 && openOrders==0 && lastOrderDelta != lastLastOrderDelta) {
@@ -448,8 +460,8 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			alertDialogBuilder.setTitle("Starting a Shift?");
 			alertDialogBuilder.setMessage(getString(R.string.Its_been)+" "+lastOrderDelta+" "+getString(R.string.hours_since_you));
 			alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {public void onClick(DialogInterface dialog, int which) {
-				dataBase.setNextShift();
-				startActivity(new Intent(getApplicationContext(),ShiftStartEndActivity.class));
+				getDataBase().setNextShift();
+				startActivity(new Intent(getApplicationContext(),ShiftActivity.class));
 				dialog.dismiss();
 				Toast.makeText(getApplicationContext(), getString(R.string.check_ourder_summary), Toast.LENGTH_LONG).show();
 			}});
@@ -462,8 +474,8 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		}
 
 
-        final int extraTime = sharedPreferences.getInt("extraDays", 0);
-        if ((dataBase.getCurShift() > (7+extraTime)) && getPackageName().contains("free")){
+        final int extraTime = getSharedPreferences().getInt("extraDays", 0);
+        if ((getDataBase().getCurShift() > (7+extraTime)) && getPackageName().contains("free")){
             if (extraTime == 0) {
                 showDialog(REVIEW_FOR_MORE);
             } else {
@@ -535,48 +547,9 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 		return null;
 	}
 	
-//	@Override
-//	public boolean onTouchEvent(MotionEvent ev){
-//		return gestureDetector.onTouchEvent(ev);
-//	}
-	
-	private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-   // private GestureDetector gestureDetector;
-   // View.OnTouchListener gestureListener;
+
 	public static boolean alreadyAskedStoreAddress=false;
-//	static class MyGestureDetector extends SimpleOnGestureListener {
-//        @Override
-//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//            try {
-//                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-//                    return false;
-//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences();
-//                int curFrag = sharedPreferences.getInt("currentFragment", SORT);
-//                // right to left swipe
-//                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                	switch (curFrag){
-//                //	case DETAILS: setSelectedFragment(SORT);
-//               // 	break;
-//                	case SORT: setSelectedFragment(MAP);
-//                	break;
-//                	}
-//                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                	switch (curFrag){
-//                //	case SORT: setSelectedFragment(DETAILS);
-//                //	break;
-//                	case MAP: setSelectedFragment(SORT);
-//                	break;
-//                	}
-//                }
-//            } catch (Exception e) {
-//                // nothing
-//            }
-//            return false;
-//        }
-//
-//    }
+
 	
 	
 	//TODO: This seems like a hack way of handling when we start a new run, come up with something clean
@@ -584,7 +557,7 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	protected void onActivityResult(final int requestCode, final int resultCode, final Intent intent) {
 		switch (resultCode) {
 			case 300: {
-				DeliveryDroidBaseActivity.startNewRun=true;
+				DeliveryDroidBaseActivity.Companion.setStartNewRun(true);
 				break;
 			}
 			case 400: {
@@ -593,12 +566,12 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			}
 			case 500: {
 				//Exit outTheDoor and start new Run
-				DeliveryDroidBaseActivity.startNewRun=true;
+				DeliveryDroidBaseActivity.Companion.setStartNewRun(true);
 				break;
 			}
 			case 501: {
 				//Exit outTheDoor and do not start new Run
-				DeliveryDroidBaseActivity.startNewRun=false;
+				DeliveryDroidBaseActivity.Companion.setStartNewRun(false);
 				break;
 			}		
 		}// end switch
@@ -632,80 +605,4 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 			
 		}
 	}
-	
-	/* Creates the menu items */
-	public boolean onCreateOptionsMenu(final Menu menu) {
-		menu.add(0, SETTINGS, 0, getString(R.string.settings)).setIcon(android.R.drawable.ic_menu_preferences);
-		menu.add(0, NEW_SHIFT, 0, getString(R.string.Shift)).setIcon(R.drawable.ic_menu_guy_clock);
-		menu.add(0, NAV_TO_STORE, 0, getString(R.string.Nav_To_Store)).setIcon(R.drawable.navigate_small);
-		menu.add(0, SEARCH_HISTORY, 0, getString(R.string.Search_Notes_Or_Addresses)).setIcon(R.drawable.ic_action_search);
-		menu.add(0, GPS_NOTES, 0, getString(R.string.GPS_notes)).setIcon(android.R.drawable.ic_menu_compass);
-	    menu.add(0, CUSTOMIZE_LIST, 0, "Customize List ");
-		
-		return true;
-	} 
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu){
-		if (sharedPreferences.getString("storePhoneNumber", "").length()>0){
-			if (menu.findItem(CALL_STORE)==null){
-				menu.add(0, CALL_STORE, 0, getString(R.string.call_store) ).setIcon(android.R.drawable.ic_menu_call);
-			}
-		} else {
-			menu.removeItem(CALL_STORE);
-		}
-		return true;
-	}
-
-	
-	/* Handles item selections */
-	@SuppressWarnings("deprecation")
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-			case SETTINGS: {
-				startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), 0);
-				return true;
-			}
-			case NEW_SHIFT: {
-				startActivity(new Intent(getApplicationContext(), ShiftStartEndActivity.class));
-				return true;
-			}
-			case SEARCH_HISTORY: {
-				startActivity(new Intent(getApplicationContext(), ListAddressHistoryActivity.class));
-				return true;
-			}
-			case NAV_TO_STORE:
-				//TODO: Error dialog box with link to settings
-				String storeAddress = sharedPreferences.getString("storeAddress", "");
-				if (storeAddress.length()>=0){
-		    		tools.navigateTo(storeAddress, HomeScreenActivity.this);
-				} else {
-					if (alreadyAskedStoreAddress==false){
-						showDialog(STORE_ADDRESS_FIRST);
-						alreadyAskedStoreAddress=true;
-					}
-				}
-			break;
-			case CALL_STORE:
-				String phoneNumber = sharedPreferences.getString("storePhoneNumber", "");
-				if (phoneNumber.length()<1){
-					Toast.makeText(getApplicationContext(), R.string.missing_phone_number, Toast.LENGTH_LONG).show();
-				} else {
-					 String uri = "tel:" + phoneNumber;
-					 Intent intent = new Intent(Intent.ACTION_DIAL);
-					 intent.setData(Uri.parse(uri));
-					 startActivity(intent);
-				}
-				break;
-			case GPS_NOTES:
-				startActivity(new Intent(getApplicationContext(), GpsNotes.class));
-				return true;
-			case CUSTOMIZE_LIST:
-				Intent i = new Intent(getApplicationContext(), SettingsListOptions.class);
-				startActivity(i);
-				break;
-		}
-		return false;
-	}
- 
 }
