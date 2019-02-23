@@ -48,21 +48,20 @@ import catglo.com.deliverydroid.Utils;
 class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
     GoogleAddressSuggester.AddressResultListener {
 
-    internal var LOOKUPABLE_ADDRESS_STRING = Pattern.compile("\\w+\\s+\\w{3,100}")
-    internal var GPS_COORDINATES_STRING = Pattern.compile("[0-9]+\\.[0-9]+\\,[0-9]+\\.[0-9]+")
+   // internal var LOOKUPABLE_ADDRESS_STRING = Pattern.compile("\\w+\\s+\\w{3,100}")
+  //  internal var GPS_COORDINATES_STRING = Pattern.compile("[0-9]+\\.[0-9]+\\,[0-9]+\\.[0-9]+")
 
     private var progressDialog: ProgressDialog? = null
     private var autocomplete: AddressHistoryAutocomplete? = null
     private var cancel: Button? = null
     private var save: Button? = null
     private var lookUpGps: Button? = null
-    internal var selectedAddress: AddressInfo? = null
+   // internal var selectedAddress: AddressInfo? = null
     private var mapView: MapView? = null
     private var sharedPreferences: SharedPreferences? = null
     private var locationAccuracyInMeters: Float = 0.toFloat()
 
-    val key: String
-        get() = "storeAddress"
+    val key = "storeAddress"
 
     internal var storeAddress: String? = null
     internal var storeAddressLat: Double = 0.toDouble()
@@ -88,12 +87,14 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
         mapView = findViewById<View>(R.id.mapview) as MapView
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        storeAddress = sharedPreferences!!.getString(key, "")
-        storeAddressLat = sharedPreferences!!.getInt(key + "Lat", 0).toDouble() / 1e6
-        storeAddressLng = sharedPreferences!!.getInt(key + "Lng", 0).toDouble() / 1e6
+        sharedPreferences?.run {
+            storeAddress = getString(key, "")
+            storeAddressLat = getInt(key + "Lat", 0).toDouble() / 1e6
+            storeAddressLng = getInt(key + "Lng", 0).toDouble() / 1e6
+        }
 
-        autocomplete!!.setSelectAllOnFocus(true)
-        autocomplete!!.setText(storeAddress)
+        autocomplete?.setSelectAllOnFocus(true)
+        autocomplete?.setText(storeAddress)
         save!!.setOnClickListener {
             Utils.appendLog("\nSaving Store Address $storeAddressLat,$storeAddressLng")
 
@@ -117,39 +118,40 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
                 saveAndExit()
             }
         }
-        cancel!!.setOnClickListener { finish() }
-        lookUpGps!!.setOnClickListener {
+        cancel?.setOnClickListener { finish() }
+        lookUpGps?.setOnClickListener {
             Utils.appendLog("\nLooking up GPS coordinates")
 
             if (locationAccuracyInMeters == 0f) {
                 synchronized(this@SettingsStoreAddressActivity) {
                     progressDialog = ProgressDialog(this@SettingsStoreAddressActivity)
-                    progressDialog!!.setMessage("Please wait...")
-                    progressDialog!!.setCancelable(true)
-                    progressDialog!!.setOnCancelListener {
+                    progressDialog?.setMessage("Please wait...")
+                    progressDialog?.setCancelable(true)
+                    progressDialog?.setOnCancelListener {
                         synchronized(this@SettingsStoreAddressActivity) {
                             Utils.appendLog("    Dialog cancled")
                             progressDialog = null
                         }
                     }
-                    progressDialog!!.show()
+                    progressDialog?.show()
                 }
 
             } else {
                 useCurrentCoordinates()
             }
         }
-        autocomplete!!.onItemClickListener =
-                OnItemClickListener { arg0, arg1, arg2, arg3 -> centerMapToAddress(autocomplete!!.selectedAddress) }
-        autocomplete!!.addTextChangedListener(this)
-        autocomplete!!.startSuggestor()
+        autocomplete?.onItemClickListener = OnItemClickListener { arg0, arg1, arg2, arg3 ->
+            centerMapToAddress(autocomplete?.selectedAddress)
+        }
+        autocomplete?.addTextChangedListener(this)
+        autocomplete?.startSuggestor()
     }
 
     protected fun useCurrentCoordinates() {
         storeAddressLat = currentLatitude.toFloat().toDouble()
         storeAddressLng = currentLongitude.toFloat().toDouble()
         storeAddress = "$storeAddressLat,$storeAddressLng"
-        autocomplete!!.setText(storeAddress)
+        autocomplete?.setText(storeAddress)
         Toast.makeText(
             applicationContext,
             getString(R.string.Accutate_to) + " " + locationAccuracyInMeters + " " + getString(R.string.meters),
@@ -160,18 +162,18 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
 
     internal fun saveAndExit() {
         //TODO: save preference but check for good lookup
-        val prefEditor = sharedPreferences!!.edit()
-        val addressString = autocomplete!!.text.toString()
-        prefEditor.putString(key, addressString)
-        prefEditor.putInt(key + "Lat", (storeAddressLat * 1e6).toInt())
-        prefEditor.putInt(key + "Lng", (storeAddressLng * 1e6).toInt())
-        prefEditor.putString("centrPoint_lat_s", "" + storeAddressLat)
-        prefEditor.putString("centrPoint_lng_s", "" + storeAddressLng)
-        prefEditor.apply()
-        finish()
-        Utils.appendLog("Saved Store Address $storeAddressLat,$storeAddressLng")
-
-
+        sharedPreferences?.edit()?.let { prefEditor ->
+            autocomplete?.text?.toString()?.let{ addressString ->
+                prefEditor.putString(key, addressString)
+                prefEditor.putInt(key + "Lat", (storeAddressLat * 1e6).toInt())
+                prefEditor.putInt(key + "Lng", (storeAddressLng * 1e6).toInt())
+                prefEditor.putString("centrPoint_lat_s", "" + storeAddressLat)
+                prefEditor.putString("centrPoint_lng_s", "" + storeAddressLng)
+                prefEditor.apply()
+                finish()
+                Utils.appendLog("Saved Store Address $storeAddressLat,$storeAddressLng")
+            }
+        }
     }
 
 
@@ -193,7 +195,7 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
 
     public override fun onPause() {
         super.onPause()
-        locationManager!!.removeUpdates(this)
+        locationManager?.removeUpdates(this)
     }
 
     override fun afterTextChanged(editable: Editable) {

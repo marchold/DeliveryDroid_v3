@@ -21,6 +21,7 @@
             android:networkSecurityConfig="@xml/network_security_config"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
         <activity android:name=".shift.PastShiftActivity">
         </activity>
 
@@ -47,6 +48,9 @@
         <activity
                 android:name=".homeScreen.HomeScreenActivity"
                 android:windowSoftInputMode="stateHidden|adjustResize">
+
+        </activity>
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -39,6 +39,7 @@ import org.mapsforge.map.reader.MapFile
 import org.mapsforge.map.reader.header.MapFileException
 import java.io.File
 import java.io.Serializable
+import java.lang.IllegalStateException
 
 
 fun Location.latLong(): LatLong {
@@ -393,8 +394,13 @@ class DownloadMapAdapter(val context: Context, val maps: ArrayList<DownloadedMap
         val locationProvider = LocationServices.getFusedLocationProviderClient(context)
         locationProvider.lastLocation.addOnSuccessListener { location ->
             map.bounds?.let {
-                if (it.contains(location.latLong())) {
-                    cell.checkmark.visibility = View.VISIBLE
+                try {
+                    if (it.contains(location.latLong())) {
+                        cell.checkmark.visibility = View.VISIBLE
+                    }
+                } catch (e:IllegalStateException){
+                    e.printStackTrace()
+                    //https://play.google.com/apps/publish/?account=5415545862965625496#AndroidMetricsErrorsPlace:p=com.catglo.deliverydroid&appid=4974298585574800656&appVersion=196&installSource=INSTALLED_FROM_ANYWHERE&clusterName=apps/com.catglo.deliverydroid/clusters/e435de23&detailsAppVersion=196&detailsSpan=7&detailsInstallSource=INSTALLED_FROM_ANYWHERE
                 }
             }
         }

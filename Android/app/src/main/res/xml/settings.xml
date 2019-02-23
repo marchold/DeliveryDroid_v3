@@ -555,9 +555,11 @@
     <androidx.preference.PreferenceCategory android:title="Other">
 
 
-        <androidx.preference.PreferenceScreen key="db_settings" android:title="Database Backup and Restore"
-                                              android:icon="@drawable/settings_database"
-                                              android:key="db_backup_and_restore">
+        <androidx.preference.PreferenceScreen
+                key="db_settings"
+                android:title="Database Backup and Restore"
+                android:icon="@drawable/settings_database"
+                android:key="db_backup_and_restore">
 
             <androidx.preference.Preference
                     android:icon="@drawable/ic_drive_file"
@@ -566,9 +568,11 @@
 
             </androidx.preference.Preference>
 
-            <androidx.preference.PreferenceScreen key="manual_backup" android:key="manual_backup"
-                                                  android:icon="@drawable/ic_save_settings"
-                                                  android:title="Manual File Backup">
+            <androidx.preference.PreferenceScreen
+                    key="manual_backup"
+                    android:key="manual_backup"
+                    android:icon="@drawable/ic_save_settings"
+                    android:title="Manual File Backup">
 
 
                 <androidx.preference.Preference
@@ -577,11 +581,14 @@
                         android:summary="Make a copy of your database file and share it"
                         android:title="Backup Data File"/>
 
-                <androidx.preference.PreferenceScreen id="where_db_stored" android:title="@string/where_db_is_stored"
-                                                      android:icon="@drawable/lock_question"
-                                                      android:key="where_db_stored" key="where_db_stored"
-                                                      android:summary="Control privacy vs. easy backup access by storing the app data in private or external or sd-card for easy backup. "
-                >
+                <androidx.preference.PreferenceScreen
+                        id="where_db_stored"
+                        android:title="@string/where_db_is_stored"
+                        android:icon="@drawable/lock_question"
+                        android:key="where_db_stored"
+                        key="where_db_stored"
+                        android:summary="Control privacy vs. easy backup access by storing the app data in private or external or sd-card for easy backup. "
+                        >
 
                     <catglo.com.deliverydroid.settings.SettingsHelpDialog
                             android:dialogIcon="@drawable/icon"
@@ -619,8 +626,9 @@
 
         </androidx.preference.PreferenceScreen>
 
-        <androidx.preference.PreferenceScreen android:title="Device Compatibility"
-                                              android:key="compatib_settings">
+        <androidx.preference.PreferenceScreen
+                android:title="Device Compatibility"
+                android:key="compatib_settings">
 
             <androidx.preference.CheckBoxPreference
                     android:defaultValue="false"

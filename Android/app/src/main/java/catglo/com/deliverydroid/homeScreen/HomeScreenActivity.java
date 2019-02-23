@@ -178,6 +178,8 @@ public class HomeScreenActivity extends DeliveryDroidBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_screen_activity);
+
+
 		prefEditor = getSharedPreferences().edit();
 
 		if (getSupportActionBar()!=null) getSupportActionBar().hide();
