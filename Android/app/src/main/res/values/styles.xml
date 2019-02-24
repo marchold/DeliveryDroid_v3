@@ -45,6 +45,13 @@
 
     </style>
 
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+
+    </style>
+
+
+
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:backgroundStacked">@color/chea_action_bar_bkgd</item>

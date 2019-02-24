@@ -10,6 +10,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -81,6 +82,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     override fun onDestroy() {
         dataBase?.let { it.close() }
         super.onDestroy()
+    }
+
+    override fun onDisplayPreferenceDialog(preference: Preference?) {
+        if (preference is SettingsHelpDialog) {
+            activity?.let {
+                AlertDialog.Builder(it,R.style.myDialog)
+                    .setTitle(R.string.help)
+                    .setMessage(preference.dialogMessage)
+                    .setPositiveButton(android.R.string.ok){ _, _ ->  }
+                    .show()
+            }
+        } else
+            super.onDisplayPreferenceDialog(preference)
     }
 
     public override fun onStart() {
