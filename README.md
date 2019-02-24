@@ -7,3 +7,4 @@ The 2nd revision uses google API's that are no longer public so the address auto
 The maps file are shared in the app through the [Frostwire jlibtorrent library](https://github.com/frostwire/frostwire-jlibtorrent) The torrent file located at http://zan.ooguy.com/Maps.torrent. DeliveryDroid will not be transfering any other kind of torrents and its not intended to be used as a general purpose torrent download app.
 
 If you want to build the project check out the [build instructions](https://github.com/marchold/DeliveryDroid_v3/blob/master/HowToBuild.md) 
+

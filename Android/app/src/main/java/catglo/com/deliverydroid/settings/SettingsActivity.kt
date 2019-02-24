@@ -1,18 +1,21 @@
 package catglo.com.deliverydroid.settings
 
 
+import android.Manifest
 import androidx.appcompat.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.legacy.preference.R.attr.fragment
 import androidx.preference.*
@@ -53,6 +56,7 @@ class SettingsActivity : DeliveryDroidBaseActivity() , PreferenceFragmentCompat.
         return true;
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
@@ -78,6 +82,18 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private var navigationListPref: TwoLinesListPreference? = null
     private var aboutPref: Preference? = null
     private var backupToGoogleDrive: Preference? = null
+
+    private fun checkFilePermissions() : Boolean {
+        activity?.let {
+            if (ActivityCompat.checkSelfPermission( it, Manifest.permission.WRITE_EXTERNAL_STORAGE )  != PackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(it, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+                return false
+            }
+        }
+        return true
+    }
+
 
     override fun onDestroy() {
         dataBase?.let { it.close() }
@@ -158,21 +174,21 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
 
 
-            databaseFileMerge?.onPreferenceChangeListener =
-                    Preference.OnPreferenceChangeListener { preference, newValue ->
+            databaseFileMerge?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                if (!checkFilePermissions()) return@OnPreferenceClickListener true
+                MaterialFilePicker()
+                    .withActivity(activity)
+                    .withRequestCode(2)
+                    .withFilter(Pattern.compile(".*\\.SQLite$")) // Filtering files and directories by file name using regexp
+                    .withFilterDirectories(true) // Set directories filterable (false by default)
+                    .withHiddenFiles(false) // Show hidden files and folders
+                    .start()
 
-                        MaterialFilePicker()
-                            .withActivity(activity)
-                            .withRequestCode(2)
-                            .withFilter(Pattern.compile(".*\\.SQLite$")) // Filtering files and directories by file name using regexp
-                            .withFilterDirectories(true) // Set directories filterable (false by default)
-                            .withHiddenFiles(false) // Show hidden files and folders
-                            .start()
-
-                        false
-                    }
+                false
+            }
 
             databaseFileUse?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                if (!checkFilePermissions()) return@OnPreferenceClickListener true
                 MaterialFilePicker()
                     .withActivity(activity)
                     .withRequestCode(1)
@@ -185,9 +201,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
 
 
-            databaseOnSdcard?.onPreferenceChangeListener =
-                    Preference.OnPreferenceChangeListener { preference, newValue ->
-                        activity?.run {
+            databaseOnSdcard?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+                if (!checkFilePermissions()) return@OnPreferenceChangeListener true
+                activity?.run {
                             try {
                                 if (newValue as Boolean == true) {
                                     //copy to sdcard
@@ -236,6 +252,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
 
             databaseFileCopy?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+
+                if (!checkFilePermissions()) return@OnPreferenceClickListener true
 
                 if (prefs?.getBoolean("DatabaseOnSdcard", false) == true) {
                     activity?.run {

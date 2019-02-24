@@ -47,137 +47,139 @@ class OdometerActivity : DeliveryDroidBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.shift_odometer_activity)
 
-        val intent = intent
-        val id = intent.getIntExtra("ID", -1)
-        if (id == -1) {
-            whichShift = dataBase.curShift
-        } else {
-            whichShift = id
-        }
-        shift = dataBase.getShift(whichShift)
+        dataBase?.let { db ->
+            val intent = intent
+            val id = intent.getIntExtra("ID", -1)
+            if (id == -1) {
+                whichShift = db.curShift
+            } else {
+                whichShift = id
+            }
+            shift = dataBase?.getShift(whichShift) ?: Shift()
 
-        val recentOdometerValue = dataBase.mostRecientOdomenterValue
-        if (shift.odometerAtShiftStart == 0) {
-            shift.odometerAtShiftStart = recentOdometerValue
-        }
-        if (shift.odometerAtShiftEnd < shift.odometerAtShiftStart) {
-            shift.odometerAtShiftEnd = shift.odometerAtShiftStart
-        }
+            val recentOdometerValue = dataBase?.mostRecientOdomenterValue ?: 0
+            if (shift.odometerAtShiftStart == 0) {
+                shift.odometerAtShiftStart = recentOdometerValue
+            }
+            if (shift.odometerAtShiftEnd < shift.odometerAtShiftStart) {
+                shift.odometerAtShiftEnd = shift.odometerAtShiftStart
+            }
 
-        odometerDoneButton.setOnClickListener { finish() }
+            odometerDoneButton.setOnClickListener { finish() }
 
-        startOdometerValueLabel.setOnClickListener {
-            val meterLayout = View.inflate(this@OdometerActivity,R.layout.meter_view_dialog, null)
-            val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
-            val milesDriven = meterLayout.findViewById<TextView>(R.id.milesDriven)
-            meterView.setOnValueChangedListener {
-                if (it==0){
-                    milesDriven.text = ""
-                } else {
-                    try {
-                        if (milesDriven.text.toString().toInt() != it) {
+            startOdometerValueLabel.setOnClickListener {
+                val meterLayout = View.inflate(this@OdometerActivity,R.layout.meter_view_dialog, null)
+                val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
+                val milesDriven = meterLayout.findViewById<TextView>(R.id.milesDriven)
+                meterView.setOnValueChangedListener {
+                    if (it==0){
+                        milesDriven.text = ""
+                    } else {
+                        try {
+                            if (milesDriven.text.toString().toInt() != it) {
+                                milesDriven.setText("$it")
+                            }
+                        } catch (e: NumberFormatException) {
                             milesDriven.setText("$it")
                         }
-                    } catch (e: NumberFormatException) {
-                        milesDriven.setText("$it")
                     }
                 }
-            }
-            milesDriven.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    try {
-                        if (s.toString().toInt() != meterView.value) {
-                            meterView.value = s.toString().toInt()
+                milesDriven.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {}
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        try {
+                            if (s.toString().toInt() != meterView.value) {
+                                meterView.value = s.toString().toInt()
+                            }
+                        } catch (e: NumberFormatException) {
                         }
-                    } catch (e: NumberFormatException) {
                     }
-                }
-            })
-            if (shift.odometerAtShiftStart==0) milesDriven.text = ""
-            else milesDriven.setText(shift.odometerAtShiftStart.toString())
-            meterView.value = shift.odometerAtShiftStart
-            AlertDialog.Builder(this@OdometerActivity)
-                .setTitle(R.string.Starting_odometer)
-                .setView(meterLayout)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    if (meterView.value < shift.odometerAtShiftStart) {
-                        Toast.makeText(
-                            this@OdometerActivity,
-                            "Distance going backwards ",
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
+                })
+                if (shift.odometerAtShiftStart==0) milesDriven.text = ""
+                else milesDriven.setText(shift.odometerAtShiftStart.toString())
+                meterView.value = shift.odometerAtShiftStart
+                AlertDialog.Builder(this@OdometerActivity)
+                    .setTitle(R.string.Starting_odometer)
+                    .setView(meterLayout)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        if (meterView.value < shift.odometerAtShiftStart) {
+                            Toast.makeText(
+                                this@OdometerActivity,
+                                "Distance going backwards ",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
+                        shift.odometerAtShiftStart = meterView.value
+                        db.saveShift(shift)
+                        updateUI()
                     }
-                    shift.odometerAtShiftStart = meterView.value
-                    dataBase.saveShift(shift)
-                    updateUI()
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
-        }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
 
 
-        endOdometerValueLabel.setOnClickListener {
-            val meterLayout = View.inflate(this@OdometerActivity,
-                R.layout.meter_view_dialog, null)
-            val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
-            val milesDriven = meterLayout.findViewById<EditText>(R.id.milesDriven)
-            meterView.setOnValueChangedListener {value ->
-                if (value == 0)
-                {
-                    milesDriven.setText("")
-                } else {
-                    try {
-                        if (milesDriven.text.toString().toInt() != value) {
+            endOdometerValueLabel.setOnClickListener {
+                val meterLayout = View.inflate(this@OdometerActivity,
+                    R.layout.meter_view_dialog, null)
+                val meterView = meterLayout.findViewById<MeterView>(R.id.meterView)
+                val milesDriven = meterLayout.findViewById<EditText>(R.id.milesDriven)
+                meterView.setOnValueChangedListener {value ->
+                    if (value == 0)
+                    {
+                        milesDriven.setText("")
+                    } else {
+                        try {
+                            if (milesDriven.text.toString().toInt() != value) {
+                                milesDriven.setText("$value")
+                            }
+                        } catch (e: NumberFormatException) {
                             milesDriven.setText("$value")
                         }
-                    } catch (e: NumberFormatException) {
-                        milesDriven.setText("$value")
                     }
                 }
-            }
-            milesDriven.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    try {
-                        if (s.toString().toInt() != meterView.value) {
-                            meterView.value = s.toString().toInt()
+                milesDriven.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {}
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        try {
+                            if (s.toString().toInt() != meterView.value) {
+                                meterView.value = s.toString().toInt()
+                            }
+                        } catch (e: NumberFormatException) {
                         }
-                    } catch (e: NumberFormatException) {
                     }
+                })
+                meterView.value = shift.odometerAtShiftEnd
+                if (shift.odometerAtShiftEnd==0){
+                    milesDriven.setText("")
+                }else {
+                    milesDriven.setText("${shift.odometerAtShiftEnd}")
                 }
-            })
-            meterView.value = shift.odometerAtShiftEnd
-            if (shift.odometerAtShiftEnd==0){
-                milesDriven.setText("")
-            }else {
-                milesDriven.setText("${shift.odometerAtShiftEnd}")
-            }
-            if (meterView.value < shift.odometerAtShiftStart) {
-                meterView.value = shift.odometerAtShiftStart + 1
-            }
-            AlertDialog.Builder(this@OdometerActivity)
-                .setTitle(R.string.End_odometer)
-                .setView(meterLayout)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    if (meterView.value < shift.odometerAtShiftStart) {
-                        Toast.makeText(
-                            this@OdometerActivity,
-                            "Distance does not go backwards",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        updateUI()
-                    } else {
-                        shift.odometerAtShiftEnd = meterView.value
-                        dataBase.saveShift(shift)
-                        updateUI()
+                if (meterView.value < shift.odometerAtShiftStart) {
+                    meterView.value = shift.odometerAtShiftStart + 1
+                }
+                AlertDialog.Builder(this@OdometerActivity)
+                    .setTitle(R.string.End_odometer)
+                    .setView(meterLayout)
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        if (meterView.value < shift.odometerAtShiftStart) {
+                            Toast.makeText(
+                                this@OdometerActivity,
+                                "Distance does not go backwards",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            updateUI()
+                        } else {
+                            shift.odometerAtShiftEnd = meterView.value
+                            dataBase?.saveShift(shift)
+                            updateUI()
+                        }
                     }
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
         }
     }
 

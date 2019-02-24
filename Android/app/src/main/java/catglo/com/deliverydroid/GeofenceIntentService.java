@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -35,7 +36,7 @@ public class GeofenceIntentService extends IntentService implements LocationList
     LocationRequest locationrequest;
     ArrayList<Geofence> listOfGeofences;
     DataBase dataBase = null;
-    private GeofencingClient locationClient = LocationServices.getGeofencingClient(this);
+    private GeofencingClient locationClient = null;
 
     public GeofenceIntentService() {
         super("GeofenceIntentService");
@@ -60,6 +61,8 @@ public class GeofenceIntentService extends IntentService implements LocationList
 
     @Override
     protected synchronized void onHandleIntent(Intent intent) {
+
+
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         if (geofencingEvent.hasError()) {
             //     String errorMessage = GeofenceErrorMessages.getErrorString(this,
@@ -195,7 +198,7 @@ public class GeofenceIntentService extends IntentService implements LocationList
         GeofencingRequest.Builder geofenceRequestBuilder = new GeofencingRequest.Builder();
         geofenceRequestBuilder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
 
-        Builder builder = new Geofence.Builder();
+        Builder builder = new Builder();
         builder.setRequestId("near_store_geofence");
         builder.setCircularRegion(latitude, longitude, 50);
         builder.setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER);
@@ -211,8 +214,11 @@ public class GeofenceIntentService extends IntentService implements LocationList
 
         //   locationClient.addGeofences(listOfGeofences,pendingIntent, GeofenceIntentService.this);
 
+        locationClient = LocationServices.getGeofencingClient(this);
+        if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            locationClient.addGeofences(geofenceRequestBuilder.build(), pendingIntent);
+        }
 
-        locationClient.addGeofences(geofenceRequestBuilder.build(), pendingIntent);
 
         return pendingIntent;
 

@@ -216,45 +216,51 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
     }
 
     private fun setupHeaderViews() {
-        val counts = dataBase.getShiftCounts(viewingShift)
-        if (counts.prev < 0) {
-            previousShift?.text = ""
-            thisShift?.text = getString(R.string.Shift) + " 1"
-        } else {
-            previousShift?.text = getString(R.string.Shift) + " " + counts.prev
-            thisShift?.text = getString(R.string.Shift) + " " + counts.cur
-        }
-        if (counts.next < 0) {
-            nextShift?.text = ""
-        } else {
-            nextShift?.text = getString(R.string.Shift) + " " + counts.next
-        }
-        numberOfOrders?.text = "" + dataBase.getNumberOfOrdersInShift(viewingShift)
-        val orders = dataBase.getShiftOrderArray(viewingShift)
-        if (orders.size > 0) {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = orders[0].time.time
-            date?.text = String.format("%tA %tb %te %tY", calendar, calendar, calendar, calendar)
-        } else {
-            date?.setText(R.string.today)
+        dataBase?.let { db ->
+            val counts = db.getShiftCounts(viewingShift)
+            if (counts.prev < 0) {
+                previousShift?.text = ""
+                thisShift?.text = getString(R.string.Shift) + " 1"
+            } else {
+                previousShift?.text = getString(R.string.Shift) + " " + counts.prev
+                thisShift?.text = getString(R.string.Shift) + " " + counts.cur
+            }
+            if (counts.next < 0) {
+                nextShift?.text = ""
+            } else {
+                nextShift?.text = getString(R.string.Shift) + " " + counts.next
+            }
+            numberOfOrders?.text = "" + db?.getNumberOfOrdersInShift(viewingShift)
+            val orders = db.getShiftOrderArray(viewingShift)
+            if (orders.size > 0) {
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = orders[0].time.time
+                date?.text = String.format("%tA %tb %te %tY", calendar, calendar, calendar, calendar)
+            } else {
+                date?.setText(R.string.today)
+            }
         }
     }
 
     internal fun flingRight() {
-        viewFlipper?.inAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left_in)
-        viewFlipper?.outAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left_out)
-        if (viewingShift < dataBase.curShift) {
-            flipViews(dataBase.getNextShiftNumber(viewingShift))
-            viewFlipper?.showPrevious()
+        dataBase?.let { db ->
+            viewFlipper?.inAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left_in)
+            viewFlipper?.outAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_left_out)
+            if (viewingShift < db.curShift) {
+                flipViews(db.getNextShiftNumber(viewingShift))
+                viewFlipper?.showPrevious()
+            }
         }
     }
 
     internal fun flingLeft() {
-        viewFlipper?.inAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right_in)
-        viewFlipper?.outAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right_out)
-        if (viewingShift > 1) {
-            flipViews(dataBase.getPrevoiusShiftNumber(viewingShift))
-            viewFlipper?.showNext()
+        dataBase?.let { db ->
+            viewFlipper?.inAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right_in)
+            viewFlipper?.outAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_right_out)
+            if (viewingShift > 1) {
+                flipViews(db.getPrevoiusShiftNumber(viewingShift))
+                viewFlipper?.showNext()
+            }
         }
     }
 
@@ -267,109 +273,111 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.order_summary_activity)
 
-        drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
-        menuDrawer = findViewById(R.id.menu_drawer)
-        findViewById<View>(R.id.export_to_menu_button).setOnClickListener {
-            exportDataDialog()
-            drawerLayout.closeDrawers()
-        }
-        findViewById<View>(R.id.go_to_day_menu_button).setOnClickListener {
-            goToDateDialog()
-            drawerLayout.closeDrawers()
-        }
-        findViewById<View>(R.id.delete_shift_menu_button).setOnClickListener {
-            confirmDeleteShiftDialog()
-            drawerLayout.closeDrawers()
-        }
-        findViewById<View>(R.id.odometer_and_hours_menu_button).setOnClickListener {
-            val i = Intent(applicationContext, PastShiftActivity::class.java)
-            i.putExtra("ID", viewingShift)
-            startActivity(i)
-            drawerLayout.closeDrawers()
-        }
-        addOrderButton = findViewById(R.id.add_order_menu_button)
-        addOrderButton?.setOnClickListener {
-            val o = Order()
-            o.primaryKey = dataBase.add(o, viewingShift).toInt()
-            val i = Intent(applicationContext, SummaryActivity::class.java)
-            i.putExtra("openEdit", true)
-            i.putExtra("DB Key", o.primaryKey)
-            startActivity(i)
-            drawerLayout.closeDrawers()
-        }
-        customizeListView = findViewById(R.id.customize_list_menu_button)
-        configCashOwedToStore = findViewById(R.id.configure_cash_owed_to_store_menu_button)
-        customizeListView.visibility = View.GONE
-        configCashOwedToStore.visibility = View.GONE
-
-
-        if (savedInstanceState == null) {
-            viewingShift = dataBase.curShift
-        } else {
-            viewingShift = savedInstanceState.getInt("viewingShift")
-        }
-        viewFlipper = findViewById<View>(R.id.viewSwitcher1) as ViewSwitcher
-
-
-        //Shift number horizontal scroll bar
-        previousShift = findViewById<View>(R.id.previousShift) as TextView
-        nextShift = findViewById<View>(R.id.nextShift) as TextView
-        thisShift = findViewById<View>(R.id.currentShift) as TextView
-
-        prevShiftClickable = findViewById(R.id.prevShiftClickable)
-        nextShiftClickable = findViewById(R.id.nextShiftClickable)
-
-        prevShiftClickable?.setOnClickListener { flingLeft() }
-        nextShiftClickable?.setOnClickListener { flingRight() }
-
-        moreMenuButton = findViewById(R.id.moreClickable) as View
-        moreMenuButton?.setOnClickListener {
-            if (drawerLayout.isDrawerOpen(menuDrawer!!)) {
-                drawerLayout.closeDrawer(menuDrawer!!)
-            } else {
-                if (viewingShift == DataBase.TodaysShiftCount) {
-                    addOrderButton?.visibility = View.GONE
-                } else {
-                    addOrderButton?.visibility = View.VISIBLE
-                }
-                drawerLayout.openDrawer(menuDrawer!!)
+        dataBase?.let { db ->
+            drawerLayout = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            menuDrawer = findViewById(R.id.menu_drawer)
+            findViewById<View>(R.id.export_to_menu_button).setOnClickListener {
+                exportDataDialog()
+                drawerLayout.closeDrawers()
             }
+            findViewById<View>(R.id.go_to_day_menu_button).setOnClickListener {
+                goToDateDialog()
+                drawerLayout.closeDrawers()
+            }
+            findViewById<View>(R.id.delete_shift_menu_button).setOnClickListener {
+                confirmDeleteShiftDialog()
+                drawerLayout.closeDrawers()
+            }
+            findViewById<View>(R.id.odometer_and_hours_menu_button).setOnClickListener {
+                val i = Intent(applicationContext, PastShiftActivity::class.java)
+                i.putExtra("ID", viewingShift)
+                startActivity(i)
+                drawerLayout.closeDrawers()
+            }
+            addOrderButton = findViewById(R.id.add_order_menu_button)
+            addOrderButton?.setOnClickListener {
+                val o = Order()
+                o.primaryKey = db.add(o, viewingShift).toInt()
+                val i = Intent(applicationContext, SummaryActivity::class.java)
+                i.putExtra("openEdit", true)
+                i.putExtra("DB Key", o.primaryKey)
+                startActivity(i)
+                drawerLayout.closeDrawers()
+            }
+            customizeListView = findViewById(R.id.customize_list_menu_button)
+            configCashOwedToStore = findViewById(R.id.configure_cash_owed_to_store_menu_button)
+            customizeListView.visibility = View.GONE
+            configCashOwedToStore.visibility = View.GONE
+
+
+            if (savedInstanceState == null) {
+                viewingShift = db.curShift
+            } else {
+                viewingShift = savedInstanceState.getInt("viewingShift")
+            }
+            viewFlipper = findViewById<View>(R.id.viewSwitcher1) as ViewSwitcher
+
+
+            //Shift number horizontal scroll bar
+            previousShift = findViewById<View>(R.id.previousShift) as TextView
+            nextShift = findViewById<View>(R.id.nextShift) as TextView
+            thisShift = findViewById<View>(R.id.currentShift) as TextView
+
+            prevShiftClickable = findViewById(R.id.prevShiftClickable)
+            nextShiftClickable = findViewById(R.id.nextShiftClickable)
+
+            prevShiftClickable?.setOnClickListener { flingLeft() }
+            nextShiftClickable?.setOnClickListener { flingRight() }
+
+            moreMenuButton = findViewById(R.id.moreClickable) as View
+            moreMenuButton?.setOnClickListener {
+                if (drawerLayout.isDrawerOpen(menuDrawer!!)) {
+                    drawerLayout.closeDrawer(menuDrawer!!)
+                } else {
+                    if (viewingShift == DataBase.TodaysShiftCount) {
+                        addOrderButton?.visibility = View.GONE
+                    } else {
+                        addOrderButton?.visibility = View.VISIBLE
+                    }
+                    drawerLayout.openDrawer(menuDrawer!!)
+                }
+            }
+
+            //Action bar shift info
+            numberOfOrders = findViewById<View>(R.id.osNumberOfDeliveries) as TextView
+            date = findViewById<View>(R.id.osDate) as TextView
+            setupHeaderViews()
+
+            /* Action Bar */
+            //headerDetailText  = (TextView)findViewById(R.id.headerDetailText);
+            (findViewById<View>(R.id.backButton) as FrameLayout).setOnClickListener { finish() }
+            //Action bar dropdown menu
+            actionBarButton = findViewById(R.id.actionMenuDropdown) as View
+            dropDownMenu = findViewById<View>(R.id.dropdownMenu) as LinearLayout
+            totalsButton = findViewById<View>(R.id.totalsMenuButton) as TextView
+            orderListButton = findViewById<View>(R.id.orderListMenuButton) as TextView
+            splitViewButton = findViewById<View>(R.id.splitViewButton) as TextView
+            actionBarButton?.setOnClickListener { dropDownMenu?.visibility = View.VISIBLE }
+            totalsButton?.setOnClickListener { swtichToViewType(VIEW_TYPE_DETAILS) }
+            orderListButton?.setOnClickListener { swtichToViewType(VIEW_TYPE_LIST) }
+            splitViewButton?.setOnClickListener { swtichToViewType(VIEW_TYPE_SPLIT) }
+
+            val display = windowManager.defaultDisplay
+            val width = display.width  // deprecated
+            val height = display.height  // deprecated
+            val dm = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(dm)
+            val x = Math.pow((width / dm.xdpi).toDouble(), 2.0)
+            val y = Math.pow((height / dm.ydpi).toDouble(), 2.0)
+            val screenInches = Math.sqrt(x + y)
+            if (screenInches > 5) {
+                viewType = sharedPreferences.getInt("showListView", VIEW_TYPE_SPLIT)
+            } else {
+                viewType = sharedPreferences.getInt("showListView", VIEW_TYPE_DETAILS)
+            }
+            use2ndView = false
+            flipViews(viewingShift)
         }
-
-        //Action bar shift info
-        numberOfOrders = findViewById<View>(R.id.osNumberOfDeliveries) as TextView
-        date = findViewById<View>(R.id.osDate) as TextView
-        setupHeaderViews()
-
-        /* Action Bar */
-        //headerDetailText  = (TextView)findViewById(R.id.headerDetailText);
-        (findViewById<View>(R.id.backButton) as FrameLayout).setOnClickListener { finish() }
-        //Action bar dropdown menu
-        actionBarButton = findViewById(R.id.actionMenuDropdown) as View
-        dropDownMenu = findViewById<View>(R.id.dropdownMenu) as LinearLayout
-        totalsButton = findViewById<View>(R.id.totalsMenuButton) as TextView
-        orderListButton = findViewById<View>(R.id.orderListMenuButton) as TextView
-        splitViewButton = findViewById<View>(R.id.splitViewButton) as TextView
-        actionBarButton?.setOnClickListener { dropDownMenu?.visibility = View.VISIBLE }
-        totalsButton?.setOnClickListener { swtichToViewType(VIEW_TYPE_DETAILS) }
-        orderListButton?.setOnClickListener { swtichToViewType(VIEW_TYPE_LIST) }
-        splitViewButton?.setOnClickListener { swtichToViewType(VIEW_TYPE_SPLIT) }
-
-        val display = windowManager.defaultDisplay
-        val width = display.width  // deprecated
-        val height = display.height  // deprecated
-        val dm = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(dm)
-        val x = Math.pow((width / dm.xdpi).toDouble(), 2.0)
-        val y = Math.pow((height / dm.ydpi).toDouble(), 2.0)
-        val screenInches = Math.sqrt(x + y)
-        if (screenInches > 5) {
-            viewType = sharedPreferences.getInt("showListView", VIEW_TYPE_SPLIT)
-        } else {
-            viewType = sharedPreferences.getInt("showListView", VIEW_TYPE_DETAILS)
-        }
-        use2ndView = false
-        flipViews(viewingShift)
     }
 
 
@@ -451,40 +459,41 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
                 )
 
                 GlobalScope.launch(Dispatchers.Default){
-                    val csvData = dataBase.getCSVData(startDate, endDate, pd, this@OrderSummaryActivity)
+                    dataBase?.let{ db ->
+                        val csvData = db.getCSVData(startDate, endDate, pd, this@OrderSummaryActivity)
 
-                    fileName ="deliveryData.csv"
-                    val file = File( Environment.getExternalStorageDirectory(), fileName)
-                    try {
-                        BufferedWriter(FileWriter(file)).run {
-                            write(csvData)
-                            flush()
-                            close()
-                        }
+                        fileName ="deliveryData.csv"
+                        val file = File( Environment.getExternalStorageDirectory(), fileName)
+                        try {
+                            BufferedWriter(FileWriter(file)).run {
+                                write(csvData)
+                                flush()
+                                close()
+                            }
 
-                        val emailIntent = Intent(Intent.ACTION_SEND)
-                        emailIntent.type = "plain/text"
-                        val subject = this@OrderSummaryActivity.getString(R.string.cvs_email_subject)
-                        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
-                        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "")
-                        emailIntent.type = "text/csv"
+                            val emailIntent = Intent(Intent.ACTION_SEND)
+                            emailIntent.type = "plain/text"
+                            val subject = this@OrderSummaryActivity.getString(R.string.cvs_email_subject)
+                            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
+                            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "")
+                            emailIntent.type = "text/csv"
 
-                        emailIntent.putExtra(Intent.EXTRA_STREAM,
-                                FileProvider.getUriForFile(this@OrderSummaryActivity,
-                                BuildConfig.APPLICATION_ID + ".provider",
-                                    file ))
+                            emailIntent.putExtra(Intent.EXTRA_STREAM,
+                                    FileProvider.getUriForFile(this@OrderSummaryActivity,
+                                    BuildConfig.APPLICATION_ID + ".provider",
+                                        file ))
 
-                        emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        GlobalScope.launch(Dispatchers.Main) {
-                            applicationContext.startActivity(emailIntent)
-                        }
+                            emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            GlobalScope.launch(Dispatchers.Main) {
+                                applicationContext.startActivity(emailIntent)
+                            }
 
-                    } catch (e: IOException) {
-                        GlobalScope.launch(Dispatchers.Main) {
-                            Toast.makeText(applicationContext,"Error Saving File",Toast.LENGTH_LONG).show()
+                        } catch (e: IOException) {
+                            GlobalScope.launch(Dispatchers.Main) {
+                                Toast.makeText(applicationContext,"Error Saving File",Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
-
                     GlobalScope.launch(Dispatchers.Main) { pd?.dismiss() }
                 }
         }
@@ -500,26 +509,26 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
             "Delete this record?"
         ).setPositiveButton("Yes") { dialog, whichButton ->
             //Log.i("Delivery Driver", "User Y/N Delete Order");
-            dataBase.delete(recordToDelete)
+            dataBase?.delete(recordToDelete)
         }.setNegativeButton("No") { dialog, whichButton -> /* User clicked Cancel so do some stuff */ }.show()
     }
 
 
     fun confirmDeleteShiftDialog() {
+        dataBase?.let { db ->
 
+            val tip = db.getTipTotal(
+                this@OrderSummaryActivity, DataBase.Shift + "=" + viewingShift + " AND " + DataBase.Payed + " >= 0",
+                "WHERE shifts.ID=$viewingShift", null
+            )
 
-        val tip = dataBase.getTipTotal(
-            this@OrderSummaryActivity, DataBase.Shift + "=" + viewingShift + " AND " + DataBase.Payed + " >= 0",
-            "WHERE shifts.ID=$viewingShift", null
-        )
-
-        AlertDialog.Builder(this@OrderSummaryActivity).setIcon(R.drawable.icon).setTitle(
-            "Delete this shift and all " + tip.deliveries + " order records?"
-        ).setPositiveButton("Yes") { dialog, whichButton ->
-            dataBase.deleteShift(viewingShift)
-            viewingShift = dataBase.getNextShiftNumber(viewingShift)
-        }.setNegativeButton("No") { dialog, whichButton -> /* User clicked Cancel so do some stuff */ }.show()
-
+            AlertDialog.Builder(this@OrderSummaryActivity).setIcon(R.drawable.icon).setTitle(
+                "Delete this shift and all " + tip.deliveries + " order records?"
+            ).setPositiveButton("Yes") { dialog, whichButton ->
+                db.deleteShift(viewingShift)
+                viewingShift = db.getNextShiftNumber(viewingShift)
+            }.setNegativeButton("No") { dialog, whichButton -> /* User clicked Cancel so do some stuff */ }.show()
+        }
 
     }
 
@@ -537,19 +546,21 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
         alert.setView(view)
 
         alert.setPositiveButton("Ok") { dialog, whichButton ->
-            val c = Calendar.getInstance()
-            c.set(input.year, input.month, input.dayOfMonth)
+            dataBase?.let {db ->
+                val c = Calendar.getInstance()
+                c.set(input.year, input.month, input.dayOfMonth)
 
-            val shift = dataBase.findShiftForTime(c)
-            if (shift >= 0) {
-                viewingShift = shift
-                if (orderListSummaryFragment != null) {
-                    orderListSummaryFragment?.viewingShift = viewingShift
-                    orderListSummaryFragment?.updateUI()
-                }
-                if (orderSummaryTotalsFragment != null) {
-                    orderSummaryTotalsFragment?.viewingShift = viewingShift
-                    orderSummaryTotalsFragment?.updateUI()
+                val shift = db.findShiftForTime(c)
+                if (shift >= 0) {
+                    viewingShift = shift
+                    if (orderListSummaryFragment != null) {
+                        orderListSummaryFragment?.viewingShift = viewingShift
+                        orderListSummaryFragment?.updateUI()
+                    }
+                    if (orderSummaryTotalsFragment != null) {
+                        orderSummaryTotalsFragment?.viewingShift = viewingShift
+                        orderSummaryTotalsFragment?.updateUI()
+                    }
                 }
             }
         }

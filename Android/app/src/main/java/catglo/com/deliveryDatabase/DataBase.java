@@ -2613,8 +2613,8 @@ public class DataBase extends Object  {
             int undeliverableCol = c.getColumnIndex("undeliverable");
 
 
-            DateFormat dateFormater = new SimpleDateFormat("yyyy-mm-dd");
-            DateFormat timeFormatter = new SimpleDateFormat("hh:mm");
+            DateFormat dateFormater = new SimpleDateFormat("mm/dd/yyyy");
+            DateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss aa");
 
             //String[] altPayAmount = new String[4];
             String[] altPayLabel  = new String[4];
@@ -2734,7 +2734,7 @@ public class DataBase extends Object  {
 
                 String otherString = sb.toString();
 
-                csvData += " \""+ cvsEscapeString(dateString)          +"\"";
+                csvData += " "+ cvsEscapeString(dateString)          +"";
                 csvData += ",\""+ cvsEscapeString(orderNumberString)   +"\"";
                 csvData += ",\""+ cvsEscapeString(timeString)          +"\"";
                 csvData += ",\""+ cvsEscapeString(shiftString)         +"\"";

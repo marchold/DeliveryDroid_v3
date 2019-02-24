@@ -70,119 +70,123 @@ open class ShiftActivity : DeliveryDroidBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.shift_activity)
 
-        val intent = intent
-        val id = intent.getIntExtra("ID", -1)
-        if (id == -1) {
-            shift = dataBase.getShift(DataBase.TodaysShiftCount)
-            whichShift = DataBase.TodaysShiftCount
-        } else {
-            whichShift = id
-            shift = dataBase.getShift(whichShift)
-        }
-
-
-
-        doneButton.setOnClickListener { finish() }
-
-        startTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.startTime) { datePicker, timePicker ->
-            shift.startTime.year = datePicker.year
-            shift.startTime.monthOfYear = datePicker.month + 1
-            shift.startTime.dayOfMonth = datePicker.dayOfMonth
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                shift.startTime.hourOfDay = timePicker.hour
-                shift.startTime.minuteOfHour = timePicker.minute
+        dataBase?.let { db ->
+            val intent = intent
+            val id = intent.getIntExtra("ID", -1)
+            if (id == -1) {
+                shift = db.getShift(DataBase.TodaysShiftCount)
+                whichShift = DataBase.TodaysShiftCount
             } else {
-                @Suppress("DEPRECATION")
-                shift.startTime.hourOfDay = timePicker.currentHour
-                @Suppress("DEPRECATION")
-                shift.startTime.minuteOfHour = timePicker.currentMinute
+                whichShift = id
+                shift = db.getShift(whichShift)
             }
-            dataBase.saveShift(shift)
-        })
 
-        endTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.endTime) { datePicker, timePicker ->
-            shift.endTime.year = datePicker.year
-            shift.endTime.monthOfYear = datePicker.month + 1
-            shift.endTime.dayOfMonth = datePicker.dayOfMonth
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                shift.endTime.hourOfDay = timePicker.hour
-                shift.endTime.minuteOfHour = timePicker.minute
-            } else {
-                shift.endTime.hourOfDay = timePicker.currentHour
-                shift.endTime.minuteOfHour = timePicker.currentMinute
-            }
-            dataBase.saveShift(shift)
-        })
 
-     /*
-*/
 
-        deleteShiftClickable.setOnClickListener {
-            AlertDialog.Builder(this@ShiftActivity).run {
-                setTitle("Delete shift?")
-                setMessage("Are you sure you want to delete this shift?")
-                setPositiveButton(android.R.string.ok) { dialog, _ ->
-                    dataBase.deleteShift(whichShift)
-                    dialog.dismiss()
-                    shift = dataBase.getShift(dataBase.curShift)
-                    updateUI()
+            doneButton.setOnClickListener { finish() }
+
+            startTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.startTime) { datePicker, timePicker ->
+                shift.startTime.year = datePicker.year
+                shift.startTime.monthOfYear = datePicker.month + 1
+                shift.startTime.dayOfMonth = datePicker.dayOfMonth
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    shift.startTime.hourOfDay = timePicker.hour
+                    shift.startTime.minuteOfHour = timePicker.minute
+                } else {
+                    @Suppress("DEPRECATION")
+                    shift.startTime.hourOfDay = timePicker.currentHour
+                    @Suppress("DEPRECATION")
+                    shift.startTime.minuteOfHour = timePicker.currentMinute
                 }
-                setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
-                show()
+                db.saveShift(shift)
+            })
+
+            endTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.endTime) { datePicker, timePicker ->
+                shift.endTime.year = datePicker.year
+                shift.endTime.monthOfYear = datePicker.month + 1
+                shift.endTime.dayOfMonth = datePicker.dayOfMonth
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    shift.endTime.hourOfDay = timePicker.hour
+                    shift.endTime.minuteOfHour = timePicker.minute
+                } else {
+                    shift.endTime.hourOfDay = timePicker.currentHour
+                    shift.endTime.minuteOfHour = timePicker.currentMinute
+                }
+                db.saveShift(shift)
+            })
+
+         /*
+    */
+
+            deleteShiftClickable.setOnClickListener {
+                AlertDialog.Builder(this@ShiftActivity).run {
+                    setTitle("Delete shift?")
+                    setMessage("Are you sure you want to delete this shift?")
+                    setPositiveButton(android.R.string.ok) { dialog, _ ->
+                        dataBase?.let { db ->
+                            db.deleteShift(whichShift)
+                            dialog.dismiss()
+                            shift = db.getShift(db.curShift)
+                            updateUI()
+                        }
+                    }
+                    setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
+                    show()
+                }
+
             }
 
+            newShiftButton?.setOnClickListener {
+                db.setNextShift()
+                shift = db.getShift(db.curShift)
+                updateUI()
+            }
+
+
+            setOdometerButton.setOnClickListener {
+                startActivity(Intent(this@ShiftActivity, OdometerActivity::class.java).run { putExtra("whichShift",whichShift) })
+            }
         }
-
-        newShiftButton?.setOnClickListener {
-            dataBase.setNextShift()
-            shift = dataBase.getShift(dataBase.curShift)
-            updateUI()
-        }
-
-
-        setOdometerButton.setOnClickListener {
-            startActivity(Intent(this@ShiftActivity, OdometerActivity::class.java).run { putExtra("whichShift",whichShift) })
-        }
-
     }
 
     public override fun onResume() {
         super.onResume()
-
-        shift = dataBase.getShift(whichShift)
-        updateUI()
+        dataBase?.let { db ->
+            shift = db.getShift(whichShift)
+            updateUI()
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        dataBase.saveShift(shift);
+        dataBase?.saveShift(shift);
     }
 
     fun updateUI() {
+        dataBase?.let { db ->
+            if (shift.endTime.millis == 0L && shift.startTime.millis == 0L) {
+                db.estimateShiftTimes(shift)
+            }
 
-        if (shift.endTime.millis == 0L && shift.startTime.millis == 0L) {
-            dataBase.estimateShiftTimes(shift)
+            tips = db.getTipTotal(
+                applicationContext, "Payed != -1 AND Shift=$whichShift",
+                "WHERE shifts.ID=$whichShift",null
+            )
+
+            shift.startTime.toGregorianCalendar()
+                .let { startTimeValueLabel.text = String.format("%tl:%tM %tp %ta", it, it, it, it) }
+            shift.endTime.toGregorianCalendar()
+                .let { endTimeValueLabel.text = String.format("%tl:%tM %tp %ta", it, it, it, it) }
+
+            //  deliveries.text = tips?.deliveries.toString()
+
+            val t1 = shift.endTime.millis.toFloat()
+            val t2 = shift.startTime.millis.toFloat()
+            var total = t1 - t2
+            total /= 3600000f
+            hoursWorkedValueLabel.text = String.format("%.2f", total)
+
         }
-
-        tips = dataBase.getTipTotal(
-            applicationContext, "Payed != -1 AND Shift=$whichShift",
-            "WHERE shifts.ID=$whichShift",null
-        )
-
-        shift.startTime.toGregorianCalendar()
-            .let { startTimeValueLabel.text = String.format("%tl:%tM %tp %ta", it, it, it, it) }
-        shift.endTime.toGregorianCalendar()
-            .let { endTimeValueLabel.text = String.format("%tl:%tM %tp %ta", it, it, it, it) }
-
-        //  deliveries.text = tips?.deliveries.toString()
-
-        val t1 = shift.endTime.millis.toFloat()
-        val t2 = shift.startTime.millis.toFloat()
-        var total = t1 - t2
-        total /= 3600000f
-        hoursWorkedValueLabel.text = String.format("%.2f", total)
-
-
 
       /*  */
         //  moneyCollected.text = Utils.getFormattedCurrency(tips?.payed)
