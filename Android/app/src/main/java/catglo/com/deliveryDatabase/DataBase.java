@@ -2613,7 +2613,7 @@ public class DataBase extends Object  {
             int undeliverableCol = c.getColumnIndex("undeliverable");
 
 
-            DateFormat dateFormater = new SimpleDateFormat("mm/dd/yyyy");
+            DateFormat dateFormater = new SimpleDateFormat("MM/dd/yyyy");
             DateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss aa");
 
             //String[] altPayAmount = new String[4];
