@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -253,10 +254,14 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
                 @Override
                 public void onClick(View v) {
                     NewOrderActivity activity = ((NewOrderActivity) getActivity());
-                    activity.getUtils().showTimeSliderDialog(orderTime, new MutableDateTime(order.time), new DialogInterface.OnDismissListener() {
+                    MutableDateTime dateTime = new MutableDateTime(order.time);
+                    activity.getUtils().showTimeSliderDialog(orderTime, dateTime, new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
                             //TODO: CHECKCHECK do we need to set this
+                            Log.i("TIME","Order time set to "+orderTime.toString());
+                            order.time.setTime(dateTime.getMillis());
+
                         }
                     });
                 }

@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/row_root"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/row_root"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
 
     <FrameLayout
         android:id="@+id/dragHandle"
@@ -64,7 +65,7 @@
                 android:layout_toRightOf="@+id/addressWarningIcons"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:text="13032 178th DR SE. Snohomish, WA. 98290 USA"
+                tools:text="13032 178th DR SE. Snohomish, WA. 98290 USA"
                 android:textSize="19sp" />
 
             <ImageView
@@ -93,7 +94,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$19.99"
+                    tools:text="$19.99"
                     android:textColor="@color/costColor"
                     android:textSize="14sp" />
             </FrameLayout>
@@ -117,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="6min"
+                    tools:text="6min"
                     android:textColor="@color/gold"
                     android:visibility="invisible" />
             </LinearLayout>
@@ -130,24 +131,27 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/lastTipThisAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    tools:text="TextView" />
 
                 <TextView
-                    android:id="@+id/numberOfPastDeliveries"
+                        android:textColor="@color/white"
+
+                        android:id="@+id/numberOfPastDeliveries"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="TextView" />
+                        tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/AveragePercentageTip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="TextView"
+                    tools:text="TextView"
                     android:textColor="@color/paidColor" />
 
                 <TextView
@@ -155,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="TextView"
+                    tools:text="TextView"
                     android:textColor="@color/tipColor" />
             </LinearLayout>
 
@@ -170,7 +174,7 @@
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12:39pm"
+                    tools:text="12:39pm"
                     android:textColor="@color/timeColor"
                     android:textSize="15sp" />
 
@@ -179,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="6min"
+                    tools:text="6min"
                     android:textColor="@color/gold" />
             </LinearLayout>
         </RelativeLayout>
