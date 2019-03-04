@@ -468,7 +468,14 @@ public class OutTheDoorActivity extends DeliveryDroidBaseActivity implements Act
                     }
                     Intent intent = new Intent(Intent.ACTION_DIAL);
                     intent.setData(Uri.parse(uri));
-                    startActivity(intent);
+                    try {
+						startActivity(intent);
+					}catch (ActivityNotFoundException e){
+                    	e.printStackTrace();
+                    	uri = "tel:" + phoneNumber;
+					    intent = new Intent(Intent.ACTION_DIAL);
+						intent.setData(Uri.parse(uri));
+					}
                 }
             }
         });
