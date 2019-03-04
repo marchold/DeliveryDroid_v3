@@ -3,23 +3,34 @@
                 android:layout_height="fill_parent" xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="vertical">
 
-    <TextView
-        tools:text="7:31 am Tue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/timeLabel"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"/>
+
+    <Button
+            android:layout_alignParentRight="true"
+            android:id="@+id/nowButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/Now"/>
+
+
+    <catglo.com.deliverydroid.widgets.HorizontalDatePicker
+            android:layout_toLeftOf="@+id/nowButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeLabel"/>
+
 
     <TextView
             tools:text="in 28 minutes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/inMinutes"
-        android:gravity="center"
-        android:layout_below="@+id/timeLabel"
-        android:textSize="20sp"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inMinutes"
+            android:gravity="center"
+            android:layout_below="@+id/timeLabel"
+            android:textSize="20sp"
+            android:layout_marginTop="0dp"/>
 
     <RelativeLayout
         android:layout_below="@+id/inMinutes"
@@ -52,40 +63,6 @@
                      android:layout_alignBottom="@+id/timePicker"
                      android:layout_marginBottom="10dp"/>
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/timeLayout"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="15" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="25" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="35" />
-
-
-    </LinearLayout>
 
 
 </RelativeLayout>

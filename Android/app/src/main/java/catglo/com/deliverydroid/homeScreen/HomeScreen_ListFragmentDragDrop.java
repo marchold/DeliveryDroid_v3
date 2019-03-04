@@ -645,8 +645,17 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		
 		Log.i("CURSOR","HomeScreen_ListFragmentDragDrop - updateUI");
 		
-		TipTotalData tip = dataBase.getTipTotal(getActivity(),DataBase.Shift+"="+dataBase.getCurShift()+" AND "+DataBase.Payed+" >= 0",
-				"WHERE shifts.ID="+DataBase.TodaysShiftCount,null);
+		TipTotalData tip;
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		boolean mileagePayForUndeliverable = prefs.getBoolean("mileagePayForUndeliverable",true);
+		if (mileagePayForUndeliverable){
+			tip = dataBase.getTipTotal(getActivity(), DataBase.Shift + "=" + dataBase.getCurShift() + " AND (" + DataBase.Payed + " >= 0 or undeliverable = '1')",
+					"WHERE shifts.ID=" + DataBase.TodaysShiftCount, null);
+		} else {
+			tip = dataBase.getTipTotal(getActivity(), DataBase.Shift + "=" + dataBase.getCurShift() + " AND " + DataBase.Payed + " >= 0",
+					"WHERE shifts.ID=" + DataBase.TodaysShiftCount, null);
+		}
+
 		final float totalTipsMade = tip.payed-tip.cost;
 		driverEarnings.setText(Utils.getFormattedCurrency(totalTipsMade + tip.mileageEarned));
 		

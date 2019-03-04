@@ -21,5 +21,6 @@
       
       <dimen name="slide_out_menu_width">240dp</dimen>
     <dimen name="curved_screen_block">15dp</dimen>
+    <dimen name="weekday_cell_width">140dp</dimen>
 
 </resources>

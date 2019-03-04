@@ -1,29 +1,30 @@
 package catglo.com.deliverydroid.shift
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.os.Build
-import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.appcompat.app.AlertDialog
 import catglo.com.deliverydroid.R
-import kotlinx.android.synthetic.main.shift_activity.*
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
+import android.view.View
+import android.view.View.OnClickListener
+import catglo.com.deliverydroid.widgets.HorizontalDatePicker
 
-class PastShiftActivity : ShiftActivity() {
+
+class TodayShiftActivity : ShiftActivity() {
 
     override fun shiftTimeClickListener(
         time: MutableDateTime,
         setter: (year:Int, month: Int, day : Int, hour : Int, minute : Int ) -> Unit
-    ): View.OnClickListener {
-        return View.OnClickListener {
-            val customView = View.inflate(this@PastShiftActivity, R.layout.time_date_picker_dialog, null)
+    ): OnClickListener {
+        return OnClickListener {
+            val customView = View.inflate(this@TodayShiftActivity, R.layout.time_day_picker_dialog, null)
             val timePicker = customView.findViewById<TimePicker>(R.id.timePicker)
-            val datePicker = customView.findViewById<DatePicker>(R.id.weekdayPicker)
+
+            val datePicker = customView.findViewById<HorizontalDatePicker>(R.id.weekdayPicker)
+            datePicker.setTime(time)
             val nowButton = customView.findViewById<Button>(R.id.nowButton)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 timePicker.hour = time.hourOfDay
@@ -35,24 +36,23 @@ class PastShiftActivity : ShiftActivity() {
                 timePicker.currentMinute = time.minuteOfHour
             }
             nowButton.setOnClickListener {
-                val now = DateTime.now()
+                time.millis = DateTime.now().millis
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    timePicker.hour = now.hourOfDay
-                    timePicker.minute = now.minuteOfHour
+                    timePicker.hour = time.hourOfDay
+                    timePicker.minute = time.minuteOfHour
                 } else {
-                    timePicker.currentHour = now.hourOfDay
-                    timePicker.currentMinute = now.minuteOfHour
+                    timePicker.currentHour = time.hourOfDay
+                    timePicker.currentMinute = time.minuteOfHour
                 }
-                datePicker.updateDate(now.year, now.monthOfYear - 1, now.dayOfMonth)
+                datePicker.snap()
             }
-            datePicker.updateDate(time.year, time.monthOfYear - 1, time.dayOfMonth)
-            AlertDialog.Builder(this@PastShiftActivity)
+
+            AlertDialog.Builder(this@TodayShiftActivity)
                 .setView(customView)
                 .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
-
-                    shift.endTime.year = datePicker.year
-                    shift.endTime.monthOfYear = datePicker.month + 1
-                    shift.endTime.dayOfMonth = datePicker.dayOfMonth
+                    var year = 0
+                    var month = 0
+                    var day = 0
                     var hour = 0
                     var minute = 0
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -62,16 +62,16 @@ class PastShiftActivity : ShiftActivity() {
                         hour = timePicker.currentHour
                         minute = timePicker.currentMinute
                     }
-                    setter(datePicker.year,datePicker.month + 1,datePicker.dayOfMonth,hour,minute)
+                    time.hourOfDay = hour
+                    time.minuteOfDay = minute
+                    datePicker.weekdayAdapter?.relativeWeekdayIndex?.let { time.addDays(it) }
+                    year = time.year().get()
+                    month = time.monthOfYear
+                    day = time.dayOfMonth
+                    setter(year, month, day, hour, minute)
                     updateUI()
                 }
                 .show()
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        deleteShiftClickable?.visibility = View.GONE
-        newShiftButton?.visibility = View.GONE
     }
 }

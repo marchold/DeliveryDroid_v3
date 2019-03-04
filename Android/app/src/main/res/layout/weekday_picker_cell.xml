@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
           android:orientation="vertical"
-          android:id="@+id/textView3"
+          android:id="@+id/contentLayout"
           tools:text="Wendsday"
-          android:textSize="30sp"
-          android:padding="10dp"
+          android:textSize="22sp"
           android:layout_marginLeft="40dp"
           android:layout_marginRight="40dp"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_width="@dimen/weekday_cell_width"
+          android:layout_height="match_parent"
+          android:textAllCaps="true"
+          android:gravity="center_vertical"
+        >
 
-</TextView>
+<TextView
+          android:textColor="@color/white"
+          android:id="@+id/textView"
+          tools:text="Wendsday"
+          android:textSize="22sp"
+          android:gravity="center"
+          android:layout_width="@dimen/weekday_cell_width"
+          android:layout_height="wrap_content"
+          android:textAllCaps="true"/>
+
+    <TextView
+            android:textColor="@color/chea_list_light_text"
+            android:textSize="14sp"
+            tools:text="today"
+            android:layout_marginTop="-10dp"
+            android:gravity="center"
+            android:layout_width="@dimen/weekday_cell_width"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeDay"/>
+
+
+</LinearLayout>

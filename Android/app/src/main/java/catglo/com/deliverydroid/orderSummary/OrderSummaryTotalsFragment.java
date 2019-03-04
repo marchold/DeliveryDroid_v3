@@ -1,5 +1,6 @@
 package catglo.com.deliverydroid.orderSummary;
 
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.DataSetObserver;
@@ -97,9 +98,19 @@ public class OrderSummaryTotalsFragment extends BaseDeliveryDroidFragment {
         }
         c.close();
 
-        TipTotalData tip = dataBase.getTipTotal(getActivity(), DataBase.Shift + "=" + viewingShift + " AND " + DataBase.Payed + " >= 0",
-                "WHERE shifts.ID =" + viewingShift, null);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean mileagePayForUndeliverable = prefs.getBoolean("mileagePayForUndeliverable",true);
 
+
+        TipTotalData tip;
+
+        if (mileagePayForUndeliverable) {
+            tip = dataBase.getTipTotal(getActivity(), DataBase.Shift + "=" + viewingShift + " AND (" + DataBase.Payed + " >= 0 OR undeliverable = '1')",
+                    "WHERE shifts.ID =" + viewingShift, null);
+        } else {
+            tip = dataBase.getTipTotal(getActivity(), DataBase.Shift + "=" + viewingShift + " AND " + DataBase.Payed + " >= 0",
+                    "WHERE shifts.ID =" + viewingShift, null);
+        }
 
         DecimalFormat df = new DecimalFormat("#.#");
         int wholeHours = (int) tip.hours;

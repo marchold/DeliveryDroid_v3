@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="main_screen_help_bubble">
+        <item>Enter orders then drag&amp;drop preferred delivery order.</item>
+        <item>At the end of your shift review data in order summary screen</item>
+        <item>Mileage calculation options are available in settings</item>
+        <item>Past orders can be viewed in the order summary screen</item>
+    </string-array>
+
 </resources>

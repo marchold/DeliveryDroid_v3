@@ -17,49 +17,7 @@ import kotlinx.android.synthetic.main.shift_activity.*
 import org.joda.time.DateTime
 import org.joda.time.MutableDateTime
 
-
-open class ShiftActivity : DeliveryDroidBaseActivity() {
-
-    fun shiftTimeClickListener(
-        time: MutableDateTime,
-        setter: (datePicker: DatePicker, timePicker: TimePicker) -> Unit
-    ): View.OnClickListener {
-        return View.OnClickListener {
-            val customView = View.inflate(this@ShiftActivity, R.layout.time_date_picker_dialog, null)
-            val timePicker = customView.findViewById<TimePicker>(R.id.timePicker)
-            val datePicker = customView.findViewById<DatePicker>(R.id.weekdayPicker)
-            val nowButton = customView.findViewById<Button>(R.id.nowButton)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                timePicker.hour = time.hourOfDay
-                timePicker.minute = time.minuteOfHour
-            } else {
-                @Suppress("DEPRECATION")
-                timePicker.currentHour = time.hourOfDay
-                @Suppress("DEPRECATION")
-                timePicker.currentMinute = time.minuteOfHour
-            }
-            nowButton.setOnClickListener {
-                val now = DateTime.now()
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    timePicker.hour = now.hourOfDay
-                    timePicker.minute = now.minuteOfHour
-                } else {
-                    timePicker.currentHour = now.hourOfDay
-                    timePicker.currentMinute = now.minuteOfHour
-                }
-                datePicker.updateDate(now.year, now.monthOfYear - 1, now.dayOfMonth)
-            }
-            datePicker.updateDate(time.year, time.monthOfYear - 1, time.dayOfMonth)
-            AlertDialog.Builder(this@ShiftActivity)
-                .setView(customView)
-                .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
-                    setter(datePicker, timePicker)
-                    updateUI()
-                }
-                .show()
-        }
-    }
-
+abstract class ShiftActivity : DeliveryDroidBaseActivity() {
 
     var whichShift: Int = 0
     lateinit var shift: Shift
@@ -81,44 +39,28 @@ open class ShiftActivity : DeliveryDroidBaseActivity() {
                 shift = db.getShift(whichShift)
             }
 
-
-
             doneButton.setOnClickListener { finish() }
 
-            startTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.startTime) { datePicker, timePicker ->
-                shift.startTime.year = datePicker.year
-                shift.startTime.monthOfYear = datePicker.month + 1
-                shift.startTime.dayOfMonth = datePicker.dayOfMonth
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    shift.startTime.hourOfDay = timePicker.hour
-                    shift.startTime.minuteOfHour = timePicker.minute
-                } else {
-                    @Suppress("DEPRECATION")
-                    shift.startTime.hourOfDay = timePicker.currentHour
-                    @Suppress("DEPRECATION")
-                    shift.startTime.minuteOfHour = timePicker.currentMinute
-                }
+            startTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.startTime) { year, month, day, hour, minute ->
+                shift.startTime.year = year
+                shift.startTime.monthOfYear = month
+                shift.startTime.dayOfMonth = day
+                shift.startTime.hourOfDay = hour
+                shift.startTime.minuteOfHour = minute
                 db.saveShift(shift)
             })
 
-            endTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.endTime) { datePicker, timePicker ->
-                shift.endTime.year = datePicker.year
-                shift.endTime.monthOfYear = datePicker.month + 1
-                shift.endTime.dayOfMonth = datePicker.dayOfMonth
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    shift.endTime.hourOfDay = timePicker.hour
-                    shift.endTime.minuteOfHour = timePicker.minute
-                } else {
-                    shift.endTime.hourOfDay = timePicker.currentHour
-                    shift.endTime.minuteOfHour = timePicker.currentMinute
-                }
+            endTimeValueLabel.setOnClickListener(shiftTimeClickListener(shift.endTime) { year, month, day, hour, minute ->
+                shift.endTime.year = year
+                shift.endTime.monthOfYear = month
+                shift.endTime.dayOfMonth = day
+                shift.endTime.hourOfDay = hour
+                shift.endTime.minuteOfHour = minute
                 db.saveShift(shift)
             })
-
-         /*
-    */
 
             deleteShiftClickable.setOnClickListener {
+
                 AlertDialog.Builder(this@ShiftActivity).run {
                     setTitle("Delete shift?")
                     setMessage("Are you sure you want to delete this shift?")
@@ -195,4 +137,8 @@ open class ShiftActivity : DeliveryDroidBaseActivity() {
     }
 
 
+    abstract fun shiftTimeClickListener(
+        time: MutableDateTime,
+        setter: (year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Unit
+    ): View.OnClickListener;
 }

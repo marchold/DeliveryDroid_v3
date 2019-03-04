@@ -1434,12 +1434,11 @@ public class DataBase extends Object  {
         if (shiftTableWhere==null) shiftTableWhere = hoursWorkedTableWhere;
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean mileagePayForUndeliverable = prefs.getBoolean("mileagePayForUndeliverable",false);
+        boolean mileagePayForUndeliverable = prefs.getBoolean("mileagePayForUndeliverable",true);
 
         String mileageWhere = where;
-
         where += " AND (undeliverable!='1' OR undeliverable IS NULL) ";
-        if (mileagePayForUndeliverable==true)
+        if (mileagePayForUndeliverable==false)
         {
             mileageWhere = where;
         }
@@ -1447,7 +1446,7 @@ public class DataBase extends Object  {
         Log.i("CURSOR","TipTotalData called where "+where);
 
         Cursor c;
-        String queryString = "SELECT COUNT(*),strftime('%w',`"+ DataBase.Time + "`) AS `weekday` FROM " + DATABASE_TABLE + " WHERE " + where;
+        String queryString = "SELECT COUNT(*),strftime('%w',`"+ DataBase.Time + "`) AS `weekday` FROM " + DATABASE_TABLE + " WHERE " + mileageWhere;
         if (db==null) return ret;
 
         c = db.rawQuery(queryString, null);

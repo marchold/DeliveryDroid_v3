@@ -274,7 +274,7 @@
     <string name="odometerTotal">Odometer total</string>
     <string name="creditsTitle">Credits</string>
     <string name="creditsBody">Many thanks to the delivery drivers who have contributed to the design\n\nThis app was
-        inspired by:\nMatt Henry\n\n Since then many drivers have contributed:Thomas Roach\nChris Garcia\nNeil
+        inspired by:\nMatt Henry\n\n Since then many drivers have contributed:Anthony Arsenault\nThomas Roach\nChris Garcia\nNeil
         Sizemore\nMichael Barron
         Jr\nEssohlath Akadje\nSteven Poekert\nLes Prince\nCarlton Clay\nSarah Sutton\nFoum Recei\nAl
         Dolega\nJoshua McBride\nJason Soltan\nTyler Allen\nManuel Villa\nRobert Royce\nJoseph Ford\n
@@ -418,13 +418,9 @@
 
     <string name="Round_Trip_Time">Round Trip Time</string>
     <string name="enter_store_address">enter store address</string>
-    <string name="set_store_address_help_bubble">To get route time displayed. Set store address in settings.</string>
+    <string name="set_store_address_help_bubble">Set store address in settings.</string>
 
-    <string-array name="main_screen_help_bubble">
-        <item>Past orders can be viewed in the order summary screen</item>
-        <item>Phone Number in Notes Field allows Text Messaging customer</item>
-        <item>Find Addresses with Phone Numbers in the notes</item>
-    </string-array>
+
 
     <string name="you_need_store">Store address missing. Enter it in settings now?</string>
     <string name="OPTIMIZE_ROUTE">OPTIMIZE ROUTE</string>
@@ -542,9 +538,7 @@
     <string name="title_activity_gps_notes">Gate Codes</string>
     <string name="New_note">New note</string>
     <string name="GPS_notes">Gate Codes</string>
-    <string name="gps_notes_no_list_help">Gate code notes are sorted by the GPS location where they were entered. This
-        is useful for storing gate codes or warnings about hazards at specific locations
-    </string>
+    <string name="gps_notes_no_list_help">Notes entered on this screen will be tagged with the location where they were entered. \n\nNotes entered with a new order are tagged by the order address. These are only visible if you select the include orders option.\n\nNotes will be sorted by how far you are from the location they are tagged with.</string>
 
     <string-array name="gps_notes_list_options">
         <item>Edit Note</item>
