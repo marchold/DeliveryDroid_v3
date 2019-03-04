@@ -3,13 +3,6 @@
                                       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.PreferenceCategory android:title="@string/Feedback">
-        <catglo.com.deliverydroid.settings.SettingsEmailMe
-                android:dialogTitle="@string/Feedback"
-                android:icon="@drawable/send_feedback"
-                android:key="SendFeedback"
-                android:summary="@string/contactdev"
-                android:title="@string/SendFeedback"/>
-
         <catglo.com.deliverydroid.settings.SettingsReviewMe
                 android:dialogTitle="@string/Review"
                 android:icon="@drawable/review_this_app"
@@ -18,6 +11,232 @@
                 android:title="@string/reviewapp"/>
     </androidx.preference.PreferenceCategory>
 
+
+    <androidx.preference.PreferenceCategory android:title="User Interface">
+
+        <androidx.preference.CheckBoxPreference
+                android:defaultValue="true"
+                android:key="showHelpBubbles"
+                android:summary="Uncheck this setting if you do not find the help bubbles useful"
+                android:title="Show help bubbles"/>
+
+        <androidx.preference.PreferenceScreen
+                android:icon="@drawable/home_screen_settings_icon"
+                android:summary=""
+                android:key="home_screen"
+                android:title="Home Screen">
+
+            <!-- We should bring back route optimization when we have a good offline routing engine back end
+
+            <androidx.preference.CheckBoxPreference
+                    android:icon="@drawable/calculate_rout_time"
+                    android:key="calculateRouteTimes"
+                    android:summary="@string/round_trip_settings_summary"
+                    android:title="Route Optimization"/>
+-->
+
+            <androidx.preference.PreferenceScreen
+                    android:icon="@drawable/store_address"
+                    android:summary="Store address is required for route optimization."
+                    android:title="@string/Store_Address">
+                <intent
+                        android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
+                        android:targetPackage="catglo.com.deliverydroid"/>
+            </androidx.preference.PreferenceScreen>
+
+            <androidx.preference.PreferenceScreen
+                    android:icon="@drawable/home_screen_settings_icon"
+                    android:summary="@string/Pending_Deliveries_sum"
+                    android:title="@string/Home_Screen_List">
+                <intent
+                        android:action="catglo.com.deliverydroid.Settings_ListOptions"
+                        android:targetPackage="catglo.com.deliverydroid"/>
+            </androidx.preference.PreferenceScreen>
+
+        </androidx.preference.PreferenceScreen>
+
+
+        <androidx.preference.PreferenceScreen
+                android:key="add_delivery_sett"
+                android:icon="@drawable/add_delivery_setting"
+                android:summary="@string/OrderEntrySettingsSum"
+                android:title="@string/OrderEntrySettings">
+            <catglo.com.deliverydroid.settings.SettingsHelpDialog
+                    android:dialogIcon="@drawable/icon"
+                    android:dialogMessage="@string/orderEntrySettingsHelp"
+                    android:dialogTitle="@string/help"
+                    android:icon="@drawable/help"
+                    android:key="helpOnAltPay6"
+                    android:negativeButtonText="@null"
+                    android:positiveButtonText="@null"
+                    android:summary="@string/orderEntrySettingsHelp"
+                    android:title="@string/help"/>
+
+            <androidx.preference.CheckBoxPreference
+                    android:defaultValue="true"
+                    android:icon="@drawable/order_number_quick_entry_simple"
+                    android:key="useOrderNumberScreen"
+                    android:summary="@string/no_order_numbers_desc"
+                    android:title="@string/no_order_numbers"/>
+
+            <androidx.preference.CheckBoxPreference
+                    android:defaultValue="true"
+                    android:icon="@drawable/order_price_quick_entry_simple"
+                    android:key="usePriceScreen"
+                    android:summary="@string/use_price_setting_sum"
+                    android:title="@string/use_price_setting"/>
+
+            <androidx.preference.CheckBoxPreference
+                    android:defaultValue="false"
+                    android:icon="@drawable/quick_phone_entry_screen_simple"
+                    android:key="usePhoneScreen"
+                    android:summary="@string/Phone_number_screen_summary"
+                    android:title="@string/Phone_Number_Screen"/>
+
+            <androidx.preference.CheckBoxPreference
+                    android:defaultValue="true"
+                    android:icon="@drawable/quick_address_entry_screen_simple"
+                    android:key="useAddressScreen"
+                    android:summary="@string/No_addresses_desc"
+                    android:title="@string/Address_quick_entry_screen"/>
+
+            <androidx.preference.CheckBoxPreference
+                    android:key="useTimeScreen"
+                    android:icon="@drawable/quick_time_entry_screen_simple"
+                    android:summary="@string/Delivery_time_screen_summary"
+                    android:title="@string/Delivery_Time_Screen"/>
+
+
+            <androidx.preference.CheckBoxPreference
+                    android:key="number_keyboard_left"
+                    android:icon="@drawable/left_list"
+                    android:summary="@string/lift_list_summary"
+                    android:title="@string/Left_list"/>
+            <androidx.preference.CheckBoxPreference
+                    android:icon="@drawable/one_top"
+                    android:key="number_keyboard_upsidedown"
+                    android:summary="@string/Inverted_Keypad_Numbers_summary"
+                    android:title="@string/Inverted_Keypad_Numbers"/>
+
+            <androidx.preference.EditTextPreference
+                    android:dialogTitle="@string/Initial_Order_Number_daigTitle"
+                    android:icon="@drawable/initial_order_number"
+                    android:inputType="phone"
+                    android:key="lastGeneratedOrderNumberString"
+                    android:numeric="integer"
+                    android:summary="@string/Initial_Order_Number_desc"
+                    android:title="@string/Initial_Order_Number"/>
+
+        </androidx.preference.PreferenceScreen>
+
+
+        <androidx.preference.PreferenceScreen
+                android:key="out_the_door"
+                android:icon="@drawable/out_the_door"
+                android:summary="@string/OutTheDoorSettingsSum"
+                android:title="@string/OutTheDoorSettings">
+
+            <androidx.preference.EditTextPreference
+                    android:dialogIcon="@drawable/icon"
+                    android:dialogMessage="@string/smsbody_summary"
+                    android:dialogTitle="@string/smsbody_dialog_title"
+                    android:icon="@drawable/default_message_when_clicking"
+                    android:key="smsbody"
+                    android:summary="@string/smsbody_summary"
+                    android:title="@string/smsbody_title"/>
+
+
+            <!--    <androidx.preference.CheckBoxPreference
+
+                        android:key="showTipField"
+                        android:summary="@string/Show_Tip_Field_summary"
+                        android:title="@string/Show_Tip_Field"/> -->
+
+            <androidx.preference.CheckBoxPreference
+                    android:icon="@drawable/call_phone_in_notes"
+                    android:key="callPhoneInNotes"
+                    android:summary="@string/Phone_in_Note_sum"
+                    android:title="@string/Phone_in_Notes"/>
+
+            <androidx.preference.EditTextPreference
+                    android:defaultValue="@string/customerDefaultSMS"
+                    android:icon="@drawable/call_phone_in_notes"
+                    android:key="customerDefaultSMS"
+                    android:summary="@string/default_sms_text"
+                    android:dialogMessage="Enter default text message ### will be replaced with order cost"
+                    android:title="@string/customer_text_message_body"/>
+
+            <androidx.preference.PreferenceScreen
+                    android:key="payment_type"
+                    android:icon="@drawable/payment_type"
+                    android:summary="@string/PaymentOptionsSum"
+                    android:title="@string/PaymentOptionsSettings">
+                <androidx.preference.CheckBoxPreference
+                        android:defaultValue="true"
+                        android:icon="@drawable/icon_money"
+                        android:key="usePaymentCash"
+                        android:title="@string/Cash"/>
+                <androidx.preference.CheckBoxPreference
+                        android:defaultValue="true"
+                        android:icon="@drawable/icon_check"
+                        android:key="usePaymentCheck"
+                        android:title="@string/Check"/>
+                <CheckBoxPreference
+                        android:defaultValue="true"
+                        android:icon="@drawable/icon_credit"
+                        android:key="usePaymentCredit"
+                        android:title="@string/Credit"/>
+                <androidx.preference.CheckBoxPreference
+                        android:defaultValue="true"
+                        android:icon="@drawable/icon_ebt"
+                        android:key="usePaymentEbt"
+                        android:title="@string/ebt"/>
+            </androidx.preference.PreferenceScreen>
+            <androidx.preference.PreferenceScreen
+                    android:key="navigate_settings"
+                    android:icon="@drawable/navigate_settings_icon"
+                    android:summary="@string/Navigation_Settings_summary"
+                    android:title="@string/Navigation_Settings">
+                <androidx.preference.CheckBoxPreference
+                        android:defaultValue="true"
+                        android:icon="@drawable/settings_copy_paste"
+                        android:key="autoCutForPaste"
+                        android:summary="@string/autoCutForPasteSum"
+                        android:title="@string/autoCutForPaste"/>
+
+                <catglo.com.deliverydroid.widgets.TwoLinesListPreference
+                        android:icon="@drawable/navigate_settings_icon"
+                        android:defaultValue="1"
+                        android:entries="@array/navigation_options"
+                        android:entryValues="@array/navigation_options_values"
+                        android:key="navigationIntent"
+                        android:summary="@string/Configure_which_navigation_app_is_launched"
+                        android:title="@string/Navigation_App"/>
+
+            </androidx.preference.PreferenceScreen>
+
+            <androidx.preference.PreferenceScreen
+                    android:key="store_address"
+                    android:icon="@drawable/store_address"
+                    android:summary="@string/Store_Address_desc"
+                    android:title="@string/Store_Address">
+                <intent
+                        android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
+                        android:targetPackage="catglo.com.deliverydroid"/>
+            </androidx.preference.PreferenceScreen>
+
+
+            <androidx.preference.EditTextPreference
+                    android:dialogIcon="@drawable/store_phone_number"
+                    android:dialogMessage="@string/Store_phone_setting_summary"
+                    android:dialogTitle="@string/Store_phone_number"
+                    android:icon="@drawable/store_phone_number"
+                    android:key="storePhoneNumber"
+                    android:title="@string/Store_phone_number"/>
+
+
+        </androidx.preference.PreferenceScreen>
+    </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory android:title="@string/mileageand">
         <androidx.preference.PreferenceScreen
@@ -326,231 +545,7 @@
                 android:summary="@string/StartOfWorkWeek_diagSum"
                 android:title="@string/StartOfWorkWeek"/>
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="User Interface">
 
-        <androidx.preference.CheckBoxPreference
-                android:defaultValue="true"
-                android:key="showHelpBubbles"
-                android:summary="Uncheck this setting if you do not find the help bubbles useful"
-                android:title="Show help bubbles"/>
-
-        <androidx.preference.PreferenceScreen
-                android:icon="@drawable/home_screen_settings_icon"
-                android:summary=""
-                android:key="home_screen"
-                android:title="Home Screen">
-
-            <!-- We should bring back route optimization when we have a good offline routing engine back end
-
-            <androidx.preference.CheckBoxPreference
-                    android:icon="@drawable/calculate_rout_time"
-                    android:key="calculateRouteTimes"
-                    android:summary="@string/round_trip_settings_summary"
-                    android:title="Route Optimization"/>
--->
-
-            <androidx.preference.PreferenceScreen
-                    android:icon="@drawable/store_address"
-                    android:summary="Store address is required for route optimization."
-                    android:title="@string/Store_Address">
-                <intent
-                        android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
-                        android:targetPackage="catglo.com.deliverydroid"/>
-            </androidx.preference.PreferenceScreen>
-
-            <androidx.preference.PreferenceScreen
-                    android:icon="@drawable/home_screen_settings_icon"
-                    android:summary="@string/Pending_Deliveries_sum"
-                    android:title="@string/Home_Screen_List">
-                <intent
-                        android:action="catglo.com.deliverydroid.Settings_ListOptions"
-                        android:targetPackage="catglo.com.deliverydroid"/>
-            </androidx.preference.PreferenceScreen>
-
-        </androidx.preference.PreferenceScreen>
-
-
-        <androidx.preference.PreferenceScreen
-                android:key="add_delivery_sett"
-                android:icon="@drawable/add_delivery_setting"
-                android:summary="@string/OrderEntrySettingsSum"
-                android:title="@string/OrderEntrySettings">
-            <catglo.com.deliverydroid.settings.SettingsHelpDialog
-                    android:dialogIcon="@drawable/icon"
-                    android:dialogMessage="@string/orderEntrySettingsHelp"
-                    android:dialogTitle="@string/help"
-                    android:icon="@drawable/help"
-                    android:key="helpOnAltPay6"
-                    android:negativeButtonText="@null"
-                    android:positiveButtonText="@null"
-                    android:summary="@string/orderEntrySettingsHelp"
-                    android:title="@string/help"/>
-
-            <androidx.preference.CheckBoxPreference
-                    android:defaultValue="true"
-                    android:icon="@drawable/order_number_quick_entry_simple"
-                    android:key="useOrderNumberScreen"
-                    android:summary="@string/no_order_numbers_desc"
-                    android:title="@string/no_order_numbers"/>
-
-            <androidx.preference.CheckBoxPreference
-                    android:defaultValue="true"
-                    android:icon="@drawable/order_price_quick_entry_simple"
-                    android:key="usePriceScreen"
-                    android:summary="@string/use_price_setting_sum"
-                    android:title="@string/use_price_setting"/>
-
-            <androidx.preference.CheckBoxPreference
-                    android:defaultValue="false"
-                    android:icon="@drawable/quick_phone_entry_screen_simple"
-                    android:key="usePhoneScreen"
-                    android:summary="@string/Phone_number_screen_summary"
-                    android:title="@string/Phone_Number_Screen"/>
-
-            <androidx.preference.CheckBoxPreference
-                    android:defaultValue="true"
-                    android:icon="@drawable/quick_address_entry_screen_simple"
-                    android:key="useAddressScreen"
-                    android:summary="@string/No_addresses_desc"
-                    android:title="@string/Address_quick_entry_screen"/>
-
-            <androidx.preference.CheckBoxPreference
-                    android:key="useTimeScreen"
-                    android:icon="@drawable/quick_time_entry_screen_simple"
-                    android:summary="@string/Delivery_time_screen_summary"
-                    android:title="@string/Delivery_Time_Screen"/>
-
-
-            <androidx.preference.CheckBoxPreference
-                    android:key="number_keyboard_left"
-                    android:icon="@drawable/left_list"
-                    android:summary="@string/lift_list_summary"
-                    android:title="@string/Left_list"/>
-            <androidx.preference.CheckBoxPreference
-                    android:icon="@drawable/one_top"
-                    android:key="number_keyboard_upsidedown"
-                    android:summary="@string/Inverted_Keypad_Numbers_summary"
-                    android:title="@string/Inverted_Keypad_Numbers"/>
-
-            <androidx.preference.EditTextPreference
-                    android:dialogTitle="@string/Initial_Order_Number_daigTitle"
-                    android:icon="@drawable/initial_order_number"
-                    android:inputType="phone"
-                    android:key="lastGeneratedOrderNumberString"
-                    android:numeric="integer"
-                    android:summary="@string/Initial_Order_Number_desc"
-                    android:title="@string/Initial_Order_Number"/>
-
-        </androidx.preference.PreferenceScreen>
-
-
-        <androidx.preference.PreferenceScreen
-                android:key="out_the_door"
-                android:icon="@drawable/out_the_door"
-                android:summary="@string/OutTheDoorSettingsSum"
-                android:title="@string/OutTheDoorSettings">
-
-            <androidx.preference.EditTextPreference
-                    android:dialogIcon="@drawable/icon"
-                    android:dialogMessage="@string/smsbody_summary"
-                    android:dialogTitle="@string/smsbody_dialog_title"
-                    android:icon="@drawable/default_message_when_clicking"
-                    android:key="smsbody"
-                    android:summary="@string/smsbody_summary"
-                    android:title="@string/smsbody_title"/>
-
-
-            <!--    <androidx.preference.CheckBoxPreference
-
-                        android:key="showTipField"
-                        android:summary="@string/Show_Tip_Field_summary"
-                        android:title="@string/Show_Tip_Field"/> -->
-
-            <androidx.preference.CheckBoxPreference
-                    android:icon="@drawable/call_phone_in_notes"
-                    android:key="callPhoneInNotes"
-                    android:summary="@string/Phone_in_Note_sum"
-                    android:title="@string/Phone_in_Notes"/>
-
-            <androidx.preference.EditTextPreference
-                    android:defaultValue="@string/customerDefaultSMS"
-                    android:icon="@drawable/call_phone_in_notes"
-                    android:key="customerDefaultSMS"
-                    android:summary="@string/default_sms_text"
-                    android:dialogMessage="Enter default text message ### will be replaced with order cost"
-                    android:title="@string/customer_text_message_body"/>
-
-            <androidx.preference.PreferenceScreen
-                    android:key="payment_type"
-                    android:icon="@drawable/payment_type"
-                    android:summary="@string/PaymentOptionsSum"
-                    android:title="@string/PaymentOptionsSettings">
-                <androidx.preference.CheckBoxPreference
-                        android:defaultValue="true"
-                        android:icon="@drawable/icon_money"
-                        android:key="usePaymentCash"
-                        android:title="@string/Cash"/>
-                <androidx.preference.CheckBoxPreference
-                        android:defaultValue="true"
-                        android:icon="@drawable/icon_check"
-                        android:key="usePaymentCheck"
-                        android:title="@string/Check"/>
-                <CheckBoxPreference
-                        android:defaultValue="true"
-                        android:icon="@drawable/icon_credit"
-                        android:key="usePaymentCredit"
-                        android:title="@string/Credit"/>
-                <androidx.preference.CheckBoxPreference
-                        android:defaultValue="true"
-                        android:icon="@drawable/icon_ebt"
-                        android:key="usePaymentEbt"
-                        android:title="@string/ebt"/>
-            </androidx.preference.PreferenceScreen>
-            <androidx.preference.PreferenceScreen
-                    android:key="navigate_settings"
-                    android:icon="@drawable/navigate_settings_icon"
-                    android:summary="@string/Navigation_Settings_summary"
-                    android:title="@string/Navigation_Settings">
-                <androidx.preference.CheckBoxPreference
-                        android:defaultValue="true"
-                        android:icon="@drawable/settings_copy_paste"
-                        android:key="autoCutForPaste"
-                        android:summary="@string/autoCutForPasteSum"
-                        android:title="@string/autoCutForPaste"/>
-
-                <catglo.com.deliverydroid.widgets.TwoLinesListPreference
-                        android:icon="@drawable/navigate_settings_icon"
-                        android:defaultValue="1"
-                        android:entries="@array/navigation_options"
-                        android:entryValues="@array/navigation_options_values"
-                        android:key="navigationIntent"
-                        android:summary="@string/Configure_which_navigation_app_is_launched"
-                        android:title="@string/Navigation_App"/>
-
-            </androidx.preference.PreferenceScreen>
-
-            <androidx.preference.PreferenceScreen
-                    android:key="store_address"
-                    android:icon="@drawable/store_address"
-                    android:summary="@string/Store_Address_desc"
-                    android:title="@string/Store_Address">
-                <intent
-                        android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
-                        android:targetPackage="catglo.com.deliverydroid"/>
-            </androidx.preference.PreferenceScreen>
-
-
-            <androidx.preference.EditTextPreference
-                    android:dialogIcon="@drawable/store_phone_number"
-                    android:dialogMessage="@string/Store_phone_setting_summary"
-                    android:dialogTitle="@string/Store_phone_number"
-                    android:icon="@drawable/store_phone_number"
-                    android:key="storePhoneNumber"
-                    android:title="@string/Store_phone_number"/>
-
-
-        </androidx.preference.PreferenceScreen>
-    </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory android:title="Other">
 
@@ -654,6 +649,17 @@
         </androidx.preference.Preference>
 
     </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="@string/Feedback">
+        <catglo.com.deliverydroid.settings.SettingsEmailMe
+                android:dialogTitle="@string/Feedback"
+                android:icon="@drawable/send_feedback"
+                android:key="SendFeedback"
+                android:summary="@string/contactdev"
+                android:title="@string/SendFeedback"/>
+
+    </androidx.preference.PreferenceCategory>
+
 
 
 </androidx.preference.PreferenceScreen>

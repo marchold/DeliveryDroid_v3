@@ -16,6 +16,7 @@ import android.widget.TimePicker
 import catglo.com.deliverydroid.R
 import catglo.com.deliverydroid.Utils
 import catglo.com.deliverydroid.widgets.HorizontalDatePicker
+import kotlinx.android.synthetic.main.new_order_time_frgament.*
 
 
 import org.joda.time.DateTime
@@ -23,6 +24,9 @@ import org.joda.time.DurationFieldType
 import org.joda.time.Hours
 import org.joda.time.Minutes
 import org.joda.time.MutableDateTime
+import java.lang.reflect.AccessibleObject.setAccessible
+
+
 
 /**
  * Created by goblets on 2/17/14.
@@ -117,12 +121,36 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
         }
     }
 
+    fun numberPickerFirstNumberHack(){
+        try {
+            val method = numberPicker!!.javaClass.getDeclaredMethod("changeValueByOne", Boolean::class.javaPrimitiveType)
+            method.setAccessible(true)
+            method.invoke(numberPicker!!, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
     fun setNumberPicker() {
         val now = DateTime.now()
         time?.let {t ->
             val minutesToOrder = Minutes.minutesBetween(now, t).minutes
-            inHowManyMinutes?.visibility = View.VISIBLE
-            inHowManyMinutes?.value = if (minutesToOrder>0) minutesToOrder else (92+minutesToOrder)
+            if (minutesToOrder>=0 && minutesToOrder<=91){
+                inHowManyMinutes?.value = minutesToOrder
+                inHowManyMinutes?.visibility = View.VISIBLE
+                numberPickerFirstNumberHack()
+            }
+            else if (minutesToOrder<0 && minutesToOrder>=-90){
+                val value = 182+minutesToOrder
+                inHowManyMinutes?.value = value
+                inHowManyMinutes?.visibility = View.VISIBLE
+                numberPickerFirstNumberHack()
+            }
+            else {
+                inHowManyMinutes?.visibility = View.GONE
+            }
+
         }
     }
 
@@ -154,10 +182,15 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
             val activity = activity as NewOrderActivity?
             val order = activity?.order
             time = MutableDateTime(order!!.time)
-            time?.add(DurationFieldType.minutes(), if (newVal<=91) newVal else (0-(182-newVal)))
-            time?.let { order?.time?.time = it.millis }
-            val lastScreenFragment = activity?.getFragment(NewOrderActivity.Pages.order)
-            lastScreenFragment?.onDataChanged()
+            time?.let { t ->
+                val value = if (newVal<=91) newVal else (0-(182-newVal))
+                t.add(DurationFieldType.minutes(), value)
+                order.time?.time = t.millis
+                val lastScreenFragment = activity.getFragment(NewOrderActivity.Pages.order)
+                timePicker?.currentHour = t.hourOfDay
+                timePicker?.currentMinute = t.minuteOfDay
+                lastScreenFragment?.onDataChanged()
+            }
         }
     }
 }
