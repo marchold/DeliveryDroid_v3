@@ -88,21 +88,22 @@ class HorizontalDatePicker @JvmOverloads constructor(context: Context, attrs: At
         helper.attachToRecyclerView(this)
     }
 
-    fun setTime(time: MutableDateTime){
-        this.dateTime = time
-        weekdayAdapter =
-            HorizontalWeekdayList(context, MutableDateTime(time))
-        adapter = weekdayAdapter
-        addOnScrollListener(object: OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                (helper.findSnapView(linearLayoutManager)?.tag as? Int)?.let { dayOffset ->
-                    onDaySelected?.let { it(dayOffset) }
-                    weekdayAdapter?.relativeWeekdayIndex = dayOffset
+    fun setTime(time: MutableDateTime) {
+        if (this.dateTime?.dayOfYear ?: -1 != time.dayOfYear){
+            weekdayAdapter = HorizontalWeekdayList(context, MutableDateTime(time))
+            adapter = weekdayAdapter
+            addOnScrollListener(object: OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    (helper.findSnapView(linearLayoutManager)?.tag as? Int)?.let { dayOffset ->
+                        onDaySelected?.let { it(dayOffset) }
+                        weekdayAdapter?.relativeWeekdayIndex = dayOffset
+                    }
                 }
-            }
-        })
-        snap()
+            })
+            snap()
+        }
+        this.dateTime = time
     }
 
     fun snap(){

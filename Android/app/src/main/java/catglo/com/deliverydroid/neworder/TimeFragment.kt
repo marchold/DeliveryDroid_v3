@@ -2,8 +2,11 @@ package catglo.com.deliverydroid.neworder
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
+import android.content.res.Resources.*
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +28,13 @@ import org.joda.time.Hours
 import org.joda.time.Minutes
 import org.joda.time.MutableDateTime
 import java.lang.reflect.AccessibleObject.setAccessible
+import kotlin.math.absoluteValue
+import net.danlew.android.joda.ResUtils.getIdentifier
+import android.app.Activity
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 
 
@@ -36,9 +46,6 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
     private var sharedPreferences: SharedPreferences? = null
     private var inHowManyMinutes: NumberPicker? = null
     private var timePicker: TimePicker? = null
-    //private var button1: View? = null
-    //private var button2: View? = null
-    //private var button3: View? = null
     private var nextButton: View? = null
     private var time: MutableDateTime? = null
     private var isInit = false
@@ -62,11 +69,33 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
         timePicker?.setOnTimeChangedListener(this)
         inHowManyMinutes?.setOnValueChangedListener(this)
 
+
         setDatePicker()
         setNumberPicker()
 
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = activity?.getCurrentFocus()
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+
+        timePicker?.findViewById<View>(Resources.getSystem().getIdentifier("minutes","id", "android"))?.let {
+            it.post {  it.performClick() }
+        }
+        timePicker?.findViewById<View>(Resources.getSystem().getIdentifier("toggle_mode","id", "android"))?.let {
+            it.post {  it.visibility = View.GONE }
+        }
+        datePicker?.onDaySelected = {
+            inHowManyMinutes?.visibility = if (it==0) { View.VISIBLE } else { View.GONE }
+            time?.dayOfYear = MutableDateTime.now().dayOfYear().get()+it
+            setDatePicker()
+            setNumberPicker()
+        }
+
+
     }
 
     internal fun setButtonClickListenerForMinutes(minutes: Int, button: View?) {
@@ -90,7 +119,7 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity?.applicationContext)
 
-        val view = inflater.inflate(R.layout.new_order_time_frgament, null) as RelativeLayout
+        val view = inflater.inflate(R.layout.new_order_time_frgament, null)
 
         inHowManyMinutes = view.findViewById<View>(R.id.numberPicker) as NumberPicker
         timePicker = view.findViewById<View>(R.id.timePicker) as TimePicker
@@ -105,6 +134,13 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
         }
         datePicker = view.findViewById(R.id.timeLabel)
         inMinutes = view.findViewById<View>(R.id.inMinutes) as TextView
+
+        view.findViewById<View>(R.id.nowButton).setOnClickListener {
+            time = MutableDateTime(MutableDateTime.now())
+            setDatePicker()
+            setNumberPicker()
+        }
+
         return view
     }
 
@@ -132,16 +168,19 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
 
     }
 
+    var blockSetNumberPicker = false
+
     fun setNumberPicker() {
+        if (blockSetNumberPicker) return
         val now = DateTime.now()
         time?.let {t ->
             val minutesToOrder = Minutes.minutesBetween(now, t).minutes
-            if (minutesToOrder>=0 && minutesToOrder<=91){
+            if (minutesToOrder in 0..91){
                 inHowManyMinutes?.value = minutesToOrder
                 inHowManyMinutes?.visibility = View.VISIBLE
                 numberPickerFirstNumberHack()
             }
-            else if (minutesToOrder<0 && minutesToOrder>=-90){
+            else if (minutesToOrder in -90..0){
                 val value = 182+minutesToOrder
                 inHowManyMinutes?.value = value
                 inHowManyMinutes?.visibility = View.VISIBLE
@@ -150,7 +189,6 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
             else {
                 inHowManyMinutes?.visibility = View.GONE
             }
-
         }
     }
 
@@ -179,18 +217,21 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
 
     override fun onValueChange(picker: NumberPicker, oldVal: Int, newVal: Int) {
         if (isInit == false) {
+            blockSetNumberPicker = true
             val activity = activity as NewOrderActivity?
             val order = activity?.order
-            time = MutableDateTime(order!!.time)
+            time = MutableDateTime(DateTime.now())
             time?.let { t ->
                 val value = if (newVal<=91) newVal else (0-(182-newVal))
                 t.add(DurationFieldType.minutes(), value)
-                order.time?.time = t.millis
-                val lastScreenFragment = activity.getFragment(NewOrderActivity.Pages.order)
-                timePicker?.currentHour = t.hourOfDay
-                timePicker?.currentMinute = t.minuteOfDay
+                order?.time?.time = t.millis
+                val lastScreenFragment = activity?.getFragment(NewOrderActivity.Pages.order)
+                timePicker?.currentHour = t.hourOfDay.absoluteValue
+                timePicker?.currentMinute = t.minuteOfHour.absoluteValue
+                time = t
                 lastScreenFragment?.onDataChanged()
             }
+            blockSetNumberPicker = false
         }
     }
 }

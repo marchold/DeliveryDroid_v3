@@ -1,26 +1,31 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
-
-    <Button
-            android:layout_alignParentRight="true"
-            android:id="@+id/nowButton"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+    <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/Now"/>
+            android:layout_height="45dp">
 
+        <catglo.com.deliverydroid.widgets.HorizontalDatePicker
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/timeLabel"/>
 
-    <catglo.com.deliverydroid.widgets.HorizontalDatePicker
-            android:layout_toLeftOf="@+id/nowButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/timeLabel"/>
+        <ImageView
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:src="@drawable/fade_overlay"/>
 
+        <ImageView
+                android:alpha="0.6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:src="@drawable/triangle_point_up"
+                android:layout_gravity="center_horizontal|bottom"
+                />
+    </FrameLayout>
 
     <TextView
             tools:text="in 28 minutes"
@@ -32,37 +37,57 @@
             android:textSize="20sp"
             android:layout_marginTop="0dp"/>
 
-    <RelativeLayout
-        android:layout_below="@+id/inMinutes"
-        android:id="@+id/timeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+    <LinearLayout
+
+            android:id="@+id/timeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
 
         <TimePicker
-                android:paddingRight="0dp"
+                android:layout_weight="1"
+                android:layout_toLeftOf="@+id/numberPicker"
                 android:id="@+id/timePicker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_alignParentStart="true"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"/>
 
-        <NumberPicker
-                android:layout_marginBottom="70dp"
-                android:layout_alignBottom="@+id/timePicker"
-                android:layout_alignParentRight="true"
-                android:id="@+id/numberPicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        <RelativeLayout
+                android:layout_width="65dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
 
+            <Button
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/nowButton"
+                    android:layout_width="75dp"
+                    android:layout_height="100dp"
+                    android:textSize="13sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/Now"/>
 
-        <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/next_button"
-                     android:src="@drawable/page_next" android:layout_alignParentRight="true"
-                     android:layout_alignBottom="@+id/timePicker"
-                     android:layout_marginBottom="10dp"/>
-    </RelativeLayout>
+            <NumberPicker
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="70dp"
+                    android:id="@+id/numberPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
 
+            <ImageButton
+                    android:scaleType="fitCenter"
+                    android:background="@color/transparent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:padding="5dp"
+                    android:id="@+id/next_button"
+                    android:src="@drawable/page_next"/>
 
-</RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
