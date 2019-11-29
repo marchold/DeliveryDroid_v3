@@ -251,12 +251,7 @@ public class Order extends NotedObject implements Comparable<Order>, Serializabl
 		return String.format("%d:%s%s\t\t$%.2f\n%s", hours, format.format(time.getMinutes()), amPm, cost, address);
 	}
 
-	@SuppressWarnings("deprecation")
-	public float getTimeAsFloat() {
-		float time = 0;
-		time = this.time.getHours() + this.time.getMinutes() / 100f;
-		return time;
-	}
+
 
     public long         id;
 	public String		number;

@@ -55,7 +55,7 @@ class HorizontalWeekdayList(val context: Context, val date : MutableDateTime):
             13 -> { context.getString(R.string.Sunday)   }
             else->{ context.getString(R.string.Monday)   }
         }
-        relativeWeekdayIndex = position-currentWeekdayIndex
+        val relativeWeekdayIndex = position-currentWeekdayIndex
         holder.subtextView.text = when (relativeWeekdayIndex) {
             -1 -> { "yesterday" }
             0  -> { "today" }
@@ -97,7 +97,7 @@ class HorizontalDatePicker @JvmOverloads constructor(context: Context, attrs: At
                     super.onScrolled(recyclerView, dx, dy)
                     (helper.findSnapView(linearLayoutManager)?.tag as? Int)?.let { dayOffset ->
                         onDaySelected?.let { it(dayOffset) }
-                        weekdayAdapter?.relativeWeekdayIndex = dayOffset
+                        weekdayAdapter?.relativeWeekdayIndex = dayOffset-1
                     }
                 }
             })
@@ -108,7 +108,7 @@ class HorizontalDatePicker @JvmOverloads constructor(context: Context, attrs: At
 
     fun snap(){
         (adapter as? HorizontalWeekdayList)?.let { weekdayAdapter ->
-            linearLayoutManager.scrollToPositionWithOffset(weekdayAdapter.currentWeekdayIndex, 100)
+            linearLayoutManager.scrollToPositionWithOffset(weekdayAdapter.currentWeekdayIndex, 0)
             post {
                 helper.findSnapView(linearLayoutManager)?.let { view ->
                     helper.calculateDistanceToFinalSnap(linearLayoutManager, view)?.let {

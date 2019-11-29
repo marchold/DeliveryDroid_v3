@@ -1,41 +1,30 @@
 package catglo.com.deliverydroid.neworder
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.content.res.Resources.*
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.NumberPicker
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.TimePicker
 
 import catglo.com.deliverydroid.R
-import catglo.com.deliverydroid.Utils
 import catglo.com.deliverydroid.widgets.HorizontalDatePicker
 import kotlinx.android.synthetic.main.new_order_time_frgament.*
 
 
 import org.joda.time.DateTime
 import org.joda.time.DurationFieldType
-import org.joda.time.Hours
 import org.joda.time.Minutes
 import org.joda.time.MutableDateTime
-import java.lang.reflect.AccessibleObject.setAccessible
 import kotlin.math.absoluteValue
-import net.danlew.android.joda.ResUtils.getIdentifier
 import android.app.Activity
-import androidx.core.content.ContextCompat.getSystemService
-
-
-
-
+import android.util.Log
+import android.view.View.*
 
 
 /**
@@ -47,7 +36,7 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
     private var inHowManyMinutes: NumberPicker? = null
     private var timePicker: TimePicker? = null
     private var nextButton: View? = null
-    private var time: MutableDateTime? = null
+    private var time = MutableDateTime(MutableDateTime.now())
     private var isInit = false
     private var datePicker: HorizontalDatePicker? = null
     private var inMinutes: TextView? = null
@@ -61,8 +50,7 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
         super.onResume()
 
         (activity as NewOrderActivity).tools.hideOnScreenKeyboard()
-        time = MutableDateTime((activity as NewOrderActivity).order.time.time)
-        datePicker?.setTime(time!!)
+        datePicker?.setTime(time)
 
         nextButton?.setOnClickListener { (activity as ButtonPadFragment.ButtonPadNextListener).onNextButtonPressed() }
 
@@ -86,29 +74,13 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
             it.post {  it.performClick() }
         }
         timePicker?.findViewById<View>(Resources.getSystem().getIdentifier("toggle_mode","id", "android"))?.let {
-            it.post {  it.visibility = View.GONE }
+            it.post {  it.visibility = GONE }
         }
-        datePicker?.onDaySelected = {
-            inHowManyMinutes?.visibility = if (it==0) { View.VISIBLE } else { View.GONE }
-            time?.dayOfYear = MutableDateTime.now().dayOfYear().get()+it
-            setDatePicker()
-            setNumberPicker()
-        }
+        datePicker?.onDaySelected = onDayChanged()
 
 
     }
 
-    internal fun setButtonClickListenerForMinutes(minutes: Int, button: View?) {
-        button?.setOnClickListener {
-            time = MutableDateTime.now()
-            time?.add(Minutes.minutes(minutes))
-            val activity = activity as NewOrderActivity?
-            val order = activity?.order
-            time?.let {  order?.time?.time = it.millis }
-            setDatePicker()
-            setNumberPicker()
-        }
-    }
 
     override fun onPause() {
         super.onPause()
@@ -116,6 +88,7 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
         setNumberPicker()
     }
 
+    var once = true
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity?.applicationContext)
 
@@ -135,26 +108,12 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
         datePicker = view.findViewById(R.id.timeLabel)
         inMinutes = view.findViewById<View>(R.id.inMinutes) as TextView
 
-        view.findViewById<View>(R.id.nowButton).setOnClickListener {
-            time = MutableDateTime(MutableDateTime.now())
-            setDatePicker()
-            setNumberPicker()
+        val nowButton = view.findViewById<View>(R.id.nowButton)
+        nowButton.setOnClickListener {
+            updateAllPickers( MutableDateTime(MutableDateTime.now()))
         }
 
         return view
-    }
-
-    override fun onDataChangedHandler() {
-        time = MutableDateTime((activity as NewOrderActivity).order.time.time)
-        setDatePicker()
-        setNumberPicker()
-    }
-
-    fun setDatePicker() {
-        time?.let { t->
-            timePicker?.currentHour = t.hourOfDay
-            timePicker?.currentMinute = t.minuteOfHour
-        }
     }
 
     fun numberPickerFirstNumberHack(){
@@ -168,6 +127,36 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
 
     }
 
+
+    fun updateAllPickers(t:MutableDateTime){
+        val activity = activity as NewOrderActivity? ?: return
+        if (isInit) return
+        isInit = true
+        Log.i("DATE","updateAllPickers ${t.toString()} ")
+        time = t
+        datePicker?.setTime(time)
+        setDatePicker()
+        setNumberPicker()
+        val timeDiff = time.dayOfYear - MutableDateTime.now().dayOfYear().get()
+        inHowManyMinutes?.visibility = if (timeDiff == 0) { VISIBLE } else { GONE }
+        val lastScreenFragment = activity.getFragment(NewOrderActivity.Pages.order)
+        lastScreenFragment?.onDataChanged()
+        isInit = false
+    }
+
+    override fun onDataChangedHandler() {
+        time = MutableDateTime((activity as NewOrderActivity).order.time.time)
+        updateAllPickers(time)
+    }
+
+    fun setDatePicker() {
+        time.let { t->
+            timePicker?.currentHour = t.hourOfDay
+            timePicker?.currentMinute = t.minuteOfHour
+        }
+    }
+
+
     var blockSetNumberPicker = false
 
     fun setNumberPicker() {
@@ -177,36 +166,42 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
             val minutesToOrder = Minutes.minutesBetween(now, t).minutes
             if (minutesToOrder in 0..91){
                 inHowManyMinutes?.value = minutesToOrder
-                inHowManyMinutes?.visibility = View.VISIBLE
+                inHowManyMinutes?.visibility = VISIBLE
                 numberPickerFirstNumberHack()
             }
             else if (minutesToOrder in -90..0){
                 val value = 182+minutesToOrder
                 inHowManyMinutes?.value = value
-                inHowManyMinutes?.visibility = View.VISIBLE
+                inHowManyMinutes?.visibility = VISIBLE
                 numberPickerFirstNumberHack()
             }
             else {
-                inHowManyMinutes?.visibility = View.GONE
+                inHowManyMinutes?.visibility = GONE
             }
         }
     }
 
 
+    /***************
+     * Callbacks for each of the 3 controls
+     */
     override fun onTimeChanged(view: TimePicker, hourOfDay: Int, minute: Int) {
+        val activity = activity as NewOrderActivity?
+
+        Log.i("DATE","onTimeChanged $hourOfDay : $minute ")
+
+        val order = activity?.order
+        time?.hourOfDay = hourOfDay
+        time?.minuteOfHour = minute
+        time?.let { t ->
+            order?.time?.time = t.millis
+        }
         if (isInit == false) {
-            val activity = activity as NewOrderActivity?
-            val order = activity?.order
-            time?.hourOfDay = hourOfDay
-            time?.minuteOfHour = minute
-            time?.let { t ->
-                order?.time?.time = t.millis
-            }
+
             isInit = true
-            setNumberPicker()
+            updateAllPickers(time)
             isInit = false
-            val lastScreenFragment = activity?.getFragment(NewOrderActivity.Pages.order)
-            lastScreenFragment?.onDataChanged()
+
         }
         time?.let { t ->
             datePicker?.setTime(t)
@@ -217,6 +212,7 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
 
     override fun onValueChange(picker: NumberPicker, oldVal: Int, newVal: Int) {
         if (isInit == false) {
+            Log.i("DATE","onValueChange $newVal ")
             blockSetNumberPicker = true
             val activity = activity as NewOrderActivity?
             val order = activity?.order
@@ -229,9 +225,18 @@ class TimeFragment : DataAwareFragment(), TimePicker.OnTimeChangedListener, Numb
                 timePicker?.currentHour = t.hourOfDay.absoluteValue
                 timePicker?.currentMinute = t.minuteOfHour.absoluteValue
                 time = t
-                lastScreenFragment?.onDataChanged()
+                updateAllPickers(t)
             }
             blockSetNumberPicker = false
         }
     }
+
+    private fun onDayChanged(): (Int) -> Unit {
+        return {
+            Log.i("DATE","onDayChanged $it ")
+            time.dayOfYear = MutableDateTime.now().dayOfYear().get() + it
+            updateAllPickers(time)
+        }
+    }
+
 }
