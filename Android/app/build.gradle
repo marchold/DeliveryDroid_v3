@@ -27,14 +27,15 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 205
-        versionName "5.55"
+        versionCode 207
+        versionName "5.57"
     }
 
     productFlavors {
         free {
             dimension "version"
             applicationId "com.catglo.deliverydroidfree"
+            resValue "string", "applicationId", applicationId
             buildConfigField "boolean", "PAID_VERSION", "false"
             it.buildConfigField 'String', 'DATABASE_NAME', "\"DeliveryData.SQLite\""
         }
@@ -42,6 +43,7 @@ android {
         paid {
             dimension "version"
             applicationId "com.catglo.deliverydroid"
+            resValue "string", "applicationId", applicationId
             buildConfigField "boolean", "PAID_VERSION", "true"
             it.buildConfigField 'String', 'DATABASE_NAME', "\"DeliveryData.SQLite\""
         }
@@ -49,6 +51,7 @@ android {
         secondjob {
             dimension "version"
             applicationId "com.catglo.deliverydroid2nd"
+            resValue "string", "applicationId", applicationId
             buildConfigField "boolean", "PAID_VERSION", "true"
             it.buildConfigField 'String', 'DATABASE_NAME', "\"DeliveryData2ndJob.SQLite\""
         }
@@ -114,7 +117,9 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
     implementation "com.google.android.gms:play-services-auth:17.0.0"
-    implementation "com.google.android.gms:play-services-places:$googlePlayServicesVersion"
+
+    implementation 'com.google.android.libraries.places:places:2.1.0'
+    //implementation 'com.google.android.libraries.places:places-compat:2.1.0'
 
     implementation 'com.google.firebase:firebase-core:17.2.1'
     implementation 'com.google.firebase:firebase-ml-vision:24.0.1'

@@ -225,6 +225,7 @@
         android:visibility="invisible" >
     </ListView>
 
+
     <RelativeLayout
         android:id="@+id/tooltipLayout"
         android:layout_width="match_parent"
@@ -244,5 +245,15 @@
     </RelativeLayout>
     <FrameLayout android:id="@+id/curvedScreenOverlay1" android:layout_alignParentLeft="true"  android:layout_width="@dimen/curved_screen_block" android:layout_height="match_parent"/>
     <FrameLayout android:id="@+id/curvedScreenOverlay2" android:layout_alignParentRight="true" android:layout_width="@dimen/curved_screen_block" android:layout_height="match_parent"/>
+
+    <ImageView
+            android:visibility="gone"
+            android:id="@+id/poweredByGoogleImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
+            android:src="@drawable/places_powered_by_google_dark" />
 
 </RelativeLayout>

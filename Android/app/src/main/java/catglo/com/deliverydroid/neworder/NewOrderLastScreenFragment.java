@@ -244,7 +244,7 @@ public class NewOrderLastScreenFragment extends DataAwareFragment {
         if (outOfTown3!=null) outOfTown3.setChecked(order.outOfTown3);
         if (outOfTown4!=null) outOfTown4.setChecked(order.outOfTown4);
         if (orderTime!=null) orderTime.setText(Utils.getFormattedTime(order.time));
-        if (order.address!=null) orderAddress.setText(order.address);
+        if (order.address!=null && orderAddress != null) orderAddress.setText(order.address);
         if (order.apartmentNumber!=null) orderAptNum.setText(order.apartmentNumber);
         if (order.number!=null) orderNumber.setText(order.number);
         if (order.phoneNumber!=null) phoneNumber.setText(order.phoneNumber);

@@ -8,4 +8,15 @@
         <item>Past orders can be viewed in the order summary screen</item>
     </string-array>
 
+    <string-array name="addressOrPhoneNumber">
+        <item>Address</item>
+        <item>Phone Number</item>
+    </string-array>
+
+    <array name="addressOrPhoneNumberValues">
+        <item>address</item>
+        <item>phone</item>
+    </array>
+
+
 </resources>

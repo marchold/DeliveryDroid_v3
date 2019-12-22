@@ -116,7 +116,6 @@
                 android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="catglo.com.deliverydroid.Settings_ListOptions"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
@@ -153,7 +152,6 @@
                 android:label="@string/title_activity_settings_store_address">
             <intent-filter>
                 <action android:name="catglo.com.deliverydroid.SettingsStoreAddressActivity"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

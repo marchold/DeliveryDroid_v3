@@ -40,8 +40,9 @@
                     android:summary="Store address is required for route optimization."
                     android:title="@string/Store_Address">
                 <intent
+                        android:targetClass="catglo.com.deliverydroid.settings.SettingsStoreAddressActivity"
                         android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
-                        android:targetPackage="catglo.com.deliverydroid"/>
+                        android:targetPackage="@string/applicationId"/>
             </androidx.preference.PreferenceScreen>
 
             <androidx.preference.PreferenceScreen
@@ -49,9 +50,24 @@
                     android:summary="@string/Pending_Deliveries_sum"
                     android:title="@string/Home_Screen_List">
                 <intent
+                        android:targetClass="catglo.com.deliverydroid.settings.SettingsListOptions"
                         android:action="catglo.com.deliverydroid.Settings_ListOptions"
-                        android:targetPackage="catglo.com.deliverydroid"/>
+                        android:targetPackage="@string/applicationId"/>
+
             </androidx.preference.PreferenceScreen>
+
+
+
+                <DropDownPreference
+                        android:icon="@drawable/home_screen_settings_icon"
+                        android:summary="Use address or phone number"
+                        android:title="Tip History"
+                        android:entries="@array/addressOrPhoneNumber"
+                        android:entryValues="@array/addressOrPhoneNumberValues"
+                        android:key="tipHistoryUsesPhone"
+                        />
+
+
 
         </androidx.preference.PreferenceScreen>
 
@@ -221,8 +237,9 @@
                     android:summary="@string/Store_Address_desc"
                     android:title="@string/Store_Address">
                 <intent
+                        android:targetClass="catglo.com.deliverydroid.settings.SettingsStoreAddressActivity"
                         android:action="catglo.com.deliverydroid.SettingsStoreAddressActivity"
-                        android:targetPackage="catglo.com.deliverydroid"/>
+                        android:targetPackage="@string/applicationId"/>
             </androidx.preference.PreferenceScreen>
 
 

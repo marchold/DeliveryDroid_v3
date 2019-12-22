@@ -358,13 +358,19 @@ public class HomeScreen_MapFragmentActivity extends DeliveryDroidBaseActivity {
 				do {
 					//Look up record for this order in data base
 					final Order order = new Order(c);
-					
-					//Look up average tip this address
-					order.tipTotalsForThisAddress = dataBase.getTipTotal(getApplicationContext(), 
-							" `"+DataBase.Address +"` LIKE "+DatabaseUtils.sqlEscapeString(order.address)
-							+" AND `"+DataBase.AptNumber+"` LIKE "+DatabaseUtils.sqlEscapeString(order.apartmentNumber)
-							+" AND Payed != -1",null,null);
 
+					if (sharedPreferences.getString("tipHistoryUsesPhone","address").equalsIgnoreCase("phone")) {
+						order.tipTotalsForThisAddress = dataBase.getTipTotal(getApplicationContext(),
+								" `" + DataBase.PhoneNumber + "` LIKE " + DatabaseUtils.sqlEscapeString(order.phoneNumber)
+										+ " AND Payed != -1", null, null);
+					}
+					else {
+						//Look up average tip this address
+						order.tipTotalsForThisAddress = dataBase.getTipTotal(getApplicationContext(),
+								" `" + DataBase.Address + "` LIKE " + DatabaseUtils.sqlEscapeString(order.address)
+										+ " AND `" + DataBase.AptNumber + "` LIKE " + DatabaseUtils.sqlEscapeString(order.apartmentNumber)
+										+ " AND Payed != -1", null, null);
+					}
 					orders.add(order);
 
 				} while (c.moveToNext());

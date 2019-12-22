@@ -625,10 +625,17 @@ public class HomeScreen_ListFragmentDragDrop extends ListFragment implements Dro
 		if (orders!=null && orders.size()>0){
 			for (Order order : orders){
 				//Look up average tip this address
-				order.tipTotalsForThisAddress = dataBase.getTipTotal(getActivity().getApplicationContext(), 
-						" `"+DataBase.Address +"` LIKE "+DatabaseUtils.sqlEscapeString(order.address)
-						+" AND `"+DataBase.AptNumber+"` LIKE "+DatabaseUtils.sqlEscapeString(order.apartmentNumber)
-						+" AND Payed != -1",null,null);
+				if (sharedPreferences.getString("tipHistoryUsesPhone","address").equalsIgnoreCase("phone")) {
+					order.tipTotalsForThisAddress = dataBase.getTipTotal(getActivity().getApplicationContext(),
+							" `" + DataBase.PhoneNumber + "` LIKE " + DatabaseUtils.sqlEscapeString(order.phoneNumber)
+									+ " AND Payed != -1", null, null);
+				}
+				else {
+					order.tipTotalsForThisAddress = dataBase.getTipTotal(getActivity().getApplicationContext(),
+							" `" + DataBase.Address + "` LIKE " + DatabaseUtils.sqlEscapeString(order.address)
+									+ " AND `" + DataBase.AptNumber + "` LIKE " + DatabaseUtils.sqlEscapeString(order.apartmentNumber)
+									+ " AND Payed != -1", null, null);
+				}
 			}
 			noListAltView.setVisibility(View.GONE);
 			getListView().setVisibility(View.VISIBLE);
