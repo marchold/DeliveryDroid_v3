@@ -45,11 +45,11 @@ abstract class ButtonPadFragment : DataAwareFragment(), OnTextChangedListener,
         id: Long
     ) {
         val tv = view.findViewById<View>(R.id.text1) as TextView
-        edit!!.setText(tv.text)
+        edit?.setText(tv.text)
         try {
-            edit!!.setSelection(tv.text.length)
+            edit?.setSelection(tv.text.length)
         } catch (e: Exception) {
-            edit!!.setSelection(tv.text.length - 1)
+            edit?.setSelection(tv.text.length - 1)
         }
     }
 

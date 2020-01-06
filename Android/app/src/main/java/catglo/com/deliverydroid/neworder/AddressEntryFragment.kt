@@ -13,6 +13,7 @@ import catglo.com.GoogleAddressSuggester.AddressResultListener
 import catglo.com.deliveryDatabase.AddressInfo
 import catglo.com.deliveryDatabase.AddressSuggester
 import catglo.com.deliverydroid.R
+import kotlinx.android.synthetic.main.activity_settings_list_options.*
 import java.util.*
 import java.util.regex.Pattern
 
@@ -25,18 +26,28 @@ class AddressEntryFragment : ButtonPadFragment() {
     private var inputStage = 0
     var addressList: ArrayList<AddressInfo>? = null
     var selectedPoint: AddressInfo? = null
-    override fun onItemClick(
-        parent: AdapterView<*>?,
-        view: View,
-        position: Int,
-        id: Long
-    ) { //Super is going to set the text view but we need to also pull the GPS location
-        super.onItemClick(parent, view, position, id)
-        val address = addressList!![position]
-        val activity = activity as NewOrderActivity?
-        if (activity != null) {
-            if (!activity.order.isValidated) {
-                activity.order.geocode(activity)
+
+    var lastSelectedText : String? = null
+
+    override fun onItemClick( parent: AdapterView<*>?, view: View, position: Int, id: Long)
+    { //Super is going to set the text view but we need to also pull the GPS location
+        addressList?.get(position)?.let { addressItem ->
+
+
+            lastSelectedText = addressItem.address
+
+            super.onItemClick(parent, view, position, id)
+            val activity = activity as NewOrderActivity?
+            if (activity != null) {
+                if (!activity.order.isValidated) {
+                    //if (addressItem.placeId != null){
+                    //
+                    //}
+                    //else
+                    //{
+                        activity.order.geocode(activity)
+                    //}
+                }
             }
         }
     }
@@ -57,8 +68,9 @@ class AddressEntryFragment : ButtonPadFragment() {
     override fun onResume() {
         super.onResume()
         val activity = activity as NewOrderActivity?
+        activity?.applicationContext?.let { context ->
         addressSuggestior =
-            AddressSuggester(getContext(), activity!!.dataBase, object : AddressResultListener {
+            AddressSuggester(context, object : AddressResultListener {
                 override fun commit(
                     addressList: ArrayList<AddressInfo>,
                     searchString: String
@@ -80,10 +92,12 @@ class AddressEntryFragment : ButtonPadFragment() {
                     }
                 }
             })
-        edit?.setText(activity.order.address)
+        }
+        activity?.order?.address?.let { edit?.setText(it) }
         val addressStrings =
             ArrayList<String>()
-        activity.dataBase.getAddressSuggestionsFor("", addressStrings)
+        //Look up frequent/recent addresses before any user input happens
+        activity?.dataBase?.getAddressSuggestionsFor("", addressStrings)
         addressList = ArrayList()
         for (address in addressStrings) {
             addressList!!.add(AddressInfo(address, null))
@@ -99,10 +113,6 @@ class AddressEntryFragment : ButtonPadFragment() {
             tooltipLayout?.visibility = View.GONE
         }
     }
-
-    //override var inputType(): get() {
-    //    return InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
-    //}
 
     override val inputType: Int
         get() = InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
@@ -153,14 +163,22 @@ class AddressEntryFragment : ButtonPadFragment() {
         }
     }
 
+    var lastSerach : String? = null
     override fun onTextChanged(newText: String) {
+
         val activity = activity as NewOrderActivity?
-        activity!!.order.address = edit?.text.toString()
-        val fragment = activity.getFragment(NewOrderActivity.Pages.order)
-        fragment?.onDataChanged()
+        activity?.order?.address = edit?.text.toString()
+        activity?.getFragment(NewOrderActivity.Pages.order)?.onDataChanged()
         if (edit?.isFocused == true) {
             selectedPoint = null
         }
-        if (addressSuggestior != null) addressSuggestior!!.lookup(newText)
+
+        //No point in searching if the text changes because the user selected the list item
+        if (newText.trim() == lastSelectedText?.trim()) { return }
+
+        if (newText.trim() == lastSerach?.trim()) { return }
+        lastSerach = newText
+
+        addressSuggestior?.lookup(newText)
     }
 }

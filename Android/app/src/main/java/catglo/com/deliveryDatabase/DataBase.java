@@ -23,6 +23,7 @@ import catglo.com.deliverydroid.BuildConfig;
 import catglo.com.deliverydroid.R;
 import catglo.com.deliverydroid.Utils;
 import catglo.com.deliverydroid.backup.TableValues;
+import catglo.com.deliverydroid.data.MyGeoPoint;
 
 
 import org.joda.time.DateTime;
@@ -1341,18 +1342,24 @@ public class DataBase extends Object  {
         return retVal;
     }}
 
-    public ArrayList<AddressInfo> getAddressInfoForString(String seatchKey) {
+    public ArrayList<AddressInfo> getAddressInfoForString(String searchKey) {
         ArrayList<AddressInfo> result = new ArrayList<AddressInfo>();
         //SQL to return a list of AddressInfo objects from geocode table for search key
         try {
-            String query = "SELECT * FROM geocode WHERE SEARCHKEY = \""+seatchKey+"\" LIMIT 0,100";
+            String query = "SELECT * FROM geocode WHERE SEARCHKEY = \""+searchKey+"\" LIMIT 0,100";
             final Cursor c = db.rawQuery(query, null);
+            int addressIndex = c.getColumnIndex("address");
+            int latIndex = c.getColumnIndex("GPSLat");
+            int lngIndex = c.getColumnIndex("GPSLng");
+
             if (c != null && c.moveToFirst()) {
 
                 do {
-                   // String address = c.getColumnName()
-                   // AddressInfo addressInfo = new AddressInfo();
-
+                    String address = c.getString(addressIndex);
+                    float lat = (float)c.getInt(latIndex)/(float)1e5;
+                    float lng = (float)c.getInt(lngIndex)/(float)1e5;
+                    AddressInfo addressInfo = new AddressInfo(address,new MyGeoPoint(lat,lng),null, null);
+                    result.add(addressInfo);
                 } while (c.moveToNext());
             }
             c.close();
@@ -2780,13 +2787,12 @@ public class DataBase extends Object  {
             String query = "SELECT * FROM " + DATABASE_TABLE + " WHERE "+Address+" LIKE "+addressOrNotes+" OR Notes LIKE "+notesSoFar+" GROUP BY "+Address+" ORDER BY "+Address+" LIKE "+addressSoFarPlusSpace+" DESC,count(*) DESC LIMIT 0,100";
             final Cursor c = db.rawQuery(query, null);
             if (c != null && c.moveToFirst()) {
-
                 do {
                     Order o = new Order(c);
                     if (o.isValidated && o.geoPoint != null){
-                        resultsFromDB.add(new AddressInfo(o.address,o.geoPoint));
+                        resultsFromDB.add(new AddressInfo(o.address,o.geoPoint,null,o));
                     } else {
-                        resultsFromDB.add(new AddressInfo(o.address,null));
+                        resultsFromDB.add(new AddressInfo(o.address,null, null,o));
                     }
                 } while (c.moveToNext());
             }

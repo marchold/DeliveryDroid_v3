@@ -6,11 +6,13 @@ import java.io.Serializable
 
 
 class AddressInfo(var address: String,
-                  var location: MyGeoPoint? = null)
+                  var location: MyGeoPoint? = null,
+                  var placeId: String? = null,
+                  var associatedOrder: Order? = null)
     : Serializable
 {
     var phoneNumber: String = ""
-    var associatedOrder: Order? = null
+
 
     override fun toString(): String {
         return if (!address.isBlank()) address else phoneNumber

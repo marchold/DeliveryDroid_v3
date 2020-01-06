@@ -27,8 +27,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 207
-        versionName "5.57"
+        versionCode 210
+        versionName "5.59"
     }
 
     productFlavors {
@@ -65,9 +65,8 @@ android {
     }
 
     buildTypes.each {
-        it.buildConfigField 'String', 'GoogleMapsApiKey', "\"$System.env.GoogleMapsApiKey\""
+        it.buildConfigField 'String', 'GooglePlacesApiKey', "\"$System.env.GooglePlacesApiKey\""
         it.resValue 'string', 'ga_trackingId', "$System.env.GoogleAnalyticsTrackingId"
-        it.resValue 'string', 'maps_API_KEY', "$System.env.GoogleMapsApiKey"
     }
 
     compileOptions {

@@ -23,6 +23,8 @@ import android.widget.TextView
 import android.widget.Toast
 import catglo.com.GoogleAddressSuggester
 import catglo.com.deliveryDatabase.AddressInfo
+import catglo.com.deliveryDatabase.AddressSuggester
+import catglo.com.deliveryDatabase.DataBase
 import catglo.com.deliverydroid.DeliveryDroidMapRenderTheme
 import catglo.com.deliverydroid.DownloadedMap
 import catglo.com.deliverydroid.DownloadedMap.Companion.getMapForCurrentLocation
@@ -72,13 +74,13 @@ class SettingsStoreAddressActivity : Activity(), TextWatcher, LocationListener,
 
     internal var tileCaches: MutableList<TileCache> = ArrayList()
 
-    private lateinit var addressSuggester: GoogleAddressSuggester
+    private lateinit var addressSuggester: AddressSuggester
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_store_address_activity)
 
-        addressSuggester = GoogleAddressSuggester(this, this);
+        addressSuggester = AddressSuggester(this , this );
 
         autocomplete = findViewById<View>(R.id.autocomplete) as AddressHistoryAutocomplete
         save = findViewById<View>(R.id.save) as Button
