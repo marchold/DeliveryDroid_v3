@@ -3,9 +3,11 @@ package catglo.com.deliverydroid;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -338,7 +340,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
                 break;
 
             case 2: //This Month
-                startDate.set(Calendar.DATE, 0);
+                endDate.set(Calendar.DATE, 1);
                 endDate.add(Calendar.MONTH, 1);
                 startDate.set(Calendar.DATE, 1);
                 startDateField.setText((startDate.get(Calendar.MONTH) + 1) + "/" + startDate.get(Calendar.DAY_OF_MONTH) + "/" + startDate.get(Calendar.YEAR));
@@ -382,6 +384,18 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
                 getString(R.string.milesDriven) + ":" + tips.odometerTotal + "\n";
     }
 
+    String mileagePrefix() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean mileagePayForUndeliverable = prefs.getBoolean("mileagePayForUndeliverable", true);
+        String mileageString = " (Payed >= 0";
+        if (mileagePayForUndeliverable) {
+            mileageString += " OR undeliverable = '1')";
+        } else {
+            mileageString += ")";
+        }
+        return mileageString;
+    }
+
     void updateUI() {
         //sharedPreferences.getLong("tipHistoryendDate", (((Calendar) now.clone()).getTimeInMillis()))
         prefEditor.putLong("tipHistoryendDate", endDate.getTimeInMillis());
@@ -391,9 +405,8 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
         String hoursWorkedTableWhere = ""
                 + "WHERE shifts.`TimeStart` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate)
                 + "' AND shifts.`TimeStart` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "' ";
-        ;
-        String sqlQuery =
-                " Payed > 0 AND `"
+        
+        String sqlQuery = mileagePrefix() + " AND `"
                         + DataBase.Time + "` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate)
                         + "' AND `" + DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "' ";
 
@@ -495,7 +508,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
 
     void emailResults() {
         TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(),
-                " Payed >= 0 AND `" + DataBase.Time + "` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
+                mileagePrefix() + " AND `" + DataBase.Time + "` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND `" + DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'",
                 "WHERE shifts.TimeStart >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND shifts.`TimeEnd` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'",null);
@@ -513,7 +526,7 @@ public class TipHistoryActivity extends DeliveryDroidBaseActivity {
     void smsResults() {
         //TODO: Update to include new fields like e-mail
         TipTotalData tips = getDataBase().getTipTotal(getApplicationContext(),
-                " Payed >= 0 AND `" + DataBase.Time + "` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
+                mileagePrefix() + " AND `" + DataBase.Time + "` >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND `" + DataBase.Time + "` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'",
                 "WHERE shifts.TimeStart >= '" + String.format("%3$tY-%3$tm-%3$td", startDate, startDate, startDate) +
                         "' AND shifts.`TimeEnd` <= '" + String.format("%3$tY-%3$tm-%3$td", endDate, endDate, endDate) + "'"

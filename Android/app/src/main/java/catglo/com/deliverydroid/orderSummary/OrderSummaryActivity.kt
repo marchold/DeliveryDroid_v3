@@ -218,14 +218,14 @@ class OrderSummaryActivity : DeliveryDroidBaseActivity() {
     private fun setupHeaderViews() {
         dataBase?.let { db ->
             val counts = db.getShiftCounts(viewingShift)
-            if (counts.prev < 0) {
+            if (counts.prev <= 0) {
                 previousShift?.text = ""
                 thisShift?.text = getString(R.string.Shift) + " 1"
             } else {
                 previousShift?.text = getString(R.string.Shift) + " " + counts.prev
                 thisShift?.text = getString(R.string.Shift) + " " + counts.cur
             }
-            if (counts.next < 0) {
+            if (counts.next <= 0) {
                 nextShift?.text = ""
             } else {
                 nextShift?.text = getString(R.string.Shift) + " " + counts.next

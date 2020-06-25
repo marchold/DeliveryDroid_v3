@@ -216,7 +216,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                                     //copy from sdcard
                                     copyDatabse(
                                         Environment.getExternalStorageDirectory().toString() + "/" + BuildConfig.DATABASE_NAME,
-                                        filesDir.toString() + BuildConfig.DATABASE_NAME
+                                        filesDir.toString() + "/" + BuildConfig.DATABASE_NAME
                                     )
 
                                 }
